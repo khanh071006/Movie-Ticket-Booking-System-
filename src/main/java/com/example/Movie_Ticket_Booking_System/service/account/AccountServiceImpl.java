@@ -5,16 +5,19 @@ import com.example.Movie_Ticket_Booking_System.domain.entity.Account;
 import com.example.Movie_Ticket_Booking_System.exception.DuplicateResourceException;
 import com.example.Movie_Ticket_Booking_System.repository.AccountRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
-    // Sau này ông sẽ tiêm thêm PasswordEncoder ở đây
+    // Inject passwordEncoder
+    private final PasswordEncoder passwordEncoder;
 
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceImpl(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,8 +33,9 @@ public class AccountServiceImpl implements AccountService {
         account.setEmail(dto.getEmail());
         account.setFullName(dto.getFullName());
         account.setPhone(dto.getPhone());
-        // Tạm thời để password chưa mã hóa
-        account.setPasswordHash(dto.getPassword());
+        //Password mã hóa theo Bcrypt
+        String hashpassword = this.passwordEncoder.encode(dto.getPassword());
+        account.setPasswordHash(hashpassword);
 
         // 3. Lưu vào Database
         return this.accountRepository.save(account);
