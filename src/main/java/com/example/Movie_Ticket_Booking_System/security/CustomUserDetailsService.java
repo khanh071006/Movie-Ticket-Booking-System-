@@ -1,11 +1,13 @@
 package com.example.Movie_Ticket_Booking_System.security;
 
-import com.example.Movie_Ticket_Booking_System.domain.entity.Account;
-import com.example.Movie_Ticket_Booking_System.service.account.AccountService;
+import com.example.Movie_Ticket_Booking_System.features.account.Account;
+import com.example.Movie_Ticket_Booking_System.features.account.AccountService;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -21,14 +23,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         Account account = this.accountService.handleGetAccountByEmail(username);
 
         if (account == null) {
-            throw new UsernameNotFoundException("Không tìm thấy người dùng với email: " + username);
+            throw new UsernameNotFoundException("Không tìm thấy tài khoản với email: " + username);
         }
 
-        // 2. Chuyển đổi Account của mình thành UserDetails của Spring Security
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(account.getEmail())
-                .password(account.getPasswordHash())
-                .roles("USER")
-                .build();
+        return new org.springframework.security.core.userdetails.User(
+                account.getEmail(),
+                account.getPasswordHash(),
+                account.getAccountRoles().stream()
+                        .map(accountRole -> new SimpleGrantedAuthority("ROLE_" + accountRole.getRole().getName()))
+                        .collect(Collectors.toList())
+        );
     }
 }

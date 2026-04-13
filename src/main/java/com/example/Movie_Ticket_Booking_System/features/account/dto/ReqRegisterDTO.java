@@ -1,10 +1,10 @@
-package com.example.Movie_Ticket_Booking_System.domain.dto.account;
+package com.example.Movie_Ticket_Booking_System.features.account.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class AccountRequestDTO {
+public class ReqRegisterDTO {
     @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không đúng định dạng", regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     private String email;

@@ -1,5 +1,6 @@
-package com.example.Movie_Ticket_Booking_System.domain.entity;
+package com.example.Movie_Ticket_Booking_System.features.role;
 
+import com.example.Movie_Ticket_Booking_System.features.account.Account;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,6 +9,16 @@ public class AccountRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -32,12 +43,4 @@ public class AccountRole {
     public void setRole(Role role) {
         this.role = role;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "account_id",nullable = false)
-    private Account account;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
 }

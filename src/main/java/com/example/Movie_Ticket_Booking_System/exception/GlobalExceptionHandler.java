@@ -3,7 +3,7 @@ package com.example.Movie_Ticket_Booking_System.exception;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.Movie_Ticket_Booking_System.domain.dto.response.ApiResponse;
+import com.example.Movie_Ticket_Booking_System.common.dto.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
