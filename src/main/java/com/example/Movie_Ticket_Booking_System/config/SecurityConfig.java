@@ -2,6 +2,7 @@ package com.example.Movie_Ticket_Booking_System.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,8 +26,11 @@ public class SecurityConfig {
                         // Cấp phép cho mọi người đều được truy cập API đăng ký
                         .requestMatchers("/api/v1/auth/register", "/api/v1/auth/login").permitAll()
                         // Mọi API khác phải yêu cầu xác thực
-                        .anyRequest().authenticated()
-                );
+                        .anyRequest().authenticated());
+        http
+                        .formLogin(Customizer.withDefaults())
+                        .httpBasic(Customizer.withDefaults());
+
         return http.build();
     }
 }
