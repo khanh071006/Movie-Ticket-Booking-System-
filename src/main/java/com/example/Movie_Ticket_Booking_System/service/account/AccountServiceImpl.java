@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -44,5 +46,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account handleGetAccountByEmail(String email) {
         return this.accountRepository.findByEmail(email).orElse(null);
+    }
+
+    @Override
+    public List<Account> handleGetUsers() {
+        return this.accountRepository.findAll();
     }
 }
