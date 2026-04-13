@@ -40,4 +40,9 @@ public class AccountServiceImpl implements AccountService {
         // 3. Lưu vào Database
         return this.accountRepository.save(account);
     }
+
+    @Override
+    public Account handleGetAccountByEmail(String email) {
+        return this.accountRepository.findByEmail(email).orElse(null);
+    }
 }

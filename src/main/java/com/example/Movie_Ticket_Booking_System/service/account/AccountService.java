@@ -6,4 +6,6 @@ import com.example.Movie_Ticket_Booking_System.domain.entity.Account;
 public interface AccountService {
 
     Account handleRegister(AccountRequestDTO dto);
+
+    Account handleGetAccountByEmail(String email);
 }
