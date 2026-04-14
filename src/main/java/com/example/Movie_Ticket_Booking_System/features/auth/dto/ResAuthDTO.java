@@ -1,40 +1,60 @@
 package com.example.Movie_Ticket_Booking_System.features.auth.dto;
 
-import java.util.UUID;
+import com.example.Movie_Ticket_Booking_System.features.account.Account;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResAuthDTO {
-    private UUID id;
-    private String email;
-    private String fullName;
 
-    public ResAuthDTO(UUID id, String email, String fullName) {
-        this.id = id;
-        this.email = email;
-        this.fullName = fullName;
+    @JsonProperty("token")
+    private TokenInfo tokenInfo;
+
+    @JsonProperty("account")
+    private AccountInfo accountInfo;
+
+    public ResAuthDTO(TokenInfo tokenInfo, Account account) {
+        this.tokenInfo = tokenInfo;
+        this.accountInfo = new AccountInfo(account);
     }
 
-    // Getters and Setters
-    public UUID getId() {
-        return id;
+    // Inner class cho thông tin Token
+    public static class TokenInfo {
+        private String accessToken;
+        private String tokenType;
+        private long expiresIn;
+
+        public TokenInfo(String accessToken, String tokenType, long expiresIn) {
+            this.accessToken = accessToken;
+            this.tokenType = tokenType;
+            this.expiresIn = expiresIn;
+        }
+
+        // Getters
+        public String getAccessToken() { return accessToken; }
+        public String getTokenType() { return tokenType; }
+        public long getExpiresIn() { return expiresIn; }
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    // Inner class cho thông tin Account
+    public static class AccountInfo {
+        private java.util.UUID id;
+        private String email;
+        private String fullName;
+
+        public AccountInfo(Account account) {
+            this.id = account.getId();
+            this.email = account.getEmail();
+            this.fullName = account.getFullName();
+        }
+
+        // Getters
+        public java.util.UUID getId() { return id; }
+        public String getEmail() { return email; }
+        public String getFullName() { return fullName; }
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    // Getters
+    public TokenInfo getTokenInfo() { return tokenInfo; }
+    public AccountInfo getAccountInfo() { return accountInfo; }
 }

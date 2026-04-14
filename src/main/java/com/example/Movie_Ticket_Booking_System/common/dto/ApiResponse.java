@@ -33,6 +33,7 @@ public class ApiResponse<T> {
     // ========== CONSTRUCTORS ==========
 
     public ApiResponse() {
+        this.timestamp = Instant.now();
     }
 
     // Constructor cho Success
@@ -40,7 +41,7 @@ public class ApiResponse<T> {
         this.statusCode = statusCode;
         this.message = message;
         this.data = data;
-        // this.timestamp = Instant.now();
+        this.timestamp = Instant.now();
     }
 
     // Constructor cho Error
@@ -49,7 +50,7 @@ public class ApiResponse<T> {
         this.message = message;
         this.error = error;
         this.details = details;
-        // this.timestamp = Instant.now();
+        this.timestamp = Instant.now();
     }
 
     // ========== SUCCESS METHODS ==========

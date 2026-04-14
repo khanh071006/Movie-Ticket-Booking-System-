@@ -1,64 +1,64 @@
 # Project Status
 
-> Dự án: Movie Ticket Booking System
-> Cập nhật lần cuối: [Ngày hiện tại]
-> Trạng thái hiện tại: Đã tái cấu trúc dự án sang kiến trúc Feature-Based.
+> **Dự án**: Movie Ticket Booking System
+> **Cập nhật lần cuối**: [Ngày hiện tại]
+> **Trạng thái hiện tại**: Đã hoàn thành luồng xác thực (đăng ký, đăng nhập) với JWT và tái cấu trúc thành công sang kiến trúc Feature-Based.
 
 ---
 
 ## ✅ Đã hoàn thành (Completed)
 
-1.  **Tái Cấu Trúc (Refactoring) sang Feature-Based Architecture**:
-    *   Chuyển đổi toàn bộ cấu trúc dự án từ Layered sang Feature-Based theo tài liệu `ARCHITECTURE.md`.
-    *   Tạo các package `features` chính: `auth`, `user`, `role`.
-    *   Tạo các package cho các thành phần dùng chung: `config`, `security`, `common`, `exception`.
-    *   Di chuyển, đổi tên và cập nhật các class (`Controller`, `Service`, `Repository`, `Entity`, `DTO`) vào cấu trúc mới.
-    *   Sửa lại tất cả các câu lệnh `import` bị lỗi sau khi tái cấu trúc.
+### 1. **Kiến trúc & Nền tảng**
+-   **Tái Cấu Trúc (Refactoring)**: Chuyển đổi toàn bộ cấu trúc dự án từ Layered sang **Feature-Based Architecture** theo tài liệu `ARCHITECTURE.md`.
+    -   Tạo các package `features` chính: `account`, `auth`, `role`.
+    -   Tạo các package cho các thành phần dùng chung: `config`, `security`, `common`, `exception`.
+-   **Thiết Lập Database**:
+    -   Thiết lập các Entity `Account`, `Role`, `AccountRole` với quan hệ Many-to-Many, tuân thủ `DATABASE.md`.
+    -   Tạo `DataInitializer` để tự động thêm `USER` và `ADMIN` roles vào database khi khởi động.
+-   **Quy Tắc Code**: Xây dựng và tuân thủ các quy tắc trong `PROJECT-RULES.md`.
 
-2.  **Thiết Lập Nền Tảng**:
-    *   Khởi tạo dự án Spring Boot, kết nối PostgreSQL.
-    *   Thiết lập các Entity `User`, `Role`, `UserRole` với quan hệ Many-to-Many.
-    *   Tạo `DataInitializer` để tự động thêm `USER` và `ADMIN` roles vào database.
+### 2. **Tính Năng Xác thực (Authentication)**
+-   **API Đăng ký (`POST /api/v1/auth/register`)**:
+    -   Sử dụng `ReqRegisterDTO` để validate đầu vào.
+    -   Logic được xử lý trong `AccountService`, bao gồm: kiểm tra email trùng lặp, mã hóa mật khẩu (BCrypt), lưu `Account` mới và tự động gán `Role` "USER" mặc định.
+-   **API Đăng nhập (`POST /api/v1/auth/login`)**:
+    -   Sử dụng `ReqLoginDTO` để validate đầu vào.
+    -   Toàn bộ nghiệp vụ được đưa xuống `AuthService` (tuân thủ "Thin Controller"):
+        -   Sử dụng `AuthenticationManager` để xác thực thông tin `email` và `password`.
+        -   Gọi `SecurityUtil.createToken()` để tạo `accessToken` (JWT).
+        -   Trả về `ResAuthDTO` chứa thông tin token (`accessToken`, `tokenType`, `expiresIn`) và thông tin `account`.
+-   **API Lấy danh sách Tài khoản (`GET /api/v1/accounts`)**:
+    -   Tạo endpoint để lấy danh sách tất cả các tài khoản.
+    -   Sử dụng `ResAccountDTO` để chỉ trả về các thông tin cần thiết.
 
-3.  **Tính Năng User & Auth**:
-    *   **API Đăng ký**: Hoàn thiện API `POST /api/v1/auth/register` với logic:
-        *   Kiểm tra email trùng lặp.
-        *   Mã hóa mật khẩu.
-        *   Lưu `User` mới và gán `Role` "USER" mặc định.
-    *   **API Lấy Danh Sách User**: Hoàn thiện API `GET /api/v1/users` để trả về danh sách người dùng.
-    *   **DTOs**: Tạo các DTOs chuyên biệt cho request và response (`ReqRegisterDTO`, `ResAuthDTO`, `ResUserDTO`).
+### 3. **Bảo mật (Security)**
+-   **Cấu hình Spring Security**:
+    -   Tắt CSRF, thiết lập `SessionCreationPolicy.STATELESS` cho API.
+    -   Cấu hình `PasswordEncoder` (BCrypt) và `DaoAuthenticationProvider` để đảm bảo cơ chế mã hóa mật khẩu nhất quán.
+    -   Phân quyền các endpoint:
+        -   `/api/v1/auth/**`: Mở cho tất cả mọi người.
+        -   `/api/v1/accounts`: Yêu cầu đã xác thực (chưa phân quyền chi tiết).
+        -   Các API khác: Yêu cầu đã xác thực.
+-   **JSON Web Token (JWT)**:
+    -   Cấu hình `JwtEncoder` và `JwtDecoder` sử dụng thuật toán `HmacSHA256`.
+    -   Tạo `SecurityUtil` với phương thức `createToken()` để tạo JWT có thời hạn 15 phút.
+    -   Tích hợp `oauth2ResourceServer` để tự động xác thực token từ header `Authorization: Bearer ...`.
+-   **`CustomUserDetailsService`**: Triển khai để lấy thông tin `UserDetails` (bao gồm cả roles) từ database, phục vụ cho quá trình xác thực của Spring Security.
 
-4.  **Cấu Hình Security**:
-    *   Tắt CSRF, thiết lập `SessionCreationPolicy.STATELESS`.
-    *   Cấu hình `PasswordEncoder` (BCrypt).
-    *   Tạo `CustomUserDetailsService` để lấy thông tin người dùng từ database.
-    *   Phân quyền cơ bản:
-        *   `/api/v1/auth/**`: Mở cho tất cả mọi người.
-        *   `/api/v1/users`: Yêu cầu đã xác thực.
-        *   Các API khác: Yêu cầu đã xác thực.
-    *   Cấu hình sẵn các bean `JwtEncoder`, `JwtDecoder`, `AuthenticationManager` để chuẩn bị cho việc tích hợp JWT.
-
-## ⏳ Đang tiến hành (In Progress)
-
-- Hiện tại không có nhiệm vụ nào đang trong quá trình thực hiện.
+---
 
 ## 🎯 Nhiệm vụ tiếp theo (Next Tasks)
 
-**[P0 - Ưu tiên cao nhất: Hoàn thiện luồng Login JWT]**
-1.  **Tạo `SecurityUtil`**: Tạo một class `SecurityUtil` chứa hàm `createToken()` để tạo chuỗi JWT từ thông tin `Authentication`.
-2.  **Hoàn thiện API Login**:
-    *   Triển khai logic cho endpoint `POST /api/v1/auth/login`.
-    *   Sử dụng `AuthenticationManager` để xác thực thông tin đăng nhập.
-    *   Gọi `createToken()` để tạo JWT và trả về cho client trong `ResAuthDTO`.
-3.  **Test Luồng JWT**:
-    *   Sử dụng một công cụ như Postman để gọi API `/login`, lấy token.
-    *   Dùng token vừa nhận được để gọi API `GET /api/v1/users` và xác nhận thành công.
+**[P0 - Ưu tiên cao nhất: Hoàn thiện & Ổn định luồng JWT]**
+1.  **Đồng bộ hóa Cấu hình**: Đưa các giá trị "magic number" như `expiresIn` và `jwt.secret` ra file `application.properties` và inject vào các class liên quan (`SecurityUtil`, `AuthServiceImpl`, `SecurityConfig`) để dễ quản lý và tránh lỗi `JwtEncodingException`.
+2.  **Triển khai Refresh Token**: Xây dựng cơ chế Refresh Token như đã được mô tả trong `ARCHITECTURE.md` để cho phép người dùng duy trì phiên đăng nhập một cách an toàn mà không cần đăng nhập lại thường xuyên.
 
-**[P1 - Ưu tiên trung bình: Phân Quyền Chi Tiết]**
-4.  Cập nhật `SecurityConfig` để yêu cầu role `ADMIN` cho API `GET /api/v1/users`.
-5.  Tạo một user có role `ADMIN` để kiểm tra lại.
+**[P1 - Ưu tiên trung bình: Phân Quyền Chi Tiết (RBAC)]**
+3.  **Phân quyền cho API**: Cập nhật `SecurityConfig` để yêu cầu role `ADMIN` cho API `GET /api/v1/accounts`.
+4.  **Tạo User Admin**: Tạo một cơ chế (ví dụ: một script SQL hoặc một endpoint nội bộ) để tạo một tài khoản có vai trò `ADMIN` nhằm mục đích kiểm thử và quản trị.
+
+---
 
 ## ⚠️ Lưu ý / Rủi ro (Warnings)
 
-- `secret key` cho JWT đang được tham chiếu từ `application.properties` (`${jwt.secret}`). Cần đảm bảo giá trị này được thiết lập và không bị lộ.
-- Các file cấu hình chứa thông tin nhạy cảm nên được đưa vào `.gitignore`.
+-   Lỗi `JwtEncodingException: Failed to select a JWK signing key` có thể vẫn xảy ra nếu giá trị `jwt.secret` trong `application.properties` chưa được thiết lập, quá ngắn, hoặc không được load đúng cách. Cần kiểm tra kỹ phần này.
