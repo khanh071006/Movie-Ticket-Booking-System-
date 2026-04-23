@@ -7,12 +7,14 @@ public class ResAccountDTO {
     private String email;
     private String fullName;
     private String phone;
+    private boolean isActive;
 
-    public ResAccountDTO(UUID id, String email, String fullName, String phone) {
+    public ResAccountDTO(UUID id, String email, String fullName, String phone, boolean isActive) {
         this.id = id;
         this.email = email;
         this.fullName = fullName;
         this.phone = phone;
+        this.isActive = isActive;
     }
 
     // Getters and Setters
@@ -46,5 +48,13 @@ public class ResAccountDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
