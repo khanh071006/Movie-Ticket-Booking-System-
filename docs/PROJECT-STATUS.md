@@ -1,7 +1,7 @@
 # Project Status
 
 > **Dự án**: Movie Ticket Booking System
-> **Cập nhật lần cuối**: [Ngày hiện tại]
+> **Cập nhật lần cuối**: 23/04/2026
 > **Trạng thái hiện tại**: Đã hoàn thành luồng xác thực (đăng ký, đăng nhập) với JWT và tái cấu trúc thành công sang kiến trúc Feature-Based.
 
 ---
@@ -27,9 +27,14 @@
         -   Sử dụng `AuthenticationManager` để xác thực thông tin `email` và `password`.
         -   Gọi `SecurityUtil.createToken()` để tạo `accessToken` (JWT).
         -   Trả về `ResAuthDTO` chứa thông tin token (`accessToken`, `tokenType`, `expiresIn`) và thông tin `account`.
--   **API Lấy danh sách Tài khoản (`GET /api/v1/accounts`)**:
-    -   Tạo endpoint để lấy danh sách tất cả các tài khoản.
-    -   Sử dụng `ResAccountDTO` để chỉ trả về các thông tin cần thiết.
+-   **Quản lý Tài khoản (Account Management CRUD)**:
+    -   Triển khai đầy đủ API CRUD cho tài khoản tại `/api/v1/accounts`:
+        -   `GET /api/v1/accounts`: Lấy danh sách tài khoản (có phân trang).
+        -   `GET /api/v1/accounts/{id}`: Lấy chi tiết tài khoản.
+        -   `PUT /api/v1/accounts/{id}`: Cập nhật thông tin tài khoản (Họ tên, Số điện thoại).
+        -   `DELETE /api/v1/accounts/{id}`: Vô hiệu hóa tài khoản (Soft Delete bằng trường `is_active`).
+    -   Bổ sung trường `is_active` vào `Account` entity để hỗ trợ xóa mềm.
+    -   Tạo `ReqUpdateAccountDTO` và cập nhật `ResAccountDTO`.
 
 ### 3. **Bảo mật (Security)**
 -   **Cấu hình Spring Security**:

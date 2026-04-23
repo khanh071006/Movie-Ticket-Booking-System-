@@ -23,6 +23,9 @@ public class Account {
 
     private String phone;
 
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
+
     @OneToMany(mappedBy = "account")
     private List<AccountRole> accountRoles;
 
@@ -74,5 +77,13 @@ public class Account {
 
     public void setAccountRoles(List<AccountRole> accountRoles) {
         this.accountRoles = accountRoles;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
