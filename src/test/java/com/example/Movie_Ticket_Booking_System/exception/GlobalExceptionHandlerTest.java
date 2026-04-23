@@ -1,6 +1,6 @@
 package com.example.Movie_Ticket_Booking_System.exception;
 
-import com.example.Movie_Ticket_Booking_System.domain.dto.response.ApiResponse;
+import com.example.Movie_Ticket_Booking_System.common.dto.ApiResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

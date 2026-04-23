@@ -1,9 +1,10 @@
 package com.example.Movie_Ticket_Booking_System.service.account;
 
-import com.example.Movie_Ticket_Booking_System.domain.dto.account.AccountRequestDTO;
-import com.example.Movie_Ticket_Booking_System.domain.entity.Account;
+import com.example.Movie_Ticket_Booking_System.features.account.Account;
+import com.example.Movie_Ticket_Booking_System.features.account.AccountServiceImpl;
+import com.example.Movie_Ticket_Booking_System.features.account.dto.ReqRegisterDTO;
 import com.example.Movie_Ticket_Booking_System.exception.DuplicateResourceException;
-import com.example.Movie_Ticket_Booking_System.repository.AccountRepository;
+import com.example.Movie_Ticket_Booking_System.features.account.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +29,7 @@ public class AccountServiceImplTest {
     @DisplayName("Đăng ký thành công khi email chưa tồn tại")
     void testHandleRegister_Success() {
         // 1. Setup dữ liệu đầu vào (DTO)
-        AccountRequestDTO requestDTO = new AccountRequestDTO();
+        ReqRegisterDTO requestDTO = new ReqRegisterDTO();
         requestDTO.setEmail("test@gmail.com");
         requestDTO.setFullName("Nguyen Van A");
         requestDTO.setPhone("0123456789");
@@ -64,7 +65,7 @@ public class AccountServiceImplTest {
     @DisplayName("Ném ngoại lệ DuplicateResourceException khi email đã tồn tại")
     void testHandleRegister_ThrowDuplicateEmailException() {
         // 1. Setup dữ liệu đầu vào
-        AccountRequestDTO requestDTO = new AccountRequestDTO();
+        ReqRegisterDTO requestDTO = new ReqRegisterDTO();
         requestDTO.setEmail("test@gmail.com");
         
         // 2. Setup hành vi mock: Giả sử email đã tồn tại trong DB
