@@ -44,7 +44,12 @@
     - Tất cả các entity của database phải được đánh dấu bằng annotation `@Entity`.
     - **Đặt Tên Bảng (Table)**: Sử dụng danh từ số nhiều, theo quy tắc snake_case (ví dụ: `@Table(name = "accounts")`).
     - **Đặt Tên Cột (Column)**: Sử dụng quy tắc snake_case cho tên các cột trong database (ví dụ: `@Column(name = "password_hash")`).
-    - **Khóa Chính (Primary Keys)**: Sử dụng `UUID` cho khóa chính của các entity chính như `Account`. Sử dụng `Integer` hoặc `Long` cho các entity đơn giản hơn như `Role`.
+    - **Khóa Chính (Primary Keys)**: Sử dụng `UUID` cho khóa chính của các entity chính như `Account`.
+- **Mối quan hệ Nhiều-Nhiều (Many-to-Many)**:
+    - **Không sử dụng `@ManyToMany` trực tiếp.**
+    - Thay vào đó, hãy biến bảng trung gian (join table) thành một Entity đầy đủ.
+    - Entity trung gian này sẽ có khóa chính `id` (UUID) của riêng nó và hai mối quan hệ `@ManyToOne` đến hai Entity ở hai đầu.
+    - Ví dụ: Mối quan hệ N-N giữa `Movie` và `Genre` sẽ được mô hình hóa thành: `Movie` --1-N--> `MovieGenre` <--N-1-- `Genre`.
 
 ## 5. Bảo Mật (Security)
 

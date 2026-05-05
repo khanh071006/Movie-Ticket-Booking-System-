@@ -41,6 +41,40 @@ erDiagram
         String language
         String poster_url
         String trailer_url
+        UUID director_id FK
+        UUID status_id FK
+    }
+
+    DIRECTORS {
+        UUID id PK
+        String name
+    }
+
+    MOVIE_STATUS {
+        UUID id PK
+        String name
+    }
+
+    CAST_MEMBERS {
+        UUID id PK
+        String name
+    }
+
+    GENRES {
+        UUID id PK
+        String name
+    }
+
+    MOVIE_CAST {
+        UUID id PK
+        UUID movie_id FK
+        UUID cast_id FK
+    }
+
+    MOVIE_GENRE {
+        UUID id PK
+        UUID movie_id FK
+        UUID genre_id FK
     }
 
     CINEMAS {
@@ -68,6 +102,12 @@ erDiagram
     CINEMAS ||--o{ ROOMS : "contains"
     MOVIES ||--o{ SHOWTIMES : "is_shown_in"
     ROOMS ||--o{ SHOWTIMES : "hosts"
+    MOVIES ||--o{ MOVIE_CAST : "features"
+    CAST_MEMBERS ||--o{ MOVIE_CAST : "acts_in"
+    MOVIES ||--o{ MOVIE_GENRE : "categorizes"
+    GENRES ||--o{ MOVIE_GENRE : "has"
+    DIRECTORS ||--o{ MOVIES : "directs"
+    MOVIE_STATUS ||--o{ MOVIES : "has_status"
 ```
 
 ### 1.2. Bảng (Tables)
@@ -86,6 +126,48 @@ erDiagram
 | `language` | `VARCHAR(255)` | | Ngôn ngữ |
 | `poster_url` | `VARCHAR(255)` | | Link ảnh poster |
 | `trailer_url` | `VARCHAR(255)` | | Link trailer |
+| `director_id` | `UUID` | `FOREIGN KEY (directors.id)` | Khóa ngoại đến đạo diễn |
+| `status_id` | `UUID` | `FOREIGN KEY (movie_status.id)` | Khóa ngoại đến trạng thái phim |
+
+#### `directors`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của đạo diễn |
+| `name` | `VARCHAR(100)` | `NOT NULL` | Tên đạo diễn |
+
+#### `movie_status`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của trạng thái phim |
+| `name` | `VARCHAR(50)` | `NOT NULL, UNIQUE` | Tên trạng thái (ví dụ: "Now Showing", "Coming Soon") |
+
+#### `cast_members`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của thành viên diễn viên |
+| `name` | `VARCHAR(100)` | `NOT NULL` | Tên diễn viên |
+
+#### `genres`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của thể loại |
+| `name` | `VARCHAR(50)` | `NOT NULL, UNIQUE` | Tên thể loại (ví dụ: "Action", "Comedy") |
+
+#### `movie_cast`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của bảng trung gian |
+| `movie_id` | `UUID` | `NOT NULL, FOREIGN KEY (movies.id)` | Khóa ngoại đến phim |
+| `cast_id` | `UUID` | `NOT NULL, FOREIGN KEY (cast_members.id)` | Khóa ngoại đến diễn viên |
+| | | `UNIQUE (movie_id, cast_id)` | Đảm bảo một diễn viên chỉ được gán cho một phim một lần |
+
+#### `movie_genre`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của bảng trung gian |
+| `movie_id` | `UUID` | `NOT NULL, FOREIGN KEY (movies.id)` | Khóa ngoại đến phim |
+| `genre_id` | `UUID` | `NOT NULL, FOREIGN KEY (genres.id)` | Khóa ngoại đến thể loại |
+| | | `UNIQUE (movie_id, genre_id)` | Đảm bảo một thể loại chỉ được gán cho một phim một lần |
 
 #### `cinemas`
 | Column | Type | Constraints | Description |
