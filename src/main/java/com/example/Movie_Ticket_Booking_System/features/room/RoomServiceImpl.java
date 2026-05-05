@@ -9,9 +9,9 @@ import com.example.Movie_Ticket_Booking_System.features.showtime.ShowtimeReposit
 import com.example.Movie_Ticket_Booking_System.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -37,17 +37,20 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<RoomResponseDTO> getAllRoomsByCinema(UUID cinemaId) {
         if (!cinemaRepository.existsById(cinemaId)) {
-            throw new ResourceNotFoundException("Cinema not found with id: " + cinemaId);
+            throw new ResourceNotFoundException("Cinema", "id", cinemaId);
         }
-        return roomRepository.findByCinemaId(cinemaId).stream()
-                .map(this::convertToResponseDTO)
-                .collect(Collectors.toList());
+        List<Room> rooms = roomRepository.findByCinemaId(cinemaId);
+        List<RoomResponseDTO> roomDTOs = new ArrayList<>();
+        for (Room room : rooms) {
+            roomDTOs.add(convertToResponseDTO(room));
+        }
+        return roomDTOs;
     }
 
     @Override
     public RoomResponseDTO createRoom(RoomRequestDTO roomRequestDTO) {
         Cinema cinema = cinemaRepository.findById(roomRequestDTO.getCinemaId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cinema not found with id: " + roomRequestDTO.getCinemaId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", roomRequestDTO.getCinemaId()));
 
         Room room = new Room();
         room.setName(roomRequestDTO.getName());
@@ -60,10 +63,10 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public RoomResponseDTO updateRoom(UUID roomId, RoomRequestDTO roomRequestDTO) {
         Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found with id: " + roomId));
+                .orElseThrow(() -> new ResourceNotFoundException("Room", "id", roomId));
 
         Cinema cinema = cinemaRepository.findById(roomRequestDTO.getCinemaId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cinema not found with id: " + roomRequestDTO.getCinemaId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", roomRequestDTO.getCinemaId()));
 
         room.setName(roomRequestDTO.getName());
         room.setCinema(cinema);
@@ -75,9 +78,8 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void deleteRoom(UUID roomId) {
         Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found with id: " + roomId));
+                .orElseThrow(() -> new ResourceNotFoundException("Room", "id", roomId));
 
-        // Check for showtimes in this room
         List<Showtime> showtimes = showtimeRepository.findByRoomIdIn(List.of(roomId));
         if (!showtimes.isEmpty()) {
             throw new IllegalStateException("Cannot delete room with active showtimes.");
