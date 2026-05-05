@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { mockSignup } from '../api/authApi';
-import { Loader2, Film, Mail, Lock, User, CheckCircle } from 'lucide-react';
+import { signup } from '../api/authApi';
+import { Loader2, Mail, Lock, User } from 'lucide-react';
 
 export const SignupForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const navigate = useNavigate();
 
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError('');
+        setSuccess('');
         try {
-            await mockSignup(name, email, password);
-            alert("Đăng ký thành công!");
-            navigate('/login'); // Đăng ký xong cho sang login
-        } catch (err: any) {
-            setError(err);
+            await signup({
+                fullName: name,
+                email,
+                password,
+                phone: phone.trim() ? phone : undefined,
+            });
+            setSuccess('Đăng ký thành công! Đang chuyển sang trang đăng nhập...');
+            setTimeout(() => navigate('/login'), 900);
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : String(err);
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -71,13 +80,36 @@ export const SignupForm = () => {
                             />
                         </div>
 
+                        <div className="relative">
+                            <input
+                                type="text"
+                                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:border-red-500 outline-none transition-all"
+                                placeholder="Số điện thoại (không bắt buộc)"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                            />
+                        </div>
+
                         <button
                             disabled={loading}
+                            type="submit"
                             className="w-full bg-white text-black hover:bg-red-600 hover:text-white font-bold py-3.5 rounded-xl transition-all flex justify-center items-center shadow-lg"
                         >
                             {loading ? <Loader2 className="animate-spin mr-2" /> : 'Tạo Tài Khoản'}
                         </button>
                     </form>
+
+                    {error && (
+                        <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-xl text-center font-medium">
+                            {error}
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 text-green-400 text-xs rounded-xl text-center font-medium">
+                            {success}
+                        </div>
+                    )}
 
                     <div className="mt-6 text-center text-gray-400 text-sm">
                         Đã có tài khoản? <Link to="/login" className="text-red-500 font-bold hover:underline">Đăng nhập</Link>

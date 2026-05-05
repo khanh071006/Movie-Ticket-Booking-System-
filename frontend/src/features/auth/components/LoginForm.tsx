@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { mockLogin } from '../api/authApi';
+import { login } from '../api/authApi';
 import { Link, useNavigate } from 'react-router-dom'; // Đảm bảo import đầy đủ
 import { Loader2, Film, Mail, Lock } from 'lucide-react';
 
@@ -18,7 +18,11 @@ export const LoginForm = () => {
         setError('');
 
         try {
-            await mockLogin(email, password);
+            const response = await login(email, password);
+            if (response.token) {
+                localStorage.setItem('accessToken', response.token);
+            }
+            localStorage.setItem('currentUser', response.user);
             // 2. Sau khi thành công, điều hướng về trang chủ (MovieList)
             navigate('/movies');
         } catch (err) {
