@@ -10,9 +10,9 @@ import com.example.Movie_Ticket_Booking_System.exception.ResourceNotFoundExcepti
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ShowtimeServiceImpl implements ShowtimeService {
@@ -57,16 +57,14 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     @Override
     public ShowtimeResponseDTO createShowtime(ShowtimeRequestDTO dto) {
         Movie movie = movieRepository.findById(dto.getMovieId())
-                .orElseThrow(() -> new ResourceNotFoundException("Movie not found with id: " + dto.getMovieId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", dto.getMovieId()));
 
         Room room = roomRepository.findById(dto.getRoomId())
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found with id: " + dto.getRoomId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Room", "id", dto.getRoomId()));
 
         LocalDateTime startTime = dto.getStartTime();
-        // Assuming a 30-minute cleanup/buffer time after each movie
         LocalDateTime endTime = startTime.plusMinutes(movie.getDurationMinutes() + 30);
 
-        // Check for overlapping showtimes
         List<Showtime> overlapping = showtimeRepository.findOverlappingShowtimes(room.getId(), startTime, endTime);
         if (!overlapping.isEmpty()) {
             throw new IllegalStateException("Showtime conflicts with an existing showtime in the same room.");
@@ -85,22 +83,27 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     @Override
     public void deleteShowtime(UUID showtimeId) {
         Showtime showtime = showtimeRepository.findById(showtimeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Showtime not found with id: " + showtimeId));
-        // TODO: Add check here to prevent deletion if there are active bookings for this showtime.
+                .orElseThrow(() -> new ResourceNotFoundException("Showtime", "id", showtimeId));
         showtimeRepository.delete(showtime);
     }
 
     @Override
     public List<ShowtimeResponseDTO> getShowtimesByMovieAndCinema(UUID movieId, UUID cinemaId) {
-        return showtimeRepository.findByMovieIdAndCinemaId(movieId, cinemaId).stream()
-                .map(this::convertToResponseDTO)
-                .collect(Collectors.toList());
+        List<Showtime> showtimes = showtimeRepository.findByMovieIdAndCinemaId(movieId, cinemaId);
+        List<ShowtimeResponseDTO> dtos = new ArrayList<>();
+        for (Showtime showtime : showtimes) {
+            dtos.add(convertToResponseDTO(showtime));
+        }
+        return dtos;
     }
 
     @Override
     public List<ShowtimeResponseDTO> getShowtimesByMovie(UUID movieId) {
-        return showtimeRepository.findByMovieId(movieId).stream()
-                .map(this::convertToResponseDTO)
-                .collect(Collectors.toList());
+        List<Showtime> showtimes = showtimeRepository.findByMovieId(movieId);
+        List<ShowtimeResponseDTO> dtos = new ArrayList<>();
+        for (Showtime showtime : showtimes) {
+            dtos.add(convertToResponseDTO(showtime));
+        }
+        return dtos;
     }
 }
