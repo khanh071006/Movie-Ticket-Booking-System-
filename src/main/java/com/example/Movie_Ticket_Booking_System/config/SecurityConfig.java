@@ -51,13 +51,30 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/accounts/**").hasRole("ADMIN")
                         
                         // Phân quyền cho Feature Movie
-                        .requestMatchers(HttpMethod.GET, "/api/v1/movies/**").permitAll() // Ai cũng có thể xem danh sách phim
-                        .requestMatchers(HttpMethod.POST, "/api/v1/movies/**").hasRole("ADMIN") // Chỉ ADMIN mới được thêm phim
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/movies/**").hasRole("ADMIN") // Chỉ ADMIN mới được sửa phim
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/**").hasRole("ADMIN") // Chỉ ADMIN mới được xóa phim
+                        .requestMatchers(HttpMethod.GET, "/api/v1/movies/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/movies/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/movies/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/**").hasRole("ADMIN")
 
                         // Phân quyền cho Feature Role
                         .requestMatchers("/api/v1/roles/**").hasRole("ADMIN")
+
+                        // Phân quyền cho Feature Cinema
+                        .requestMatchers(HttpMethod.GET, "/api/v1/cinemas/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/cinemas").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/cinemas/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/cinemas/**").hasRole("ADMIN")
+
+                        // Phân quyền cho Feature Room
+                        .requestMatchers(HttpMethod.GET, "/api/v1/rooms/cinema/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/rooms/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/rooms/**").hasRole("ADMIN")
+
+                        // Phân quyền cho Feature Showtime
+                        .requestMatchers(HttpMethod.GET, "/api/v1/showtimes/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/showtimes").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/showtimes/**").hasRole("ADMIN")
                         
                         .anyRequest().authenticated()
                 )
@@ -98,9 +115,7 @@ public class SecurityConfig {
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        // Xóa sạch cái tiền tố "SCOPE_" mặc định của Spring đi
         grantedAuthoritiesConverter.setAuthorityPrefix("");
-        // Chỉ định rõ ràng là lấy quyền từ claim "scope" trong JWT
         grantedAuthoritiesConverter.setAuthoritiesClaimName("scope");
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
