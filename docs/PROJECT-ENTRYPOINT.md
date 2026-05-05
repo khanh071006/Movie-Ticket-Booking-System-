@@ -111,16 +111,13 @@ Tài liệu này cung cấp danh sách các điểm cuối (entrypoint) API và 
 
 ## 2. Feature: Account (`/api/v1/accounts`)
 
+Tất cả các API dưới đây đều yêu cầu quyền `ADMIN`.
+
 ### 2.1. Lấy danh sách tất cả tài khoản
 
 -   **Endpoint**: `GET /api/v1/accounts`
 -   **Mô tả**: Lấy danh sách tất cả các tài khoản trong hệ thống.
--   **Yêu cầu xác thực**: **Có**. Cần gửi `accessToken` trong header `Authorization`.
-    -   **Header**: `Authorization: Bearer [your_access_token]`
-
-#### Ví dụ Request:
-
-Không có request body. Chỉ cần gửi request `GET` đến endpoint với header `Authorization`.
+-   **Yêu cầu xác thực**: **Có** (Role `ADMIN`).
 
 #### Ví dụ Response thành công (HTTP 200 OK):
 
@@ -133,27 +130,119 @@ Không có request body. Chỉ cần gửi request `GET` đến endpoint với h
             "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
             "email": "user@example.com",
             "fullName": "Nguyễn Văn A",
-            "phone": "0987654321"
-        },
-        {
-            "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
-            "email": "admin@example.com",
-            "fullName": "Quản Trị Viên",
-            "phone": "0123456789"
+            "phone": "0987654321",
+            "roles": ["USER"]
         }
     ],
     "timestamp": "2023-10-27T10:10:00.000Z"
 }
 ```
 
-#### Ví dụ Response khi chưa xác thực (HTTP 401 Unauthorized):
+### 2.2. Tạo tài khoản mới (Admin)
+
+-   **Endpoint**: `POST /api/v1/accounts`
+-   **Mô tả**: Tạo tài khoản, cho phép gán role.
+-   **Yêu cầu xác thực**: **Có** (Role `ADMIN`).
+
+#### Ví dụ Request Body:
 
 ```json
 {
-    "statusCode": 401,
-    "message": "Full authentication is required to access this resource",
-    "error": "Unauthorized",
-    "details": null,
-    "timestamp": "2023-10-27T10:11:00.000Z"
+    "email": "staff@example.com",
+    "password": "password123",
+    "fullName": "Nhân viên 1",
+    "phone": "0987654321",
+    "roles": ["STAFF"]
 }
 ```
+
+### 2.3. Cập nhật tài khoản
+
+-   **Endpoint**: `PUT /api/v1/accounts/{id}`
+-   **Mô tả**: Cập nhật thông tin cơ bản và gán lại quyền.
+-   **Yêu cầu xác thực**: **Có** (Role `ADMIN`).
+
+#### Ví dụ Request Body:
+
+```json
+{
+    "fullName": "Nhân viên 1 Cập nhật",
+    "phone": "0987654321",
+    "roles": ["STAFF", "ADMIN"]
+}
+```
+
+### 2.4. Xóa tài khoản
+
+-   **Endpoint**: `DELETE /api/v1/accounts/{id}`
+-   **Yêu cầu xác thực**: **Có** (Role `ADMIN`).
+
+---
+
+## 3. Feature: Movie (`/api/v1/movies`)
+
+### 3.1. Lấy danh sách phim
+
+-   **Endpoint**: `GET /api/v1/movies`
+-   **Mô tả**: Lấy danh sách tất cả các phim.
+-   **Yêu cầu xác thực**: Không.
+
+#### Ví dụ Response thành công (HTTP 200 OK):
+
+```json
+{
+    "statusCode": 200,
+    "message": "Lấy danh sách phim thành công",
+    "data": [
+        {
+            "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+            "title": "Avengers: Endgame",
+            "description": "Siêu anh hùng tập hợp...",
+            "durationMinutes": 181,
+            "releaseDate": "2019-04-26",
+            "language": "Tiếng Anh",
+            "posterUrl": "https://example.com/poster.jpg",
+            "trailerUrl": "https://example.com/trailer.mp4"
+        }
+    ],
+    "timestamp": "2023-10-27T10:15:00.000Z"
+}
+```
+
+### 3.2. Lấy thông tin chi tiết phim
+
+-   **Endpoint**: `GET /api/v1/movies/{id}`
+-   **Mô tả**: Lấy thông tin chi tiết của một bộ phim theo ID.
+-   **Yêu cầu xác thực**: Không.
+
+### 3.3. Thêm phim mới (Admin)
+
+-   **Endpoint**: `POST /api/v1/movies`
+-   **Mô tả**: Thêm một bộ phim mới vào hệ thống.
+-   **Yêu cầu xác thực**: **Có**, yêu cầu role `ADMIN`.
+
+#### Ví dụ Request Body:
+
+```json
+{
+    "title": "Avengers: Endgame",
+    "description": "Siêu anh hùng tập hợp...",
+    "durationMinutes": 181,
+    "releaseDate": "2019-04-26",
+    "language": "Tiếng Anh",
+    "posterUrl": "https://example.com/poster.jpg",
+    "trailerUrl": "https://example.com/trailer.mp4"
+}
+```
+
+### 3.4. Cập nhật thông tin phim (Admin)
+
+-   **Endpoint**: `PUT /api/v1/movies/{id}`
+-   **Mô tả**: Cập nhật thông tin của một bộ phim theo ID.
+-   **Yêu cầu xác thực**: **Có**, yêu cầu role `ADMIN`.
+
+### 3.5. Xóa phim (Admin)
+
+-   **Endpoint**: `DELETE /api/v1/movies/{id}`
+-   **Mô tả**: Xóa một bộ phim khỏi hệ thống theo ID.
+-   **Yêu cầu xác thực**: **Có**, yêu cầu role `ADMIN`.
