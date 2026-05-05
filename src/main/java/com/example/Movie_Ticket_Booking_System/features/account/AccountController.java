@@ -66,6 +66,6 @@ public class AccountController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteAccount(@PathVariable UUID id) {
         accountService.handleDeleteAccount(id);
-        return ResponseEntity.ok(ApiResponse.success("Xóa tài khoản thành công"));
+        return ResponseEntity.ok(ApiResponse.success("Xóa tài khoản thành công", null));
     }
 }
