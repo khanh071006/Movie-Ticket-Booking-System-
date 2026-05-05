@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { mockLogin } from '../api/authApi';
+import { login } from '../api/authApi';
 import { Link, useNavigate } from 'react-router-dom'; // Đảm bảo import đầy đủ
 import { Loader2, Film, Mail, Lock } from 'lucide-react';
+import { hasAdminRole, setStoredAccount } from '../utils/session';
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -18,9 +19,13 @@ export const LoginForm = () => {
         setError('');
 
         try {
-            await mockLogin(email, password);
-            // 2. Sau khi thành công, điều hướng về trang chủ (MovieList)
-            navigate('/movies');
+            const response = await login(email, password);
+            if (response.token) {
+                localStorage.setItem('accessToken', response.token);
+            }
+            localStorage.setItem('currentUser', response.user);
+            setStoredAccount(response.account);
+            navigate(hasAdminRole(response.token) ? '/admin' : '/');
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : String(err);
             setError(errorMessage);
@@ -92,7 +97,7 @@ export const LoginForm = () => {
 
                     <div className="mt-8 pt-6 border-t border-white/5 text-center">
                         <p className="text-gray-500 text-sm">
-                            Chưa có tài khoản? <Link to="/signup" className="text-red-500 font-bold hover:text-red-400 transition-colors ml-1">Đăng ký ngay</Link>
+                            Chưa có tài khoản? <Link to="/register" className="text-red-500 font-bold hover:text-red-400 transition-colors ml-1">Đăng ký ngay</Link>
                         </p>
                     </div>
                 </div>

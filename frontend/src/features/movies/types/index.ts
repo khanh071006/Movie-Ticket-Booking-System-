@@ -1,12 +1,19 @@
 export interface Movie {
-    id: number;
+    id: string;
     title: string;
     description: string;
-    director: string;
-    cast: string;
-    duration: number; // phút
+    durationMinutes: number;
     releaseDate: string;
+    language: string;
     posterUrl: string;
-    rating: number;
-    genre: string;
+    trailerUrl: string;
+}
+
+export interface ApiResponse<T> {
+    statusCode: number;
+    message: string;
+    data: T;
+    error?: string;
+    details?: string[];
+    timestamp: string;
 }

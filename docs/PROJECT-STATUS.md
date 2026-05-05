@@ -2,7 +2,7 @@
 
 > **Dự án**: Movie Ticket Booking System
 > **Cập nhật lần cuối**: [Ngày hiện tại]
-> **Trạng thái hiện tại**: Đã hoàn thiện cấu trúc Entity cho toàn bộ hệ thống, bao gồm cả các mối quan hệ N-N.
+> **Trạng thái hiện tại**: Đã hoàn thiện cấu trúc Entity cho toàn bộ hệ thống, bao gồm cả các mối quan hệ N-N, và CRUD các danh mục.
 
 ---
 
@@ -47,19 +47,24 @@
 -   **JSON Web Token (JWT)**: Cấu hình `JwtEncoder`, `JwtDecoder`, tích hợp `oauth2ResourceServer`.
 -   **`CustomUserDetailsService`**: Triển khai để lấy thông tin `UserDetails` từ database.
 
+### 10. **Tính Năng Danh Mục Phim (Director, Genre, MovieStatus, CastMember)**
+-   **Director**: Khởi tạo `ReqDirectorDTO`, `ResDirectorDTO`, `DirectorService`, `DirectorServiceImpl`, `DirectorRepository`, và `DirectorController`. Hoàn thiện chức năng CRUD danh mục đạo diễn cho `ADMIN`.
+-   **Genre**: Khởi tạo `ReqGenreDTO`, `ResGenreDTO`, `GenreService`, `GenreServiceImpl`, `GenreRepository`, và `GenreController`. Hoàn thiện chức năng CRUD danh mục thể loại cho `ADMIN`, bao gồm logic kiểm tra tên không được trùng lặp.
+-   **MovieStatus**: Khởi tạo `ReqMovieStatusDTO`, `ResMovieStatusDTO`, `MovieStatusService`, `MovieStatusServiceImpl`, `MovieStatusRepository`, và `MovieStatusController`. Hoàn thiện chức năng CRUD trạng thái chiếu phim cho `ADMIN`, bao gồm logic kiểm tra tên duy nhất.
+-   **CastMember**: Khởi tạo `ReqCastMemberDTO`, `ResCastMemberDTO`, `CastMemberService`, `CastMemberServiceImpl`, `CastMemberRepository`, và `CastMemberController`. Hoàn thiện chức năng CRUD danh mục diễn viên cho `ADMIN`.
+
 ---
 
 ## 🎯 Nhiệm vụ tiếp theo (Next Tasks)
 
-**[P0 - Ưu tiên cao: Hoàn thiện CRUD cho các Feature mới]**
-1.  **Xây dựng API cho các Entity danh mục**: Tạo `Repository`, `Service`, `DTO`, và `Controller` cho các feature mới: `Director`, `MovieStatus`, `CastMember`, và `Genre`. Các API này sẽ cho phép `ADMIN` quản lý (CRUD) các danh mục này.
-2.  **Nâng cấp API của Movie**: Cập nhật các API `POST` và `PUT` của `Movie` để cho phép `ADMIN` có thể gán đạo diễn, trạng thái, danh sách diễn viên và thể loại cho phim khi tạo/sửa.
+**[P0 - Ưu tiên cao: Nâng cấp API của Movie]**
+1.  **Nâng cấp API của Movie**: Cập nhật các API `POST` và `PUT` của `Movie` để cho phép `ADMIN` có thể gán đạo diễn, trạng thái, danh sách diễn viên và thể loại cho phim khi tạo/sửa.
 
 **[P1 - Ưu tiên trung bình: Lõi Booking]**
-3.  **Triển khai tính năng Ghế (Seat):**
+2.  **Triển khai tính năng Ghế (Seat):**
     -   Tạo Entity `Seat` với các thuộc tính như `seat_number`, `seat_type` (thường, VIP), và mối quan hệ với `Room`.
     -   Xây dựng API cho phép `ADMIN` cấu hình sơ đồ ghế cho mỗi phòng chiếu.
-4.  **Xây dựng nền tảng cho việc Đặt vé (Booking):**
+3.  **Xây dựng nền tảng cho việc Đặt vé (Booking):**
     -   Thiết kế và tạo các Entity cốt lõi: `Booking`, `Ticket`, và `BookingSeat`.
     -   Xây dựng API cho phép người dùng tạo một `Booking` mới cho một `Showtime` cụ thể.
 

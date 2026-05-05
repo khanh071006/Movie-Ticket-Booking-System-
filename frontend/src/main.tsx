@@ -1,13 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom' // PHẢI CÓ DÒNG NÀY
+import { RouterProvider } from 'react-router-dom'
 import './index.css'
-import App from './App.tsx'
+import { router } from './routes/router'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <BrowserRouter> {/* Bọc App lại như thế này */}
-            <App />
-        </BrowserRouter>
+        <RouterProvider router={router} />
     </StrictMode>,
 )

@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/accounts/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/accounts/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/accounts/**").hasRole("ADMIN")
-                        
+
                         // Phân quyền cho Feature Movie
                         .requestMatchers(HttpMethod.GET, "/api/v1/movies/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/movies/**").hasRole("ADMIN")
@@ -75,7 +75,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/showtimes/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/showtimes").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/showtimes/**").hasRole("ADMIN")
-                        
+
+                        // Phân quyền cho các Feature Danh mục
+                        .requestMatchers(HttpMethod.GET, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/directors", "/api/v1/genres", "/api/v1/movie-statuses", "/api/v1/cast-members").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
