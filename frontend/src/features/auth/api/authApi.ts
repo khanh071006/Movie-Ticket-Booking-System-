@@ -18,7 +18,6 @@ interface AccountInfo {
     id: string;
     email: string;
     fullName: string;
-    phone?: string;
 }
 
 interface AuthPayload {
@@ -29,7 +28,6 @@ interface AuthPayload {
 export interface LoginResponse {
     user: string;
     token: string;
-    account: AccountInfo;
 }
 
 interface RegisterRequest {
@@ -74,7 +72,6 @@ export const login = async (email: string, password: string): Promise<LoginRespo
         return {
             user: payload.account.fullName,
             token: payload.token?.accessToken ?? '',
-            account: payload.account,
         };
     } catch (error) {
         throw new Error(buildErrorMessage(error));

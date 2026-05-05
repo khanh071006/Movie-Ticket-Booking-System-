@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { login } from '../api/authApi';
 import { Link, useNavigate } from 'react-router-dom'; // Đảm bảo import đầy đủ
 import { Loader2, Film, Mail, Lock } from 'lucide-react';
-import { hasAdminRole, setStoredAccount } from '../utils/session';
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -24,12 +23,8 @@ export const LoginForm = () => {
                 localStorage.setItem('accessToken', response.token);
             }
             localStorage.setItem('currentUser', response.user);
-            setStoredAccount(response.account);
-            if (hasAdminRole(response.token)) {
-                navigate('/admin/dashboard');
-            } else {
-                navigate('/movies');
-            }
+            // 2. Sau khi thành công, điều hướng về trang chủ (MovieList)
+            navigate('/movies');
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : String(err);
             setError(errorMessage);
