@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -86,10 +85,12 @@ public class AccountServiceImpl implements AccountService {
         Account newAccount = accountRepository.save(account);
 
         if (dto.getRoles() != null && !dto.getRoles().isEmpty()) {
-            Set<Role> roles = dto.getRoles().stream()
-                    .map(roleName -> roleRepository.findByName(roleName)
-                            .orElseThrow(() -> new ResourceNotFoundException("Role", "name", roleName)))
-                    .collect(Collectors.toSet());
+            Set<Role> roles = new HashSet<>();
+            for (String roleName : dto.getRoles()) {
+                Role role = roleRepository.findByName(roleName)
+                        .orElseThrow(() -> new ResourceNotFoundException("Role", "name", roleName));
+                roles.add(role);
+            }
 
             for (Role role : roles) {
                 AccountRole newAccountRole = new AccountRole();
@@ -121,10 +122,12 @@ public class AccountServiceImpl implements AccountService {
             accountRoleRepository.deleteByAccount(account);
 
             // Add new roles
-            Set<Role> newRoles = dto.getRoles().stream()
-                    .map(roleName -> roleRepository.findByName(roleName)
-                            .orElseThrow(() -> new ResourceNotFoundException("Role", "name", roleName)))
-                    .collect(Collectors.toSet());
+            Set<Role> newRoles = new HashSet<>();
+            for (String roleName : dto.getRoles()) {
+                Role role = roleRepository.findByName(roleName)
+                        .orElseThrow(() -> new ResourceNotFoundException("Role", "name", roleName));
+                newRoles.add(role);
+            }
 
             for (Role role : newRoles) {
                 AccountRole newAccountRole = new AccountRole();

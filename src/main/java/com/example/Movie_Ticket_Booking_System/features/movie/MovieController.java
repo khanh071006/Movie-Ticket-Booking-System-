@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/movies")
@@ -34,9 +34,12 @@ public class MovieController {
     @GetMapping
     public ResponseEntity<ApiResponse<List<ResMovieDTO>>> getAllMovies() {
         List<Movie> movies = movieService.getAllMovies();
-        List<ResMovieDTO> res = movies.stream()
-                .map(ResMovieDTO::new)
-                .collect(Collectors.toList());
+        
+        List<ResMovieDTO> res = new ArrayList<>();
+        for (Movie movie : movies) {
+            res.add(new ResMovieDTO(movie));
+        }
+
         return ResponseEntity.ok(ApiResponse.success("Lấy danh sách phim thành công", res));
     }
 

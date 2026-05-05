@@ -9,10 +9,11 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/accounts")
@@ -25,20 +26,25 @@ public class AccountController {
     }
 
     private ResAccountDTO mapToResDTO(Account account) {
-        Set<String> roles = account.getAccountRoles() != null ?
-                account.getAccountRoles().stream()
-                        .map(accountRole -> accountRole.getRole().getName())
-                        .collect(Collectors.toSet())
-                : null;
+        Set<String> roles = null;
+        if (account.getAccountRoles() != null) {
+            roles = new HashSet<>();
+            for (AccountRole accountRole : account.getAccountRoles()) {
+                roles.add(accountRole.getRole().getName());
+            }
+        }
         return new ResAccountDTO(account.getId(), account.getEmail(), account.getFullName(), account.getPhone(), roles);
     }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<ResAccountDTO>>> getAccounts() {
         List<Account> accounts = this.accountService.handleGetAccounts();
-        List<ResAccountDTO> resAccounts = accounts.stream()
-                .map(this::mapToResDTO)
-                .collect(Collectors.toList());
+        
+        List<ResAccountDTO> resAccounts = new ArrayList<>();
+        for (Account account : accounts) {
+            resAccounts.add(mapToResDTO(account));
+        }
+
         return ResponseEntity.ok(ApiResponse.success("Lấy danh sách tài khoản thành công", resAccounts));
     }
 

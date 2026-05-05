@@ -2,12 +2,15 @@ package com.example.Movie_Ticket_Booking_System.security;
 
 import com.example.Movie_Ticket_Booking_System.features.account.Account;
 import com.example.Movie_Ticket_Booking_System.features.account.AccountService;
+import com.example.Movie_Ticket_Booking_System.features.role.AccountRole;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import java.util.stream.Collectors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -26,12 +29,17 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Không tìm thấy tài khoản với email: " + username);
         }
 
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        if (account.getAccountRoles() != null) {
+            for (AccountRole accountRole : account.getAccountRoles()) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + accountRole.getRole().getName()));
+            }
+        }
+
         return new org.springframework.security.core.userdetails.User(
                 account.getEmail(),
                 account.getPasswordHash(),
-                account.getAccountRoles().stream()
-                        .map(accountRole -> new SimpleGrantedAuthority("ROLE_" + accountRole.getRole().getName()))
-                        .collect(Collectors.toList())
+                authorities
         );
     }
 }

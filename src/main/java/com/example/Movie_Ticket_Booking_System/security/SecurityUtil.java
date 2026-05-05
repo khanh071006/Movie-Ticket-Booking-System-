@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.stream.Collectors;
 
 /**
  * Utility class để xử lý các tác vụ liên quan đến security, đặc biệt là JWT.
@@ -37,9 +36,15 @@ public class SecurityUtil {
      */
     public String createToken(Authentication authentication) {
         Instant now = Instant.now();
-        String scope = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
+        
+        StringBuilder scopeBuilder = new StringBuilder();
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (scopeBuilder.length() > 0) {
+                scopeBuilder.append(" ");
+            }
+            scopeBuilder.append(authority.getAuthority());
+        }
+        String scope = scopeBuilder.toString();
 
         JwsHeader jwsHeader = JwsHeader.with(MacAlgorithm.HS256).build();
 
