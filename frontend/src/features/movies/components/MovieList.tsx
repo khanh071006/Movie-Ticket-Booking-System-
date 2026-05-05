@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, Clock, Film, Languages, Loader2, PlayCircle } from 'lucide-react';
 import { getMovies } from '../api/movieApi';
 import type { Movie } from '../types';
@@ -48,7 +48,12 @@ export const MovieList = () => {
                 <h1 className="text-2xl font-bold flex items-center gap-2 text-red-500 tracking-tighter">
                     <Film /> HUST CINEMA
                 </h1>
-                <div className="text-sm text-gray-300">Tổng phim: {movies.length}</div>
+                <div className="flex items-center gap-4">
+                    <Link to="/profile" className="text-sm bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition">
+                        Hồ sơ
+                    </Link>
+                    <div className="text-sm text-gray-300">Tổng phim: {movies.length}</div>
+                </div>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
