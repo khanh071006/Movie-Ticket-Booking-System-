@@ -58,3 +58,5 @@
 - **Định Dạng Code**: Duy trì định dạng code nhất quán.
 - **Tính Bất Biến (Immutability)**: Ưu tiên các đối tượng bất biến khi có thể, đặc biệt là đối với DTOs.
 - **Trường `final`**: Đánh dấu các dependency được inject trong constructor là `final`.
+- **Sử dụng Vòng lặp `for`**: Ưu tiên sử dụng vòng lặp `for` truyền thống thay vì Java Stream API để xử lý các tập hợp (collections). Điều này giúp code dễ gỡ lỗi (debug) hơn và dễ đọc hơn đối với các lập trình viên ở mọi cấp độ.
+- **Không sử dụng Lombok**: Dự án không sử dụng thư viện Lombok để tránh các vấn đề liên quan đến build và IDE. Tất cả các Plain Old Java Objects (POJOs) như DTOs và Entities phải được viết thủ công với đầy đủ constructors, getters, và setters.
