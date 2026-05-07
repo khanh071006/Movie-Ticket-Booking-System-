@@ -4,6 +4,7 @@ import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { CategoryItem } from '../../types/app';
 
 type CategoryKey = 'directors' | 'genres' | 'movie-statuses' | 'cast-members';
@@ -22,6 +23,7 @@ export const CategoryManagementPage = () => {
     const [editId, setEditId] = useState<string | null>(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const current = useMemo(() => kinds.find((k) => k.key === active)!, [active]);
 
@@ -55,18 +57,20 @@ export const CategoryManagementPage = () => {
         }
     };
 
-    const remove = async (id: string) => {
-        if (!confirm('Xác nhận xóa mục danh mục này?')) return;
+    const confirmDelete = async () => {
+        if (!deleteId) return;
         try {
-            await apiClient.categories.remove(active, id);
+            await apiClient.categories.remove(active, deleteId);
+            setDeleteId(null);
             load();
         } catch (err) {
             setError(parseError(err));
+            setDeleteId(null);
         }
     };
 
     return (
-        <div className="mx-auto max-w-6xl space-y-8 animate-in fade-in duration-500">
+        <div className="w-full space-y-8 animate-in fade-in duration-500">
             {/* Header Section */}
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
@@ -176,7 +180,7 @@ export const CategoryManagementPage = () => {
                                                     {item.name}
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
-                                                    <div className="flex justify-end gap-1 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                    <div className="flex justify-end gap-1 opacity-100 transition-opacity">
                                                         <Button 
                                                             variant="ghost" 
                                                             size="icon" 
@@ -189,7 +193,7 @@ export const CategoryManagementPage = () => {
                                                             variant="ghost" 
                                                             size="icon" 
                                                             className="h-8 w-8 text-red-500 hover:bg-red-500/10" 
-                                                            onClick={() => remove(item.id)}
+                                                            onClick={() => setDeleteId(item.id)}
                                                         >
                                                             <Trash2 className="h-3.5 w-3.5" />
                                                         </Button>
@@ -216,6 +220,15 @@ export const CategoryManagementPage = () => {
                     {error}
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={!!deleteId}
+                title="Xác nhận xóa"
+                message={`Bạn có chắc chắn muốn xóa ${current.label.toLowerCase()} này khỏi hệ thống? Hành động này không thể hoàn tác.`}
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteId(null)}
+                confirmText="Xóa mục"
+            />
         </div>
     );
 };

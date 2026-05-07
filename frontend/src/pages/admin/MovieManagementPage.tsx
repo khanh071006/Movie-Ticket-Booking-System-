@@ -4,6 +4,7 @@ import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Movie } from '../../types/app';
 
 const emptyMovie = {
@@ -23,6 +24,7 @@ export const MovieManagementPage = () => {
     const [form, setForm] = useState(emptyMovie);
     const [editId, setEditId] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const formatDate = (value: string) => {
         if (!value) return '-';
@@ -88,18 +90,20 @@ export const MovieManagementPage = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const onDelete = async (id: string) => {
-        if (!confirm('Bạn có chắc chắn muốn xóa bộ phim này?')) return;
+    const confirmDelete = async () => {
+        if (!deleteId) return;
         try {
-            await apiClient.movies.remove(id);
+            await apiClient.movies.remove(deleteId);
+            setDeleteId(null);
             loadMovies();
         } catch (err) {
             setError(parseError(err));
+            setDeleteId(null);
         }
     };
 
     return (
-        <div className="mx-auto max-w-7xl space-y-8 animate-in fade-in duration-500">
+        <div className="w-full space-y-8 animate-in fade-in duration-500">
             {/* Header */}
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
@@ -263,7 +267,7 @@ export const MovieManagementPage = () => {
                                                     </div>
                                                     <div>
                                                         <div className="font-bold text-slate-200 group-hover:text-blue-400 transition-colors line-clamp-1">{movie.title}</div>
-                                                        <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
+                                                        <div className="mt-1 flex items-center gap-2 text-xs text-slate-400">
                                                             <Calendar size={12} />
                                                             {formatDate(movie.releaseDate)}
                                                         </div>
@@ -288,11 +292,11 @@ export const MovieManagementPage = () => {
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <div className="flex justify-end gap-1 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                <div className="flex justify-end gap-1 opacity-100 transition-opacity">
                                                     <Button variant="ghost" size="icon" className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" onClick={() => startEdit(movie)}>
                                                         <Edit2 size={16} />
                                                     </Button>
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 text-red-500 hover:bg-red-500/10" onClick={() => onDelete(movie.id)}>
+                                                    <Button variant="ghost" size="icon" className="h-9 w-9 text-red-500 hover:bg-red-500/10" onClick={() => setDeleteId(movie.id)}>
                                                         <Trash2 size={16} />
                                                     </Button>
                                                 </div>
@@ -317,6 +321,15 @@ export const MovieManagementPage = () => {
                     {error}
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={!!deleteId}
+                title="Xác nhận xóa"
+                message="Bạn có chắc chắn muốn xóa bộ phim này khỏi hệ thống? Hành động này không thể hoàn tác."
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteId(null)}
+                confirmText="Xóa phim"
+            />
         </div>
     );
 };

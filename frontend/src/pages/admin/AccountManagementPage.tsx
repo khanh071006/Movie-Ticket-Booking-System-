@@ -4,6 +4,7 @@ import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Account } from '../../types/app';
 
 const emptyCreate = { fullName: '', email: '', password: '', phone: '', isAdmin: false };
@@ -17,6 +18,7 @@ export const AccountManagementPage = () => {
     const [editId, setEditId] = useState<string | null>(null);
     const [updateForm, setUpdateForm] = useState(emptyUpdate);
     const [loading, setLoading] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const loadAccounts = async () => {
         setLoading(true);
@@ -89,18 +91,20 @@ export const AccountManagementPage = () => {
         }
     };
 
-    const onDelete = async (id: string) => {
-        if (!confirm('Xác nhận xóa tài khoản này khỏi hệ thống?')) return;
+    const confirmDelete = async () => {
+        if (!deleteId) return;
         try {
-            await apiClient.accounts.remove(id);
+            await apiClient.accounts.remove(deleteId);
+            setDeleteId(null);
             loadAccounts();
         } catch (err) {
             setError(parseError(err));
+            setDeleteId(null);
         }
     };
 
     return (
-        <div className="mx-auto max-w-7xl space-y-8 animate-in fade-in duration-500">
+        <div className="w-full space-y-8 animate-in fade-in duration-500">
             {/* Header */}
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
@@ -217,17 +221,17 @@ export const AccountManagementPage = () => {
                                                         </div>
                                                         <div>
                                                             <div className="font-bold text-slate-200 group-hover:text-blue-400 transition-colors">{acc.fullName}</div>
-                                                            <div className="text-xs text-slate-500">{acc.id.substring(0, 8)}...</div>
+                                                            <div className="text-xs text-slate-400">{acc.id.substring(0, 8)}...</div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className="space-y-1">
-                                                        <div className="flex items-center gap-2 text-xs text-slate-400">
+                                                        <div className="flex items-center gap-2 text-xs text-slate-300">
                                                             <Mail size={12} className="text-blue-500" />
                                                             {acc.email}
                                                         </div>
-                                                        <div className="flex items-center gap-2 text-xs text-slate-400">
+                                                        <div className="flex items-center gap-2 text-xs text-slate-300">
                                                             <Phone size={12} className="text-blue-500" />
                                                             {acc.phone || 'Chưa cập nhật'}
                                                         </div>
@@ -245,11 +249,11 @@ export const AccountManagementPage = () => {
                                                     )}
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
-                                                    <div className="flex justify-end gap-1 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                    <div className="flex justify-end gap-1 opacity-100 transition-opacity">
                                                         <Button variant="ghost" size="icon" className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" onClick={() => startEdit(acc)}>
                                                             <Edit2 size={16} />
                                                         </Button>
-                                                        <Button variant="ghost" size="icon" className="h-9 w-9 text-red-500 hover:bg-red-500/10" onClick={() => onDelete(acc.id)}>
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 text-red-500 hover:bg-red-500/10" onClick={() => setDeleteId(acc.id)}>
                                                             <Trash2 size={16} />
                                                         </Button>
                                                     </div>
@@ -341,6 +345,15 @@ export const AccountManagementPage = () => {
                     {error}
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={!!deleteId}
+                title="Xác nhận xóa"
+                message="Bạn có chắc chắn muốn xóa tài khoản này khỏi hệ thống? Hành động này không thể hoàn tác."
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteId(null)}
+                confirmText="Xóa tài khoản"
+            />
         </div>
     );
 };

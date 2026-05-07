@@ -4,6 +4,7 @@ import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Cinema, Room } from '../../types/app';
 
 export const RoomManagementPage = () => {
@@ -14,6 +15,7 @@ export const RoomManagementPage = () => {
     const [editId, setEditId] = useState<string | null>(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     useEffect(() => {
         apiClient.cinemas.getAll().then((res) => {
@@ -50,18 +52,20 @@ export const RoomManagementPage = () => {
         }
     };
 
-    const remove = async (id: string) => {
-        if (!confirm('Xác nhận xóa phòng chiếu này?')) return;
+    const confirmDelete = async () => {
+        if (!deleteId) return;
         try {
-            await apiClient.rooms.remove(id);
+            await apiClient.rooms.remove(deleteId);
+            setDeleteId(null);
             loadRooms(selectedCinemaId);
         } catch (err) {
             setError(parseError(err));
+            setDeleteId(null);
         }
     };
 
     return (
-        <div className="mx-auto max-w-6xl space-y-8 animate-in fade-in duration-500">
+        <div className="w-full space-y-8 animate-in fade-in duration-500">
             {/* Header Section */}
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
@@ -166,7 +170,7 @@ export const RoomManagementPage = () => {
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
-                                                    <div className="flex justify-end gap-1 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                    <div className="flex justify-end gap-1 opacity-100 transition-opacity">
                                                         <Button 
                                                             variant="ghost" 
                                                             size="icon" 
@@ -179,7 +183,7 @@ export const RoomManagementPage = () => {
                                                             variant="ghost" 
                                                             size="icon" 
                                                             className="h-9 w-9 text-red-500 hover:bg-red-500/10" 
-                                                            onClick={() => remove(room.id)}
+                                                            onClick={() => setDeleteId(room.id)}
                                                         >
                                                             <Trash2 size={16} />
                                                         </Button>
@@ -206,6 +210,15 @@ export const RoomManagementPage = () => {
                     {error}
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={!!deleteId}
+                title="Xác nhận xóa"
+                message="Bạn có chắc chắn muốn xóa phòng chiếu này khỏi hệ thống? Hành động này không thể hoàn tác."
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteId(null)}
+                confirmText="Xóa phòng"
+            />
         </div>
     );
 };

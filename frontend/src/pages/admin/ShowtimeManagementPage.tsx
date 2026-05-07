@@ -3,6 +3,7 @@ import { Plus, Trash2, CalendarDays, ChevronRight, Clock, MonitorPlay, Film, Bui
 import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Cinema, Movie, Room, Showtime } from '../../types/app';
 
 export const ShowtimeManagementPage = () => {
@@ -16,6 +17,7 @@ export const ShowtimeManagementPage = () => {
     const [startTime, setStartTime] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     useEffect(() => {
         Promise.all([apiClient.movies.getAll(), apiClient.cinemas.getAll()])
@@ -63,18 +65,20 @@ export const ShowtimeManagementPage = () => {
         }
     };
 
-    const onDelete = async (id: string) => {
-        if (!confirm('Xác nhận xóa lịch chiếu này?')) return;
+    const confirmDelete = async () => {
+        if (!deleteId) return;
         try {
-            await apiClient.showtimes.remove(id);
+            await apiClient.showtimes.remove(deleteId);
+            setDeleteId(null);
             loadShowtimes();
         } catch (err) {
             setError(parseError(err));
+            setDeleteId(null);
         }
     };
 
     return (
-        <div className="mx-auto max-w-7xl space-y-8 animate-in fade-in duration-500">
+        <div className="w-full space-y-8 animate-in fade-in duration-500">
             {/* Header Section */}
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
@@ -184,7 +188,7 @@ export const ShowtimeManagementPage = () => {
                                                     <div className="font-bold text-slate-200">
                                                         {new Date(st.startTime).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
                                                     </div>
-                                                    <div className="text-xs text-slate-500">
+                                                    <div className="text-xs text-slate-400">
                                                         {new Date(st.startTime).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}
                                                     </div>
                                                 </div>
@@ -195,7 +199,7 @@ export const ShowtimeManagementPage = () => {
                                                         <MonitorPlay size={12} className="text-blue-500" />
                                                         {st.room?.name ?? '-'}
                                                     </div>
-                                                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                                                    <div className="flex items-center gap-2 text-xs text-slate-400">
                                                         <Building2 size={12} className="text-blue-500" />
                                                         {st.room?.cinema?.name ?? '-'}
                                                     </div>
@@ -205,8 +209,8 @@ export const ShowtimeManagementPage = () => {
                                                 <Button 
                                                     variant="ghost" 
                                                     size="icon" 
-                                                    className="h-9 w-9 text-red-500 hover:bg-red-500/10 opacity-40 group-hover:opacity-100 transition-opacity" 
-                                                    onClick={() => onDelete(st.id)}
+                                                    className="h-9 w-9 text-red-500 hover:bg-red-500/10 opacity-100 transition-opacity" 
+                                                    onClick={() => setDeleteId(st.id)}
                                                 >
                                                     <Trash2 size={16} />
                                                 </Button>
@@ -231,6 +235,15 @@ export const ShowtimeManagementPage = () => {
                     {error}
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={!!deleteId}
+                title="Xác nhận xóa"
+                message="Bạn có chắc chắn muốn xóa suất chiếu này khỏi hệ thống? Hành động này không thể hoàn tác."
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteId(null)}
+                confirmText="Xóa suất chiếu"
+            />
         </div>
     );
 };

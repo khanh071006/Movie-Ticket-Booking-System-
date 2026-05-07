@@ -4,6 +4,7 @@ import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Cinema } from '../../types/app';
 
 const emptyForm = { name: '', address: '' };
@@ -14,6 +15,7 @@ export const CinemaManagementPage = () => {
     const [editId, setEditId] = useState<string | null>(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [deleteId, setDeleteId] = useState<string | null>(null);
 
     const load = async () => {
         setLoading(true);
@@ -50,18 +52,20 @@ export const CinemaManagementPage = () => {
         setForm({ name: cinema.name, address: cinema.address });
     };
 
-    const remove = async (id: string) => {
-        if (!confirm('Bạn có chắc chắn muốn xóa rạp chiếu này?')) return;
+    const confirmDelete = async () => {
+        if (!deleteId) return;
         try {
-            await apiClient.cinemas.remove(id);
+            await apiClient.cinemas.remove(deleteId);
+            setDeleteId(null);
             load();
         } catch (err) {
             setError(parseError(err));
+            setDeleteId(null);
         }
     };
 
     return (
-        <div className="mx-auto max-w-6xl space-y-8 animate-in fade-in duration-500">
+        <div className="w-full space-y-8 animate-in fade-in duration-500">
             {/* Header Section */}
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
@@ -157,14 +161,14 @@ export const CinemaManagementPage = () => {
                                                         <div className="text-base font-bold text-slate-200 group-hover:text-blue-400 transition-colors">
                                                             {cinema.name}
                                                         </div>
-                                                        <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                                                        <div className="flex items-center gap-1.5 text-xs text-slate-400">
                                                             <MapPin className="h-3 w-3 text-blue-500" />
                                                             {cinema.address}
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
-                                                    <div className="flex justify-end gap-1 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                    <div className="flex justify-end gap-1 opacity-100 transition-opacity">
                                                         <Button 
                                                             variant="ghost" 
                                                             size="icon" 
@@ -177,7 +181,7 @@ export const CinemaManagementPage = () => {
                                                             variant="ghost" 
                                                             size="icon" 
                                                             className="h-9 w-9 text-red-500 hover:bg-red-500/10" 
-                                                            onClick={() => remove(cinema.id)}
+                                                            onClick={() => setDeleteId(cinema.id)}
                                                         >
                                                             <Trash2 size={16} />
                                                         </Button>
@@ -204,6 +208,15 @@ export const CinemaManagementPage = () => {
                     {error}
                 </div>
             )}
+
+            <ConfirmDialog
+                isOpen={!!deleteId}
+                title="Xác nhận xóa"
+                message="Bạn có chắc chắn muốn xóa rạp chiếu này khỏi hệ thống? Hành động này không thể hoàn tác."
+                onConfirm={confirmDelete}
+                onCancel={() => setDeleteId(null)}
+                confirmText="Xóa rạp"
+            />
         </div>
     );
 };
