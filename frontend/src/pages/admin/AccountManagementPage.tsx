@@ -1,62 +1,179 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { getStoredToken } from '../../features/auth/utils/session';
+import { useEffect, useMemo, useState } from 'react';
+import { Edit2, Plus, Search, Trash2 } from 'lucide-react';
+import { apiClient, parseError } from '../../api/axiosClient';
+import { Card } from '../../components/ui/Card';
+import { Button } from '../../components/ui/Button';
+import { Input } from '../../components/ui/Input';
+import type { Account } from '../../types/app';
 
-interface ApiResponse<T> {
-    data: T;
-}
-
-interface Account {
-    id: string;
-    email: string;
-    fullName: string;
-    phone?: string;
-    roles?: string[];
-}
-
-const adminApi = axios.create({
-    baseURL: `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'}/api/v1`,
-});
+const emptyCreate = { fullName: '', email: '', password: '', phone: '', isAdmin: false };
+const emptyUpdate = { fullName: '', phone: '', isAdmin: false };
 
 export const AccountManagementPage = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
+    const [query, setQuery] = useState('');
+    const [error, setError] = useState('');
+    const [createForm, setCreateForm] = useState(emptyCreate);
+    const [editId, setEditId] = useState<string | null>(null);
+    const [updateForm, setUpdateForm] = useState(emptyUpdate);
+
+    const loadAccounts = () => {
+        apiClient.accounts.getAll().then(setAccounts).catch((err) => setError(parseError(err)));
+    };
 
     useEffect(() => {
-        const load = async () => {
-            const token = getStoredToken();
-            const response = await adminApi.get<ApiResponse<Account[]>>('/accounts', {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setAccounts(response.data.data);
-        };
-        load();
+        loadAccounts();
     }, []);
 
+    const rows = useMemo(() => {
+        const q = query.trim().toLowerCase();
+        if (!q) return accounts;
+        return accounts.filter((acc) => acc.fullName.toLowerCase().includes(q) || acc.email.toLowerCase().includes(q));
+    }, [accounts, query]);
+
+    const onCreate = async (event: React.FormEvent) => {
+        event.preventDefault();
+        setError('');
+        try {
+            await apiClient.accounts.create({
+                fullName: createForm.fullName,
+                email: createForm.email,
+                password: createForm.password,
+                phone: createForm.phone.trim() ? createForm.phone : undefined,
+                roles: createForm.isAdmin ? ['ADMIN'] : ['USER'],
+            });
+            setCreateForm(emptyCreate);
+            loadAccounts();
+        } catch (err) {
+            setError(parseError(err));
+        }
+    };
+
+    const startEdit = (acc: Account) => {
+        setEditId(acc.id);
+        setUpdateForm({
+            fullName: acc.fullName,
+            phone: acc.phone ?? '',
+            isAdmin: Boolean(acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN')),
+        });
+    };
+
+    const onUpdate = async (event: React.FormEvent) => {
+        event.preventDefault();
+        if (!editId) return;
+        try {
+            await apiClient.accounts.update(editId, {
+                fullName: updateForm.fullName,
+                phone: updateForm.phone.trim() ? updateForm.phone : undefined,
+                roles: updateForm.isAdmin ? ['ADMIN'] : ['USER'],
+            });
+            setEditId(null);
+            setUpdateForm(emptyUpdate);
+            loadAccounts();
+        } catch (err) {
+            setError(parseError(err));
+        }
+    };
+
+    const onDelete = async (id: string) => {
+        if (!confirm('Xóa tài khoản này?')) return;
+        try {
+            await apiClient.accounts.remove(id);
+            loadAccounts();
+        } catch (err) {
+            setError(parseError(err));
+        }
+    };
+
     return (
-        <div className="rounded-2xl border border-white/10 bg-[#1A1A1A] p-6">
-            <h1 className="mb-4 text-xl font-bold text-white">Quản lý tài khoản</h1>
-            <div className="overflow-x-auto">
-                <table className="min-w-full text-sm">
-                    <thead>
-                        <tr className="border-b border-white/10 text-left text-[#A3A3A3]">
-                            <th className="px-3 py-2">Họ tên</th>
-                            <th className="px-3 py-2">Email</th>
-                            <th className="px-3 py-2">SĐT</th>
-                            <th className="px-3 py-2">Roles</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {accounts.map((account) => (
-                            <tr key={account.id} className="border-b border-white/5">
-                                <td className="px-3 py-2 text-white">{account.fullName}</td>
-                                <td className="px-3 py-2 text-[#A3A3A3]">{account.email}</td>
-                                <td className="px-3 py-2 text-[#A3A3A3]">{account.phone || '-'}</td>
-                                <td className="px-3 py-2 text-[#A3A3A3]">{account.roles?.join(', ') || '-'}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+        <div className="space-y-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Accounts</h1>
+                    <p className="mt-1 text-slate-500">CRUD đầy đủ endpoint `/api/v1/accounts`.</p>
+                </div>
             </div>
+
+            <Card className="p-4">
+                <form onSubmit={onCreate} className="grid gap-3 md:grid-cols-5">
+                    <Input placeholder="Full name" value={createForm.fullName} onChange={(e) => setCreateForm((p) => ({ ...p, fullName: e.target.value }))} required />
+                    <Input placeholder="Email" type="email" value={createForm.email} onChange={(e) => setCreateForm((p) => ({ ...p, email: e.target.value }))} required />
+                    <Input placeholder="Password" type="password" value={createForm.password} onChange={(e) => setCreateForm((p) => ({ ...p, password: e.target.value }))} required />
+                    <Input placeholder="Phone" value={createForm.phone} onChange={(e) => setCreateForm((p) => ({ ...p, phone: e.target.value }))} />
+                    <div className="flex items-center gap-3">
+                        <label className="flex items-center gap-2 text-sm text-slate-700">
+                            <input type="checkbox" checked={createForm.isAdmin} onChange={(e) => setCreateForm((p) => ({ ...p, isAdmin: e.target.checked }))} />
+                            ADMIN
+                        </label>
+                        <Button className="gap-2">
+                            <Plus className="h-4 w-4" /> Create
+                        </Button>
+                    </div>
+                </form>
+            </Card>
+
+            <Card className="overflow-hidden">
+                <div className="flex items-center justify-between border-b bg-slate-50 p-4">
+                    <div className="relative w-full max-w-sm">
+                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                        <Input className="bg-white pl-9" placeholder="Search accounts..." value={query} onChange={(e) => setQuery(e.target.value)} />
+                    </div>
+                </div>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                        <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
+                            <tr>
+                                <th className="px-6 py-4 font-medium">Name</th>
+                                <th className="px-6 py-4 font-medium">Email</th>
+                                <th className="px-6 py-4 font-medium">Phone</th>
+                                <th className="px-6 py-4 font-medium">Roles</th>
+                                <th className="px-6 py-4 text-right font-medium">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y">
+                            {rows.map((acc) => (
+                                <tr key={acc.id} className="bg-white">
+                                    <td className="px-6 py-4 font-medium text-slate-900">{acc.fullName}</td>
+                                    <td className="px-6 py-4 text-slate-500">{acc.email}</td>
+                                    <td className="px-6 py-4 text-slate-500">{acc.phone || '-'}</td>
+                                    <td className="px-6 py-4 text-slate-500">{acc.roles?.join(', ') || 'USER'}</td>
+                                    <td className="px-6 py-4 text-right">
+                                        <div className="flex items-center justify-end gap-2">
+                                            <Button variant="ghost" size="icon" className="text-blue-600" onClick={() => startEdit(acc)}>
+                                                <Edit2 className="h-4 w-4" />
+                                            </Button>
+                                            <Button variant="ghost" size="icon" className="text-red-600" onClick={() => onDelete(acc.id)}>
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </Card>
+
+            {editId && (
+                <Card className="p-4">
+                    <form onSubmit={onUpdate} className="grid gap-3 md:grid-cols-4">
+                        <Input placeholder="Full name" value={updateForm.fullName} onChange={(e) => setUpdateForm((p) => ({ ...p, fullName: e.target.value }))} required />
+                        <Input placeholder="Phone" value={updateForm.phone} onChange={(e) => setUpdateForm((p) => ({ ...p, phone: e.target.value }))} />
+                        <label className="flex items-center gap-2 text-sm text-slate-700">
+                            <input type="checkbox" checked={updateForm.isAdmin} onChange={(e) => setUpdateForm((p) => ({ ...p, isAdmin: e.target.checked }))} />
+                            ADMIN
+                        </label>
+                        <div className="flex items-center gap-2">
+                            <Button type="submit">Update</Button>
+                            <Button type="button" variant="outline" className="text-slate-600" onClick={() => setEditId(null)}>
+                                Cancel
+                            </Button>
+                        </div>
+                    </form>
+                </Card>
+            )}
+
+            {error && <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
         </div>
     );
 };

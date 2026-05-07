@@ -12,6 +12,10 @@ import { RegisterPage } from '../pages/auth/RegisterPage';
 import { DashboardPage } from '../pages/admin/DashboardPage';
 import { AccountManagementPage } from '../pages/admin/AccountManagementPage';
 import { MovieManagementPage } from '../pages/admin/MovieManagementPage';
+import { CinemaManagementPage } from '../pages/admin/CinemaManagementPage';
+import { RoomManagementPage } from '../pages/admin/RoomManagementPage';
+import { ShowtimeManagementPage } from '../pages/admin/ShowtimeManagementPage';
+import { CategoryManagementPage } from '../pages/admin/CategoryManagementPage';
 import { ForbiddenPage } from '../pages/error/ForbiddenPage';
 import { NotFoundPage } from '../pages/error/NotFoundPage';
 
@@ -50,6 +54,10 @@ export const router = createBrowserRouter([
             { path: 'dashboard', element: <Navigate to="/admin" replace /> },
             { path: 'accounts', element: <AccountManagementPage /> },
             { path: 'movies', element: <MovieManagementPage /> },
+            { path: 'cinemas', element: <CinemaManagementPage /> },
+            { path: 'rooms', element: <RoomManagementPage /> },
+            { path: 'showtimes', element: <ShowtimeManagementPage /> },
+            { path: 'categories', element: <CategoryManagementPage /> },
         ],
     },
     {
