@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Edit2, Plus, Search, Trash2 } from 'lucide-react';
+import { Edit2, Plus, Search, Trash2, Users, Shield, Mail, Phone, ChevronRight, UserPlus, CheckCircle2 } from 'lucide-react';
 import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
@@ -16,9 +16,18 @@ export const AccountManagementPage = () => {
     const [createForm, setCreateForm] = useState(emptyCreate);
     const [editId, setEditId] = useState<string | null>(null);
     const [updateForm, setUpdateForm] = useState(emptyUpdate);
+    const [loading, setLoading] = useState(false);
 
-    const loadAccounts = () => {
-        apiClient.accounts.getAll().then(setAccounts).catch((err) => setError(parseError(err)));
+    const loadAccounts = async () => {
+        setLoading(true);
+        try {
+            const data = await apiClient.accounts.getAll();
+            setAccounts(data);
+        } catch (err) {
+            setError(parseError(err));
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -28,7 +37,11 @@ export const AccountManagementPage = () => {
     const rows = useMemo(() => {
         const q = query.trim().toLowerCase();
         if (!q) return accounts;
-        return accounts.filter((acc) => acc.fullName.toLowerCase().includes(q) || acc.email.toLowerCase().includes(q));
+        return accounts.filter((acc) => 
+            acc.fullName.toLowerCase().includes(q) || 
+            acc.email.toLowerCase().includes(q) ||
+            (acc.phone && acc.phone.includes(q))
+        );
     }, [accounts, query]);
 
     const onCreate = async (event: React.FormEvent) => {
@@ -56,6 +69,7 @@ export const AccountManagementPage = () => {
             phone: acc.phone ?? '',
             isAdmin: Boolean(acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN')),
         });
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     };
 
     const onUpdate = async (event: React.FormEvent) => {
@@ -76,7 +90,7 @@ export const AccountManagementPage = () => {
     };
 
     const onDelete = async (id: string) => {
-        if (!confirm('Xóa tài khoản này?')) return;
+        if (!confirm('Xác nhận xóa tài khoản này khỏi hệ thống?')) return;
         try {
             await apiClient.accounts.remove(id);
             loadAccounts();
@@ -86,94 +100,247 @@ export const AccountManagementPage = () => {
     };
 
     return (
-        <div className="space-y-6">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Quản lý tài khoản</h1>
-                    <p className="mt-1 text-slate-500">Theo dõi và cập nhật thông tin người dùng trong hệ thống.</p>
+        <div className="mx-auto max-w-7xl space-y-8 animate-in fade-in duration-500">
+            {/* Header */}
+            <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
+                    <span>Admin</span>
+                    <ChevronRight className="h-4 w-4 text-slate-600" />
+                    <span className="text-slate-400">Users</span>
                 </div>
+                <h1 className="text-4xl font-black tracking-tight text-white italic">
+                    QUẢN LÝ <span className="text-blue-600 font-serif">TÀI KHOẢN</span>
+                </h1>
+                <p className="text-slate-400">Phân quyền và quản lý thông tin định danh của người dùng và nhân viên.</p>
             </div>
 
-            <Card className="p-4">
-                <form onSubmit={onCreate} className="grid gap-3 md:grid-cols-5">
-                    <Input placeholder="Họ và tên" value={createForm.fullName} onChange={(e) => setCreateForm((p) => ({ ...p, fullName: e.target.value }))} required />
-                    <Input placeholder="Email" type="email" value={createForm.email} onChange={(e) => setCreateForm((p) => ({ ...p, email: e.target.value }))} required />
-                    <Input placeholder="Mật khẩu" type="password" value={createForm.password} onChange={(e) => setCreateForm((p) => ({ ...p, password: e.target.value }))} required />
-                    <Input placeholder="Số điện thoại" value={createForm.phone} onChange={(e) => setCreateForm((p) => ({ ...p, phone: e.target.value }))} />
-                    <div className="flex items-center gap-3">
-                        <label className="flex items-center gap-2 text-sm text-slate-700">
-                            <input type="checkbox" checked={createForm.isAdmin} onChange={(e) => setCreateForm((p) => ({ ...p, isAdmin: e.target.checked }))} />
-                            Quản trị viên
+            {/* Create Section */}
+            <Card className="overflow-hidden border-white/10 bg-zinc-900/50 p-0 backdrop-blur-md">
+                <div className="flex items-center gap-3 border-b border-white/5 bg-white/5 px-6 py-4">
+                    <div className="rounded-lg bg-blue-600/20 p-2 text-blue-500">
+                        <UserPlus size={20} />
+                    </div>
+                    <h2 className="text-lg font-bold text-white">Tạo tài khoản mới</h2>
+                </div>
+                <form onSubmit={onCreate} className="p-6">
+                    <div className="grid gap-4 md:grid-cols-4">
+                        <Input 
+                            className="h-11 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus:border-blue-500" 
+                            placeholder="Họ và tên" 
+                            value={createForm.fullName} 
+                            onChange={(e) => setCreateForm((p) => ({ ...p, fullName: e.target.value }))} 
+                            required 
+                        />
+                        <Input 
+                            className="h-11 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus:border-blue-500" 
+                            placeholder="Email" 
+                            type="email" 
+                            value={createForm.email} 
+                            onChange={(e) => setCreateForm((p) => ({ ...p, email: e.target.value }))} 
+                            required 
+                        />
+                        <Input 
+                            className="h-11 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus:border-blue-500" 
+                            placeholder="Mật khẩu" 
+                            type="password" 
+                            value={createForm.password} 
+                            onChange={(e) => setCreateForm((p) => ({ ...p, password: e.target.value }))} 
+                            required 
+                        />
+                        <Input 
+                            className="h-11 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus:border-blue-500" 
+                            placeholder="Số điện thoại" 
+                            value={createForm.phone} 
+                            onChange={(e) => setCreateForm((p) => ({ ...p, phone: e.target.value }))} 
+                        />
+                    </div>
+                    <div className="mt-6 flex items-center justify-between border-t border-white/5 pt-6">
+                        <label className="flex cursor-pointer items-center gap-3 group">
+                            <div className="relative flex h-6 w-11 items-center">
+                                <input 
+                                    type="checkbox" 
+                                    className="peer sr-only"
+                                    checked={createForm.isAdmin} 
+                                    onChange={(e) => setCreateForm((p) => ({ ...p, isAdmin: e.target.checked }))} 
+                                />
+                                <div className="h-6 w-11 rounded-full bg-white/10 transition-colors peer-checked:bg-blue-600"></div>
+                                <div className="absolute left-1 h-4 w-4 rounded-full bg-white transition-transform peer-checked:translate-x-5"></div>
+                            </div>
+                            <span className="text-sm font-bold text-slate-400 group-hover:text-white transition-colors">Cấp quyền Quản trị viên</span>
                         </label>
-                        <Button className="gap-2">
-                            <Plus className="h-4 w-4" /> Tạo tài khoản
+                        <Button className="h-11 px-8 font-bold shadow-xl shadow-blue-900/20 gap-2">
+                            <Plus size={18} /> Xác nhận tạo
                         </Button>
                     </div>
                 </form>
             </Card>
 
-            <Card className="overflow-hidden">
-                <div className="flex items-center justify-between border-b bg-slate-50 p-4">
-                    <div className="relative w-full max-w-sm">
-                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                        <Input className="bg-white pl-9" placeholder="Tìm kiếm tài khoản..." value={query} onChange={(e) => setQuery(e.target.value)} />
+            {/* List Section */}
+            <div className="space-y-4">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                        <Users className="text-blue-500" />
+                        Danh sách thành viên ({rows.length})
+                    </h3>
+                    <div className="relative w-full sm:w-80">
+                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                        <Input 
+                            className="h-10 border-white/10 bg-zinc-900 pl-10 text-white placeholder:text-slate-600 focus:border-blue-500" 
+                            placeholder="Tìm kiếm theo tên hoặc email..." 
+                            value={query} 
+                            onChange={(e) => setQuery(e.target.value)} 
+                        />
                     </div>
                 </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
-                            <tr>
-                                <th className="px-6 py-4 font-medium">Họ tên</th>
-                                <th className="px-6 py-4 font-medium">Email</th>
-                                <th className="px-6 py-4 font-medium">Số điện thoại</th>
-                                <th className="px-6 py-4 font-medium">Vai trò</th>
-                                <th className="px-6 py-4 text-right font-medium">Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y">
-                            {rows.map((acc) => (
-                                <tr key={acc.id} className="bg-white">
-                                    <td className="px-6 py-4 font-medium text-slate-900">{acc.fullName}</td>
-                                    <td className="px-6 py-4 text-slate-500">{acc.email}</td>
-                                    <td className="px-6 py-4 text-slate-500">{acc.phone || '-'}</td>
-                                    <td className="px-6 py-4 text-slate-500">{acc.roles?.join(', ') || 'Người dùng'}</td>
-                                    <td className="px-6 py-4 text-right">
-                                        <div className="flex items-center justify-end gap-2">
-                                            <Button variant="ghost" size="icon" className="text-blue-600" onClick={() => startEdit(acc)}>
-                                                <Edit2 className="h-4 w-4" />
-                                            </Button>
-                                            <Button variant="ghost" size="icon" className="text-red-600" onClick={() => onDelete(acc.id)}>
-                                                <Trash2 className="h-4 w-4" />
-                                            </Button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </Card>
 
+                <Card className="overflow-hidden border-white/10 bg-zinc-900/30">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left text-sm">
+                            <thead className="border-b border-white/5 bg-white/5 text-[10px] uppercase tracking-widest text-slate-500">
+                                <tr>
+                                    <th className="px-6 py-4 font-bold">Thành viên</th>
+                                    <th className="px-6 py-4 font-bold">Liên hệ</th>
+                                    <th className="px-6 py-4 font-bold">Vai trò</th>
+                                    <th className="px-6 py-4 text-right font-bold">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                                {rows.length > 0 ? (
+                                    rows.map((acc) => {
+                                        const isAdmin = acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN');
+                                        return (
+                                            <tr key={acc.id} className="group hover:bg-white/[0.02] transition-colors">
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-800 font-bold text-white shadow-lg border border-white/10">
+                                                            {acc.fullName?.charAt(0).toUpperCase() || 'U'}
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-bold text-slate-200 group-hover:text-blue-400 transition-colors">{acc.fullName}</div>
+                                                            <div className="text-xs text-slate-500">{acc.id.substring(0, 8)}...</div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="space-y-1">
+                                                        <div className="flex items-center gap-2 text-xs text-slate-400">
+                                                            <Mail size={12} className="text-blue-500" />
+                                                            {acc.email}
+                                                        </div>
+                                                        <div className="flex items-center gap-2 text-xs text-slate-400">
+                                                            <Phone size={12} className="text-blue-500" />
+                                                            {acc.phone || 'Chưa cập nhật'}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {isAdmin ? (
+                                                        <span className="inline-flex items-center gap-1 rounded-full bg-red-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-red-500 border border-red-500/20">
+                                                            <Shield size={10} /> Quản trị
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-blue-500 border border-blue-500/20">
+                                                            Khách hàng
+                                                        </span>
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-4 text-right">
+                                                    <div className="flex justify-end gap-1 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" onClick={() => startEdit(acc)}>
+                                                            <Edit2 size={16} />
+                                                        </Button>
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 text-red-500 hover:bg-red-500/10" onClick={() => onDelete(acc.id)}>
+                                                            <Trash2 size={16} />
+                                                        </Button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                ) : (
+                                    <tr>
+                                        <td colSpan={4} className="px-6 py-20 text-center text-slate-600 italic">
+                                            {loading ? 'Đang tải danh sách...' : 'Không tìm thấy tài khoản nào.'}
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </Card>
+            </div>
+
+            {/* Edit Modal (Inline Card) */}
             {editId && (
-                <Card className="p-4">
-                    <form onSubmit={onUpdate} className="grid gap-3 md:grid-cols-4">
-                        <Input placeholder="Họ và tên" value={updateForm.fullName} onChange={(e) => setUpdateForm((p) => ({ ...p, fullName: e.target.value }))} required />
-                        <Input placeholder="Số điện thoại" value={updateForm.phone} onChange={(e) => setUpdateForm((p) => ({ ...p, phone: e.target.value }))} />
-                        <label className="flex items-center gap-2 text-sm text-slate-700">
-                            <input type="checkbox" checked={updateForm.isAdmin} onChange={(e) => setUpdateForm((p) => ({ ...p, isAdmin: e.target.checked }))} />
-                            Quản trị viên
-                        </label>
-                        <div className="flex items-center gap-2">
-                            <Button type="submit">Lưu thay đổi</Button>
-                            <Button type="button" variant="outline" className="text-slate-600" onClick={() => setEditId(null)}>
-                                Huỷ
-                            </Button>
+                <Card className="border-blue-500/30 bg-blue-500/5 p-6 backdrop-blur-xl animate-in slide-in-from-bottom-4 shadow-2xl shadow-blue-500/10">
+                    <div className="mb-6 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="rounded-lg bg-blue-600 p-2 text-white">
+                                <Edit2 size={20} />
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-bold text-white">Chỉnh sửa tài khoản</h2>
+                                <p className="text-xs text-slate-400">Thay đổi thông tin và quyền hạn của thành viên</p>
+                            </div>
+                        </div>
+                        <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white" onClick={() => setEditId(null)}>
+                            &times;
+                        </Button>
+                    </div>
+
+                    <form onSubmit={onUpdate} className="space-y-6">
+                        <div className="grid gap-4 md:grid-cols-2">
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Họ và tên</label>
+                                <Input 
+                                    className="h-11 border-white/10 bg-zinc-900 text-white focus:border-blue-500" 
+                                    value={updateForm.fullName} 
+                                    onChange={(e) => setUpdateForm((p) => ({ ...p, fullName: e.target.value }))} 
+                                    required 
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Số điện thoại</label>
+                                <Input 
+                                    className="h-11 border-white/10 bg-zinc-900 text-white focus:border-blue-500" 
+                                    value={updateForm.phone} 
+                                    onChange={(e) => setUpdateForm((p) => ({ ...p, phone: e.target.value }))} 
+                                />
+                            </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                            <label className="flex cursor-pointer items-center gap-3 group">
+                                <div className="relative flex h-6 w-11 items-center">
+                                    <input 
+                                        type="checkbox" 
+                                        className="peer sr-only"
+                                        checked={updateForm.isAdmin} 
+                                        onChange={(e) => setUpdateForm((p) => ({ ...p, isAdmin: e.target.checked }))} 
+                                    />
+                                    <div className="h-6 w-11 rounded-full bg-white/10 transition-colors peer-checked:bg-red-600"></div>
+                                    <div className="absolute left-1 h-4 w-4 rounded-full bg-white transition-transform peer-checked:translate-x-5"></div>
+                                </div>
+                                <span className="text-sm font-bold text-slate-400 group-hover:text-white">Quyền Quản trị viên</span>
+                            </label>
+                            <div className="flex gap-2">
+                                <Button type="button" variant="outline" className="h-11 px-6 border-white/10 text-slate-400 hover:text-white" onClick={() => setEditId(null)}>
+                                    Huỷ bỏ
+                                </Button>
+                                <Button type="submit" className="h-11 px-8 font-bold gap-2">
+                                    <CheckCircle2 size={18} /> Lưu thay đổi
+                                </Button>
+                            </div>
                         </div>
                     </form>
                 </Card>
             )}
 
-            {error && <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+            {error && (
+                <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-400 animate-in slide-in-from-bottom-2">
+                    {error}
+                </div>
+            )}
         </div>
     );
 };

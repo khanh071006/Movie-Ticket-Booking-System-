@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, CalendarDays, ChevronRight, Clock, MonitorPlay, Film, Building2 } from 'lucide-react';
 import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
@@ -15,6 +15,7 @@ export const ShowtimeManagementPage = () => {
     const [roomId, setRoomId] = useState('');
     const [startTime, setStartTime] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         Promise.all([apiClient.movies.getAll(), apiClient.cinemas.getAll()])
@@ -37,7 +38,11 @@ export const ShowtimeManagementPage = () => {
 
     const loadShowtimes = useCallback(() => {
         if (!movieId || !cinemaId) return;
-        apiClient.showtimes.getByMovieAndCinema(movieId, cinemaId).then(setShowtimes).catch((err) => setError(parseError(err)));
+        setLoading(true);
+        apiClient.showtimes.getByMovieAndCinema(movieId, cinemaId)
+            .then(setShowtimes)
+            .catch((err) => setError(parseError(err)))
+            .finally(() => setLoading(false));
     }, [cinemaId, movieId]);
 
     useEffect(() => {
@@ -48,6 +53,7 @@ export const ShowtimeManagementPage = () => {
 
     const onCreate = async (event: React.FormEvent) => {
         event.preventDefault();
+        setError('');
         try {
             await apiClient.showtimes.create({ movieId, roomId, startTime });
             setStartTime('');
@@ -58,7 +64,7 @@ export const ShowtimeManagementPage = () => {
     };
 
     const onDelete = async (id: string) => {
-        if (!confirm('Xóa lịch chiếu này?')) return;
+        if (!confirm('Xác nhận xóa lịch chiếu này?')) return;
         try {
             await apiClient.showtimes.remove(id);
             loadShowtimes();
@@ -68,75 +74,163 @@ export const ShowtimeManagementPage = () => {
     };
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Quản lý lịch chiếu</h1>
-                <p className="mt-1 text-slate-500">Sắp xếp suất chiếu theo phim, rạp và phòng để tối ưu trải nghiệm khách hàng.</p>
+        <div className="mx-auto max-w-7xl space-y-8 animate-in fade-in duration-500">
+            {/* Header Section */}
+            <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
+                    <span>Admin</span>
+                    <ChevronRight className="h-4 w-4 text-slate-600" />
+                    <span className="text-slate-400">Scheduling</span>
+                </div>
+                <h1 className="text-4xl font-black tracking-tight text-white italic">
+                    LỊCH <span className="text-blue-600 font-serif">CHIẾU</span>
+                </h1>
+                <p className="text-slate-400">Điều phối suất chiếu, phòng chiếu và thời gian vận hành cho từng bộ phim.</p>
             </div>
-            <Card className="p-4">
-                <form onSubmit={onCreate} className="grid gap-3 md:grid-cols-4">
-                    <select className="h-9 rounded-md border border-slate-300 px-3 text-sm" value={movieId} onChange={(e) => setMovieId(e.target.value)}>
-                        {movies.map((movie) => (
-                            <option key={movie.id} value={movie.id}>
-                                {movie.title}
-                            </option>
-                        ))}
-                    </select>
-                    <select className="h-9 rounded-md border border-slate-300 px-3 text-sm" value={cinemaId} onChange={(e) => setCinemaId(e.target.value)}>
-                        {cinemas.map((cinema) => (
-                            <option key={cinema.id} value={cinema.id}>
-                                {cinema.name}
-                            </option>
-                        ))}
-                    </select>
-                    <select className="h-9 rounded-md border border-slate-300 px-3 text-sm" value={roomId} onChange={(e) => setRoomId(e.target.value)}>
-                        {rooms.map((room) => (
-                            <option key={room.id} value={room.id}>
-                                {room.name}
-                            </option>
-                        ))}
-                    </select>
-                    <div className="flex gap-2">
-                        <input className="h-9 flex-1 rounded-md border border-slate-300 px-3 text-sm" type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
-                        <Button className="gap-2">
-                            <Plus className="h-4 w-4" /> Thêm suất chiếu
+
+            {/* Create Section */}
+            <Card className="overflow-hidden border-white/10 bg-zinc-900/50 p-0 backdrop-blur-md">
+                <div className="flex items-center gap-3 border-b border-white/5 bg-white/5 px-6 py-4">
+                    <div className="rounded-lg bg-blue-600/20 p-2 text-blue-500">
+                        <CalendarDays size={20} />
+                    </div>
+                    <h2 className="text-lg font-bold text-white">Sắp xếp suất chiếu mới</h2>
+                </div>
+                <form onSubmit={onCreate} className="p-6">
+                    <div className="grid gap-4 md:grid-cols-4">
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Phim</label>
+                            <select 
+                                className="h-11 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" 
+                                value={movieId} 
+                                onChange={(e) => setMovieId(e.target.value)}
+                            >
+                                {movies.map((movie) => (
+                                    <option key={movie.id} value={movie.id} className="bg-[#141414]">{movie.title}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Rạp</label>
+                            <select 
+                                className="h-11 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" 
+                                value={cinemaId} 
+                                onChange={(e) => setCinemaId(e.target.value)}
+                            >
+                                {cinemas.map((cinema) => (
+                                    <option key={cinema.id} value={cinema.id} className="bg-[#141414]">{cinema.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Phòng</label>
+                            <select 
+                                className="h-11 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" 
+                                value={roomId} 
+                                onChange={(e) => setRoomId(e.target.value)}
+                            >
+                                {rooms.map((room) => (
+                                    <option key={room.id} value={room.id} className="bg-[#141414]">{room.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Thời gian bắt đầu</label>
+                            <input 
+                                className="h-11 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all [color-scheme:dark]" 
+                                type="datetime-local" 
+                                value={startTime} 
+                                onChange={(e) => setStartTime(e.target.value)} 
+                                required 
+                            />
+                        </div>
+                    </div>
+                    <div className="mt-6 flex justify-end border-t border-white/5 pt-6">
+                        <Button className="h-11 px-10 font-bold shadow-xl shadow-blue-900/20 gap-2">
+                            <Plus size={18} /> Thêm suất chiếu
                         </Button>
                     </div>
                 </form>
             </Card>
 
-            <Card className="overflow-hidden">
-                <div className="border-b bg-slate-50 px-6 py-4 text-sm text-slate-600">
-                    Phim đang chọn: <span className="font-semibold text-slate-900">{selectedMovie?.title ?? '-'}</span>
+            {/* List Section */}
+            <div className="space-y-4">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                        <Clock className="text-blue-500" />
+                        Lịch chiếu hiện tại
+                    </h3>
+                    <div className="rounded-full bg-blue-500/10 px-4 py-1.5 text-xs font-bold text-blue-500 border border-blue-500/20">
+                        {selectedMovie?.title || 'Đang chọn phim...'}
+                    </div>
                 </div>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm">
-                        <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
-                            <tr>
-                                <th className="px-6 py-4 font-medium">Giờ bắt đầu</th>
-                                <th className="px-6 py-4 font-medium">Phòng</th>
-                                <th className="px-6 py-4 font-medium">Rạp</th>
-                                <th className="px-6 py-4 text-right font-medium">Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y">
-                            {showtimes.map((st) => (
-                                <tr key={st.id} className="bg-white">
-                                    <td className="px-6 py-4 text-slate-700">{new Date(st.startTime).toLocaleString()}</td>
-                                    <td className="px-6 py-4 text-slate-700">{st.room?.name ?? '-'}</td>
-                                    <td className="px-6 py-4 text-slate-700">{st.room?.cinema?.name ?? '-'}</td>
-                                    <td className="px-6 py-4 text-right">
-                                        <Button variant="ghost" size="icon" className="text-red-600" onClick={() => onDelete(st.id)}>
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </td>
+
+                <Card className="overflow-hidden border-white/10 bg-zinc-900/30">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left text-sm">
+                            <thead className="border-b border-white/5 bg-white/5 text-[10px] uppercase tracking-widest text-slate-500">
+                                <tr>
+                                    <th className="px-6 py-4 font-bold">Thời gian</th>
+                                    <th className="px-6 py-4 font-bold">Địa điểm</th>
+                                    <th className="px-6 py-4 text-right font-bold">Thao tác</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                                {showtimes.length > 0 ? (
+                                    showtimes.map((st) => (
+                                        <tr key={st.id} className="group hover:bg-white/[0.02] transition-colors">
+                                            <td className="px-6 py-4">
+                                                <div className="flex flex-col gap-1">
+                                                    <div className="font-bold text-slate-200">
+                                                        {new Date(st.startTime).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
+                                                    </div>
+                                                    <div className="text-xs text-slate-500">
+                                                        {new Date(st.startTime).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="space-y-1">
+                                                    <div className="flex items-center gap-2 text-xs text-slate-300 font-bold">
+                                                        <MonitorPlay size={12} className="text-blue-500" />
+                                                        {st.room?.name ?? '-'}
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                                                        <Building2 size={12} className="text-blue-500" />
+                                                        {st.room?.cinema?.name ?? '-'}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 text-right">
+                                                <Button 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="h-9 w-9 text-red-500 hover:bg-red-500/10 opacity-40 group-hover:opacity-100 transition-opacity" 
+                                                    onClick={() => onDelete(st.id)}
+                                                >
+                                                    <Trash2 size={16} />
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={4} className="px-6 py-20 text-center text-slate-600 italic">
+                                            {loading ? 'Đang tải lịch chiếu...' : 'Chưa có suất chiếu nào cho phim và rạp này.'}
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </Card>
+            </div>
+
+            {error && (
+                <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-400 animate-in slide-in-from-bottom-2">
+                    {error}
                 </div>
-            </Card>
-            {error && <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+            )}
         </div>
     );
 };
