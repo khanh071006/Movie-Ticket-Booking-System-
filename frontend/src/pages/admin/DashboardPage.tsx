@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CalendarDays, Clapperboard, MapPin, Ticket, Users } from 'lucide-react';
+import { CalendarDays, Clapperboard, MapPin, Ticket, Users, ArrowUpRight, Activity } from 'lucide-react';
 import { apiClient } from '../../api/axiosClient';
 import { Card, CardContent } from '../../components/ui/Card';
 import type { Showtime } from '../../types/app';
@@ -20,8 +20,14 @@ export const DashboardPage = () => {
 
     useEffect(() => {
         const load = async () => {
-            const [movies, cinemas, accounts] = await Promise.all([apiClient.movies.getAll(), apiClient.cinemas.getAll(), apiClient.accounts.getAll()]);
-            const showtimesByMovie = await Promise.all(movies.map((movie) => apiClient.showtimes.getByMovie(movie.id).catch(() => [])));
+            const [movies, cinemas, accounts] = await Promise.all([
+                apiClient.movies.getAll(),
+                apiClient.cinemas.getAll(),
+                apiClient.accounts.getAll()
+            ]);
+            const showtimesByMovie = await Promise.all(
+                movies.map((movie) => apiClient.showtimes.getByMovie(movie.id).catch(() => []))
+            );
             const allShowtimes = showtimesByMovie.flat();
             const now = new Date();
             const upcoming = allShowtimes
@@ -56,113 +62,140 @@ export const DashboardPage = () => {
     }, []);
 
     const cards = [
-        { title: 'Phim đang quản lý', value: stats.movies, icon: Clapperboard, color: 'text-blue-600 bg-blue-50' },
-        { title: 'Rạp đang hoạt động', value: stats.cinemas, icon: MapPin, color: 'text-emerald-600 bg-emerald-50' },
-        { title: 'Tài khoản hệ thống', value: stats.accounts, icon: Users, color: 'text-purple-600 bg-purple-50' },
-        { title: 'Suất chiếu đã lên lịch', value: stats.showtimes, icon: Ticket, color: 'text-amber-600 bg-amber-50' },
+        { title: 'Phim đang quản lý', value: stats.movies, icon: Clapperboard, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+        { title: 'Rạp đang hoạt động', value: stats.cinemas, icon: MapPin, color: 'text-cyan-500', bg: 'bg-cyan-500/10' },
+        { title: 'Tài khoản hệ thống', value: stats.accounts, icon: Users, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
+        { title: 'Suất chiếu đã lên lịch', value: stats.showtimes, icon: Ticket, color: 'text-sky-500', bg: 'bg-sky-500/10' },
     ];
 
     return (
-        <div className="space-y-8">
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Tổng quan vận hành rạp</h1>
-                <p className="mt-2 text-slate-500">Theo dõi nhanh tình hình phim, rạp, người dùng và lịch chiếu trong ngày.</p>
+        <div className="space-y-8 bg-[#0A0A0A] min-h-screen p-2 text-white">
+            {/* Header section with operational status */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-black tracking-tight">Hệ Thống Vận Hành</h1>
+                    <p className="mt-1 text-slate-400 text-sm">Cập nhật dữ liệu thời gian thực từ toàn bộ hệ thống rạp.</p>
+                </div>
+                <div className="flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-lg">
+                    <Activity className="h-4 w-4 text-blue-500" />
+                    <span className="text-xs font-bold text-blue-500 uppercase tracking-wider">Hệ thống ổn định</span>
+                </div>
             </div>
+
+            {/* Quick stats grid */}
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 {cards.map((card) => (
-                    <Card key={card.title} className="border-0 ring-1 ring-slate-200">
+                    <Card key={card.title} className="bg-[#141414] border-white/5 hover:border-blue-500/50 transition-colors">
                         <CardContent className="p-6">
-                            <div className="mb-4 flex items-center justify-between">
-                                <p className="text-sm font-medium text-slate-600">{card.title}</p>
-                                <div className={`rounded-lg p-2 ${card.color}`}>
-                                    <card.icon className="h-4 w-4" />
+                            <div className="flex items-center justify-between mb-4">
+                                <div className={`p-2 rounded-lg ${card.bg}`}>
+                                    <card.icon className={`h-5 w-5 ${card.color}`} />
                                 </div>
+                                <span className="text-[10px] font-bold text-slate-500 uppercase">Hệ thống</span>
                             </div>
-                            <div className="text-3xl font-bold text-slate-900">{card.value}</div>
+                            <div className="space-y-1">
+                                <div className="text-3xl font-black">{card.value}</div>
+                                <p className="text-xs font-medium text-slate-400 uppercase tracking-tight">{card.title}</p>
+                            </div>
                         </CardContent>
                     </Card>
                 ))}
             </div>
 
             <div className="grid gap-6 lg:grid-cols-3">
-                <Card className="border-0 ring-1 ring-slate-200 lg:col-span-2">
-                    <CardContent className="p-0">
-                        <div className="border-b border-slate-100 px-6 py-5">
-                            <h2 className="text-lg font-semibold text-slate-900">Đơn đặt hàng gần đây</h2>
-                            <p className="mt-1 text-sm text-slate-500">Các giao dịch mới nhất cần theo dõi và xử lý.</p>
+                {/* Orders Table Container */}
+                <Card className="bg-[#141414] border-white/5 lg:col-span-2 overflow-hidden">
+                    <div className="border-b border-white/5 px-6 py-5 flex items-center justify-between">
+                        <div>
+                            <h2 className="text-lg font-bold">Đơn đặt hàng gần đây</h2>
+                            <p className="text-xs text-slate-400 mt-1">5 giao dịch mới nhất cần được rà soát.</p>
                         </div>
+                        <button className="text-blue-500 hover:text-blue-400 transition-colors">
+                            <ArrowUpRight size={20} />
+                        </button>
+                    </div>
+                    <CardContent className="p-0">
                         {recentOrders.length > 0 ? (
                             <div className="overflow-x-auto">
-                                <table className="w-full text-left text-sm">
-                                    <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
-                                        <tr>
-                                            <th className="px-6 py-3 font-medium">Mã đơn</th>
-                                            <th className="px-6 py-3 font-medium">Khách hàng</th>
-                                            <th className="px-6 py-3 font-medium">Phim</th>
-                                            <th className="px-6 py-3 font-medium">Ghế</th>
-                                            <th className="px-6 py-3 font-medium">Tổng tiền</th>
-                                            <th className="px-6 py-3 font-medium">Trạng thái</th>
-                                        </tr>
+                                <table className="w-full text-left text-sm border-collapse">
+                                    <thead className="bg-white/[0.02] text-[11px] uppercase tracking-wider text-slate-500">
+                                    <tr>
+                                        <th className="px-6 py-4 font-bold">Mã đơn</th>
+                                        <th className="px-6 py-4 font-bold">Khách hàng</th>
+                                        <th className="px-6 py-4 font-bold">Thông tin phim</th>
+                                        <th className="px-6 py-4 font-bold text-right">Tổng tiền</th>
+                                        <th className="px-6 py-4 text-center font-bold">Trạng thái</th>
+                                    </tr>
                                     </thead>
-                                    <tbody className="divide-y">
-                                        {recentOrders.map((order) => (
-                                            <tr key={order.id} className="bg-white">
-                                                <td className="px-6 py-4 font-medium text-slate-900">{order.id}</td>
-                                                <td className="px-6 py-4 text-slate-700">{order.customerName}</td>
-                                                <td className="px-6 py-4 text-slate-700">{order.movieTitle}</td>
-                                                <td className="px-6 py-4 text-slate-600">{order.seats}</td>
-                                                <td className="px-6 py-4 text-slate-900">{order.amount}</td>
-                                                <td className="px-6 py-4">
-                                                    <span
-                                                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
-                                                            order.status === 'Đã thanh toán' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
-                                                        }`}
-                                                    >
+                                    <tbody className="divide-y divide-white/5">
+                                    {recentOrders.map((order) => (
+                                        <tr key={order.id} className="hover:bg-white/[0.02] transition-colors group">
+                                            <td className="px-6 py-4 font-mono text-blue-500 text-xs">{order.id}</td>
+                                            <td className="px-6 py-4 font-medium">{order.customerName}</td>
+                                            <td className="px-6 py-4">
+                                                <p className="font-bold text-slate-200">{order.movieTitle}</p>
+                                                <p className="text-[11px] text-slate-500 italic">Ghế: {order.seats}</p>
+                                            </td>
+                                            <td className="px-6 py-4 text-right font-black text-blue-400">{order.amount}</td>
+                                            <td className="px-6 py-4 text-center">
+                                                    <span className={`inline-flex rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-tighter ${
+                                                        order.status === 'Đã thanh toán'
+                                                            ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                                                            : 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
+                                                    }`}>
                                                         {order.status}
                                                     </span>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                            </td>
+                                        </tr>
+                                    ))}
                                     </tbody>
                                 </table>
                             </div>
                         ) : (
-                            <div className="px-6 py-10 text-center text-sm text-slate-500">Chưa có đơn đặt hàng mới trong thời gian gần đây.</div>
+                            <div className="px-6 py-12 text-center text-slate-500 italic">
+                                Không có dữ liệu giao dịch.
+                            </div>
                         )}
                     </CardContent>
                 </Card>
 
-                <Card className="border-0 ring-1 ring-slate-200">
+                {/* Sidebar: Upcoming Showtimes */}
+                <Card className="bg-[#141414] border-white/5 overflow-hidden">
+                    <div className="border-b border-white/5 px-6 py-5">
+                        <h2 className="text-lg font-bold">Suất chiếu sắp đến</h2>
+                        <p className="text-xs text-slate-400 mt-1">Lịch vận hành trong vài giờ tới.</p>
+                    </div>
                     <CardContent className="p-0">
-                        <div className="border-b border-slate-100 px-6 py-5">
-                            <h2 className="text-lg font-semibold text-slate-900">Suất chiếu sắp đến</h2>
-                            <p className="mt-1 text-sm text-slate-500">Lịch chiếu tiếp theo để chủ động vận hành.</p>
-                        </div>
-                        <div className="divide-y">
+                        <div className="divide-y divide-white/5">
                             {upcomingShowtimes.length > 0 ? (
                                 upcomingShowtimes.map((showtime) => (
-                                    <div key={showtime.id} className="px-6 py-4">
-                                        <div className="flex items-start justify-between gap-3">
-                                            <div>
-                                                <p className="font-medium text-slate-900">{showtime.movie?.title ?? 'Suất chiếu'}</p>
-                                                <p className="mt-1 text-sm text-slate-500">
-                                                    {showtime.room?.cinema?.name ?? 'Rạp'} - {showtime.room?.name ?? 'Phòng chiếu'}
+                                    <div key={showtime.id} className="px-6 py-5 hover:bg-white/[0.01] transition-colors">
+                                        <div className="flex flex-col gap-3">
+                                            <div className="flex justify-between items-start">
+                                                <p className="font-black text-blue-100 leading-tight flex-1">
+                                                    {showtime.movie?.title ?? 'Suất chiếu chưa đặt tên'}
                                                 </p>
+                                                <span className="flex items-center gap-1.5 rounded-md bg-blue-500/10 border border-blue-500/20 px-2 py-1 text-[11px] font-black text-blue-500">
+                                                    <CalendarDays className="h-3 w-3" />
+                                                    {new Date(showtime.startTime).toLocaleTimeString('vi-VN', {
+                                                        hour: '2-digit',
+                                                        minute: '2-digit',
+                                                    })}
+                                                </span>
                                             </div>
-                                            <span className="inline-flex items-center gap-1 rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700">
-                                                <CalendarDays className="h-3.5 w-3.5" />
-                                                {new Date(showtime.startTime).toLocaleString('vi-VN', {
-                                                    day: '2-digit',
-                                                    month: '2-digit',
-                                                    hour: '2-digit',
-                                                    minute: '2-digit',
-                                                })}
-                                            </span>
+                                            <div className="flex items-center gap-2 text-[11px] text-slate-500 font-medium">
+                                                <MapPin size={12} className="text-blue-600" />
+                                                <span>{showtime.room?.cinema?.name ?? 'N/A'}</span>
+                                                <span className="text-slate-700">•</span>
+                                                <span className="text-blue-400/80 uppercase">{showtime.room?.name ?? 'P. Trống'}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <div className="px-6 py-10 text-center text-sm text-slate-500">Hiện chưa có suất chiếu sắp diễn ra.</div>
+                                <div className="px-6 py-12 text-center text-slate-500 italic">
+                                    Lịch trình đang trống.
+                                </div>
                             )}
                         </div>
                     </CardContent>
