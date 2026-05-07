@@ -23,21 +23,24 @@ export const AdminLayout = () => {
     };
 
     return (
-        /* Đổi sang nền đen sâu cho toàn bộ trang quản trị */
-        <div className="flex min-h-screen bg-[#0A0A0A] text-slate-200">
-            {/* Sidebar: Chuyển sang Dark Gray và Border mờ */}
-            <aside className="hidden w-64 flex-shrink-0 flex-col border-r border-white/5 bg-[#0F0F0F] md:flex">
-                <div className="flex h-16 items-center border-b border-white/5 px-6">
+        /* H-screen để cố định chiều cao layout bằng màn hình, overflow-hidden để chặn cuộn toàn trang */
+        <div className="flex h-screen w-full bg-[#0A0A0A] text-slate-200 overflow-hidden">
+
+            {/* SIDEBAR: Sticky/Fixed structure */}
+            <aside className="hidden w-64 flex-shrink-0 flex-col border-r border-white/5 bg-[#0F0F0F] md:flex h-full">
+                {/* 1. Fixed Header trong Sidebar */}
+                <div className="flex h-16 items-center border-b border-white/5 px-6 flex-shrink-0">
                     <Link to="/" className="group flex items-center gap-2">
                         <div className="rounded-lg bg-blue-600 p-1.5 shadow-lg shadow-blue-900/20">
                             <Film className="h-4 w-4 text-white" />
                         </div>
-                        <span className="font-bold tracking-tight text-white">HUSTheatre</span>
+                        <span className="font-bold tracking-tight text-white italic">HUSTheatre</span>
                         <span className="ml-2 rounded bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-500 border border-blue-500/20">Quản trị</span>
                     </Link>
                 </div>
 
-                <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-6">
+                {/* 2. Scrollable Menu: flex-1 kết hợp overflow-y-auto giúp phần này tự cuộn nếu menu quá dài */}
+                <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-6 custom-scrollbar">
                     {navItems.map((item) => {
                         const active = location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path));
                         return (
@@ -57,40 +60,41 @@ export const AdminLayout = () => {
                     })}
                 </nav>
 
-                {/* Phần thông tin User ở Sidebar bottom */}
-                <div className="border-t border-white/5 bg-black/20 p-4 pb-6">
+                {/* 3. Fixed Footer trong Sidebar: Luôn nằm dưới cùng bất kể nội dung trang chính dài bao nhiêu */}
+                <div className="flex-shrink-0 border-t border-white/5 bg-black/20 p-4 pb-6">
                     <div className="mb-4 flex items-center gap-3 px-2">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-800 text-sm font-bold text-white shadow-lg">
+                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-blue-800 text-sm font-bold text-white shadow-lg border border-white/10">
                             {account?.fullName?.charAt(0).toUpperCase() ?? 'A'}
                         </div>
                         <div className="overflow-hidden">
-                            <p className="truncate text-sm font-semibold text-white">{account?.fullName ?? 'Quản trị viên'}</p>
-                            <p className="truncate text-[10px] text-slate-500 uppercase tracking-tighter">{account?.email ?? 'Chưa có email'}</p>
+                            <p className="truncate text-sm font-bold text-white">{account?.fullName ?? 'Quản trị viên'}</p>
+                            <p className="truncate text-[10px] text-slate-500 font-medium uppercase tracking-tighter">{account?.email ?? 'admin@gmail.com'}</p>
                         </div>
                     </div>
                     <button
                         type="button"
                         onClick={handleLogout}
-                        className="flex w-full items-center justify-start gap-2 rounded-lg px-2 py-2 text-sm text-slate-400 hover:bg-red-500/10 hover:text-red-500 transition-colors"
+                        className="group flex w-full items-center justify-start gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-400 hover:bg-red-500/10 hover:text-red-500 transition-all border border-transparent hover:border-red-500/20"
                     >
-                        <LogOut className="h-4 w-4" />
+                        <LogOut className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                         Trở về trang chủ
                     </button>
                 </div>
             </aside>
 
-            {/* Main Content Area */}
-            <main className="min-w-0 flex-1 overflow-hidden flex flex-col">
-                <header className="flex h-16 items-center justify-between border-b border-white/5 bg-[#0F0F0F] px-4 md:hidden">
-                    <span className="font-bold text-white uppercase text-xs tracking-widest">Quản trị viên</span>
-                    <button type="button" onClick={handleLogout} className="text-xs font-bold text-blue-500">
+            {/* MAIN CONTENT: Có thanh cuộn riêng */}
+            <main className="min-w-0 flex-1 flex flex-col h-full overflow-hidden">
+                {/* Mobile Header (chỉ hiện trên màn hình nhỏ) */}
+                <header className="flex h-16 items-center justify-between border-b border-white/5 bg-[#0F0F0F] px-4 flex-shrink-0 md:hidden">
+                    <span className="font-bold text-white uppercase text-xs tracking-widest italic">HUSTheatre Admin</span>
+                    <button type="button" onClick={handleLogout} className="text-xs font-bold text-blue-500 bg-blue-500/10 px-3 py-1 rounded">
                         Thoát
                     </button>
                 </header>
 
-                {/* Content scrollable area */}
-                <div className="h-full overflow-y-auto p-4 md:p-8 lg:p-10 custom-scrollbar">
-                    <div className="mx-auto max-w-6xl">
+                {/* Nội dung chính sẽ cuộn tại đây */}
+                <div className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-10 custom-scrollbar bg-[#0A0A0A]">
+                    <div className="w-full">
                         <Outlet />
                     </div>
                 </div>
