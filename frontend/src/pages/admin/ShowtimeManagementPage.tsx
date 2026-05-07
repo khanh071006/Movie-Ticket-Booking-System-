@@ -83,7 +83,7 @@ export const ShowtimeManagementPage = () => {
                     <span className="text-slate-400">Scheduling</span>
                 </div>
                 <h1 className="text-4xl font-black tracking-tight text-white italic">
-                    LỊCH <span className="text-blue-600 font-serif">CHIẾU</span>
+                    LỊCH <span className="text-blue-600">CHIẾU</span>
                 </h1>
                 <p className="text-slate-400">Điều phối suất chiếu, phòng chiếu và thời gian vận hành cho từng bộ phim.</p>
             </div>

@@ -108,7 +108,7 @@ export const MovieManagementPage = () => {
                     <span className="text-slate-400">Content</span>
                 </div>
                 <h1 className="text-4xl font-black tracking-tight text-white italic">
-                    QUẢN LÝ <span className="text-blue-600 font-serif">PHIM</span>
+                    QUẢN LÝ <span className="text-blue-600">PHIM</span>
                 </h1>
                 <p className="text-slate-400">Cập nhật kho phim, poster và thông tin chi tiết cho khán giả.</p>
             </div>

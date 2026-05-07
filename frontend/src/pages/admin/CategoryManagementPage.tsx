@@ -75,7 +75,7 @@ export const CategoryManagementPage = () => {
                     <span className="text-slate-400">Management</span>
                 </div>
                 <h1 className="text-4xl font-black tracking-tight text-white italic">
-                    DANH <span className="text-blue-600 font-serif">MỤC</span>
+                    DANH <span className="text-blue-600">MỤC</span>
                 </h1>
                 <p className="text-slate-400">Phân loại dữ liệu giúp hệ thống tìm kiếm và hiển thị phim chuyên nghiệp hơn.</p>
             </div>

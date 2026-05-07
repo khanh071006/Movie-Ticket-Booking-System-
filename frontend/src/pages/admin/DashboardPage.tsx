@@ -73,7 +73,7 @@ export const DashboardPage = () => {
             {/* Header section with operational status */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-black tracking-tight">Hệ Thống Vận Hành</h1>
+                    <h1 className="text-3xl font-black tracking-tight uppercase italic">Hệ Thống <span className="text-blue-600">Vận Hành</span></h1>
                     <p className="mt-1 text-slate-400 text-sm">Cập nhật dữ liệu thời gian thực từ toàn bộ hệ thống rạp.</p>
                 </div>
                 <div className="flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-2 rounded-lg">

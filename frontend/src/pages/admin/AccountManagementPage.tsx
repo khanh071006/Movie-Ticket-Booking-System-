@@ -109,7 +109,7 @@ export const AccountManagementPage = () => {
                     <span className="text-slate-400">Users</span>
                 </div>
                 <h1 className="text-4xl font-black tracking-tight text-white italic">
-                    QUẢN LÝ <span className="text-blue-600 font-serif">TÀI KHOẢN</span>
+                    QUẢN LÝ <span className="text-blue-600">TÀI KHOẢN</span>
                 </h1>
                 <p className="text-slate-400">Phân quyền và quản lý thông tin định danh của người dùng và nhân viên.</p>
             </div>

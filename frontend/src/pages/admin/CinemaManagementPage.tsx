@@ -70,7 +70,7 @@ export const CinemaManagementPage = () => {
                     <span className="text-slate-400">Cinemas</span>
                 </div>
                 <h1 className="text-4xl font-black tracking-tight text-white italic">
-                    HỆ THỐNG <span className="text-blue-600 font-serif">RẠP</span>
+                    HỆ THỐNG <span className="text-blue-600">RẠP</span>
                 </h1>
                 <p className="text-slate-400">Quản lý địa điểm, rạp chiếu và thông tin liên hệ trên toàn hệ thống.</p>
             </div>

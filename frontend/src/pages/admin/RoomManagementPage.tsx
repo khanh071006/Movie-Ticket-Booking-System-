@@ -70,7 +70,7 @@ export const RoomManagementPage = () => {
                     <span className="text-slate-400">Cinemas</span>
                 </div>
                 <h1 className="text-4xl font-black tracking-tight text-white italic">
-                    PHÒNG <span className="text-blue-600 font-serif">CHIẾU</span>
+                    PHÒNG <span className="text-blue-600">CHIẾU</span>
                 </h1>
                 <p className="text-slate-400">Quản lý không gian chiếu phim, số lượng ghế và hạ tầng kỹ thuật của rạp.</p>
             </div>
