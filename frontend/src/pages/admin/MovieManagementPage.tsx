@@ -22,6 +22,7 @@ export const MovieManagementPage = () => {
     const [error, setError] = useState('');
     const [form, setForm] = useState(emptyMovie);
     const [editId, setEditId] = useState<string | null>(null);
+    const formatDate = (value: string) => new Date(value).toLocaleDateString('vi-VN');
 
     const loadMovies = () => {
         apiClient.movies.getAll().then(setMovies).catch((err) => setError(parseError(err)));
@@ -82,28 +83,28 @@ export const MovieManagementPage = () => {
         <div className="space-y-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Movies</h1>
-                    <p className="mt-1 text-slate-500">CRUD endpoint `/api/v1/movies` (GET công khai, còn lại ADMIN).</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Quản lý phim</h1>
+                    <p className="mt-1 text-slate-500">Cập nhật thông tin phim để hiển thị chính xác cho khán giả.</p>
                 </div>
             </div>
 
             <Card className="p-4">
                 <form onSubmit={onSubmit} className="grid gap-3 md:grid-cols-4">
-                    <Input placeholder="Title" value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} required />
-                    <Input placeholder="Duration (minutes)" type="number" value={String(form.durationMinutes)} onChange={(e) => setForm((p) => ({ ...p, durationMinutes: Number(e.target.value) }))} required />
-                    <Input placeholder="Release date (YYYY-MM-DD)" type="date" value={form.releaseDate} onChange={(e) => setForm((p) => ({ ...p, releaseDate: e.target.value }))} required />
-                    <Input placeholder="Language" value={form.language} onChange={(e) => setForm((p) => ({ ...p, language: e.target.value }))} required />
-                    <Input className="md:col-span-2" placeholder="Poster URL" value={form.posterUrl} onChange={(e) => setForm((p) => ({ ...p, posterUrl: e.target.value }))} />
-                    <Input className="md:col-span-2" placeholder="Trailer URL" value={form.trailerUrl} onChange={(e) => setForm((p) => ({ ...p, trailerUrl: e.target.value }))} />
-                    <Input className="md:col-span-4" placeholder="Description" value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} />
+                    <Input placeholder="Tên phim" value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} required />
+                    <Input placeholder="Thời lượng (phút)" type="number" value={String(form.durationMinutes)} onChange={(e) => setForm((p) => ({ ...p, durationMinutes: Number(e.target.value) }))} required />
+                    <Input placeholder="Ngày khởi chiếu" type="date" value={form.releaseDate} onChange={(e) => setForm((p) => ({ ...p, releaseDate: e.target.value }))} required />
+                    <Input placeholder="Ngôn ngữ" value={form.language} onChange={(e) => setForm((p) => ({ ...p, language: e.target.value }))} required />
+                    <Input className="md:col-span-2" placeholder="Link ảnh poster" value={form.posterUrl} onChange={(e) => setForm((p) => ({ ...p, posterUrl: e.target.value }))} />
+                    <Input className="md:col-span-2" placeholder="Link trailer" value={form.trailerUrl} onChange={(e) => setForm((p) => ({ ...p, trailerUrl: e.target.value }))} />
+                    <Input className="md:col-span-4" placeholder="Mô tả phim" value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} />
                     <div className="md:col-span-4 flex items-center gap-2">
                         <Button className="gap-2">
                             <Plus className="h-4 w-4" />
-                            {editId ? 'Update Movie' : 'Add Movie'}
+                            {editId ? 'Cập nhật phim' : 'Thêm phim mới'}
                         </Button>
                         {editId && (
                             <Button type="button" variant="outline" className="text-slate-600" onClick={() => { setEditId(null); setForm(emptyMovie); }}>
-                                Cancel edit
+                                Huỷ chỉnh sửa
                             </Button>
                         )}
                     </div>
@@ -114,18 +115,18 @@ export const MovieManagementPage = () => {
                 <div className="flex items-center justify-between border-b bg-slate-50 p-4">
                     <div className="relative w-full max-w-sm">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                        <Input className="bg-white pl-9" placeholder="Search movies..." value={query} onChange={(e) => setQuery(e.target.value)} />
+                        <Input className="bg-white pl-9" placeholder="Tìm kiếm phim..." value={query} onChange={(e) => setQuery(e.target.value)} />
                     </div>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
                             <tr>
-                                <th className="px-6 py-4 font-medium">Movie</th>
-                                <th className="px-6 py-4 font-medium">Duration</th>
-                                <th className="px-6 py-4 font-medium">Release Date</th>
-                                <th className="px-6 py-4 font-medium">Language</th>
-                                <th className="px-6 py-4 text-right font-medium">Actions</th>
+                                <th className="px-6 py-4 font-medium">Phim</th>
+                                <th className="px-6 py-4 font-medium">Thời lượng</th>
+                                <th className="px-6 py-4 font-medium">Ngày khởi chiếu</th>
+                                <th className="px-6 py-4 font-medium">Ngôn ngữ</th>
+                                <th className="px-6 py-4 text-right font-medium">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">
@@ -137,7 +138,7 @@ export const MovieManagementPage = () => {
                                             <div className="font-medium text-slate-900">{movie.title}</div>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 text-slate-500">{movie.durationMinutes} min</td>
+                                    <td className="px-6 py-4 text-slate-500">{movie.durationMinutes} phút</td>
                                     <td className="px-6 py-4 text-slate-500">{formatDate(movie.releaseDate)}</td>
                                     <td className="px-6 py-4 text-slate-500">{movie.language}</td>
                                     <td className="px-6 py-4 text-right">
@@ -160,4 +161,3 @@ export const MovieManagementPage = () => {
         </div>
     );
 };
-    const formatDate = (value: string) => new Date(value).toLocaleDateString('vi-VN');

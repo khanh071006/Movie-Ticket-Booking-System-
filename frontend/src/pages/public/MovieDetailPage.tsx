@@ -24,6 +24,10 @@ export const MovieDetailPage = () => {
         });
     }, [id]);
 
+    const formatDate = (value: string) =>
+        new Date(value).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const formatTime = (value: string) => new Date(value).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
     if (!movie) {
         return <div className="flex min-h-[50vh] items-center justify-center text-slate-400">Không tìm thấy phim hoặc chưa có dữ liệu.</div>;
     }
@@ -41,7 +45,7 @@ export const MovieDetailPage = () => {
                                 <img src={movie.posterUrl} alt={movie.title} className="h-full w-full object-cover" />
                             </div>
                             <div className="flex-1 space-y-6 pb-4 md:pb-0">
-                                <div className="inline-flex rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-sm font-medium text-blue-400">Now Showing</div>
+                                <div className="inline-flex rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-sm font-medium text-blue-400">Đang chiếu</div>
                                 <h1 className="text-4xl font-bold leading-tight tracking-tight text-white drop-shadow-lg md:text-5xl lg:text-7xl">{movie.title}</h1>
                                 <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-slate-300 md:text-base">
                                     <div className="flex items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-sm">
@@ -57,12 +61,12 @@ export const MovieDetailPage = () => {
                                 <div className="flex items-center gap-4 pt-2">
                                     <Button size="lg" className="h-12 rounded-full bg-blue-600 px-8 text-white hover:bg-blue-500">
                                         <Ticket className="mr-2 h-5 w-5" />
-                                        Book Tickets
+                                        Đặt vé ngay
                                     </Button>
                                     <a href={movie.trailerUrl} target="_blank" rel="noreferrer">
                                         <Button size="lg" variant="outline" className="h-12 rounded-full border-white/20 bg-transparent px-8 text-white">
                                             <Play className="mr-2 h-5 w-5" />
-                                            Watch Trailer
+                                            Xem trailer
                                         </Button>
                                     </a>
                                 </div>
@@ -76,14 +80,14 @@ export const MovieDetailPage = () => {
                 <div className="grid gap-12 md:grid-cols-3">
                     <div className="space-y-12 md:col-span-2">
                         <div className="space-y-4">
-                            <h2 className="text-2xl font-bold tracking-tight text-white">Synopsis</h2>
+                            <h2 className="text-2xl font-bold tracking-tight text-white">Nội dung phim</h2>
                             <p className="text-lg font-light leading-relaxed text-slate-400">{movie.description}</p>
                         </div>
                         <div className="space-y-6">
                             <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                                <h2 className="text-2xl font-bold tracking-tight text-white">Showtimes</h2>
+                                <h2 className="text-2xl font-bold tracking-tight text-white">Lịch chiếu</h2>
                                 <div className="rounded-lg border border-blue-400/20 bg-blue-400/10 px-4 py-2 text-sm font-medium text-blue-400">
-                                    Today, {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                    Hôm nay, {new Date().toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' })}
                                 </div>
                             </div>
                             <div className="space-y-6">
@@ -107,7 +111,7 @@ export const MovieDetailPage = () => {
                                                         <button key={st.id} className="group flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-blue-500 hover:bg-blue-600">
                                                             <span className="text-lg font-semibold text-white">{formatTime(st.startTime)}</span>
                                                             <span className="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-500 group-hover:text-blue-100">
-                                                                {st.room?.name ?? 'Room'}
+                                                                {st.room?.name ?? 'Phòng chiếu'}
                                                             </span>
                                                         </button>
                                                     ))}
@@ -121,20 +125,20 @@ export const MovieDetailPage = () => {
                     </div>
                     <div className="space-y-6 md:col-span-1">
                         <div className="rounded-2xl border border-white/5 bg-[#111111] p-6">
-                            <h3 className="mb-4 font-bold tracking-tight text-white">Movie Info</h3>
+                            <h3 className="mb-4 font-bold tracking-tight text-white">Thông tin phim</h3>
                             <div className="space-y-4">
                                 <div>
-                                    <p className="mb-1 text-sm text-slate-500">Language</p>
+                                    <p className="mb-1 text-sm text-slate-500">Ngôn ngữ</p>
                                     <p className="font-medium text-slate-300">{movie.language}</p>
                                 </div>
                                 <div className="h-px w-full bg-white/5" />
                                 <div>
-                                    <p className="mb-1 text-sm text-slate-500">Duration</p>
-                                    <p className="font-medium text-slate-300">{movie.durationMinutes} minutes</p>
+                                    <p className="mb-1 text-sm text-slate-500">Thời lượng</p>
+                                    <p className="font-medium text-slate-300">{movie.durationMinutes} phút</p>
                                 </div>
                                 <div className="h-px w-full bg-white/5" />
                                 <div>
-                                    <p className="mb-1 text-sm text-slate-500">Release date</p>
+                                    <p className="mb-1 text-sm text-slate-500">Ngày khởi chiếu</p>
                                     <p className="font-medium text-slate-300">{movie.releaseDate}</p>
                                 </div>
                             </div>
@@ -145,6 +149,3 @@ export const MovieDetailPage = () => {
         </div>
     );
 };
-    const formatDate = (value: string) => new Date(value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    const formatTime = (value: string) => new Date(value).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
-

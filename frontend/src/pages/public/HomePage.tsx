@@ -31,11 +31,11 @@ export const HomePage = () => {
                 <div className="relative z-20 container mx-auto mt-20 px-4">
                     <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-medium text-blue-400 backdrop-blur-md">
                         <TrendingUp className="h-4 w-4" />
-                        <span>Premium Cinema Experience</span>
+                        <span>Trải nghiệm điện ảnh cao cấp</span>
                     </div>
                     <h1 className="max-w-4xl text-5xl font-extrabold leading-[1.1] tracking-tight md:text-7xl">
-                        Experience Cinematic <br className="hidden md:block" />
-                        <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Masterpieces</span>
+                        Thưởng thức điện ảnh <br className="hidden md:block" />
+                        <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">đỉnh cao</span>
                     </h1>
                     <p className="mb-10 mt-6 max-w-2xl text-lg font-light text-slate-300 md:text-xl">
                         Xem thông tin phim, lịch chiếu theo rạp và quản lý toàn bộ dữ liệu rạp phim trên cùng một hệ thống.
@@ -48,7 +48,7 @@ export const HomePage = () => {
                         </Link>
                         <Button size="lg" variant="outline" className="h-12 rounded-full border-white/20 px-8 text-base font-semibold text-white">
                             <Play className="mr-2 h-4 w-4" />
-                            Watch Trailers
+                            Xem trailer
                         </Button>
                     </div>
                 </div>
@@ -57,8 +57,8 @@ export const HomePage = () => {
             <section className="container mx-auto px-4">
                 <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                     <div>
-                        <h2 className="mb-2 text-3xl font-bold tracking-tight md:text-4xl">Now Showing</h2>
-                        <p className="font-light text-slate-400">Toàn bộ phim công khai từ API `/api/v1/movies`.</p>
+                        <h2 className="mb-2 text-3xl font-bold tracking-tight md:text-4xl">Phim đang chiếu</h2>
+                        <p className="font-light text-slate-400">Khám phá các bộ phim nổi bật đang có lịch chiếu.</p>
                     </div>
                     <input
                         className="h-10 w-full max-w-sm rounded-lg border border-white/20 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-400"
@@ -75,7 +75,7 @@ export const HomePage = () => {
                                 {movie.posterUrl ? (
                                     <img src={movie.posterUrl} alt={movie.title} className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
                                 ) : (
-                                    <div className="flex h-full w-full items-center justify-center text-slate-700">No Image</div>
+                                    <div className="flex h-full w-full items-center justify-center text-slate-700">Chưa có ảnh</div>
                                 )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                                 <div className="absolute right-3 top-3 rounded-md border border-white/10 bg-black/60 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-md">

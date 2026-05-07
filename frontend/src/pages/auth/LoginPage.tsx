@@ -35,7 +35,7 @@ export const LoginPage = () => {
                 </div>
                 <div className="relative z-10">
                     <div className="mb-8 text-center">
-                        <h1 className="mb-2 text-2xl font-bold tracking-tight">Welcome back</h1>
+                        <h1 className="mb-2 text-2xl font-bold tracking-tight">Chào mừng quay lại</h1>
                         <p className="text-sm text-slate-500">Đăng nhập để truy cập hệ thống đặt vé.</p>
                     </div>
                     <form onSubmit={handleSubmit} className="space-y-4">

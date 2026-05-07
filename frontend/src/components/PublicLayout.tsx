@@ -34,7 +34,7 @@ export const PublicLayout = () => {
                                 {isAdmin && (
                                     <Link to="/admin">
                                         <Button size="sm" className="border-0 bg-blue-600 text-white hover:bg-blue-700">
-                                            Admin Panel
+                                            Trang quản trị
                                         </Button>
                                     </Link>
                                 )}

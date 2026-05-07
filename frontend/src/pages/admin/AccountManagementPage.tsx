@@ -89,24 +89,24 @@ export const AccountManagementPage = () => {
         <div className="space-y-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Accounts</h1>
-                    <p className="mt-1 text-slate-500">CRUD đầy đủ endpoint `/api/v1/accounts`.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">Quản lý tài khoản</h1>
+                    <p className="mt-1 text-slate-500">Theo dõi và cập nhật thông tin người dùng trong hệ thống.</p>
                 </div>
             </div>
 
             <Card className="p-4">
                 <form onSubmit={onCreate} className="grid gap-3 md:grid-cols-5">
-                    <Input placeholder="Full name" value={createForm.fullName} onChange={(e) => setCreateForm((p) => ({ ...p, fullName: e.target.value }))} required />
+                    <Input placeholder="Họ và tên" value={createForm.fullName} onChange={(e) => setCreateForm((p) => ({ ...p, fullName: e.target.value }))} required />
                     <Input placeholder="Email" type="email" value={createForm.email} onChange={(e) => setCreateForm((p) => ({ ...p, email: e.target.value }))} required />
-                    <Input placeholder="Password" type="password" value={createForm.password} onChange={(e) => setCreateForm((p) => ({ ...p, password: e.target.value }))} required />
-                    <Input placeholder="Phone" value={createForm.phone} onChange={(e) => setCreateForm((p) => ({ ...p, phone: e.target.value }))} />
+                    <Input placeholder="Mật khẩu" type="password" value={createForm.password} onChange={(e) => setCreateForm((p) => ({ ...p, password: e.target.value }))} required />
+                    <Input placeholder="Số điện thoại" value={createForm.phone} onChange={(e) => setCreateForm((p) => ({ ...p, phone: e.target.value }))} />
                     <div className="flex items-center gap-3">
                         <label className="flex items-center gap-2 text-sm text-slate-700">
                             <input type="checkbox" checked={createForm.isAdmin} onChange={(e) => setCreateForm((p) => ({ ...p, isAdmin: e.target.checked }))} />
-                            ADMIN
+                            Quản trị viên
                         </label>
                         <Button className="gap-2">
-                            <Plus className="h-4 w-4" /> Create
+                            <Plus className="h-4 w-4" /> Tạo tài khoản
                         </Button>
                     </div>
                 </form>
@@ -116,18 +116,18 @@ export const AccountManagementPage = () => {
                 <div className="flex items-center justify-between border-b bg-slate-50 p-4">
                     <div className="relative w-full max-w-sm">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                        <Input className="bg-white pl-9" placeholder="Search accounts..." value={query} onChange={(e) => setQuery(e.target.value)} />
+                        <Input className="bg-white pl-9" placeholder="Tìm kiếm tài khoản..." value={query} onChange={(e) => setQuery(e.target.value)} />
                     </div>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
                             <tr>
-                                <th className="px-6 py-4 font-medium">Name</th>
+                                <th className="px-6 py-4 font-medium">Họ tên</th>
                                 <th className="px-6 py-4 font-medium">Email</th>
-                                <th className="px-6 py-4 font-medium">Phone</th>
-                                <th className="px-6 py-4 font-medium">Roles</th>
-                                <th className="px-6 py-4 text-right font-medium">Actions</th>
+                                <th className="px-6 py-4 font-medium">Số điện thoại</th>
+                                <th className="px-6 py-4 font-medium">Vai trò</th>
+                                <th className="px-6 py-4 text-right font-medium">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">
@@ -136,7 +136,7 @@ export const AccountManagementPage = () => {
                                     <td className="px-6 py-4 font-medium text-slate-900">{acc.fullName}</td>
                                     <td className="px-6 py-4 text-slate-500">{acc.email}</td>
                                     <td className="px-6 py-4 text-slate-500">{acc.phone || '-'}</td>
-                                    <td className="px-6 py-4 text-slate-500">{acc.roles?.join(', ') || 'USER'}</td>
+                                    <td className="px-6 py-4 text-slate-500">{acc.roles?.join(', ') || 'Người dùng'}</td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex items-center justify-end gap-2">
                                             <Button variant="ghost" size="icon" className="text-blue-600" onClick={() => startEdit(acc)}>
@@ -157,16 +157,16 @@ export const AccountManagementPage = () => {
             {editId && (
                 <Card className="p-4">
                     <form onSubmit={onUpdate} className="grid gap-3 md:grid-cols-4">
-                        <Input placeholder="Full name" value={updateForm.fullName} onChange={(e) => setUpdateForm((p) => ({ ...p, fullName: e.target.value }))} required />
-                        <Input placeholder="Phone" value={updateForm.phone} onChange={(e) => setUpdateForm((p) => ({ ...p, phone: e.target.value }))} />
+                        <Input placeholder="Họ và tên" value={updateForm.fullName} onChange={(e) => setUpdateForm((p) => ({ ...p, fullName: e.target.value }))} required />
+                        <Input placeholder="Số điện thoại" value={updateForm.phone} onChange={(e) => setUpdateForm((p) => ({ ...p, phone: e.target.value }))} />
                         <label className="flex items-center gap-2 text-sm text-slate-700">
                             <input type="checkbox" checked={updateForm.isAdmin} onChange={(e) => setUpdateForm((p) => ({ ...p, isAdmin: e.target.checked }))} />
-                            ADMIN
+                            Quản trị viên
                         </label>
                         <div className="flex items-center gap-2">
-                            <Button type="submit">Update</Button>
+                            <Button type="submit">Lưu thay đổi</Button>
                             <Button type="button" variant="outline" className="text-slate-600" onClick={() => setEditId(null)}>
-                                Cancel
+                                Huỷ
                             </Button>
                         </div>
                     </form>

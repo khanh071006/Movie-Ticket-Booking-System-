@@ -11,7 +11,7 @@ export const AppBar = ({ showSearch = true, onSearchChange }: AppBarProps) => {
     const token = getStoredToken();
     const isLoggedIn = Boolean(token);
     const isAdmin = hasAdminRole(token);
-    const currentUser = getStoredUser() || 'User';
+    const currentUser = getStoredUser() || 'Khách hàng';
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -53,8 +53,8 @@ export const AppBar = ({ showSearch = true, onSearchChange }: AppBarProps) => {
                 ) : (
                     <div className="flex items-center gap-3">
                         {isAdmin && (
-                            <Link to="/admin" className="rounded-lg bg-[#E50914] px-3 py-1.5 text-sm font-semibold text-white hover:bg-[#c50711]">
-                                Dashboard
+                                <Link to="/admin" className="rounded-lg bg-[#E50914] px-3 py-1.5 text-sm font-semibold text-white hover:bg-[#c50711]">
+                                Trang quản trị
                             </Link>
                         )}
                         <button type="button" className="rounded-lg border border-white/10 p-2 text-[#A3A3A3] hover:text-white">

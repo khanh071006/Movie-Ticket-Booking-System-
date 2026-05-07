@@ -57,8 +57,8 @@ export const RoomManagementPage = () => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Rooms</h1>
-                <p className="mt-1 text-slate-500">Quản lý `/api/v1/rooms` theo từng rạp.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Quản lý phòng chiếu</h1>
+                <p className="mt-1 text-slate-500">Thiết lập phòng chiếu theo từng rạp để vận hành lịch chiếu chính xác.</p>
             </div>
             <Card className="p-4">
                 <div className="mb-3 grid gap-3 md:grid-cols-2">
@@ -75,14 +75,14 @@ export const RoomManagementPage = () => {
                     </select>
                 </div>
                 <form onSubmit={submit} className="flex flex-wrap items-center gap-3">
-                    <Input placeholder="Room name" value={name} onChange={(e) => setName(e.target.value)} required />
+                    <Input placeholder="Tên phòng chiếu" value={name} onChange={(e) => setName(e.target.value)} required />
                     <Button className="gap-2">
                         <Plus className="h-4 w-4" />
-                        {editId ? 'Update Room' : 'Add Room'}
+                        {editId ? 'Cập nhật phòng' : 'Thêm phòng'}
                     </Button>
                     {editId && (
                         <Button type="button" variant="outline" className="text-slate-600" onClick={() => { setEditId(null); setName(''); }}>
-                            Cancel
+                            Huỷ
                         </Button>
                     )}
                 </form>
@@ -93,8 +93,8 @@ export const RoomManagementPage = () => {
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
                             <tr>
-                                <th className="px-6 py-4 font-medium">Room name</th>
-                                <th className="px-6 py-4 text-right font-medium">Actions</th>
+                                <th className="px-6 py-4 font-medium">Tên phòng</th>
+                                <th className="px-6 py-4 text-right font-medium">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">

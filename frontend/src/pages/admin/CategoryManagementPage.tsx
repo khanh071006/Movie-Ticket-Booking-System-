@@ -8,11 +8,11 @@ import type { CategoryItem } from '../../types/app';
 
 type CategoryKey = 'directors' | 'genres' | 'movie-statuses' | 'cast-members';
 
-const kinds: Array<{ key: CategoryKey; label: string; endpoint: string }> = [
-    { key: 'directors', label: 'Directors', endpoint: '/api/v1/directors' },
-    { key: 'genres', label: 'Genres', endpoint: '/api/v1/genres' },
-    { key: 'movie-statuses', label: 'Movie Statuses', endpoint: '/api/v1/movie-statuses' },
-    { key: 'cast-members', label: 'Cast Members', endpoint: '/api/v1/cast-members' },
+const kinds: Array<{ key: CategoryKey; label: string }> = [
+    { key: 'directors', label: 'Đạo diễn' },
+    { key: 'genres', label: 'Thể loại' },
+    { key: 'movie-statuses', label: 'Trạng thái phim' },
+    { key: 'cast-members', label: 'Diễn viên' },
 ];
 
 export const CategoryManagementPage = () => {
@@ -58,8 +58,8 @@ export const CategoryManagementPage = () => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Categories</h1>
-                <p className="mt-1 text-slate-500">CRUD cho toàn bộ API danh mục (director, genre, movie status, cast member).</p>
+                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Quản lý danh mục</h1>
+                <p className="mt-1 text-slate-500">Cập nhật dữ liệu danh mục để trang phim hiển thị đầy đủ và nhất quán.</p>
             </div>
             <div className="flex flex-wrap gap-2">
                 {kinds.map((kind) => (
@@ -79,17 +79,17 @@ export const CategoryManagementPage = () => {
             </div>
             <Card className="p-4">
                 <p className="mb-3 text-sm text-slate-500">
-                    Endpoint hiện tại: <span className="font-semibold text-slate-700">{current.endpoint}</span>
+                    Nhóm danh mục đang chỉnh sửa: <span className="font-semibold text-slate-700">{current.label}</span>
                 </p>
                 <form onSubmit={submit} className="flex flex-wrap items-center gap-3">
-                    <Input placeholder={`${current.label} name`} value={name} onChange={(e) => setName(e.target.value)} required />
+                    <Input placeholder={`Nhập tên ${current.label.toLowerCase()}`} value={name} onChange={(e) => setName(e.target.value)} required />
                     <Button className="gap-2">
                         <Plus className="h-4 w-4" />
-                        {editId ? 'Update' : 'Add'}
+                        {editId ? 'Cập nhật' : 'Thêm mới'}
                     </Button>
                     {editId && (
                         <Button type="button" variant="outline" className="text-slate-600" onClick={() => { setEditId(null); setName(''); }}>
-                            Cancel
+                            Huỷ
                         </Button>
                     )}
                 </form>
@@ -99,8 +99,8 @@ export const CategoryManagementPage = () => {
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
                             <tr>
-                                <th className="px-6 py-4 font-medium">Name</th>
-                                <th className="px-6 py-4 text-right font-medium">Actions</th>
+                                <th className="px-6 py-4 font-medium">Tên</th>
+                                <th className="px-6 py-4 text-right font-medium">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">

@@ -22,8 +22,8 @@ export const MoviesPage = () => {
         <div className="container mx-auto px-4 py-10">
             <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-white">Movie Catalog</h1>
-                    <p className="mt-1 text-slate-400">Dữ liệu trực tiếp từ API phim công khai.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-white">Danh mục phim</h1>
+                    <p className="mt-1 text-slate-400">Tìm nhanh bộ phim bạn muốn xem hôm nay.</p>
                 </div>
                 <input
                     className="h-10 w-full max-w-sm rounded-lg border border-white/20 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-400"

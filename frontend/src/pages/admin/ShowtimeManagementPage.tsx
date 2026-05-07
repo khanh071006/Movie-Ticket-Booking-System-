@@ -70,8 +70,8 @@ export const ShowtimeManagementPage = () => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Showtimes</h1>
-                <p className="mt-1 text-slate-500">Khai thác API `/api/v1/showtimes` gồm create/list/delete.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Quản lý lịch chiếu</h1>
+                <p className="mt-1 text-slate-500">Sắp xếp suất chiếu theo phim, rạp và phòng để tối ưu trải nghiệm khách hàng.</p>
             </div>
             <Card className="p-4">
                 <form onSubmit={onCreate} className="grid gap-3 md:grid-cols-4">
@@ -99,7 +99,7 @@ export const ShowtimeManagementPage = () => {
                     <div className="flex gap-2">
                         <input className="h-9 flex-1 rounded-md border border-slate-300 px-3 text-sm" type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
                         <Button className="gap-2">
-                            <Plus className="h-4 w-4" /> Add
+                            <Plus className="h-4 w-4" /> Thêm suất chiếu
                         </Button>
                     </div>
                 </form>
@@ -107,16 +107,16 @@ export const ShowtimeManagementPage = () => {
 
             <Card className="overflow-hidden">
                 <div className="border-b bg-slate-50 px-6 py-4 text-sm text-slate-600">
-                    Movie: <span className="font-semibold text-slate-900">{selectedMovie?.title ?? '-'}</span>
+                    Phim đang chọn: <span className="font-semibold text-slate-900">{selectedMovie?.title ?? '-'}</span>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
                             <tr>
-                                <th className="px-6 py-4 font-medium">Start Time</th>
-                                <th className="px-6 py-4 font-medium">Room</th>
-                                <th className="px-6 py-4 font-medium">Cinema</th>
-                                <th className="px-6 py-4 text-right font-medium">Actions</th>
+                                <th className="px-6 py-4 font-medium">Giờ bắt đầu</th>
+                                <th className="px-6 py-4 font-medium">Phòng</th>
+                                <th className="px-6 py-4 font-medium">Rạp</th>
+                                <th className="px-6 py-4 text-right font-medium">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">

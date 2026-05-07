@@ -51,21 +51,21 @@ export const CinemaManagementPage = () => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Cinemas</h1>
-                <p className="mt-1 text-slate-500">CRUD endpoint `/api/v1/cinemas`.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-slate-900">Quản lý rạp chiếu</h1>
+                <p className="mt-1 text-slate-500">Cập nhật danh sách rạp để khách hàng dễ dàng chọn địa điểm xem phim.</p>
             </div>
             <Card className="p-4">
                 <form onSubmit={submit} className="grid gap-3 md:grid-cols-3">
-                    <Input placeholder="Cinema name" value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} required />
-                    <Input className="md:col-span-2" placeholder="Address" value={form.address} onChange={(e) => setForm((p) => ({ ...p, address: e.target.value }))} required />
+                    <Input placeholder="Tên rạp" value={form.name} onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))} required />
+                    <Input className="md:col-span-2" placeholder="Địa chỉ" value={form.address} onChange={(e) => setForm((p) => ({ ...p, address: e.target.value }))} required />
                     <div className="md:col-span-3 flex gap-2">
                         <Button className="gap-2">
                             <Plus className="h-4 w-4" />
-                            {editId ? 'Update Cinema' : 'Add Cinema'}
+                            {editId ? 'Cập nhật rạp' : 'Thêm rạp mới'}
                         </Button>
                         {editId && (
                             <Button type="button" variant="outline" className="text-slate-600" onClick={() => { setEditId(null); setForm(emptyForm); }}>
-                                Cancel
+                                Huỷ
                             </Button>
                         )}
                     </div>
@@ -77,8 +77,8 @@ export const CinemaManagementPage = () => {
                     <table className="w-full text-left text-sm">
                         <thead className="border-b bg-slate-50 text-xs uppercase text-slate-500">
                             <tr>
-                                <th className="px-6 py-4 font-medium">Cinema</th>
-                                <th className="px-6 py-4 text-right font-medium">Actions</th>
+                                <th className="px-6 py-4 font-medium">Rạp chiếu</th>
+                                <th className="px-6 py-4 text-right font-medium">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">
