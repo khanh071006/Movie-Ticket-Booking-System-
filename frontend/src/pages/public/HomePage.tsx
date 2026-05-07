@@ -65,14 +65,16 @@ export const HomePage = () => {
                                 Xem ngay
                             </Button>
                         </Link>
-                        <Button
-                            variant="outline"
-                            size="lg"
-                            className="h-14 border-white/40 px-10 text-lg font-bold transition-all hover:bg-white hover:text-black"
-                        >
-                            <Info size={20} className="mr-2" />
-                            Thông tin rạp
-                        </Button>
+                        <Link to="/cinemas">
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                className="h-14 border-white/40 px-10 text-lg font-bold transition-all hover:bg-white hover:text-black"
+                            >
+                                <Info size={20} className="mr-2" />
+                                Thông tin rạp
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </section>

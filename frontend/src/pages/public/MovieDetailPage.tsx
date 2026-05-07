@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { Calendar, Clock, Globe, MapPin, Play, Ticket, ChevronRight, Info, Star } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Calendar, Clock, Globe, MapPin, Play, Ticket, ChevronRight, Info, Star, ArrowLeft } from 'lucide-react';
 import { apiClient } from '../../api/axiosClient';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -8,6 +8,7 @@ import type { Cinema, Movie, Showtime } from '../../types/app';
 
 export const MovieDetailPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [movie, setMovie] = useState<Movie | null>(null);
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
     const [allShowtimes, setAllShowtimes] = useState<Showtime[]>([]);
@@ -101,7 +102,7 @@ export const MovieDetailPage = () => {
             <div className="flex min-h-screen flex-col items-center justify-center bg-[#0A0A0A] text-slate-400">
                 <Info size={48} className="mb-4 text-slate-700" />
                 <p className="text-xl font-medium">Không tìm thấy thông tin phim.</p>
-                <Button variant="ghost" className="mt-4 text-blue-500" onClick={() => window.history.back()}>
+                <Button variant="ghost" className="mt-4 text-blue-500" onClick={() => navigate(-1)}>
                     Quay lại
                 </Button>
             </div>
@@ -123,8 +124,21 @@ export const MovieDetailPage = () => {
                     <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-transparent to-transparent" />
                 </div>
 
-                <div className="container relative z-10 mx-auto flex h-full items-end px-4 pb-12 lg:px-8">
-                    <div className="flex flex-col gap-8 md:flex-row md:items-end">
+                <div className="container relative z-10 mx-auto flex h-full flex-col px-4 pb-12 lg:px-8">
+                    {/* Top Navigation */}
+                    <div className="pt-24 pb-4">
+                        <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => navigate(-1)}
+                            className="flex items-center gap-2 text-slate-300 hover:text-white hover:bg-white/10"
+                        >
+                            <ArrowLeft size={16} />
+                            Quay lại
+                        </Button>
+                    </div>
+                    
+                    <div className="mt-auto flex flex-col gap-8 md:flex-row md:items-end">
                         {/* Main Poster */}
                         <div className="relative hidden w-64 flex-shrink-0 overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/50 md:block lg:w-80">
                             <img 

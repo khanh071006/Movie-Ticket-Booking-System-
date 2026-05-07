@@ -7,6 +7,7 @@ import { AdminGuard } from '../guards/AdminGuard';
 import { HomePage } from '../pages/public/HomePage';
 import { MoviesPage } from '../pages/public/MoviesPage';
 import { MovieDetailPage } from '../pages/public/MovieDetailPage';
+import { CinemasPage } from '../pages/public/CinemasPage';
 import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
 import { DashboardPage } from '../pages/admin/DashboardPage';
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
             { index: true, element: <HomePage /> },
             { path: 'movies', element: <MoviesPage /> },
             { path: 'movies/:id', element: <MovieDetailPage /> },
+            { path: 'cinemas', element: <CinemasPage /> },
         ],
     },
     {
