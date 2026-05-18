@@ -29,6 +29,13 @@
 
 ### 4. **Tính Năng Movie (`/api/v1/movies`)**
 -   Hoàn thiện toàn bộ các chức năng CRUD cho phim (yêu cầu quyền `ADMIN`, trừ API lấy danh sách).
+-   **Nâng cấp API của Movie**: Cập nhật các API `POST` và `PUT` của `Movie` để cho phép `ADMIN` có thể gán đạo diễn, trạng thái, danh sách diễn viên và thể loại cho phim khi tạo/sửa.
+    -   **Sửa lỗi & Tái cấu trúc**:
+        -   **Sửa kiểu ID**: Đã sửa lỗi nghiêm trọng trong đó các DTO (`ReqMovieDTO`, `ResMovieDTO`) và service layer đang sử dụng `Long` cho ID, trong khi các entity thực sự sử dụng `UUID`. Đã thống nhất tất cả về `UUID`.
+        -   **Sửa `MovieServiceImpl`**: Đã cấu trúc lại logic cập nhật. Logic bây giờ xóa các collection (`movieCasts`, `movieGenres`) trên `Movie entity` và thêm lại các mục mới. Điều này dựa vào cấu hình `orphanRemoval=true` của JPA để tự động dọn dẹp các bản ghi trong bảng trung gian.
+        -   **Tăng cường `ResMovieDTO`**: Đã làm cho `ResMovieDTO` an toàn hơn bằng cách sử dụng `Optional` để xử lý các trường hợp các mối quan hệ (như `director`, `movieCasts`) có thể là `null`, ngăn ngừa `NullPointerException`. Đã dọn dẹp mã CSS bị lỗi và áp dụng tính bất biến cho các trường DTO.
+    -   **Cập nhật `ReqMovieDTO`**: Đã thêm các trường `directorId`, `movieStatusId`, `castMemberIds`, và `genreIds` (với kiểu `UUID` chính xác).
+    -   **Cập nhật `ResMovieDTO`**: Đã mở rộng `ResMovieDTO` để bao gồm thông tin chi tiết về đạo diễn, trạng thái phim, diễn viên và thể loại của một bộ phim, với các kiểm tra null an toàn và cấu trúc DTO lồng nhau chính xác.
 
 ### 5. **Tính Năng Role (`/api/v1/roles`)**
 -   Hoàn thiện toàn bộ các chức năng CRUD cho role (yêu cầu quyền `ADMIN`).
@@ -57,16 +64,17 @@
 
 ## 🎯 Nhiệm vụ tiếp theo (Next Tasks)
 
-**[P0 - Ưu tiên cao: Nâng cấp API của Movie]**
-1.  **Nâng cấp API của Movie**: Cập nhật các API `POST` và `PUT` của `Movie` để cho phép `ADMIN` có thể gán đạo diễn, trạng thái, danh sách diễn viên và thể loại cho phim khi tạo/sửa.
-
-**[P1 - Ưu tiên trung bình: Lõi Booking]**
-2.  **Triển khai tính năng Ghế (Seat):**
+**[P0 - Ưu tiên cao: Lõi Booking]**
+1.  **Triển khai tính năng Ghế (Seat):**
     -   Tạo Entity `Seat` với các thuộc tính như `seat_number`, `seat_type` (thường, VIP), và mối quan hệ với `Room`.
     -   Xây dựng API cho phép `ADMIN` cấu hình sơ đồ ghế cho mỗi phòng chiếu.
-3.  **Xây dựng nền tảng cho việc Đặt vé (Booking):**
+2.  **Xây dựng nền tảng cho việc Đặt vé (Booking):**
     -   Thiết kế và tạo các Entity cốt lõi: `Booking`, `Ticket`, và `BookingSeat`.
     -   Xây dựng API cho phép người dùng tạo một `Booking` mới cho một `Showtime` cụ thể.
+
+**[P1 - Ưu tiên trung bình: Cải thiện & Hoàn thiện]**
+3.  **Xác minh cấu hình Movie Entity**: Kiểm tra lại `Movie` entity và đảm bảo rằng các mối quan hệ `OneToMany` với `MovieCast` và `MovieGenre` được cấu hình với `cascade = CascadeType.ALL` và `orphanRemoval = true`.
+4.  **Viết Test cho Movie API**: Viết các bài kiểm tra tích hợp cho các điểm cuối `POST` và `PUT` của phim để xác minh rằng các mối quan hệ đang được tạo và cập nhật một cách chính xác.
 
 ---
 

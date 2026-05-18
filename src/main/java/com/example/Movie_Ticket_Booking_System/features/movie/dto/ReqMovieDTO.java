@@ -1,8 +1,11 @@
 package com.example.Movie_Ticket_Booking_System.features.movie.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 public class ReqMovieDTO {
 
@@ -21,6 +24,17 @@ public class ReqMovieDTO {
     private String posterUrl;
 
     private String trailerUrl;
+
+    @NotNull(message = "ID đạo diễn không được để trống")
+    private UUID directorId;
+
+    @NotNull(message = "ID trạng thái phim không được để trống")
+    private UUID movieStatusId;
+
+    private List<UUID> castMemberIds;
+
+    private List<UUID> genreIds;
+
 
     // Getters and Setters
 
@@ -78,5 +92,37 @@ public class ReqMovieDTO {
 
     public void setTrailerUrl(String trailerUrl) {
         this.trailerUrl = trailerUrl;
+    }
+
+    public UUID getDirectorId() {
+        return directorId;
+    }
+
+    public void setDirectorId(UUID directorId) {
+        this.directorId = directorId;
+    }
+
+    public UUID getMovieStatusId() {
+        return movieStatusId;
+    }
+
+    public void setMovieStatusId(UUID movieStatusId) {
+        this.movieStatusId = movieStatusId;
+    }
+
+    public List<UUID> getCastMemberIds() {
+        return castMemberIds;
+    }
+
+    public void setCastMemberIds(List<UUID> castMemberIds) {
+        this.castMemberIds = castMemberIds;
+    }
+
+    public List<UUID> getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(List<UUID> genreIds) {
+        this.genreIds = genreIds;
     }
 }
