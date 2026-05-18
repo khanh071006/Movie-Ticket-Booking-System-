@@ -192,6 +192,53 @@ erDiagram
 | `start_time` | `DATETIME` | `NOT NULL` | Thời gian bắt đầu chiếu |
 | `end_time` | `DATETIME` | `NOT NULL` | Thời gian kết thúc (dự kiến) |
 
+#### `seat_type`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính của loại ghế |
+| `name` | `VARCHAR(50)` | `NOT NULL, UNIQUE` | Tên loại ghế (ví dụ: "Normal", "VIP") |
+
+#### `seats`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính của ghế |
+| `seat_location` | `VARCHAR(10)` | `NOT NULL` | Vị trí ghế (ví dụ: "A1", "B2") |
+| `theatre_id` | `INT` | `NOT NULL, FOREIGN KEY (theatres.id)` | Khóa ngoại đến phòng chiếu |
+| `seat_type_id` | `INT` | `NOT NULL, FOREIGN KEY (seat_type.id)` | Khóa ngoại đến loại ghế |
+
+#### `ticket_type`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính của loại vé |
+| `name` | `VARCHAR(50)` | `NOT NULL, UNIQUE` | Tên loại vé (ví dụ: "Người lớn", "Trẻ em") |
+| `base_price` | `DECIMAL(10, 2)` | `NOT NULL` | Giá vé gốc |
+
+#### `bookings`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của giao dịch |
+| `account_id` | `UUID` | `FOREIGN KEY (accounts.id)` | Khách hàng đặt vé |
+| `showing_id` | `UUID` | `NOT NULL, FOREIGN KEY (showtimes.id)` | Suất chiếu được đặt |
+| `total_amount` | `DECIMAL(12, 2)` | `NOT NULL` | Tổng số tiền |
+| `payment_status` | `VARCHAR(20)` | `NOT NULL` | Trạng thái thanh toán (PENDING, PAID) |
+| `created_datetime` | `DATETIME` | `NOT NULL` | Thời điểm tạo giao dịch |
+
+#### `booking_ticket`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của dòng mục vé |
+| `booking_id` | `UUID` | `NOT NULL, FOREIGN KEY (bookings.id)` | Giao dịch cha |
+| `ticket_type_id` | `INT` | `NOT NULL, FOREIGN KEY (ticket_type.id)` | Loại vé được mua |
+| `ticket_qty` | `INT` | `NOT NULL` | Số lượng vé của loại này |
+| `purchase_price` | `DECIMAL(10, 2)` | `NOT NULL` | Giá chốt tại thời điểm mua |
+
+#### `booking_seat`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của dòng mục ghế |
+| `booking_id` | `UUID` | `NOT NULL, FOREIGN KEY (bookings.id)` | Giao dịch cha |
+| `seat_id` | `INT` | `NOT NULL, FOREIGN KEY (seats.id)` | Ghế cụ thể được chọn |
+
 ---
 
 ## 2. Lược đồ toàn bộ dự án (Full Project Schema)
@@ -388,4 +435,3 @@ CREATE TABLE booking_seat (
     FOREIGN KEY (booking_id) REFERENCES bookings(id),
     FOREIGN KEY (seat_id) REFERENCES seats(id)
 );
-```

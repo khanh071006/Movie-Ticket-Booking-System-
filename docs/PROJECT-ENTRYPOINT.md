@@ -231,3 +231,130 @@
 ### 7.4. Cast Member (`/api/v1/cast-members`)
 -   **Ví dụ `POST /api/v1/cast-members`**:
     -   **Request Body**: `{"name": "Tom Hanks"}`
+
+---
+
+## 8. Feature: Seat & Ticket Categories (Danh mục Ghế & Vé)
+
+### 8.1. Seat Type (`/api/v1/seat-types`)
+-   **Mô tả**: Quản lý các loại ghế (ví dụ: "Normal", "VIP").
+-   **Yêu cầu xác thực**: Role `ADMIN` cho tất cả endpoints.
+-   **Endpoints**:
+    -   `GET /api/v1/seat-types`: Lấy danh sách tất cả loại ghế.
+    -   `POST /api/v1/seat-types`: Tạo một loại ghế mới.
+    -   `PUT /api/v1/seat-types/{id}`: Cập nhật một loại ghế.
+    -   `DELETE /api/v1/seat-types/{id}`: Xóa một loại ghế.
+-   **Ví dụ `POST`**:
+    -   **Request Body**: `{"name": "VIP"}`
+    -   **Response (201 Created)**:
+        ```json
+        {
+            "id": 1,
+            "name": "VIP"
+        }
+        ```
+
+### 8.2. Ticket Type (`/api/v1/ticket-types`)
+-   **Mô tả**: Quản lý các loại vé và giá gốc (ví dụ: "Người lớn", "Trẻ em").
+-   **Yêu cầu xác thực**: Role `ADMIN` cho tất cả endpoints.
+-   **Endpoints**:
+    -   `GET /api/v1/ticket-types`: Lấy danh sách tất cả loại vé.
+    -   `POST /api/v1/ticket-types`: Tạo một loại vé mới.
+    -   `PUT /api/v1/ticket-types/{id}`: Cập nhật một loại vé.
+    -   `DELETE /api/v1/ticket-types/{id}`: Xóa một loại vé.
+-   **Ví dụ `POST`**:
+    -   **Request Body**: `{"name": "Adult", "basePrice": 10.00}`
+    -   **Response (201 Created)**:
+        ```json
+        {
+            "id": 1,
+            "name": "Adult",
+            "basePrice": 10.00
+        }
+        ```
+
+---
+
+## 9. Feature: Seat Configuration (Cấu hình Ghế)
+
+### 9.1. Lấy danh sách ghế của một phòng
+-   **Endpoint**: `GET /api/v1/rooms/{roomId}/seats`
+-   **Mô tả**: Lấy sơ đồ ghế của một phòng chiếu cụ thể.
+-   **Yêu cầu xác thực**: Công khai.
+-   **Response (200 OK)**:
+    ```json
+    [
+        {
+            "id": 101,
+            "seatLocation": "A1",
+            "seatTypeId": 1,
+            "seatTypeName": "VIP",
+            "roomId": 5
+        },
+        {
+            "id": 102,
+            "seatLocation": "A2",
+            "seatTypeId": 2,
+            "seatTypeName": "Normal",
+            "roomId": 5
+        }
+    ]
+    ```
+
+### 9.2. Cấu hình ghế cho một phòng
+-   **Endpoint**: `POST /api/v1/rooms/{roomId}/seats`
+-   **Mô tả**: Tạo hàng loạt ghế cho một phòng chiếu. Thao tác này sẽ xóa tất cả ghế cũ (nếu có) và tạo lại từ đầu.
+-   **Yêu cầu xác thực**: Role `ADMIN`.
+-   **Request Body**:
+    ```json
+    [
+        {
+            "seatLocation": "A1",
+            "seatTypeId": 1
+        },
+        {
+            "seatLocation": "A2",
+            "seatTypeId": 2
+        }
+    ]
+    ```
+-   **Response (201 Created)**: Trả về danh sách các ghế vừa được tạo.
+
+---
+
+## 10. Feature: Booking (Đặt vé)
+
+### 10.1. Tạo một Booking mới
+-   **Endpoint**: `POST /api/v1/bookings`
+-   **Mô tả**: Tạo một giao dịch đặt vé mới cho một suất chiếu.
+-   **Yêu cầu xác thực**: `Bearer Token` (Role `USER` hoặc `ADMIN`).
+-   **Request Body**:
+    ```json
+    {
+        "showtimeId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+        "seatIds": [101, 102],
+        "ticketQuantities": [
+            {
+                "ticketTypeId": 1,
+                "quantity": 1
+            },
+            {
+                "ticketTypeId": 2,
+                "quantity": 1
+            }
+        ]
+    }
+    ```
+-   **Response (201 Created)**:
+    ```json
+    {
+        "id": "b1b2b3b4-e5f6-7890-1234-567890abcdef",
+        "showtimeId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+        "movieTitle": "Inception",
+        "bookingTime": "2024-08-02T10:30:00",
+        "totalAmount": 20.00,
+        "paymentStatus": "PENDING",
+        "seatLocations": ["A1", "A2"],
+        "tickets": ["1x Adult", "1x Child"]
+    }
+    ```
