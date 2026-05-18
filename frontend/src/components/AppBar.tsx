@@ -1,6 +1,6 @@
-import { Bell, ChevronDown, Search } from 'lucide-react';
+import { Bell, ChevronDown, Search, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { clearSession, getStoredToken, getStoredUser, hasAdminRole } from '../features/auth/utils/session';
+import { clearSession, getStoredToken, getStoredAccount, getStoredUser, hasAdminRole } from '../features/auth/utils/session';
 
 interface AppBarProps {
     showSearch?: boolean;
@@ -11,7 +11,10 @@ export const AppBar = ({ showSearch = true, onSearchChange }: AppBarProps) => {
     const token = getStoredToken();
     const isLoggedIn = Boolean(token);
     const isAdmin = hasAdminRole(token);
-    const currentUser = getStoredUser() || 'User';
+    const currentAccount = getStoredAccount();
+    const storedUser = getStoredUser();
+    const displayName = currentAccount?.fullName || storedUser || 'Khách hàng';
+    const displayEmail = currentAccount?.email || '';
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -54,29 +57,35 @@ export const AppBar = ({ showSearch = true, onSearchChange }: AppBarProps) => {
                     <div className="flex items-center gap-3">
                         {isAdmin && (
                             <Link to="/admin" className="rounded-lg bg-[#E50914] px-3 py-1.5 text-sm font-semibold text-white hover:bg-[#c50711]">
-                                Dashboard
+                                Trang quản trị
                             </Link>
                         )}
                         <button type="button" className="rounded-lg border border-white/10 p-2 text-[#A3A3A3] hover:text-white">
                             <Bell size={16} />
                         </button>
-                        <details className="relative">
-                            <summary className="list-none cursor-pointer">
-                                <span className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-[#1A1A1A] px-3 py-1.5 text-sm">
-                                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#E50914] text-xs font-bold text-white">
-                                        {currentUser.slice(0, 1).toUpperCase()}
-                                    </span>
-                                    <span className="hidden md:inline">{currentUser}</span>
-                                    <ChevronDown size={14} />
+                        
+                        <div className="relative group">
+                            <div className="cursor-pointer flex items-center gap-2 rounded-full border border-white/10 bg-[#1A1A1A] p-1 pr-3 text-sm transition hover:bg-white/5">
+                                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#E50914] to-red-800 text-sm font-bold text-white shadow-sm border border-white/10">
+                                    {displayName === 'Khách hàng' ? <User size={16} /> : displayName.slice(0, 1).toUpperCase()}
                                 </span>
-                            </summary>
-                            <div className="absolute right-0 mt-2 w-44 rounded-xl border border-white/10 bg-[#1A1A1A] p-2 shadow-2xl">
-                                <Link to="/movies" className="block rounded-lg px-3 py-2 text-sm text-[#A3A3A3] hover:bg-white/10 hover:text-white">Phim</Link>
-                                <button type="button" onClick={handleLogout} className="mt-1 w-full rounded-lg px-3 py-2 text-left text-sm text-[#EF4444] hover:bg-[#EF4444]/10">
-                                    Đăng xuất
-                                </button>
+                                <span className="hidden md:inline font-medium text-slate-200">{displayName}</span>
+                                <ChevronDown size={14} className="text-slate-400" />
                             </div>
-                        </details>
+                            
+                            <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 w-56 z-50">
+                                <div className="rounded-xl border border-white/10 bg-[#1A1A1A] p-1 shadow-2xl backdrop-blur-xl">
+                                    <div className="px-3 py-2.5 border-b border-white/10 mb-1">
+                                        <p className="text-sm font-bold text-white line-clamp-1">{displayName}</p>
+                                        {displayEmail && <p className="text-xs text-slate-400 line-clamp-1">{displayEmail}</p>}
+                                    </div>
+                                    <Link to="/movies" className="block rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition">Phim</Link>
+                                    <button type="button" onClick={handleLogout} className="mt-1 w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-red-500 hover:bg-red-500/10 transition">
+                                        Đăng xuất
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>

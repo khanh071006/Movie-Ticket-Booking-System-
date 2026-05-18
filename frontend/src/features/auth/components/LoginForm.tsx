@@ -45,7 +45,7 @@ export const LoginForm = () => {
                         <div className="bg-red-600 p-4 rounded-2xl shadow-lg shadow-red-500/40 mb-4 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
                             <Film size={32} className="text-white" />
                         </div>
-                        <h2 className="text-3xl font-black text-white tracking-tighter">HUST <span className="text-red-500 font-serif italic">CINEMA</span></h2>
+                        <h2 className="text-3xl font-black text-white tracking-tighter">HUST <span className="text-red-500 italic">CINEMA</span></h2>
                         <p className="text-gray-400 text-xs mt-1 uppercase tracking-widest font-medium">Hệ thống đặt vé sinh viên</p>
                     </div>
 
