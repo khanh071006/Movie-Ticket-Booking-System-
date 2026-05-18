@@ -1,73 +1,50 @@
 package com.example.Movie_Ticket_Booking_System.features.cinema;
 
+import com.example.Movie_Ticket_Booking_System.exception.ResourceNotFoundException;
 import com.example.Movie_Ticket_Booking_System.features.cinema.dto.CinemaDTO;
 import com.example.Movie_Ticket_Booking_System.features.room.Room;
 import com.example.Movie_Ticket_Booking_System.features.room.RoomRepository;
-import com.example.Movie_Ticket_Booking_System.features.showtime.Showtime;
-import com.example.Movie_Ticket_Booking_System.features.showtime.ShowtimeRepository;
-import com.example.Movie_Ticket_Booking_System.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CinemaServiceImpl implements CinemaService {
 
     private final CinemaRepository cinemaRepository;
     private final RoomRepository roomRepository;
-    private final ShowtimeRepository showtimeRepository;
 
-    public CinemaServiceImpl(CinemaRepository cinemaRepository, RoomRepository roomRepository, ShowtimeRepository showtimeRepository) {
+    public CinemaServiceImpl(CinemaRepository cinemaRepository, RoomRepository roomRepository) {
         this.cinemaRepository = cinemaRepository;
         this.roomRepository = roomRepository;
-        this.showtimeRepository = showtimeRepository;
-    }
-
-    private CinemaDTO convertToDTO(Cinema cinema) {
-        return CinemaDTO.builder()
-                .id(cinema.getId())
-                .name(cinema.getName())
-                .address(cinema.getAddress())
-                .build();
-    }
-
-    private Cinema convertToEntity(CinemaDTO cinemaDTO) {
-        Cinema cinema = new Cinema();
-        cinema.setName(cinemaDTO.getName());
-        cinema.setAddress(cinemaDTO.getAddress());
-        return cinema;
     }
 
     @Override
     public List<CinemaDTO> getAllCinemas() {
-        List<Cinema> cinemas = cinemaRepository.findAll();
-        List<CinemaDTO> cinemaDTOs = new ArrayList<>();
-        for (Cinema cinema : cinemas) {
-            cinemaDTOs.add(convertToDTO(cinema));
-        }
-        return cinemaDTOs;
+        return cinemaRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public CinemaDTO getCinemaById(UUID id) {
-        Cinema cinema = cinemaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", id));
+    public CinemaDTO getCinemaById(Integer id) {
+        Cinema cinema = findCinemaById(id);
         return convertToDTO(cinema);
     }
 
     @Override
     public CinemaDTO createCinema(CinemaDTO cinemaDTO) {
-        Cinema cinema = convertToEntity(cinemaDTO);
+        Cinema cinema = new Cinema();
+        cinema.setName(cinemaDTO.getName());
+        cinema.setAddress(cinemaDTO.getAddress());
         Cinema savedCinema = cinemaRepository.save(cinema);
         return convertToDTO(savedCinema);
     }
 
     @Override
-    public CinemaDTO updateCinema(UUID id, CinemaDTO cinemaDTO) {
-        Cinema cinema = cinemaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", id));
+    public CinemaDTO updateCinema(Integer id, CinemaDTO cinemaDTO) {
+        Cinema cinema = findCinemaById(id);
         cinema.setName(cinemaDTO.getName());
         cinema.setAddress(cinemaDTO.getAddress());
         Cinema updatedCinema = cinemaRepository.save(cinema);
@@ -75,22 +52,21 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     @Override
-    public void deleteCinema(UUID id) {
-        Cinema cinema = cinemaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", id));
-
+    public void deleteCinema(Integer id) {
+        Cinema cinema = findCinemaById(id);
         List<Room> rooms = roomRepository.findByCinemaId(id);
         if (!rooms.isEmpty()) {
-            List<UUID> roomIds = new ArrayList<>();
-            for (Room room : rooms) {
-                roomIds.add(room.getId());
-            }
-            List<Showtime> showtimes = showtimeRepository.findByRoomIdIn(roomIds);
-            if (!showtimes.isEmpty()) {
-                throw new IllegalStateException("Cannot delete cinema with active showtimes.");
-            }
+            throw new IllegalStateException("Cannot delete cinema with existing rooms.");
         }
-
         cinemaRepository.delete(cinema);
+    }
+
+    private Cinema findCinemaById(Integer id) {
+        return cinemaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", id));
+    }
+
+    private CinemaDTO convertToDTO(Cinema cinema) {
+        return new CinemaDTO(cinema.getId(), cinema.getName(), cinema.getAddress());
     }
 }

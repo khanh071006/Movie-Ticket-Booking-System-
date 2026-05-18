@@ -1,31 +1,35 @@
 package com.example.Movie_Ticket_Booking_System.features.room;
 
 import com.example.Movie_Ticket_Booking_System.features.cinema.Cinema;
+import com.example.Movie_Ticket_Booking_System.features.seat.Seat;
 import jakarta.persistence.*;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "theatres") // Renamed table to 'theatres' as per DB.md
 public class Room {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "theatre_num", nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_id", nullable = false)
     private Cinema cinema;
 
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seat> seats;
+
     // Getters and Setters
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -43,5 +47,13 @@ public class Room {
 
     public void setCinema(Cinema cinema) {
         this.cinema = cinema;
+    }
+
+    public List<Seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
     }
 }

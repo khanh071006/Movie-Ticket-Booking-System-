@@ -1,14 +1,12 @@
 package com.example.Movie_Ticket_Booking_System.features.room;
 
-import com.example.Movie_Ticket_Booking_System.features.room.dto.RoomRequestDTO;
-import com.example.Movie_Ticket_Booking_System.features.room.dto.RoomResponseDTO;
+import com.example.Movie_Ticket_Booking_System.features.room.dto.RoomDTO;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface RoomService {
-    List<RoomResponseDTO> getAllRoomsByCinema(UUID cinemaId);
-    RoomResponseDTO createRoom(RoomRequestDTO roomRequestDTO);
-    RoomResponseDTO updateRoom(UUID roomId, RoomRequestDTO roomRequestDTO);
-    void deleteRoom(UUID roomId);
+    List<RoomDTO> getAllRoomsByCinema(Integer cinemaId);
+    RoomDTO createRoom(RoomDTO roomDTO);
+    RoomDTO updateRoom(Integer roomId, RoomDTO roomDTO);
+    void deleteRoom(Integer roomId);
 }

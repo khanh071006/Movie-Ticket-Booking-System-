@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/cinemas")
@@ -25,7 +24,7 @@ public class CinemaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CinemaDTO> getCinemaById(@PathVariable UUID id) {
+    public ResponseEntity<CinemaDTO> getCinemaById(@PathVariable Integer id) {
         return ResponseEntity.ok(cinemaService.getCinemaById(id));
     }
 
@@ -36,12 +35,12 @@ public class CinemaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CinemaDTO> updateCinema(@PathVariable UUID id, @Valid @RequestBody CinemaDTO cinemaDTO) {
+    public ResponseEntity<CinemaDTO> updateCinema(@PathVariable Integer id, @Valid @RequestBody CinemaDTO cinemaDTO) {
         return ResponseEntity.ok(cinemaService.updateCinema(id, cinemaDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCinema(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteCinema(@PathVariable Integer id) {
         cinemaService.deleteCinema(id);
         return ResponseEntity.noContent().build();
     }
