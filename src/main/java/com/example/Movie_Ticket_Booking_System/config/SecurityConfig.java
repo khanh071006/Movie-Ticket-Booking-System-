@@ -50,9 +50,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
 
                         // Phân quyền cho Feature Account
-                        .requestMatchers(HttpMethod.GET, "/api/v1/accounts").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/accounts", "/api/v1/accounts/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/v1/accounts").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/accounts/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/accounts/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/accounts/**").hasRole("ADMIN")
 
@@ -71,9 +70,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/v1/cinemas/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/cinemas/**").hasRole("ADMIN")
 
-                        // Phân quyền cho Feature Room
-                        .requestMatchers(HttpMethod.GET, "/api/v1/rooms/cinema/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms").hasRole("ADMIN")
+                        // Phân quyền cho Feature Room (Theatre)
+                        .requestMatchers(HttpMethod.GET, "/api/v1/rooms/**").permitAll() // Cho phép xem phòng và ghế
+                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms", "/api/v1/rooms/**/seats").hasRole("ADMIN") // Tạo phòng, tạo ghế
                         .requestMatchers(HttpMethod.PUT, "/api/v1/rooms/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/rooms/**").hasRole("ADMIN")
 
@@ -82,11 +81,18 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/showtimes").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/showtimes/**").hasRole("ADMIN")
 
-                        // Phân quyền cho các Feature Danh mục
+                        // Phân quyền cho các Feature Danh mục (cũ)
                         .requestMatchers(HttpMethod.GET, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/directors", "/api/v1/genres", "/api/v1/movie-statuses", "/api/v1/cast-members").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("ADMIN")
+
+                        // === PHÂN QUYỀN CHO CÁC TÍNH NĂNG MỚI ===
+                        // Phân quyền cho SeatType và TicketType (chỉ ADMIN)
+                        .requestMatchers("/api/v1/seat-types/**", "/api/v1/ticket-types/**").hasRole("ADMIN")
+
+                        // Phân quyền cho Booking (chỉ cần xác thực)
+                        .requestMatchers("/api/v1/bookings/**").authenticated()
 
                         .anyRequest().authenticated()
                 )
@@ -143,7 +149,6 @@ public class SecurityConfig {
         return authProvider;
     }
 
-    // --- THÊM BEAN NÀY ĐỂ "DỌN DẸP" TIỀN TỐ SCOPE_ ---
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
