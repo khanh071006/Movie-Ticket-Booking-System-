@@ -19,13 +19,23 @@ export const HomePage = () => {
             });
     }, []);
 
+    const getMoviePriority = (movie: Movie) => {
+        const lang = movie.language ? movie.language.toLowerCase() : '';
+        if (lang === 'english') return 1; // Hollywood (English) first
+        if (lang === 'vietnamese') return 3; // Vietnamese last
+        return 2; // Others in the middle
+    };
+
     const filteredMovies = useMemo(() => {
         const q = keyword.trim().toLowerCase();
-        if (!q) return movies;
-        return movies.filter((movie) =>
-            movie.title.toLowerCase().includes(q) ||
-            movie.description.toLowerCase().includes(q)
-        );
+        const baseMovies = q
+            ? movies.filter((movie) =>
+                movie.title.toLowerCase().includes(q) ||
+                movie.description.toLowerCase().includes(q)
+              )
+            : movies;
+            
+        return [...baseMovies].sort((a, b) => getMoviePriority(a) - getMoviePriority(b));
     }, [movies, keyword]);
 
     return (

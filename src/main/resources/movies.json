@@ -1,0 +1,4679 @@
+[
+    {
+        "movie_id": "HW001",
+        "title": "Kẻ Đánh Cắp Giấc Mơ",
+        "original_title": "Inception",
+        "release_year": 2010,
+        "duration_minutes": 148,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi",
+            "Action"
+        ],
+        "director": "Christopher Nolan",
+        "main_cast": [
+            "Leonardo DiCaprio"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một đạo tặc có khả năng xâm nhập vào giấc mộng.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW002",
+        "title": "Kỵ Sĩ Bóng Đêm",
+        "original_title": "The Dark Knight",
+        "release_year": 2008,
+        "duration_minutes": 152,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Crime"
+        ],
+        "director": "Christopher Nolan",
+        "main_cast": [
+            "Christian Bale"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese",
+            "English"
+        ],
+        "description": "Cuộc đối đầu giữa Batman và Joker.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW003",
+        "title": "Hố Đen Tử Thần",
+        "original_title": "Interstellar",
+        "release_year": 2014,
+        "duration_minutes": 169,
+        "age_rating": "P",
+        "genres": [
+            "Sci-Fi",
+            "Drama"
+        ],
+        "director": "Christopher Nolan",
+        "main_cast": [
+            "Matthew McConaughey"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Chuyến du hành xuyên không gian cứu nhân loại.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW004",
+        "title": "Joker",
+        "original_title": "Joker",
+        "release_year": 2019,
+        "duration_minutes": 122,
+        "age_rating": "T18",
+        "genres": [
+            "Crime",
+            "Drama"
+        ],
+        "director": "Todd Phillips",
+        "main_cast": [
+            "Joaquin Phoenix"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Sự biến đổi của Arthur Fleck thành Joker.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW005",
+        "title": "Thế Thân: Dòng Chảy Của Nước",
+        "original_title": "Avatar: Way of Water",
+        "release_year": 2022,
+        "duration_minutes": 192,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi",
+            "Adventure"
+        ],
+        "director": "James Cameron",
+        "main_cast": [
+            "Sam Worthington"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc chiến bảo vệ hành tinh Pandora.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNWI0Y2NkOWEtMmM2OC00MjQ3LWI1YzItZGQxYzQ3NzI4NWZmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KR001",
+        "title": "Ký Sinh Trùng",
+        "original_title": "Parasite",
+        "release_year": 2019,
+        "duration_minutes": 132,
+        "age_rating": "T18",
+        "genres": [
+            "Drama",
+            "Thriller"
+        ],
+        "director": "Bong Joon-ho",
+        "main_cast": [
+            "Song Kang-ho"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese",
+            "English"
+        ],
+        "description": "Khoảng cách giàu nghèo trong xã hội Hàn Quốc.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYjk1Y2U4MjQtY2ZiNS00OWQyLWI3MmYtZWUwNmRjYWRiNWNhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KR002",
+        "title": "Chuyến Tàu Sinh Tử",
+        "original_title": "Train to Busan",
+        "release_year": 2016,
+        "duration_minutes": 118,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Horror"
+        ],
+        "director": "Yeon Sang-ho",
+        "main_cast": [
+            "Gong Yoo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Đại dịch Zombie bùng phát trên tàu cao tốc.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTkwOTQ4OTg0OV5BMl5BanBnXkFtZTgwMzQyOTM0OTE@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KR003",
+        "title": "Thử Thách Thần Chết",
+        "original_title": "Along with the Gods",
+        "release_year": 2017,
+        "duration_minutes": 139,
+        "age_rating": "T13",
+        "genres": [
+            "Fantasy",
+            "Action"
+        ],
+        "director": "Kim Yong-hwa",
+        "main_cast": [
+            "Ha Jung-woo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc hành trình ở địa ngục sau cái chết.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOTM0NWVlNzctNjdjMC00OTZmLTlkMjMtYWI2MGM5N2RkZjk1XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CN001",
+        "title": "Diệp Vấn",
+        "original_title": "Ip Man",
+        "release_year": 2008,
+        "duration_minutes": 106,
+        "age_rating": "T16",
+        "genres": [
+            "Action",
+            "History"
+        ],
+        "director": "Wilson Yip",
+        "main_cast": [
+            "Donnie Yen"
+        ],
+        "country": "China",
+        "language": "Cantonese",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc đời danh sư Vịnh Xuân Quyền.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZmJjZDE0MmYtNzgwYy00NTg2LWE0NDYtNzA0YTA4MjA0NmYxXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CN002",
+        "title": "Na Tra: Ma Đồng Giáng Thế",
+        "original_title": "Ne Zha",
+        "release_year": 2019,
+        "duration_minutes": 110,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Fantasy"
+        ],
+        "director": "Jiaozi",
+        "main_cast": [
+            "Lu Yanting"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Câu chuyện cải biên về nhân vật Na Tra.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYmRlODVlZDAtNzcxOC00N2U2LWE4MmQtZTYzZjg3Yjg1MzUxXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW006",
+        "title": "Vua Sư Tử",
+        "original_title": "The Lion King",
+        "release_year": 2019,
+        "duration_minutes": 118,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Adventure"
+        ],
+        "director": "Jon Favreau",
+        "main_cast": [
+            "Donald Glover"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hành trình trở thành vua của Simba.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjIwMjE1Nzc4NV5BMl5BanBnXkFtZTgwNDg4OTA1NzM@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW007",
+        "title": "Chiến Tranh Giữa Các Vì Sao",
+        "original_title": "Star Wars: A New Hope",
+        "release_year": 1977,
+        "duration_minutes": 121,
+        "age_rating": "P",
+        "genres": [
+            "Sci-Fi",
+            "Adventure"
+        ],
+        "director": "George Lucas",
+        "main_cast": [
+            "Mark Hamill"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc chiến chống lại Đế chế Thiên hà.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BY2YwYmUwNjQtMzRmYy00OTJhLTkyYTgtYzg0MzQ1Yjk3NTNiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW008",
+        "title": "Biệt Đội Siêu Anh Hùng",
+        "original_title": "The Avengers",
+        "release_year": 2012,
+        "duration_minutes": 143,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Joss Whedon",
+        "main_cast": [
+            "Robert Downey Jr."
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Các siêu anh hùng hợp sức cứu Trái Đất.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGE0YTVjNzUtNzJjOS00NGNlLTgxMzctZTY4YTE1Y2Y1ZTU4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW009",
+        "title": "Chiến Binh Báo Đen",
+        "original_title": "Black Panther",
+        "release_year": 2018,
+        "duration_minutes": 134,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Ryan Coogler",
+        "main_cast": [
+            "Chadwick Boseman"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "T'Challa trở về lãnh đạo Wakanda.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW010",
+        "title": "Người Nhện: Không Còn Nhà",
+        "original_title": "Spider-Man: No Way Home",
+        "release_year": 2021,
+        "duration_minutes": 148,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Jon Watts",
+        "main_cast": [
+            "Tom Holland"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Peter Parker đối mặt với đa vũ trụ.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMmFiZGZjMmEtMTA0Ni00MzA2LTljMTYtZGI2MGJmZWYzZTQ2XkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW011",
+        "title": "Thế Giới Khủng Long",
+        "original_title": "Jurassic World",
+        "release_year": 2015,
+        "duration_minutes": 124,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Colin Trevorrow",
+        "main_cast": [
+            "Chris Pratt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Công viên giải trí khủng long gặp sự cố kinh hoàng.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzBhNzlkM2UtZTQyOC00NjUyLTkzMmMtNDQ1YTM5N2NmMGE5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW012",
+        "title": "Nhiệm Vụ Bất Khả Thi 7",
+        "original_title": "Mission: Impossible 7",
+        "release_year": 2023,
+        "duration_minutes": 163,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Christopher McQuarrie",
+        "main_cast": [
+            "Tom Cruise"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Ethan Hunt đối đầu với một thực thể AI nguy hiểm.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BN2U4OTdmM2QtZTkxYy00ZmQyLTg2N2UtMDdmMGJmNDhlZDU1XkEyXkFqcGc@._V1_QL75_UY562_CR1,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW013",
+        "title": "Bố Già",
+        "original_title": "The Godfather",
+        "release_year": 1972,
+        "duration_minutes": 175,
+        "age_rating": "T18",
+        "genres": [
+            "Crime",
+            "Drama"
+        ],
+        "director": "Francis Ford Coppola",
+        "main_cast": [
+            "Marlon Brando"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tượng đài điện ảnh về gia tộc mafia Corleone.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGEwYjgwOGQtYjg5ZS00Njc1LTk2ZGEtM2QwZWQ2NjdhZTE5XkEyXkFqcGc@._V1_QL75_UY562_CR8,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW014",
+        "title": "Forrest Gump",
+        "original_title": "Forrest Gump",
+        "release_year": 1994,
+        "duration_minutes": 142,
+        "age_rating": "P",
+        "genres": [
+            "Drama",
+            "Romance"
+        ],
+        "director": "Robert Zemeckis",
+        "main_cast": [
+            "Tom Hanks"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc đời kỳ diệu của một người đàn ông lương thiện.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNDYwNzVjMTItZmU5YS00YjQ5LTljYjgtMjY2NDVmYWMyNWFmXkEyXkFqcGc@._V1_QL75_UY562_CR4,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "KR007",
+        "title": "Điều Ba Mẹ Không Kể",
+        "original_title": "Romang",
+        "release_year": 2019,
+        "duration_minutes": 112,
+        "age_rating": "P",
+        "genres": [
+            "Drama",
+            "Family"
+        ],
+        "director": "Lee Chang-geun",
+        "main_cast": [
+            "Lee Soon-jae"
+        ],
+        "country": "South Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Câu chuyện cảm động về đôi vợ chồng già bị lẫn.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMzc1NzYwMDQtMWNjOC00MGJkLTk4NWItODEwMTY4NDQ4M2FiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KR008",
+        "title": "Thây Ma Thủ Đô",
+        "original_title": "Peninsula",
+        "release_year": 2020,
+        "duration_minutes": 116,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Horror"
+        ],
+        "director": "Yeon Sang-ho",
+        "main_cast": [
+            "Gang Dong-won"
+        ],
+        "country": "South Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hậu bản của Chuyến Tàu Sinh Tử sau 4 năm.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNmQzODQyM2UtZjQyYy00ZTQ2LWExZDItYWU2ZGEwM2NjMmIzXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CN004",
+        "title": "Thám Tử Phố Tàu 3",
+        "original_title": "Detective Chinatown 3",
+        "release_year": 2021,
+        "duration_minutes": 136,
+        "age_rating": "T13",
+        "genres": [
+            "Comedy",
+            "Mystery"
+        ],
+        "director": "Chen Sicheng",
+        "main_cast": [
+            "Wang Baoqiang"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc phiêu lưu phá án hài hước tại Tokyo.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDY0YjMxMWYtOWViYS00OGU4LTkyNmEtOThmNTJkNTRiMTk5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW021",
+        "title": "Coco: Hội Ngộ Diệu Kỳ",
+        "original_title": "Coco",
+        "release_year": 2017,
+        "duration_minutes": 105,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Family"
+        ],
+        "director": "Lee Unkrich",
+        "main_cast": [
+            "Anthony Gonzalez"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese",
+            "English"
+        ],
+        "description": "Cậu bé Miguel lạc vào vùng đất linh hồn.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDIyM2E2NTAtMzlhNy00ZGUxLWI1NjgtZDY5MzhiMDc5NGU3XkEyXkFqcGc@._V1_QL75_UY562_CR7,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW022",
+        "title": "Vùng Đất Linh Hồn",
+        "original_title": "Spirited Away",
+        "release_year": 2001,
+        "duration_minutes": 125,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Fantasy"
+        ],
+        "director": "Hayao Miyazaki",
+        "main_cast": [
+            "Rumi Hiiragi"
+        ],
+        "country": "Japan",
+        "language": "Japanese",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Kiệt tác hoạt hình của Studio Ghibli.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2YwOGUzYjRiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW023",
+        "title": "Đấu Sĩ Trường Học",
+        "original_title": "Fight Club",
+        "release_year": 1999,
+        "duration_minutes": 139,
+        "age_rating": "T18",
+        "genres": [
+            "Drama"
+        ],
+        "director": "David Fincher",
+        "main_cast": [
+            "Brad Pitt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một nhân viên văn phòng lập ra câu lạc bộ đấm bốc.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOTgyOGQ1NDItNGU3Ny00MjU3LTg2YWEtNmEyYjBiMjI1Y2M5XkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW024",
+        "title": "Giải Cứu Binh Nhì Ryan",
+        "original_title": "Saving Private Ryan",
+        "release_year": 1998,
+        "duration_minutes": 169,
+        "age_rating": "T16",
+        "genres": [
+            "War",
+            "Drama"
+        ],
+        "director": "Steven Spielberg",
+        "main_cast": [
+            "Tom Hanks"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc giải cứu lính dù trong Thế chiến II.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZGZhZGQ1ZWUtZTZjYS00MDJhLWFkYjctN2ZlYjE5NWYwZDM2XkEyXkFqcGc@._V1_QL75_UY562_CR1,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "KR009",
+        "title": "Anh Trai Tôi Vô Số Tội",
+        "original_title": "My Annoying Brother",
+        "release_year": 2016,
+        "duration_minutes": 110,
+        "age_rating": "T13",
+        "genres": [
+            "Comedy",
+            "Drama"
+        ],
+        "director": "Kwon Soo-kyung",
+        "main_cast": [
+            "Jo Jung-suk"
+        ],
+        "country": "South Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tình anh em đầy hài hước và nước mắt.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTc5MDcwNDQ4Nl5BMl5BanBnXkFtZTgwNzA4NTEwMTI@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CN005",
+        "title": "Mỹ Nhân Ngư",
+        "original_title": "The Mermaid",
+        "release_year": 2016,
+        "duration_minutes": 94,
+        "age_rating": "T13",
+        "genres": [
+            "Comedy",
+            "Fantasy"
+        ],
+        "director": "Stephen Chow",
+        "main_cast": [
+            "Đặng Siêu"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Siêu phẩm hài hước của Châu Tinh Trì.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYWMzYThhODAtOWFlYS00OTdhLTkzM2ItZWU5NTRjMjZmMWMyXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW025",
+        "title": "Tàu Phá Băng",
+        "original_title": "Snowpiercer",
+        "release_year": 2013,
+        "duration_minutes": 126,
+        "age_rating": "T18",
+        "genres": [
+            "Sci-Fi",
+            "Action"
+        ],
+        "director": "Bong Joon-ho",
+        "main_cast": [
+            "Chris Evans"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc chiến giai cấp trên đoàn tàu xuyên tuyết.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTQ3NzA1MTY3MV5BMl5BanBnXkFtZTgwNzE2Mzg5MTE@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD001",
+        "title": "Nữ Hoàng Nước Mắt",
+        "original_title": "Queen of Tears",
+        "release_year": 2024,
+        "duration_minutes": 70,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Drama"
+        ],
+        "director": "Jang Young-woo",
+        "main_cast": [
+            "Kim Soo-hyun",
+            "Kim Ji-won"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc hôn nhân đầy sóng gió của tiểu thư tài phiệt.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNWNmYmQ2NzctNTA1NS00NGU2LThjOTQtYTgxNmUyYmNjODYyXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD002",
+        "title": "Cuộc Gọi Định Mệnh",
+        "original_title": "When the Phone Rings",
+        "release_year": 2024,
+        "duration_minutes": 65,
+        "age_rating": "T13",
+        "genres": [
+            "Mystery",
+            "Romance"
+        ],
+        "director": "Park Sang-woo",
+        "main_cast": [
+            "Yoo Yeon-seok",
+            "Chae Soo-bin"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Bí mật đằng sau những cuộc điện thoại lạ.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZWMyMjRkYzMtZDMyNS00ZTEwLTg3ZmMtYTljZDMxMjg2MjNhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD001",
+        "title": "Khó Dỗ Dành",
+        "original_title": "First Frost",
+        "release_year": 2025,
+        "duration_minutes": 45,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Youth"
+        ],
+        "director": "Chu Yui-bin",
+        "main_cast": [
+            "Bạch Kính Đình",
+            "Chương Nhược Nam"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Chuyện tình thanh xuân giữa Ôn Dĩ Phàm và Tang Diên.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGRhZjkxNmMtMGI0Ny00N2M1LTkzM2ItNzg2YWIwYjcwNzE0XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD003",
+        "title": "Tiếng Yêu Này",
+        "original_title": "Love Next Door",
+        "release_year": 2024,
+        "duration_minutes": 70,
+        "age_rating": "T13",
+        "genres": [
+            "Comedy",
+            "Romance"
+        ],
+        "director": "Yoo Je-won",
+        "main_cast": [
+            "Jung Hae-in",
+            "Jung So-min"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Chuyện tình thanh mai trúc mã đầy hài hước.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDg2M2Y4NWQtMGY3NS00ODE3LWFmMWEtYjgyZjVjZmU0YTU5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD004",
+        "title": "Cõng Anh Mà Chạy",
+        "original_title": "Lovely Runner",
+        "release_year": 2024,
+        "duration_minutes": 60,
+        "age_rating": "T13",
+        "genres": [
+            "Fantasy",
+            "Romance"
+        ],
+        "director": "Yoon Jong-ho",
+        "main_cast": [
+            "Byeon Woo-seok",
+            "Kim Hye-yoon"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Xuyên không về quá khứ để cứu thần tượng.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNjYwM2RkMmUtOGU2OS00ZjdlLWE5Y2UtYzRkMzExYjdhNjVlXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD005",
+        "title": "Hạ Cánh Nơi Anh",
+        "original_title": "Crash Landing on You",
+        "release_year": 2019,
+        "duration_minutes": 80,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Drama"
+        ],
+        "director": "Lee Jeong-hyo",
+        "main_cast": [
+            "Hyun Bin",
+            "Son Ye-jin"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tình yêu xuyên biên giới giữa đại úy và tài phiệt.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZjM3ZGQ4ZTMtOTNjMS00NmJlLTljMWUtNWExMzJhMGJlMWNiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD006",
+        "title": "Trò Chơi Con Mực",
+        "original_title": "Squid Game",
+        "release_year": 2021,
+        "duration_minutes": 60,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller",
+            "Action"
+        ],
+        "director": "Hwang Dong-hyuk",
+        "main_cast": [
+            "Lee Jung-jae"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc chiến sinh tồn giành giải thưởng khổng lồ.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYTU3ZDVhNmMtMDVlNC00MDc0LTgwNDMtYWE5MTI2ZGI4YWIwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "KD007",
+        "title": "Điệu Cha-Cha-Cha Làng Biển",
+        "original_title": "Hometown Cha-Cha-Cha",
+        "release_year": 2021,
+        "duration_minutes": 75,
+        "age_rating": "P",
+        "genres": [
+            "Romance",
+            "Comedy"
+        ],
+        "director": "Yoo Je-won",
+        "main_cast": [
+            "Kim Seon-ho",
+            "Shin Min-ah"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tình yêu nhẹ nhàng tại làng chài ven biển Gongjin.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZWFiNjBjNDQtMjMwMC00Y2Q3LWFkN2EtOGQ1MDM2M2U3YTk1XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD008",
+        "title": "Hẹn Hò Chốn Công Sở",
+        "original_title": "Business Proposal",
+        "release_year": 2022,
+        "duration_minutes": 60,
+        "age_rating": "T13",
+        "genres": [
+            "Comedy",
+            "Romance"
+        ],
+        "director": "Park Seon-ho",
+        "main_cast": [
+            "Ahn Hyo-seop",
+            "Kim Se-jeong"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hợp đồng tình yêu đầy hài hước tại công sở.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYWM2NTM4MTktNDFiNi00NTI3LThiZTgtZmJiZTQ2NzdhNDE3XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD009",
+        "title": "Vinh Quang Trong Thù Hận",
+        "original_title": "The Glory",
+        "release_year": 2022,
+        "duration_minutes": 60,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller",
+            "Drama"
+        ],
+        "director": "Ahn Gil-ho",
+        "main_cast": [
+            "Song Hye-kyo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Kế hoạch trả thù kẻ bắt nạt thời trung học.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BODM0ZTc5YTAtZmMxNi00YzJkLWEzODItZDczZTRlNTc1NGE3XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD010",
+        "title": "Khách Sạn Ánh Dương",
+        "original_title": "King the Land",
+        "release_year": 2023,
+        "duration_minutes": 70,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Comedy"
+        ],
+        "director": "Im Hyun-wook",
+        "main_cast": [
+            "Lee Jun-ho",
+            "Im Yoon-ah"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Chuyện tình giữa người thừa kế và nhân viên ưu tú.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BODM2MGU3OTItNTUyZS00ODc2LWJlNzMtOTI5ZTQ4MjljMzI4XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD002",
+        "title": "Vụng Trộm Không Thể Giấu",
+        "original_title": "Hidden Love",
+        "release_year": 2023,
+        "duration_minutes": 45,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Youth"
+        ],
+        "director": "Lee Ching-jung",
+        "main_cast": [
+            "Triệu Lộ Tư",
+            "Trần Triết Viễn"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tình yêu thầm kín từ thuở niên thiếu đến trưởng thành.",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZTc3MmQ1YjctYWM4YS00YzFmLTg2YjQtNjEzODQ5ZWVjZjVmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN021",
+        "title": "Nhà Bà Nữ",
+        "original_title": "The House of No Man",
+        "release_year": 2023,
+        "duration_minutes": 102,
+        "age_rating": "T16",
+        "genres": [
+            "Family",
+            "Drama"
+        ],
+        "director": "Trấn Thành",
+        "main_cast": [
+            "Uyển Ân",
+            "Lê Giang"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Những mâu thuẫn trong gia đình ba thế hệ sống chung",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDJjMDkzNTAtNjAwZC00NWE5LWIwNGEtMGZjM2VhNWFiMGEyXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN022",
+        "title": "Em và Trịnh",
+        "original_title": "Em and Trinh",
+        "release_year": 2022,
+        "duration_minutes": 136,
+        "age_rating": "T13",
+        "genres": [
+            "Music",
+            "Romance"
+        ],
+        "director": "Phan Gia Nhật Linh",
+        "main_cast": [
+            "Avin Lu",
+            "Trần Lực"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Cuộc đời và những bóng hồng của nhạc sĩ Trịnh Công Sơn",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BM2ViNjUyNzQtZTI2Zi00MDAxLWE0NDctYTdlZGVlZTc4OTM5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN023",
+        "title": "Quỷ Cẩu",
+        "original_title": "Dogman",
+        "release_year": 2023,
+        "duration_minutes": 90,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Lưu Thành Ninh",
+        "main_cast": [
+            "Quang Tuấn",
+            "NSND Kim Xuân"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Chuyện kinh dị về nghiệp báo trong một gia đình làm nghề mổ chó",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzJhZjg3MTctMGViNC00MmExLTk4MWEtODA4ZGJlMjQ2ZGRmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN024",
+        "title": "Người Vợ Cuối Cùng",
+        "original_title": "The Last Wife",
+        "release_year": 2023,
+        "duration_minutes": 132,
+        "age_rating": "T18",
+        "genres": [
+            "Drama",
+            "History"
+        ],
+        "director": "Victor Vũ",
+        "main_cast": [
+            "Kaity Nguyễn",
+            "Thuận Nguyễn"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Kiếp làm vợ lẽ đầy bi kịch trong bối cảnh phong kiến Việt Nam",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BM2RmNmFlZjUtMDNkZC00NTlhLWFkZTktOWE3ZGZlOWY3ZWI4XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW071",
+        "title": "Joker",
+        "original_title": "Joker",
+        "release_year": 2019,
+        "duration_minutes": 122,
+        "age_rating": "T18",
+        "genres": [
+            "Crime",
+            "Drama"
+        ],
+        "director": "Todd Phillips",
+        "main_cast": [
+            "Joaquin Phoenix"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hành trình hắc hóa của Arthur Fleck thành gã hề điên loạn",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW072",
+        "title": "Titanic",
+        "original_title": "Titanic",
+        "release_year": 1997,
+        "duration_minutes": 194,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Drama"
+        ],
+        "director": "James Cameron",
+        "main_cast": [
+            "Leonardo DiCaprio"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Chuyện tình lãng mạn và bi thương trên con tàu định mệnh",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzYyN2FiZmUtYWYzMy00MzViLWJkZTMtOGY1ZjgzNWMwN2YxXkEyXkFqcGc@._V1_QL75_UX380_CR0,2,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW073",
+        "title": "Ký Ức Sát Nhân",
+        "original_title": "Memories of Murder",
+        "release_year": 2003,
+        "duration_minutes": 132,
+        "age_rating": "T18",
+        "genres": [
+            "Crime",
+            "Mystery"
+        ],
+        "director": "Bong Joon-ho",
+        "main_cast": [
+            "Song Kang-ho"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc truy lùng kẻ sát nhân hàng loạt đầu tiên tại Hàn Quốc",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYmRjOWE5NmMtYTdkYS00ODFlLWJiMTMtYzE2NDZlZjlkZDQ0XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW074",
+        "title": "Vì Sao Vụt Sáng",
+        "original_title": "A Star Is Born",
+        "release_year": 2018,
+        "duration_minutes": 136,
+        "age_rating": "T16",
+        "genres": [
+            "Music",
+            "Romance"
+        ],
+        "director": "Bradley Cooper",
+        "main_cast": [
+            "Lady Gaga",
+            "Bradley Cooper"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tình yêu và sự nghiệp đầy thăng trầm của hai nghệ sĩ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGUxZTc0NTAtNzQwMy00MmM2LTgzMGYtZWIyY2E1MGFjYmM5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW075",
+        "title": "Ác Quỷ Ma Sơ 2",
+        "original_title": "The Nun II",
+        "release_year": 2023,
+        "duration_minutes": 110,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Michael Chaves",
+        "main_cast": [
+            "Taissa Farmiga"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Sơ Irene một lần nữa đối đầu với thực thể ác quỷ Valak",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNmJkYWIyYWYtNWVhZi00ZTkyLWExMTktZWUzNGE1MjNlNjQ0XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW076",
+        "title": "Fast & Furious 10",
+        "original_title": "Fast X",
+        "release_year": 2023,
+        "duration_minutes": 141,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Crime"
+        ],
+        "director": "Louis Leterrier",
+        "main_cast": [
+            "Vin Diesel"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Dom Toretto bảo vệ gia đình khỏi kẻ thù nguy hiểm nhất",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzEwZjczOTktYzU1OS00YjJlLTgyY2UtNWEzODBlN2RjZDEwXkEyXkFqcGc@._V1_QL75_UX380_CR0,20,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW077",
+        "title": "Đại Chiến Hành Tinh Khỉ",
+        "original_title": "Kingdom of the Planet of the Apes",
+        "release_year": 2024,
+        "duration_minutes": 145,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi",
+            "Action"
+        ],
+        "director": "Wes Ball",
+        "main_cast": [
+            "Owen Teague"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhiều năm sau thời đại của Caesar một thủ lĩnh khỉ mới trỗi dậy",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDRlZTc3YTItOTk3Yi00NmU4LWFiOGUtNjgwMDZjNjIzNTU1XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW078",
+        "title": "Godzilla x Kong",
+        "original_title": "The New Empire",
+        "release_year": 2024,
+        "duration_minutes": 115,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Adam Wingard",
+        "main_cast": [
+            "Rebecca Hall"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hai quái vật khổng lồ bắt tay chống lại mối đe dọa mới",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTY0N2MzODctY2ExYy00OWYxLTkyNDItMTVhZGIxZjliZjU5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW079",
+        "title": "Deadpool & Wolverine",
+        "original_title": "Deadpool & Wolverine",
+        "release_year": 2024,
+        "duration_minutes": 127,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Comedy"
+        ],
+        "director": "Shawn Levy",
+        "main_cast": [
+            "Ryan Reynolds",
+            "Hugh Jackman"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Sự kết hợp lầy lội giữa Deadpool và Wolverine trong MCU",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZTk5ODY0MmQtMzA3Ni00NGY1LThiYzItZThiNjFiNDM4MTM3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW080",
+        "title": "Những Kẻ Hết Thời",
+        "original_title": "The Holdovers",
+        "release_year": 2023,
+        "duration_minutes": 133,
+        "age_rating": "T16",
+        "genres": [
+            "Comedy",
+            "Drama"
+        ],
+        "director": "Alexander Payne",
+        "main_cast": [
+            "Paul Giamatti"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Câu chuyện nhẹ nhàng về thầy trò bị kẹt lại trường dịp Noel",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOWY3MjUzZTctOTI5ZC00MDA5LTk4ZTMtZWJjNjRmMzE4ZmI2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "KD023",
+        "title": "Quái Vật Sông Hàn",
+        "original_title": "The Host",
+        "release_year": 2006,
+        "duration_minutes": 120,
+        "age_rating": "T16",
+        "genres": [
+            "Horror",
+            "Sci-Fi"
+        ],
+        "director": "Bong Joon-ho",
+        "main_cast": [
+            "Song Kang-ho"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một sinh vật lạ xuất hiện từ sông Hàn tấn công người dân",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTQzYzI1MDAtYzVkOC00N2U1LThmNzYtNmYyNDg5MzQwYjEwXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD024",
+        "title": "Chuyến Tàu Sinh Tử",
+        "original_title": "Train to Busan",
+        "release_year": 2016,
+        "duration_minutes": 118,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Horror"
+        ],
+        "director": "Yeon Sang-ho",
+        "main_cast": [
+            "Gong Yoo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Đại dịch Zombie bùng phát dữ dội trên chuyến tàu cao tốc",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTkwOTQ4OTg0OV5BMl5BanBnXkFtZTgwMzQyOTM0OTE@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD005",
+        "title": "Ngọa Hổ Tàng Long",
+        "original_title": "Crouching Tiger Hidden Dragon",
+        "release_year": 2000,
+        "duration_minutes": 120,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "History"
+        ],
+        "director": "Ang Lee",
+        "main_cast": [
+            "Châu Nhuận Phát"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Kiệt tác võ hiệp về tình yêu và danh dự thời phong kiến",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMzRmMTU2OWEtZjI0Ni00MGRhLThjOTItZTJiNmM4MDk0ZWU2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD006",
+        "title": "Tuyệt Đỉnh Kungfu",
+        "original_title": "Kung Fu Hustle",
+        "release_year": 2004,
+        "duration_minutes": 99,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Comedy"
+        ],
+        "director": "Stephen Chow",
+        "main_cast": [
+            "Châu Tinh Trì"
+        ],
+        "country": "China",
+        "language": "Cantonese",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một tên trộm vô danh vô tình lạc vào cuộc chiến của các cao thủ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGU2OWVlM2ItZGZlOC00Yzk2LWE1NzEtMDYwMzE4YTE5MzQ2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW081",
+        "title": "Vùng Đất Câm Lặng: Ngày Một",
+        "original_title": "A Quiet Place: Day One",
+        "release_year": 2024,
+        "duration_minutes": 99,
+        "age_rating": "T16",
+        "genres": [
+            "Horror",
+            "Sci-Fi"
+        ],
+        "director": "Michael Sarnoski",
+        "main_cast": [
+            "Lupita Nyong o"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Những giây phút đầu tiên khi quái vật ngoài hành tinh đổ bộ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDdjZTljZWMtMDIwNi00MTA5LTkxZmItNmY0NDA3ZDM0N2M2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN025",
+        "title": "Lật Mặt 6: Tấm Vé Định Mệnh",
+        "original_title": "Face Off 6",
+        "release_year": 2023,
+        "duration_minutes": 132,
+        "age_rating": "T16",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Lý Hải",
+        "main_cast": [
+            "Quốc Cường",
+            "Huy Khánh"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Nhóm bạn thân tranh giành tờ vé số trúng giải độc đắc",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGJjZjU2MzUtNGE5YS00YjMyLTllODAtYzRhZTE2OWQxMTAyXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW082",
+        "title": "Dune: Hành Tinh Cát 2",
+        "original_title": "Dune: Part Two",
+        "release_year": 2024,
+        "duration_minutes": 166,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi",
+            "Adventure"
+        ],
+        "director": "Denis Villeneuve",
+        "main_cast": [
+            "Timothée Chalamet"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Paul Atreides hợp lực với Chani để trả thù những kẻ hủy diệt gia đình mình",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW083",
+        "title": "Oppenheimer",
+        "original_title": "Oppenheimer",
+        "release_year": 2023,
+        "duration_minutes": 180,
+        "age_rating": "T18",
+        "genres": [
+            "Biography",
+            "Drama"
+        ],
+        "director": "Christopher Nolan",
+        "main_cast": [
+            "Cillian Murphy"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Câu chuyện về cha đẻ của bom nguyên tử trong dự án Manhattan",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW084",
+        "title": "Barbie",
+        "original_title": "Barbie",
+        "release_year": 2023,
+        "duration_minutes": 114,
+        "age_rating": "P",
+        "genres": [
+            "Comedy",
+            "Fantasy"
+        ],
+        "director": "Greta Gerwig",
+        "main_cast": [
+            "Margot Robbie"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Barbie và Ken trải nghiệm cuộc sống ở thế giới thực đầy màu sắc",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYjI3NDU0ZGYtYjA2YS00Y2RlLTgwZDAtYTE2YTM5ZjE1M2JlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "VN026",
+        "title": "Đất Rừng Phương Nam",
+        "original_title": "Song of the South",
+        "release_year": 2023,
+        "duration_minutes": 110,
+        "age_rating": "K",
+        "genres": [
+            "Adventure"
+        ],
+        "director": "Quang Dũng",
+        "main_cast": [
+            "Hào Khang"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Hành trình tìm cha đầy gian nan của bé An tại miền Tây Nam Bộ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNDllMWM5MjktNmE4MC00MTc3LTk2YjItOGFkNjgyMjhkMjRiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN027",
+        "title": "Cô Ba Sài Gòn",
+        "original_title": "The Tailor",
+        "release_year": 2017,
+        "duration_minutes": 100,
+        "age_rating": "P",
+        "genres": [
+            "Comedy",
+            "Drama"
+        ],
+        "director": "Kay Nguyễn",
+        "main_cast": [
+            "Ninh Dương Lan Ngọc"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Câu chuyện về tà áo dài truyền thống và chuyến du hành thời gian",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/vv8JfnN1ljrB1BvI7Ob9ZNrVgpb.jpg"
+    },
+    {
+        "movie_id": "VN028",
+        "title": "Muôn Vị Nhân Gian",
+        "original_title": "The Pot-au-Feu",
+        "release_year": 2023,
+        "duration_minutes": 135,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Drama"
+        ],
+        "director": "Trần Anh Hùng",
+        "main_cast": [
+            "Juliette Binoche"
+        ],
+        "country": "France",
+        "language": "French",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Câu chuyện tình yêu và ẩm thực tinh tế của đạo diễn Trần Anh Hùng",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTBkZTk1NzMtMTNlMC00ZjFmLWE5ZWYtYzg0NmVlNzllNTRlXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW085",
+        "title": "Vầng Trăng Máu",
+        "original_title": "Killers of the Flower Moon",
+        "release_year": 2023,
+        "duration_minutes": 206,
+        "age_rating": "T18",
+        "genres": [
+            "Crime",
+            "Drama"
+        ],
+        "director": "Martin Scorsese",
+        "main_cast": [
+            "Leonardo DiCaprio"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc điều tra vụ sát hại hàng loạt người Osage giàu có tại Mỹ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZWY5ZDVjNTUtODI5Yy00MjFhLWEyM2EtYzZjM2VjZTI0MTBjXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW086",
+        "title": "Những Kẻ Sát Nhân",
+        "original_title": "The Killer",
+        "release_year": 2023,
+        "duration_minutes": 118,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "David Fincher",
+        "main_cast": [
+            "Michael Fassbender"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một sát thủ máu lạnh bắt đầu cuộc truy lùng xuyên quốc gia",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzU2MTlkMTctNWI3MC00ODUzLTlmYzQtMzZjYjVmMmYwZGU0XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD025",
+        "title": "Vinh Quang Trong Thù Hận",
+        "original_title": "The Glory",
+        "release_year": 2022,
+        "duration_minutes": 60,
+        "age_rating": "T18",
+        "genres": [
+            "Drama",
+            "Thriller"
+        ],
+        "director": "Ahn Gil-ho",
+        "main_cast": [
+            "Song Hye-kyo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một người phụ nữ thực hiện kế hoạch trả thù những kẻ đã bắt nạt mình",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BODM0ZTc5YTAtZmMxNi00YzJkLWEzODItZDczZTRlNTc1NGE3XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD026",
+        "title": "Trò Chơi Con Mực",
+        "original_title": "Squid Game",
+        "release_year": 2021,
+        "duration_minutes": 60,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Hwang Dong-hyuk",
+        "main_cast": [
+            "Lee Jung-jae"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Những người nợ nần tham gia trò chơi sinh tồn để giành giải thưởng lớn",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYTU3ZDVhNmMtMDVlNC00MDc0LTgwNDMtYWE5MTI2ZGI4YWIwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "CD007",
+        "title": "Thần Điêu Đại Hiệp",
+        "original_title": "Return of the Condor Heroes",
+        "release_year": 2006,
+        "duration_minutes": 45,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Romance"
+        ],
+        "director": "Yu Min",
+        "main_cast": [
+            "Lưu Diệc Phi",
+            "Huỳnh Hiểu Minh"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Chuyện tình giữa Dương Quá và Tiểu Long Nữ trong giới võ lâm",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMWZkNjA5NmItOTE5MC00ZjA1LTg0ZDEtZDRhODJjYzA4ZjhhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD008",
+        "title": "Diên Hy Công Lược",
+        "original_title": "Story of Yanxi Palace",
+        "release_year": 2018,
+        "duration_minutes": 45,
+        "age_rating": "T13",
+        "genres": [
+            "History",
+            "Drama"
+        ],
+        "director": "Hui Kaidong",
+        "main_cast": [
+            "Ngô Cẩn Ngôn"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hành trình thăng tiến của Ngụy Anh Lạc trong cung cấm nhà Thanh",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOWMyMWY0ZTMtZTU2Yy00M2M2LWE3ZWMtZWZmZjQ4MDQ2OWJiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW087",
+        "title": "Sát Thủ John Wick 3",
+        "original_title": "John Wick 3",
+        "release_year": 2019,
+        "duration_minutes": 131,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Chad Stahelski",
+        "main_cast": [
+            "Keanu Reeves"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "John Wick bị truy nã toàn cầu sau khi phá luật của khách sạn Continental",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/dCuJH7UsWOzNrXUzPiGwmcwT8sk.jpg"
+    },
+    {
+        "movie_id": "HW088",
+        "title": "Kẻ Hủy Diệt: Thời Đại Robot",
+        "original_title": "Terminator Genisys",
+        "release_year": 2015,
+        "duration_minutes": 126,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi",
+            "Action"
+        ],
+        "director": "Alan Taylor",
+        "main_cast": [
+            "Arnold Schwarzenegger"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Sarah Connor cùng robot T-800 ngăn chặn sự trỗi dậy của Skynet",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjM1NTc0NzE4OF5BMl5BanBnXkFtZTgwNDkyNjQ1NTE@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW089",
+        "title": "Nhiệm Vụ Bất Khả Thi 7",
+        "original_title": "Dead Reckoning",
+        "release_year": 2023,
+        "duration_minutes": 163,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Christopher McQuarrie",
+        "main_cast": [
+            "Tom Cruise"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Ethan Hunt nỗ lực ngăn chặn một vũ khí trí tuệ nhân tạo đe dọa thế giới",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BN2U4OTdmM2QtZTkxYy00ZmQyLTg2N2UtMDdmMGJmNDhlZDU1XkEyXkFqcGc@._V1_QL75_UY562_CR1,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "VN029",
+        "title": "Gái Già Lắm Chiêu V",
+        "original_title": "Camellia Sisters",
+        "release_year": 2021,
+        "duration_minutes": 115,
+        "age_rating": "T13",
+        "genres": [
+            "Drama",
+            "Comedy"
+        ],
+        "director": "Namcito",
+        "main_cast": [
+            "Kaity Nguyễn",
+            "NSND Lê Khanh"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Cuộc chiến giành quyền lực và những bí mật của ba chị em họ Lý",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZmM3ZGFjNWYtN2ExNi00ZDg2LWE4MzUtYjFlNDVmZjdhZTM3XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN030",
+        "title": "Tiệc Trăng Máu",
+        "original_title": "Blood Moon Party",
+        "release_year": 2020,
+        "duration_minutes": 115,
+        "age_rating": "T18",
+        "genres": [
+            "Comedy",
+            "Drama"
+        ],
+        "director": "Quang Dũng",
+        "main_cast": [
+            "Thái Hòa",
+            "Thu Trang"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Những bí mật khủng khiếp lộ diện từ trò chơi công khai điện thoại",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/1gtr8Js6yS7gWrQylbIK4sGQGih.jpg"
+    },
+    {
+        "movie_id": "HW090",
+        "title": "Spider-Man: Trở Về Nhà",
+        "original_title": "Homecoming",
+        "release_year": 2017,
+        "duration_minutes": 133,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Jon Watts",
+        "main_cast": [
+            "Tom Holland"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Peter Parker cân bằng giữa việc làm học sinh và siêu anh hùng mới",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/tNm6pNf9Xe1gPKu4xqPEWj0issu.jpg"
+    },
+    {
+        "movie_id": "HW091",
+        "title": "Vệ Binh Dải Ngân Hà 3",
+        "original_title": "Guardians of the Galaxy 3",
+        "release_year": 2023,
+        "duration_minutes": 150,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "James Gunn",
+        "main_cast": [
+            "Chris Pratt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhóm vệ binh thực hiện nhiệm vụ cuối cùng để bảo vệ Rocket",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOTJhOTMxMmItZmE0Ny00MDc3LWEzOGEtOGFkMzY4MWYyZDQ0XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW092",
+        "title": "Công Viên Kỷ Jura 4",
+        "original_title": "Jurassic World",
+        "release_year": 2015,
+        "duration_minutes": 124,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Colin Trevorrow",
+        "main_cast": [
+            "Chris Pratt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một loài khủng long lai tạo trốn thoát và gây náo loạn công viên",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzBhNzlkM2UtZTQyOC00NjUyLTkzMmMtNDQ1YTM5N2NmMGE5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW093",
+        "title": "Nữ Hoàng Băng Giá",
+        "original_title": "Frozen",
+        "release_year": 2013,
+        "duration_minutes": 102,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Adventure"
+        ],
+        "director": "Jennifer Lee",
+        "main_cast": [
+            "Kristen Bell"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hành trình tìm kiếm chị gái Elsa để giải cứu vương quốc khỏi mùa đông vĩnh cửu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTQ1MjQwMTE5OF5BMl5BanBnXkFtZTgwNjk3MTcyMDE@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW094",
+        "title": "Câu Chuyện Đồ Chơi 4",
+        "original_title": "Toy Story 4",
+        "release_year": 2019,
+        "duration_minutes": 100,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Comedy"
+        ],
+        "director": "Josh Cooley",
+        "main_cast": [
+            "Tom Hanks"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Woody và những người bạn cũ gặp lại Bo Peep trong một chuyến đi xa",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTYzMDM4NzkxOV5BMl5BanBnXkFtZTgwNzM1Mzg2NzM@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW095",
+        "title": "Cuộc Hội Ngộ Diệu Kỳ",
+        "original_title": "Coco",
+        "release_year": 2017,
+        "duration_minutes": 105,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Family"
+        ],
+        "director": "Lee Unkrich",
+        "main_cast": [
+            "Anthony Gonzalez"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cậu bé Miguel lạc vào vùng đất linh hồn để khám phá bí mật gia đình",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDIyM2E2NTAtMzlhNy00ZGUxLWI1NjgtZDY5MzhiMDc5NGU3XkEyXkFqcGc@._V1_QL75_UY562_CR7,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW096",
+        "title": "Ám Ảnh Kinh Hoàng",
+        "original_title": "The Conjuring",
+        "release_year": 2013,
+        "duration_minutes": 112,
+        "age_rating": "T18",
+        "genres": [
+            "Horror",
+            "Mystery"
+        ],
+        "director": "James Wan",
+        "main_cast": [
+            "Vera Farmiga"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cặp vợ chồng nhà ngoại cảm điều tra thực thể đáng sợ tại một trang trại",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW097",
+        "title": "Gã Hề Ma Quái",
+        "original_title": "It",
+        "release_year": 2017,
+        "duration_minutes": 135,
+        "age_rating": "T18",
+        "genres": [
+            "Horror",
+            "Drama"
+        ],
+        "director": "Andy Muschietti",
+        "main_cast": [
+            "Bill Skarsgård"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một nhóm trẻ em đối mặt với thực thể tà ác dưới hình dạng hề Pennywise",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZGZmOTZjNzUtOTE4OS00OGM3LWJiNGEtZjk4Yzg2M2Q1YzYxXkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW098",
+        "title": "Nhiệm Vụ Bất Khả Thi: Sụp Đổ",
+        "original_title": "Mission Impossible: Fallout",
+        "release_year": 2018,
+        "duration_minutes": 147,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Christopher McQuarrie",
+        "main_cast": [
+            "Tom Cruise"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Ethan Hunt phải chạy đua với thời gian sau khi một nhiệm vụ bị thất bại",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZmUwZTg2YmMtMmZjOS00ZDYwLWI2ZDgtZDcyY2ZmMWMwZDdlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW099",
+        "title": "Tên Sát Nhân Trong Gương",
+        "original_title": "Candyman",
+        "release_year": 2021,
+        "duration_minutes": 91,
+        "age_rating": "T18",
+        "genres": [
+            "Horror",
+            "Thriller"
+        ],
+        "director": "Nia DaCosta",
+        "main_cast": [
+            "Yahya Abdul-Mateen"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một họa sĩ vô tình đánh thức huyền thoại kinh dị về kẻ sát nhân có móc sắt",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMzFjMTQwMGYtNjNmNC00NjMyLWJjNWYtOGRhMmVkNGY1N2U5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN031",
+        "title": "Cô Gái Đến Từ Quá Khứ",
+        "original_title": "Girl From The Past",
+        "release_year": 2022,
+        "duration_minutes": 105,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller",
+            "Drama"
+        ],
+        "director": "Namcito",
+        "main_cast": [
+            "Ninh Dương Lan Ngọc"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Bí mật đen tối trong quá khứ của một cô gái thành đạt dần lộ diện",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDk5NThlM2ItYTkyMC00YTFiLTlkNmUtNTNjZjc0NzQ4MzIyXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN032",
+        "title": "Mười: Lời Nguyền Trở Lại",
+        "original_title": "Muoi: The Curse Returns",
+        "release_year": 2022,
+        "duration_minutes": 95,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Hằng Trịnh",
+        "main_cast": [
+            "Chi Pu"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Bí mật về bức chân dung bị nguyền rủa của cô gái tên Mười",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTBjMmU1NWQtMTBjNy00YmU1LWFjZjUtYTQwODNkNzE0YzViXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD027",
+        "title": "Cậu Út Nhà Tài Phiệt",
+        "original_title": "Reborn Rich",
+        "release_year": 2022,
+        "duration_minutes": 70,
+        "age_rating": "T13",
+        "genres": [
+            "Drama",
+            "Fantasy"
+        ],
+        "director": "Jung Dae-yoon",
+        "main_cast": [
+            "Song Joong-ki"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Thư ký trung thành tái sinh thành cháu trai của gia đình tài phiệt để trả thù",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzlhNGU0NGQtNmYzMi00MzdjLTlkMzgtNTAzM2NhYTlhMzdhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD028",
+        "title": "Vinh Quang Trong Thù Hận 2",
+        "original_title": "The Glory 2",
+        "release_year": 2023,
+        "duration_minutes": 65,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller",
+            "Drama"
+        ],
+        "director": "Ahn Gil-ho",
+        "main_cast": [
+            "Song Hye-kyo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Đoạn kết tàn khốc cho kế hoạch trả thù của Dong-eun",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/uUM4LVlPgIrww07OoEKrGWlS1Ej.jpg"
+    },
+    {
+        "movie_id": "HW100",
+        "title": "Vùng Đất Câm Lặng",
+        "original_title": "A Quiet Place",
+        "release_year": 2018,
+        "duration_minutes": 90,
+        "age_rating": "T16",
+        "genres": [
+            "Horror",
+            "Sci-Fi"
+        ],
+        "director": "John Krasinski",
+        "main_cast": [
+            "Emily Blunt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một gia đình phải sống trong im lặng tuyệt đối để tránh quái vật săn bằng tai",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjI0MDMzNTQ0M15BMl5BanBnXkFtZTgwMTM5NzM3NDM@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW101",
+        "title": "Vụ Bê Bối",
+        "original_title": "Bombshell",
+        "release_year": 2019,
+        "duration_minutes": 109,
+        "age_rating": "T13",
+        "genres": [
+            "Biography",
+            "Drama"
+        ],
+        "director": "Jay Roach",
+        "main_cast": [
+            "Margot Robbie"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Những phụ nữ tại Fox News đứng lên tố cáo hành vi quấy rối",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BODY3ODVkYTAtZDFmNS00ZDYyLTlkOTEtNTY3NTFhNDE4ZjFjXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW102",
+        "title": "Hiểm Họa Vô Hình",
+        "original_title": "The Invisible Man",
+        "release_year": 2020,
+        "duration_minutes": 124,
+        "age_rating": "T16",
+        "genres": [
+            "Horror",
+            "Sci-Fi"
+        ],
+        "director": "Leigh Whannell",
+        "main_cast": [
+            "Elisabeth Moss"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một người phụ nữ bị săn đuổi bởi gã bạn trai cũ đã trở nên vô hình",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYTM3NDJhZWUtZWM1Yy00ODk4LThjNmMtNDg3OGYzMGM2OGYzXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW103",
+        "title": "Võ Sĩ Quyền Anh",
+        "original_title": "Creed III",
+        "release_year": 2023,
+        "duration_minutes": 116,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Drama"
+        ],
+        "director": "Michael B. Jordan",
+        "main_cast": [
+            "Michael B. Jordan"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Adonis Creed đối đầu với một người bạn cũ vừa ra tù trên võ đài",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOWY0MTRmY2YtMzBlYi00NjlkLThkZWYtMmE2NzJiZmIzODFkXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW104",
+        "title": "Đại Chiến Hai Thế Giới",
+        "original_title": "Warcraft",
+        "release_year": 2016,
+        "duration_minutes": 123,
+        "age_rating": "T13",
+        "genres": [
+            "Fantasy",
+            "Action"
+        ],
+        "director": "Duncan Jones",
+        "main_cast": [
+            "Travis Fimmel"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc chiến giữa con người và tộc Orc khi thế giới của họ đứng bờ vực",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjIwNTM0Mzc5MV5BMl5BanBnXkFtZTgwMDk5NDU1ODE@._V1_QL75_UX380_CR0,20,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW105",
+        "title": "Sát Thủ Leon",
+        "original_title": "Leon: The Professional",
+        "release_year": 1994,
+        "duration_minutes": 110,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Crime"
+        ],
+        "director": "Luc Besson",
+        "main_cast": [
+            "Jean Reno"
+        ],
+        "country": "France",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một sát thủ chuyên nghiệp nhận nuôi và bảo vệ một cô bé mồ côi",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGRkYTNhOWQtYmI0Ni00MjZhLWJmMzAtMTA2Mjg4NGNiNDU0XkEyXkFqcGc@._V1_QL75_UX380_CR0,2,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW106",
+        "title": "Sự Im Lặng Của Bầy Cừu",
+        "original_title": "The Silence of the Lambs",
+        "release_year": 1991,
+        "duration_minutes": 118,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller",
+            "Horror"
+        ],
+        "director": "Jonathan Demme",
+        "main_cast": [
+            "Jodie Foster"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nữ học viên FBI nhờ đến sự giúp đỡ của kẻ sát nhân ăn thịt người",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNDdhOGJhYzctYzYwZC00YmI2LWI0MjctYjg4ODdlMDExYjBlXkEyXkFqcGc@._V1_QL75_UY562_CR1,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW107",
+        "title": "Hành Trình Của Moana",
+        "original_title": "Moana",
+        "release_year": 2016,
+        "duration_minutes": 107,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Adventure"
+        ],
+        "director": "Ron Clements",
+        "main_cast": [
+            "Auli'i Cravalho"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cô bé Moana vượt đại dương để trả lại trái tim cho nữ thần Te Fiti",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjI4MzU5NTExNF5BMl5BanBnXkFtZTgwNzY1MTEwMDI@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW108",
+        "title": "Đẳng Cấp Thú Cưng",
+        "original_title": "The Secret Life of Pets",
+        "release_year": 2016,
+        "duration_minutes": 87,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Comedy"
+        ],
+        "director": "Chris Renaud",
+        "main_cast": [
+            "Louis C.K."
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc sống bí mật của những chú thú cưng khi chủ vắng nhà",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjIzMzA1OTkzNV5BMl5BanBnXkFtZTgwODE3MjM4NzE@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW109",
+        "title": "Godzilla Đại Chiến Kong",
+        "original_title": "Godzilla vs. Kong",
+        "release_year": 2021,
+        "duration_minutes": 113,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Sci-Fi"
+        ],
+        "director": "Adam Wingard",
+        "main_cast": [
+            "Alexander Skarsgård"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc chạm trán nảy lửa giữa hai quái thú hùng mạnh nhất lịch sử",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjZlYjUwZjItZmQ1ZS00NDU2LWFhNWMtMGRmMmZiMzliY2NhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN033",
+        "title": "Song Lang",
+        "original_title": "Song Lang",
+        "release_year": 2018,
+        "duration_minutes": 101,
+        "age_rating": "T16",
+        "genres": [
+            "Drama",
+            "Music"
+        ],
+        "director": "Leon Lê",
+        "main_cast": [
+            "Isaac",
+            "Liên Bỉnh Phát"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Mối liên kết kỳ lạ giữa một gã đòi nợ thuê và nghệ sĩ cải lương",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzIzYTYzMDUtZWYzNy00ODcyLTljMzEtZTg4Yzc5NzYyZWE3XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN034",
+        "title": "Hai Phượng",
+        "original_title": "Furie",
+        "release_year": 2019,
+        "duration_minutes": 98,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Lê Văn Kiệt",
+        "main_cast": [
+            "Ngô Thanh Vân"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Người mẹ đơn thân dấn thân vào hang ổ tội phạm để cứu con gái",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZGI2YzNjYmUtNDFjMS00NjAxLTljMWEtOWExN2EwYThjMDk3XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN035",
+        "title": "Gái Già Lắm Chiêu 2",
+        "original_title": "The Royal Bride",
+        "release_year": 2018,
+        "duration_minutes": 105,
+        "age_rating": "T16",
+        "genres": [
+            "Comedy",
+            "Romance"
+        ],
+        "director": "Namcito",
+        "main_cast": [
+            "Ninh Dương Lan Ngọc"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Chuyện tình lệch tuổi đầy rắc rối giữa máy bay và phi công",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDg5ODU2NzAtMGJiMy00OWM5LTk4MzktN2IyZDgzNTIwMjYzXkEyXkFqcGdeQXVyOTIxNDQ1MTQ@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD029",
+        "title": "Những Người Thừa Kế",
+        "original_title": "The Heirs",
+        "release_year": 2013,
+        "duration_minutes": 60,
+        "age_rating": "T13",
+        "genres": [
+            "Drama",
+            "Romance"
+        ],
+        "director": "Kang Shin-hyo",
+        "main_cast": [
+            "Lee Min-ho"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc sống và tình yêu của những học sinh thuộc giới thượng lưu",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/3G04LFd3IhYXfPpk1bGQmO9efWu.jpg"
+    },
+    {
+        "movie_id": "KD030",
+        "title": "Hạ Cánh Nơi Anh 2",
+        "original_title": "Crash Landing on You",
+        "release_year": 2019,
+        "duration_minutes": 80,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Drama"
+        ],
+        "director": "Lee Jeong-hyo",
+        "main_cast": [
+            "Son Ye-jin"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nữ tài phiệt Hàn Quốc vô tình hạ cánh xuống lãnh thổ Triều Tiên",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZjM3ZGQ4ZTMtOTNjMS00NmJlLTljMWUtNWExMzJhMGJlMWNiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW110",
+        "title": "Trò Chơi Ảo Giác",
+        "original_title": "Jumanji: Welcome to the Jungle",
+        "release_year": 2017,
+        "duration_minutes": 119,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Jake Kasdan",
+        "main_cast": [
+            "Dwayne Johnson"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Bốn thiếu niên bị hút vào một trò chơi điện tử cổ điển",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZjI5MzdmODctYjA4NS00ZmMxLWJlOWUtOGVhMjA0OGMxMWYzXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW111",
+        "title": "Điệp Viên 007: Không Phải Lúc Chết",
+        "original_title": "No Time to Die",
+        "release_year": 2021,
+        "duration_minutes": 163,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Cary Fukunaga",
+        "main_cast": [
+            "Daniel Craig"
+        ],
+        "country": "UK",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "James Bond thực hiện nhiệm vụ cuối cùng đầy cảm xúc",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZGZiOGZhZDQtZmRkNy00ZmUzLTliMGEtZGU0NjExOGMxZDVkXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW112",
+        "title": "Kẻ Vô Danh",
+        "original_title": "Nobody",
+        "release_year": 2021,
+        "duration_minutes": 92,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Ilya Naishuller",
+        "main_cast": [
+            "Bob Odenkirk"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một người cha bình thường bộc lộ quá khứ sát thủ để bảo vệ gia đình",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYmIzOWViNDEtOWRiZS00ZWM4LWFiMmEtNGJjMmQ3NTIxN2U0XkEyXkFqcGc@._V1_QL75_UX380_CR0,20,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW113",
+        "title": "Kẻ Sát Nhân Trong Đêm",
+        "original_title": "Nightcrawler",
+        "release_year": 2014,
+        "duration_minutes": 118,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller",
+            "Crime"
+        ],
+        "director": "Dan Gilroy",
+        "main_cast": [
+            "Jake Gyllenhaal"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một phóng viên tự do lao vào thế giới tội phạm đêm tại LA",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYjMwMmI5MWQtOTU4OS00OTAyLTg0OTYtNmQ5YzExZTQ3ZWJhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW114",
+        "title": "Thung Lũng Chết",
+        "original_title": "Death Valley",
+        "release_year": 2021,
+        "duration_minutes": 91,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Horror"
+        ],
+        "director": "Brandon Slagle",
+        "main_cast": [
+            "Randy Couture"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhóm lính đặc nhiệm đối mặt với quái vật sinh học trong hầm ngầm",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMmQ4OGQ2ZjAtNWI2ZC00NWIyLWEzYzItN2M2Y2E3M2IwMzMwXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW115",
+        "title": "Vùng Đất Câm Lặng: Ngày Một",
+        "original_title": "A Quiet Place: Day One",
+        "release_year": 2024,
+        "duration_minutes": 100,
+        "age_rating": "T16",
+        "genres": [
+            "Horror",
+            "Sci-Fi"
+        ],
+        "director": "Michael Sarnoski",
+        "main_cast": [
+            "Lupita Nyong'o"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Ngày đầu tiên thế giới chìm vào im lặng vì quái vật xâm lăng",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDdjZTljZWMtMDIwNi00MTA5LTkxZmItNmY0NDA3ZDM0N2M2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW116",
+        "title": "Võ Sĩ Giác Đấu",
+        "original_title": "Gladiator",
+        "release_year": 2000,
+        "duration_minutes": 155,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Drama"
+        ],
+        "director": "Ridley Scott",
+        "main_cast": [
+            "Russell Crowe"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một vị tướng quân bị phản bội trở thành nô lệ đấu sĩ để trả thù",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYWQ4YmNjYjEtOWE1Zi00Y2U4LWI4NTAtMTU0MjkxNWQ1ZmJiXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW117",
+        "title": "Hành Tinh Khỉ: Vương Quốc Mới",
+        "original_title": "Kingdom of the Planet of the Apes",
+        "release_year": 2024,
+        "duration_minutes": 145,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi",
+            "Action"
+        ],
+        "director": "Wes Ball",
+        "main_cast": [
+            "Owen Teague"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhiều năm sau thời đại của Caesar một thủ lĩnh khỉ trẻ trỗi dậy",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDRlZTc3YTItOTk3Yi00NmU4LWFiOGUtNjgwMDZjNjIzNTU1XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW118",
+        "title": "Godzilla x Kong: Đế Chế Mới",
+        "original_title": "Godzilla x Kong: The New Empire",
+        "release_year": 2024,
+        "duration_minutes": 115,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Adam Wingard",
+        "main_cast": [
+            "Rebecca Hall"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Godzilla và Kong hợp sức chống lại mối đe dọa từ lòng đất",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTY0N2MzODctY2ExYy00OWYxLTkyNDItMTVhZGIxZjliZjU5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW119",
+        "title": "Deadpool và Wolverine",
+        "original_title": "Deadpool & Wolverine",
+        "release_year": 2024,
+        "duration_minutes": 127,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Comedy"
+        ],
+        "director": "Shawn Levy",
+        "main_cast": [
+            "Ryan Reynolds",
+            "Hugh Jackman"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hai siêu anh hùng lầy lội nhất vũ trụ Marvel cùng thực hiện nhiệm vụ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZTk5ODY0MmQtMzA3Ni00NGY1LThiYzItZThiNjFiNDM4MTM3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW120",
+        "title": "Những Kẻ Hết Thời",
+        "original_title": "The Holdovers",
+        "release_year": 2023,
+        "duration_minutes": 133,
+        "age_rating": "T16",
+        "genres": [
+            "Comedy",
+            "Drama"
+        ],
+        "director": "Alexander Payne",
+        "main_cast": [
+            "Paul Giamatti"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một giáo viên khó tính và nam sinh bị kẹt lại trường dịp Giáng sinh",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOWY3MjUzZTctOTI5ZC00MDA5LTk4ZTMtZWJjNjRmMzE4ZmI2XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "VN036",
+        "title": "Lật Mặt 6: Tấm Vé Định Mệnh",
+        "original_title": "Face Off 6",
+        "release_year": 2023,
+        "duration_minutes": 132,
+        "age_rating": "T16",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Lý Hải",
+        "main_cast": [
+            "Quốc Cường",
+            "Huy Khánh"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Tình bạn bị rạn nứt khi nhóm bạn thân tranh giành tờ vé số độc đắc",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGJjZjU2MzUtNGE5YS00YjMyLTllODAtYzRhZTE2OWQxMTAyXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN037",
+        "title": "Chị Chị Em Em 2",
+        "original_title": "Sister Sister 2",
+        "release_year": 2023,
+        "duration_minutes": 115,
+        "age_rating": "T18",
+        "genres": [
+            "Drama",
+            "Comedy"
+        ],
+        "director": "Vũ Ngọc Đãng",
+        "main_cast": [
+            "Minh Hằng",
+            "Ngọc Trinh"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Cuộc chiến nhan sắc và mưu đồ của hai mỹ nhân nổi tiếng Sài Thành",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYTJlN2E2MjMtZTcxNi00YmQ2LWJkZGMtYzc2NDJlMWViY2QxXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN038",
+        "title": "Quỷ Cẩu",
+        "original_title": "Dogman",
+        "release_year": 2023,
+        "duration_minutes": 90,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Lưu Thành Ninh",
+        "main_cast": [
+            "Quang Tuấn",
+            "NSND Kim Xuân"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Những hiện tượng tâm linh kinh hoàng xảy ra trong gia đình mổ chó",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzJhZjg3MTctMGViNC00MmExLTk4MWEtODA4ZGJlMjQ2ZGRmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD031",
+        "title": "Chuyến Tàu Sinh Tử",
+        "original_title": "Train to Busan",
+        "release_year": 2016,
+        "duration_minutes": 118,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Horror"
+        ],
+        "director": "Yeon Sang-ho",
+        "main_cast": [
+            "Gong Yoo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một người cha và con gái kẹt trên chuyến tàu đầy rẫy thây ma",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTkwOTQ4OTg0OV5BMl5BanBnXkFtZTgwMzQyOTM0OTE@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD032",
+        "title": "Quái Vật Sông Hàn",
+        "original_title": "The Host",
+        "release_year": 2006,
+        "duration_minutes": 120,
+        "age_rating": "T16",
+        "genres": [
+            "Horror",
+            "Sci-Fi"
+        ],
+        "director": "Bong Joon-ho",
+        "main_cast": [
+            "Song Kang-ho"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một gia đình nỗ lực cứu con gái khỏi quái vật xuất hiện từ sông Hàn",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTQzYzI1MDAtYzVkOC00N2U1LThmNzYtNmYyNDg5MzQwYjEwXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD009",
+        "title": "Ngọa Hổ Tàng Long",
+        "original_title": "Crouching Tiger Hidden Dragon",
+        "release_year": 2000,
+        "duration_minutes": 120,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "History"
+        ],
+        "director": "Ang Lee",
+        "main_cast": [
+            "Châu Nhuận Phát"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Kiệt tác kiếm hiệp về tình yêu và danh dự thời nhà Thanh",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMzRmMTU2OWEtZjI0Ni00MGRhLThjOTItZTJiNmM4MDk0ZWU2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD010",
+        "title": "Tuyệt Đỉnh Kungfu",
+        "original_title": "Kung Fu Hustle",
+        "release_year": 2004,
+        "duration_minutes": 99,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Comedy"
+        ],
+        "director": "Stephen Chow",
+        "main_cast": [
+            "Châu Tinh Trì"
+        ],
+        "country": "China",
+        "language": "Cantonese",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một tên trộm vô danh lạc vào cuộc chiến giữa bang Phái và các cao thủ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNGU2OWVlM2ItZGZlOC00Yzk2LWE1NzEtMDYwMzE4YTE5MzQ2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW121",
+        "title": "Gã Hề Ma Quái 2",
+        "original_title": "It Chapter Two",
+        "release_year": 2019,
+        "duration_minutes": 169,
+        "age_rating": "T18",
+        "genres": [
+            "Horror",
+            "Fantasy"
+        ],
+        "director": "Andy Muschietti",
+        "main_cast": [
+            "Jessica Chastain"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhóm bạn Losers Club trở lại thị trấn Derry sau 27 năm để diệt hề",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzUxM2VhOGItZTY2My00OTA4LWI4NjUtMDA5YWJjM2M2NDJjXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW122",
+        "title": "Ám Ảnh Kinh Hoàng 2",
+        "original_title": "The Conjuring 2",
+        "release_year": 2016,
+        "duration_minutes": 134,
+        "age_rating": "T18",
+        "genres": [
+            "Horror",
+            "Mystery"
+        ],
+        "director": "James Wan",
+        "main_cast": [
+            "Vera Farmiga"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhà ngoại cảm Warren đến London giúp đỡ một gia đình bị quỷ ám",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOTRkMDlmZWEtMzQyYy00YzgyLTgwM2QtNzgxYmIwNGVlYmJlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW123",
+        "title": "Chạng Vạng",
+        "original_title": "Twilight",
+        "release_year": 2008,
+        "duration_minutes": 122,
+        "age_rating": "T13",
+        "genres": [
+            "Fantasy",
+            "Romance"
+        ],
+        "director": "Catherine Hardwicke",
+        "main_cast": [
+            "Kristen Stewart"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Mối tình lãng mạn đầy nguy hiểm giữa một nữ sinh và ma cà rồng",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTQ2NzUxMTAxN15BMl5BanBnXkFtZTcwMzEyMTIwMg@@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW124",
+        "title": "Sinh Vật Huyền Bí",
+        "original_title": "Fantastic Beasts",
+        "release_year": 2016,
+        "duration_minutes": 133,
+        "age_rating": "T13",
+        "genres": [
+            "Fantasy",
+            "Adventure"
+        ],
+        "director": "David Yates",
+        "main_cast": [
+            "Eddie Redmayne"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hành trình thu phục các sinh vật kỳ ảo lạc lối giữa New York",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjMxOTM1OTI4MV5BMl5BanBnXkFtZTgwODE5OTYxMDI@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW125",
+        "title": "Người Nhện: Không Còn Nhà",
+        "original_title": "Spider-Man: No Way Home",
+        "release_year": 2021,
+        "duration_minutes": 148,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "Jon Watts",
+        "main_cast": [
+            "Tom Holland"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Peter Parker đối mặt với đa vũ trụ khi danh tính bị tiết lộ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMmFiZGZjMmEtMTA0Ni00MzA2LTljMTYtZGI2MGJmZWYzZTQ2XkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW126",
+        "title": "Joker: Điên Có Đôi",
+        "original_title": "Joker: Folie à Deux",
+        "release_year": 2024,
+        "duration_minutes": 138,
+        "age_rating": "T18",
+        "genres": [
+            "Crime",
+            "Drama"
+        ],
+        "director": "Todd Phillips",
+        "main_cast": [
+            "Lady Gaga"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Arthur Fleck tìm thấy sự đồng điệu với Harley Quinn trong ngục tù",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTRlNmU1NzEtODNkNC00ZGM3LWFmNzQtMjBlMWRiYTcyMGRhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW127",
+        "title": "Vùng Đất Câm Lặng 2",
+        "original_title": "A Quiet Place Part II",
+        "release_year": 2020,
+        "duration_minutes": 97,
+        "age_rating": "T16",
+        "genres": [
+            "Horror",
+            "Sci-Fi"
+        ],
+        "director": "John Krasinski",
+        "main_cast": [
+            "Emily Blunt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Gia đình Abbott tiếp tục sinh tồn trong im lặng ngoài thế giới",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNjRiYjk4ZmItNGQ5NS00MmRhLTk4Y2EtMGQ1MTYxZWJhYjU0XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN039",
+        "title": "Bỗng Dưng Trúng Số",
+        "original_title": "Bỗng Dưng Trúng Số",
+        "release_year": 2022,
+        "duration_minutes": 113,
+        "age_rating": "T13",
+        "genres": [
+            "Comedy"
+        ],
+        "director": "Park Gyu-tae",
+        "main_cast": [
+            "Go Kyung-pyo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc tranh giành tờ vé số trúng độc đắc giữa hai miền Triều Tiên",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZTljMDk3MTgtZTgzYi00ZmYyLTlmOGItYTJkZjkyMGE1NTdmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN040",
+        "title": "Mai",
+        "original_title": "Mai",
+        "release_year": 2024,
+        "duration_minutes": 131,
+        "age_rating": "T18",
+        "genres": [
+            "Drama",
+            "Romance"
+        ],
+        "director": "Trấn Thành",
+        "main_cast": [
+            "Phương Anh Đào"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Câu chuyện về người phụ nữ chịu nhiều định kiến tìm thấy tình yêu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTgwNDBhOGItNTIxZC00ZjMzLWFhZTYtOGNiM2MzYWViMWUwXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN041",
+        "title": "Gặp Lại Chị Bầu",
+        "original_title": "Meet My Family",
+        "release_year": 2024,
+        "duration_minutes": 110,
+        "age_rating": "T13",
+        "genres": [
+            "Comedy",
+            "Family"
+        ],
+        "director": "Nhất Trung",
+        "main_cast": [
+            "Anh Tú",
+            "Diệu Nhi"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Một thanh niên lạc về quá khứ và gặp gỡ những người bạn đặc biệt",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/a5ssTNPs1yLybfbDyj6dRJRFNYZ.jpg"
+    },
+    {
+        "movie_id": "HW128",
+        "title": "Thế Thân 2: Dòng Chảy Của Nước",
+        "original_title": "Avatar: The Way of Water",
+        "release_year": 2022,
+        "duration_minutes": 192,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi",
+            "Action"
+        ],
+        "director": "James Cameron",
+        "main_cast": [
+            "Sam Worthington"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Jake Sully và gia đình tìm nơi ẩn náu mới tại các rạn san hô",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNWI0Y2NkOWEtMmM2OC00MjQ3LWI1YzItZGQxYzQ3NzI4NWZmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW129",
+        "title": "Thế Giới Khủng Long: Lãnh Địa",
+        "original_title": "Jurassic World Dominion",
+        "release_year": 2022,
+        "duration_minutes": 147,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Sci-Fi"
+        ],
+        "director": "Colin Trevorrow",
+        "main_cast": [
+            "Chris Pratt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Con người phải học cách chung sống với khủng long trên toàn cầu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZGExMWU2NWMtNzczYi00NjQ4LTk2YzctZGZkYmRmMDdhMjllXkEyXkFqcGc@._V1_QL75_UY562_CR5,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW130",
+        "title": "Sát Thủ John Wick 2",
+        "original_title": "John Wick: Chapter 2",
+        "release_year": 2017,
+        "duration_minutes": 122,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Thriller"
+        ],
+        "director": "Chad Stahelski",
+        "main_cast": [
+            "Keanu Reeves"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "John Wick bị kéo lại thế giới ngầm bởi một lời thề máu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjE2NDkxNTY2M15BMl5BanBnXkFtZTgwMDc2NzE0MTI@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW131",
+        "title": "Top Gun: Maverick",
+        "original_title": "Top Gun: Maverick",
+        "release_year": 2022,
+        "duration_minutes": 130,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Drama"
+        ],
+        "director": "Joseph Kosinski",
+        "main_cast": [
+            "Tom Cruise"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Maverick trở lại huấn luyện một thế hệ phi công mới đầy tài năng",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDBkZDNjMWEtOTdmMi00NmExLTg5MmMtNTFlYTJlNWY5YTdmXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "KD033",
+        "title": "Điền Thì Có Sao",
+        "original_title": "It is Okay to Not Be Okay",
+        "release_year": 2020,
+        "duration_minutes": 75,
+        "age_rating": "T16",
+        "genres": [
+            "Romance",
+            "Drama"
+        ],
+        "director": "Park Shin-woo",
+        "main_cast": [
+            "Kim Soo-hyun"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Câu chuyện tình chữa lành giữa điều dưỡng và tác giả truyện thiếu nhi",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzZmOWMwNjktNzdkOC00MDcxLWE3YTItNzIwOTRjOGFlYWZlXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD034",
+        "title": "Chào Mừng Đến Samdal-ri",
+        "original_title": "Welcome to Samdal-ri",
+        "release_year": 2023,
+        "duration_minutes": 70,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "Life"
+        ],
+        "director": "Cha Young-hoon",
+        "main_cast": [
+            "Ji Chang-wook"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nữ nhiếp ảnh gia quay về quê hương và tìm lại chính mình",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZTRkMmFmM2YtYmFiYi00NGZkLWIzOTUtNGYxOGMxMjRmNWRkXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW132",
+        "title": "Kung Fu Gấu Trúc 4",
+        "original_title": "Kung Fu Panda 4",
+        "release_year": 2024,
+        "duration_minutes": 94,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Comedy"
+        ],
+        "director": "Mike Mitchell",
+        "main_cast": [
+            "Jack Black"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Po phải tìm kiếm người kế vị Thần Long Đại Hiệp mới",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMzJlNGYxYzQtOTg4MC00OTMyLTkwYzMtZDRlNTgwY2YwOWYxXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW133",
+        "title": "Kẻ Trộm Mặt Trăng 4",
+        "original_title": "Despicable Me 4",
+        "release_year": 2024,
+        "duration_minutes": 94,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Comedy"
+        ],
+        "director": "Chris Renaud",
+        "main_cast": [
+            "Steve Carell"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Gia đình Gru đối mặt với kẻ thù mới và sự hỗn loạn từ các Minions",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzY0ZTlhYzgtOTgzZC00ZTg2LTk4NTEtZDllM2E2NGE5Njg2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW134",
+        "title": "Những Mảnh Ghép Cảm Xúc 2",
+        "original_title": "Inside Out 2",
+        "release_year": 2024,
+        "duration_minutes": 96,
+        "age_rating": "P",
+        "genres": [
+            "Animation",
+            "Adventure"
+        ],
+        "director": "Kelsey Mann",
+        "main_cast": [
+            "Amy Poehler"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Riley bước vào tuổi dậy thì với sự xuất hiện của những cảm xúc mới",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYWY3MDE2Y2UtOTE3Zi00MGUzLTg2MTItZjE1ZWVkMGVlODRmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW135",
+        "title": "Ma Gương 2",
+        "original_title": "Smile 2",
+        "release_year": 2024,
+        "duration_minutes": 127,
+        "age_rating": "T18",
+        "genres": [
+            "Horror",
+            "Mystery"
+        ],
+        "director": "Parker Finn",
+        "main_cast": [
+            "Naomi Scott"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một ngôi sao nhạc Pop bị ám ảnh bởi những nụ cười kinh hoàng",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYTg5OTMyMGMtYzMwNC00NDMyLWE0OGUtMTQ1ODcwM2FjOTM4XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW136",
+        "title": "Interstellar",
+        "original_title": "Interstellar",
+        "release_year": 2014,
+        "duration_minutes": 169,
+        "age_rating": "P",
+        "genres": [
+            "Sci-Fi",
+            "Adventure"
+        ],
+        "director": "Christopher Nolan",
+        "main_cast": [
+            "Matthew McConaughey"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hành trình xuyên không gian tìm hành tinh mới cứu nhân loại",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW137",
+        "title": "Cuộc Di tản Dunkirk",
+        "original_title": "Dunkirk",
+        "release_year": 2017,
+        "duration_minutes": 106,
+        "age_rating": "T13",
+        "genres": [
+            "War",
+            "Action"
+        ],
+        "director": "Christopher Nolan",
+        "main_cast": [
+            "Fionn Whitehead"
+        ],
+        "country": "UK",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc giải cứu thần tốc hàng vạn binh sĩ tại bờ biển Dunkirk",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTE0Mjg4MTMwMDZeQTJeQWpwZ15BbWU4MDAwMDQ1ODAy._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW138",
+        "title": "Joker 2: Điên Có Đôi",
+        "original_title": "Joker: Folie a Deux",
+        "release_year": 2024,
+        "duration_minutes": 138,
+        "age_rating": "T18",
+        "genres": [
+            "Musical",
+            "Crime"
+        ],
+        "director": "Todd Phillips",
+        "main_cast": [
+            "Lady Gaga"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Arthur Fleck và tình yêu điên rồ với Harley Quinn trong ngục",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTRlNmU1NzEtODNkNC00ZGM3LWFmNzQtMjBlMWRiYTcyMGRhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "VN042",
+        "title": "Bố Già",
+        "original_title": "Dad I'm Sorry",
+        "release_year": 2021,
+        "duration_minutes": 128,
+        "age_rating": "T13",
+        "genres": [
+            "Drama",
+            "Family"
+        ],
+        "director": "Trấn Thành",
+        "main_cast": [
+            "Trấn Thành",
+            "Tuấn Trần"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Những mâu thuẫn và tình cảm cha con trong một xóm nghèo",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNmJiMWNhZDYtNmJjZS00ZTY3LTgyZjgtMjA1MzZjNzJmNjZmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN043",
+        "title": "Chị Mười Ba: 3 Ngày Sinh Tử",
+        "original_title": "Sister Thirteen",
+        "release_year": 2020,
+        "duration_minutes": 95,
+        "age_rating": "T18",
+        "genres": [
+            "Action",
+            "Comedy"
+        ],
+        "director": "Võ Thanh Hòa",
+        "main_cast": [
+            "Thu Trang",
+            "Tiến Luật"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Chị Mười Ba dấn thân vào chốn giang hồ để bảo vệ đàn em",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/faqGzwnN6OWXDSiQQofFmMs2SBg.jpg"
+    },
+    {
+        "movie_id": "HW139",
+        "title": "Mad Max: Con Đường Tử Thần",
+        "original_title": "Mad Max: Fury Road",
+        "release_year": 2015,
+        "duration_minutes": 120,
+        "age_rating": "T16",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "George Miller",
+        "main_cast": [
+            "Tom Hardy",
+            "Charlize Theron"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuộc rượt đuổi nghẹt thở trên sa mạc trong thế giới hậu tận thế",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDRkODJhOTgtOTc1OC00NTgzLTk4NjItNDgxZDY4YjlmNDY2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW140",
+        "title": "Furiosa: Câu Chuyện Mad Max",
+        "original_title": "Furiosa",
+        "release_year": 2024,
+        "duration_minutes": 148,
+        "age_rating": "T16",
+        "genres": [
+            "Action",
+            "Adventure"
+        ],
+        "director": "George Miller",
+        "main_cast": [
+            "Anya Taylor-Joy"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Quá khứ khốc liệt của chiến binh Furiosa trước khi gặp Max",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTcwYWE1NTYtOWNiYy00NzY3LWIwY2MtNjJmZDkxNDNmOWE1XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW141",
+        "title": "Hành Tinh Cát",
+        "original_title": "Dune",
+        "release_year": 2021,
+        "duration_minutes": 155,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi",
+            "Adventure"
+        ],
+        "director": "Denis Villeneuve",
+        "main_cast": [
+            "Timothée Chalamet"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Paul Atreides dấn thân vào hành tinh nguy hiểm nhất vũ trụ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNWIyNmU5MGYtZDZmNi00ZjAwLWJlYjgtZTc0ZGIxMDE4ZGYwXkEyXkFqcGc@._V1_QL75_UY562_CR1,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW142",
+        "title": "Godzilla: Đế Vương Bất Tử",
+        "original_title": "Godzilla: King of the Monsters",
+        "release_year": 2019,
+        "duration_minutes": 132,
+        "age_rating": "T13",
+        "genres": [
+            "Action",
+            "Sci-Fi"
+        ],
+        "director": "Michael Dougherty",
+        "main_cast": [
+            "Millie Bobby Brown"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Godzilla đối đầu với những siêu quái vật cổ đại để giành ngôi vua",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDVhMjk2OGUtYzYxNS00NzBjLTk5YTItYzI0ZjgzNjY1NmI0XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD035",
+        "title": "Ngôi Trường Xác Sống",
+        "original_title": "All of Us Are Dead",
+        "release_year": 2022,
+        "duration_minutes": 60,
+        "age_rating": "T18",
+        "genres": [
+            "Horror",
+            "Action"
+        ],
+        "director": "Lee Jae-kyoo",
+        "main_cast": [
+            "Park Ji-hu"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhóm học sinh bị kẹt trong trường học khi đại dịch zombie bùng phát",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDY4ZmZhNzMtNjdkMC00NTE3LWFjYzQtOGE4OTllOGY1NTk5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD036",
+        "title": "Thế Giới Ma Quái",
+        "original_title": "Sweet Home",
+        "release_year": 2020,
+        "duration_minutes": 50,
+        "age_rating": "T18",
+        "genres": [
+            "Horror",
+            "Fantasy"
+        ],
+        "director": "Lee Eung-bok",
+        "main_cast": [
+            "Song Kang"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Những cư dân chung cư chiến đấu với quái vật biến dị từ lòng tham",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDE0MTM5YjgtMzNhOS00NWE2LTkxN2EtMzg0NWRmODBmMDA5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD011",
+        "title": "Trần Tình Lệnh",
+        "original_title": "The Untamed",
+        "release_year": 2019,
+        "duration_minutes": 45,
+        "age_rating": "T13",
+        "genres": [
+            "Fantasy",
+            "Mystery"
+        ],
+        "director": "Zheng Weiwen",
+        "main_cast": [
+            "Tiêu Chiến",
+            "Vương Nhất Bác"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Ngụy Vô Tiện và Lam Vong Cơ cùng giải mã những bí ẩn quá khứ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTllNDAwMzYtZjJjOS00NWE3LWExOTktZjNhZGQxZmMxYzM4XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD012",
+        "title": "Tinh Hán Xán Lạn",
+        "original_title": "Love Like The Galaxy",
+        "release_year": 2022,
+        "duration_minutes": 45,
+        "age_rating": "T13",
+        "genres": [
+            "Romance",
+            "History"
+        ],
+        "director": "Fei Zhenxiang",
+        "main_cast": [
+            "Triệu Lộ Tư",
+            "Ngô Lỗi"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Chuyện tình sâu sắc giữa thiếu nữ tài ba và vị tướng trẻ tuổi",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYjQ1YTNhOWYtNjQxNC00MjUyLTgwMDYtNjU5MGIwYWY5ZTRiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW143",
+        "title": "Nốt Trầm",
+        "original_title": "Whiplash",
+        "release_year": 2014,
+        "duration_minutes": 106,
+        "age_rating": "T16",
+        "genres": [
+            "Drama",
+            "Music"
+        ],
+        "director": "Damien Chazelle",
+        "main_cast": [
+            "Miles Teller"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Sự nỗ lực điên cuồng của một tay trống dưới trướng thầy giáo khắc nghiệt",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDFjOWFkYzktYzhhMC00NmYyLTkwY2EtYjViMDhmNzg0OGFkXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW144",
+        "title": "Những Kẻ Khờ Mộng Mơ",
+        "original_title": "La La Land",
+        "release_year": 2016,
+        "duration_minutes": 128,
+        "age_rating": "P",
+        "genres": [
+            "Romance",
+            "Music"
+        ],
+        "director": "Damien Chazelle",
+        "main_cast": [
+            "Ryan Gosling",
+            "Emma Stone"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tình yêu và những bản nhạc dang dở giữa hai tâm hồn nghệ sĩ",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMzUzNDM2NzM2MV5BMl5BanBnXkFtZTgwNTM3NTg4OTE@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW145",
+        "title": "Ký Sinh Trùng",
+        "original_title": "Parasite",
+        "release_year": 2019,
+        "duration_minutes": 132,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller",
+            "Drama"
+        ],
+        "director": "Bong Joon-ho",
+        "main_cast": [
+            "Song Kang-ho"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Một gia đình nghèo dùng thủ đoạn để thâm nhập vào nhà tài phiệt",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYjk1Y2U4MjQtY2ZiNS00OWQyLWI3MmYtZWUwNmRjYWRiNWNhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW146",
+        "title": "Soi Gia Pho Wall",
+        "original_title": "The Wolf of Wall Street",
+        "release_year": 2013,
+        "duration_minutes": 180,
+        "age_rating": "T18",
+        "genres": [
+            "Biography"
+        ],
+        "director": "Martin Scorsese",
+        "main_cast": [
+            "Leonardo DiCaprio"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuoc doi thang tram cua tay moi gioi chung khoan",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW147",
+        "title": "Giai Dieu Hanh Phuc",
+        "original_title": "Soul",
+        "release_year": 2020,
+        "duration_minutes": 100,
+        "age_rating": "P",
+        "genres": [
+            "Animation"
+        ],
+        "director": "Pete Docter",
+        "main_cast": [
+            "Jamie Foxx"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhac si nhac Jazz lac vao coi linh hon",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZTZkYjA5MDEtMjY1ZC00ODk5LThjOTUtZDYxODEzYWNjMTU2XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW148",
+        "title": "Diep Vien Kingsman",
+        "original_title": "Kingsman",
+        "release_year": 2014,
+        "duration_minutes": 129,
+        "age_rating": "T16",
+        "genres": [
+            "Action"
+        ],
+        "director": "Matthew Vaughn",
+        "main_cast": [
+            "Taron Egerton"
+        ],
+        "country": "UK",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "To chuc gian diep bi mat tuyen mo thieu nien",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BODk1MTYwNTAtYmI5Zi00OWYyLWE0MzQtOWE4NDIxZmU2MjMwXkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW149",
+        "title": "Vung Dat Cam Lang 1",
+        "original_title": "A Quiet Place",
+        "release_year": 2018,
+        "duration_minutes": 90,
+        "age_rating": "T16",
+        "genres": [
+            "Horror"
+        ],
+        "director": "John Krasinski",
+        "main_cast": [
+            "Emily Blunt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Gia dinh sinh ton trong im lang tuyet doi",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjI0MDMzNTQ0M15BMl5BanBnXkFtZTgwMTM5NzM3NDM@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW150",
+        "title": "Ke Kien Tao",
+        "original_title": "The Creator",
+        "release_year": 2023,
+        "duration_minutes": 133,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi"
+        ],
+        "director": "Gareth Edwards",
+        "main_cast": [
+            "John David Washington"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuoc chien tuong lai giua con nguoi va AI",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDkxMTUxOTQtYzM4Yi00YzA2LTgzOTYtNDg2NTliODE0ZTRjXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW151",
+        "title": "Meo Di Hia 2",
+        "original_title": "Puss in Boots 2",
+        "release_year": 2022,
+        "duration_minutes": 102,
+        "age_rating": "P",
+        "genres": [
+            "Animation"
+        ],
+        "director": "Joel Crawford",
+        "main_cast": [
+            "Antonio Banderas"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Meo di hia tim kiem dieu uoc cuoi cung",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMzg0MWUzMjctYjVlOS00NzVjLWIwZDMtNzg1YzNkYzdjNTMwXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN044",
+        "title": "Muoi Loi Nguyen",
+        "original_title": "Muoi 2",
+        "release_year": 2022,
+        "duration_minutes": 95,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Hang Trinh",
+        "main_cast": [
+            "Chi Pu"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Bi mat kinh hoang ve buc chan dung ma nu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTBjMmU1NWQtMTBjNy00YmU1LWFjZjUtYTQwODNkNzE0YzViXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN045",
+        "title": "Co Gai Qua Khu",
+        "original_title": "Girl From Past",
+        "release_year": 2022,
+        "duration_minutes": 105,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller"
+        ],
+        "director": "Namcito",
+        "main_cast": [
+            "Ninh Duong Lan Ngoc"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Bi mat den toi trong qua khu dan lo dien",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZDk5NThlM2ItYTkyMC00YTFiLTlkNmUtNTNjZjc0NzQ4MzIyXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN046",
+        "title": "Sieu Lua Gap Sieu Lay",
+        "original_title": "Hustler",
+        "release_year": 2023,
+        "duration_minutes": 112,
+        "age_rating": "T16",
+        "genres": [
+            "Comedy"
+        ],
+        "director": "Vo Thanh Hoa",
+        "main_cast": [
+            "Anh Tu"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Bo doi lua dao thuc hien phi vu hài hước",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZTI1MzJiYzMtOTk1Yi00ZWQzLTlkYTEtZjBkNDQyYWRkNDljXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD037",
+        "title": "Hen Ho Cong So",
+        "original_title": "Business Proposal",
+        "release_year": 2022,
+        "duration_minutes": 60,
+        "age_rating": "T13",
+        "genres": [
+            "Romance"
+        ],
+        "director": "Park Seon ho",
+        "main_cast": [
+            "Ahn Hyo seop"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhan vien di xem mat thay ban va gap sep",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYWM2NTM4MTktNDFiNi00NTI3LThiZTgtZmJiZTQ2NzdhNDE3XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD038",
+        "title": "Tuoi 25 Tuoi 21",
+        "original_title": "25 21",
+        "release_year": 2022,
+        "duration_minutes": 75,
+        "age_rating": "T13",
+        "genres": [
+            "Drama"
+        ],
+        "director": "Jung Ji hyun",
+        "main_cast": [
+            "Kim Tae ri"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Uoc mo va tinh yeu tuoi tre day hoai niem",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYmUyZWRiYzMtMDU3Mi00NzNjLTk2YjEtMjhhMzliNTgwMTNkXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW152",
+        "title": "Nguoi Nhen 2023",
+        "original_title": "Across Spider Verse",
+        "release_year": 2023,
+        "duration_minutes": 140,
+        "age_rating": "P",
+        "genres": [
+            "Animation"
+        ],
+        "director": "Joaquim Dos Santos",
+        "main_cast": [
+            "Shameik Moore"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Miles Morales du hanh qua cac da vu tru",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNThiZjA3MjItZGY5Ni00ZmJhLWEwN2EtOTBlYTA4Y2E0M2ZmXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW153",
+        "title": "Indiana Jones 5",
+        "original_title": "Dial of Destiny",
+        "release_year": 2023,
+        "duration_minutes": 154,
+        "age_rating": "T13",
+        "genres": [
+            "Adventure"
+        ],
+        "director": "James Mangold",
+        "main_cast": [
+            "Harrison Ford"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nha khao co chay dua voi thoi gian tim co vat",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYWJlOWE2ZjEtZGRhOC00M2YzLWFkZGEtYzIzZWI2Zjg3NWYxXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW154",
+        "title": "Ba Dong",
+        "original_title": "Talk To Me",
+        "release_year": 2023,
+        "duration_minutes": 95,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Danny Philippou",
+        "main_cast": [
+            "Sophie Wilde"
+        ],
+        "country": "Australia",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhom ban tre choi dua voi ban tay ma quai",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BY2I2NzJmY2YtYTM3Ni00ZGJhLThkZTItODFhMzhlZjZkMDQ5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW155",
+        "title": "Ca Map Meg 2",
+        "original_title": "Meg 2",
+        "release_year": 2023,
+        "duration_minutes": 116,
+        "age_rating": "T13",
+        "genres": [
+            "Action"
+        ],
+        "director": "Ben Wheatley",
+        "main_cast": [
+            "Jason Statham"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuoc chien sinh ton voi ca map tien su",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOGNiOTFkYTUtMDdiMi00YmJlLTkzOTAtMGViYWRhZjY3ODhkXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW156",
+        "title": "Chuyen Tau Bullet",
+        "original_title": "Bullet Train",
+        "release_year": 2022,
+        "duration_minutes": 126,
+        "age_rating": "T18",
+        "genres": [
+            "Action"
+        ],
+        "director": "David Leitch",
+        "main_cast": [
+            "Brad Pitt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Sat thu doi dau tren chuyen tau sieu toc",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BODUyZjkxZDMtZGI3ZC00ZmEwLTgwMTUtYTU4OTQ5YjU4ZjRlXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW157",
+        "title": "Ke Sat Nhan Thue",
+        "original_title": "The Killer",
+        "release_year": 2023,
+        "duration_minutes": 118,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller"
+        ],
+        "director": "David Fincher",
+        "main_cast": [
+            "Michael Fassbender"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Mot sat thu mau lanh bat dau cuoc truy lung",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzU2MTlkMTctNWI3MC00ODUzLTlmYzQtMzZjYjVmMmYwZGU0XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW158",
+        "title": "Vang Trang Mau",
+        "original_title": "Killers of Flower Moon",
+        "release_year": 2023,
+        "duration_minutes": 206,
+        "age_rating": "T18",
+        "genres": [
+            "Crime"
+        ],
+        "director": "Martin Scorsese",
+        "main_cast": [
+            "Leonardo DiCaprio"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cuoc dieu tra vu sat hai nguoi Osage tai My",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZWY5ZDVjNTUtODI5Yy00MjFhLWEyM2EtYzZjM2VjZTI0MTBjXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW159",
+        "title": "Barbie",
+        "original_title": "Barbie",
+        "release_year": 2023,
+        "duration_minutes": 114,
+        "age_rating": "P",
+        "genres": [
+            "Comedy"
+        ],
+        "director": "Greta Gerwig",
+        "main_cast": [
+            "Margot Robbie"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Barbie trai nghiem cuoc song o the gioi thuc",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYjI3NDU0ZGYtYjA2YS00Y2RlLTgwZDAtYTE2YTM5ZjE1M2JlXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW160",
+        "title": "Oppenheimer",
+        "original_title": "Oppenheimer",
+        "release_year": 2023,
+        "duration_minutes": 180,
+        "age_rating": "T18",
+        "genres": [
+            "Biography"
+        ],
+        "director": "Christopher Nolan",
+        "main_cast": [
+            "Cillian Murphy"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Cau chuyen ve cha de cua bom nguyen tu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW161",
+        "title": "Dune Hanh Tinh Cat 2",
+        "original_title": "Dune Part Two",
+        "release_year": 2024,
+        "duration_minutes": 166,
+        "age_rating": "T13",
+        "genres": [
+            "Sci-Fi"
+        ],
+        "director": "Denis Villeneuve",
+        "main_cast": [
+            "Timothee Chalamet"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Paul Atreides hop luc voi Chani de tra thu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NjFiLTlkMWUtOGQ5NjFmYWUyZGJhXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW162",
+        "title": "Nguoi Nhien Homecoming",
+        "original_title": "Spider-Man",
+        "release_year": 2017,
+        "duration_minutes": 133,
+        "age_rating": "T13",
+        "genres": [
+            "Action"
+        ],
+        "director": "Jon Watts",
+        "main_cast": [
+            "Tom Holland"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Peter Parker can bang viec hoc va sieu anh hung",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDEyMTc2NTAtNmMyMi00ZTBmLTg1NGEtYzA2MTJmZjJiNDQwXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW163",
+        "title": "Ve Binh Dai Ngan Ha 3",
+        "original_title": "GotG Vol 3",
+        "release_year": 2023,
+        "duration_minutes": 150,
+        "age_rating": "T13",
+        "genres": [
+            "Action"
+        ],
+        "director": "James Gunn",
+        "main_cast": [
+            "Chris Pratt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhom ve binh thuc hien nhiem vu bao ve Rocket",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOTJhOTMxMmItZmE0Ny00MDc3LWEzOGEtOGFkMzY4MWYyZDQ0XkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW164",
+        "title": "Cong Vien Ky Jura 4",
+        "original_title": "Jurassic World",
+        "release_year": 2015,
+        "duration_minutes": 124,
+        "age_rating": "T13",
+        "genres": [
+            "Action"
+        ],
+        "director": "Colin Trevorrow",
+        "main_cast": [
+            "Chris Pratt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Khung long lai tao tron thoat gay nao loan",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNzBhNzlkM2UtZTQyOC00NjUyLTkzMmMtNDQ1YTM5N2NmMGE5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN047",
+        "title": "Dat Rung Phuong Nam",
+        "original_title": "Song of South",
+        "release_year": 2023,
+        "duration_minutes": 110,
+        "age_rating": "K",
+        "genres": [
+            "Adventure"
+        ],
+        "director": "Quang Dung",
+        "main_cast": [
+            "Hao Khang"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Hanh trinh tim cha cua be An tai mien Tay",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNDllMWM5MjktNmE4MC00MTc3LTk2YjItOGFkNjgyMjhkMjRiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN048",
+        "title": "Co Ba Sai Gon",
+        "original_title": "The Tailor",
+        "release_year": 2017,
+        "duration_minutes": 100,
+        "age_rating": "P",
+        "genres": [
+            "Comedy"
+        ],
+        "director": "Kay Nguyen",
+        "main_cast": [
+            "Lan Ngoc"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Thoi trang ao dai va chuyen du hanh thoi gian",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/vv8JfnN1ljrB1BvI7Ob9ZNrVgpb.jpg"
+    },
+    {
+        "movie_id": "VN049",
+        "title": "Muon Vi Nhan Gian",
+        "original_title": "The Pot-au-Feu",
+        "release_year": 2023,
+        "duration_minutes": 135,
+        "age_rating": "T13",
+        "genres": [
+            "Romance"
+        ],
+        "director": "Tran Anh Hung",
+        "main_cast": [
+            "Juliette Binoche"
+        ],
+        "country": "France",
+        "language": "French",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tinh yeu va am thuc tinh te cua Tran Anh Hung",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTBkZTk1NzMtMTNlMC00ZjFmLWE5ZWYtYzg0NmVlNzllNTRlXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD039",
+        "title": "Vinh Quang Trong Thu Han",
+        "original_title": "The Glory",
+        "release_year": 2022,
+        "duration_minutes": 60,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller"
+        ],
+        "director": "Ahn Gil ho",
+        "main_cast": [
+            "Song Hye kyo"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Ke hoach tra thu ke bat nat trong qua khu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BODM0ZTc5YTAtZmMxNi00YzJkLWEzODItZDczZTRlNTc1NGE3XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD040",
+        "title": "Tro Choi Con Muc",
+        "original_title": "Squid Game",
+        "release_year": 2021,
+        "duration_minutes": 60,
+        "age_rating": "T18",
+        "genres": [
+            "Thriller"
+        ],
+        "director": "Hwang Dong hyuk",
+        "main_cast": [
+            "Lee Jung jae"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Tro choi sinh ton de gianh giai thuong lon",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYTU3ZDVhNmMtMDVlNC00MDc0LTgwNDMtYWE5MTI2ZGI4YWIwXkEyXkFqcGc@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "CD013",
+        "title": "Than Dieu Dai Hiep",
+        "original_title": "Condor Heroes",
+        "release_year": 2006,
+        "duration_minutes": 45,
+        "age_rating": "T13",
+        "genres": [
+            "Action"
+        ],
+        "director": "Yu Min",
+        "main_cast": [
+            "Luu Diec Phi"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Chuyen tinh Duong Qua va Tieu Long Nu",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMWZkNjA5NmItOTE5MC00ZjA1LTg0ZDEtZDRhODJjYzA4ZjhhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "CD014",
+        "title": "Dien Hy Cong Luoc",
+        "original_title": "Yanxi Palace",
+        "release_year": 2018,
+        "duration_minutes": 45,
+        "age_rating": "T13",
+        "genres": [
+            "History"
+        ],
+        "director": "Hui Kaidong",
+        "main_cast": [
+            "Ngo Can Ngon"
+        ],
+        "country": "China",
+        "language": "Mandarin",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hanh trinh thăng tiến của Nguy Anh Lac",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BOWMyMWY0ZTMtZTU2Yy00M2M2LWE3ZWMtZWZmZjQ4MDQ2OWJiXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW165",
+        "title": "Sat Thu John Wick 3",
+        "original_title": "John Wick 3",
+        "release_year": 2019,
+        "duration_minutes": 131,
+        "age_rating": "T18",
+        "genres": [
+            "Action"
+        ],
+        "director": "Chad Stahelski",
+        "main_cast": [
+            "Keanu Reeves"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "John Wick bi truy na toan cau sau khi pha luat",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/dCuJH7UsWOzNrXUzPiGwmcwT8sk.jpg"
+    },
+    {
+        "movie_id": "HW169",
+        "title": "Cau Chuyen Do Choi 4",
+        "original_title": "Toy Story 4",
+        "release_year": 2019,
+        "duration_minutes": 100,
+        "age_rating": "P",
+        "genres": [
+            "Animation"
+        ],
+        "director": "Josh Cooley",
+        "main_cast": [
+            "Tom Hanks"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Woody gap lai Bo Peep trong chuyen di xa",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTYzMDM4NzkxOV5BMl5BanBnXkFtZTgwNzM1Mzg2NzM@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW170",
+        "title": "Cuoc Hoi Ngo Dieu Ky",
+        "original_title": "Coco",
+        "release_year": 2017,
+        "duration_minutes": 105,
+        "age_rating": "P",
+        "genres": [
+            "Animation"
+        ],
+        "director": "Lee Unkrich",
+        "main_cast": [
+            "Gael Garcia"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Miguel lac vao vung dat linh hon tim bi mat",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMDIyM2E2NTAtMzlhNy00ZGUxLWI1NjgtZDY5MzhiMDc5NGU3XkEyXkFqcGc@._V1_QL75_UY562_CR7,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW171",
+        "title": "Am Anh Kinh Hoang",
+        "original_title": "The Conjuring",
+        "release_year": 2013,
+        "duration_minutes": 112,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "James Wan",
+        "main_cast": [
+            "Vera Farmiga"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nha ngoai cam dieu tra thuc the tai trang trai",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMTM3NjA1NDMyMV5BMl5BanBnXkFtZTcwMDQzNDMzOQ@@._V1_QL75_UX380_CR0,0,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW172",
+        "title": "Ga He Ma Quai",
+        "original_title": "It",
+        "release_year": 2017,
+        "duration_minutes": 135,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Andy Muschietti",
+        "main_cast": [
+            "Bill Skarsgard"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Nhom tre doi mat voi ga he Pennywise",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BZGZmOTZjNzUtOTE4OS00OGM3LWJiNGEtZjk4Yzg2M2Q1YzYxXkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg"
+    },
+    {
+        "movie_id": "HW173",
+        "title": "Nhiem Vu Bat Kha Thi 6",
+        "original_title": "Fallout",
+        "release_year": 2018,
+        "duration_minutes": 147,
+        "age_rating": "T13",
+        "genres": [
+            "Action"
+        ],
+        "director": "McQuarrie",
+        "main_cast": [
+            "Tom Cruise"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Ethan Hunt chay dua voi thoi gian cuu the gioi",
+        "poster_url": "https://images.weserv.nl/?url=https://image.tmdb.org/t/p/w500/4S7HQR2aOTlNVxwUpcVQSMSuUJI.jpg"
+    },
+    {
+        "movie_id": "HW174",
+        "title": "Ten Sat Nhan Trong Guong",
+        "original_title": "Candyman",
+        "release_year": 2021,
+        "duration_minutes": 91,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Nia DaCosta",
+        "main_cast": [
+            "Yahya Abdul"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Hoa si danh thuc huyen thoai kinh di sat nhan",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMzFjMTQwMGYtNjNmNC00NjMyLWJjNWYtOGRhMmVkNGY1N2U5XkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "VN052",
+        "title": "Muoi Loi Nguyen Tro Lai",
+        "original_title": "Muoi 2",
+        "release_year": 2022,
+        "duration_minutes": 95,
+        "age_rating": "T18",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Hang Trinh",
+        "main_cast": [
+            "Chi Pu"
+        ],
+        "country": "Vietnam",
+        "language": "Vietnamese",
+        "subtitle_languages": [
+            "English"
+        ],
+        "description": "Bi mat buc chan dung bi nguyen rua cua Muoi",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BNTBjMmU1NWQtMTBjNy00YmU1LWFjZjUtYTQwODNkNzE0YzViXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "KD041",
+        "title": "Cau Ut Nha Tai Phiet",
+        "original_title": "Reborn Rich",
+        "release_year": 2022,
+        "duration_minutes": 70,
+        "age_rating": "T13",
+        "genres": [
+            "Drama"
+        ],
+        "director": "Jung Dae yoon",
+        "main_cast": [
+            "Song Joong ki"
+        ],
+        "country": "Korea",
+        "language": "Korean",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Thu ky tai sinh thanh chau trai nha tai phiet",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYzlhNGU0NGQtNmYzMi00MzdjLTlkMzgtNTAzM2NhYTlhMzdhXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW175",
+        "title": "Vung Dat Cam Lang",
+        "original_title": "A Quiet Place",
+        "release_year": 2018,
+        "duration_minutes": 90,
+        "age_rating": "T16",
+        "genres": [
+            "Horror"
+        ],
+        "director": "John Krasinski",
+        "main_cast": [
+            "Emily Blunt"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Gia dinh phai im lang tuyet doi de sinh ton",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BMjI0MDMzNTQ0M15BMl5BanBnXkFtZTgwMTM5NzM3NDM@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW176",
+        "title": "Vu Be Boi",
+        "original_title": "Bombshell",
+        "release_year": 2019,
+        "duration_minutes": 109,
+        "age_rating": "T13",
+        "genres": [
+            "Biography"
+        ],
+        "director": "Jay Roach",
+        "main_cast": [
+            "Margot Robbie"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Phu nu Fox News dung len to cao quay roi",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BODY3ODVkYTAtZDFmNS00ZDYyLTlkOTEtNTY3NTFhNDE4ZjFjXkEyXkFqcGc@._V1_SX300.jpg"
+    },
+    {
+        "movie_id": "HW177",
+        "title": "Hiem Hoa Vo Hinh",
+        "original_title": "The Invisible Man",
+        "release_year": 2020,
+        "duration_minutes": 124,
+        "age_rating": "T16",
+        "genres": [
+            "Horror"
+        ],
+        "director": "Leigh Whannell",
+        "main_cast": [
+            "Elisabeth Moss"
+        ],
+        "country": "USA",
+        "language": "English",
+        "subtitle_languages": [
+            "Vietnamese"
+        ],
+        "description": "Mot phu nu bi san duoi boi ke vo hinh",
+        "poster_url": "https://m.media-amazon.com/images/M/MV5BYTM3NDJhZWUtZWM1Yy00ODk4LThjNmMtNDg3OGYzMGM2OGYzXkEyXkFqcGc@._V1_SX300.jpg"
+    }
+]

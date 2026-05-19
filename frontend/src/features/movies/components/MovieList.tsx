@@ -11,10 +11,18 @@ export const MovieList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const getMoviePriority = (movie: Movie) => {
+            const lang = movie.language ? movie.language.toLowerCase() : '';
+            if (lang === 'english') return 1; // Hollywood (English) first
+            if (lang === 'vietnamese') return 3; // Vietnamese last
+            return 2; // Others in the middle
+        };
+
         const fetchMovies = async () => {
             try {
                 const data = await getMovies();
-                setMovies(data);
+                const sortedData = [...data].sort((a, b) => getMoviePriority(a) - getMoviePriority(b));
+                setMovies(sortedData);
             } catch (err) {
                 const errorMessage = err instanceof Error ? err.message : 'Không thể tải danh sách phim.';
                 setError(errorMessage);
