@@ -72,7 +72,7 @@ public class SecurityConfig {
 
                         // Phân quyền cho Feature Room (Theatre)
                         .requestMatchers(HttpMethod.GET, "/api/v1/rooms/**").permitAll() // Cho phép xem phòng và ghế
-                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms", "/api/v1/rooms/**/seats").hasRole("ADMIN") // Tạo phòng, tạo ghế
+                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms", "/api/v1/rooms/*/seats").hasRole("ADMIN") // Sửa lỗi: dùng * thay cho **
                         .requestMatchers(HttpMethod.PUT, "/api/v1/rooms/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/rooms/**").hasRole("ADMIN")
 
