@@ -4,6 +4,8 @@ import com.example.Movie_Ticket_Booking_System.exception.ResourceNotFoundExcepti
 import com.example.Movie_Ticket_Booking_System.features.cinema.Cinema;
 import com.example.Movie_Ticket_Booking_System.features.cinema.CinemaRepository;
 import com.example.Movie_Ticket_Booking_System.features.room.dto.RoomDTO;
+import com.example.Movie_Ticket_Booking_System.features.showtime.Showtime;
+import com.example.Movie_Ticket_Booking_System.features.showtime.ShowtimeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +16,12 @@ public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
     private final CinemaRepository cinemaRepository;
+    private final ShowtimeRepository showtimeRepository; // Inject ShowtimeRepository
 
-    public RoomServiceImpl(RoomRepository roomRepository, CinemaRepository cinemaRepository) {
+    public RoomServiceImpl(RoomRepository roomRepository, CinemaRepository cinemaRepository, ShowtimeRepository showtimeRepository) {
         this.roomRepository = roomRepository;
         this.cinemaRepository = cinemaRepository;
+        this.showtimeRepository = showtimeRepository; // Khởi tạo
     }
 
     @Override
@@ -55,7 +59,13 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void deleteRoom(Integer roomId) {
         Room room = findRoomById(roomId);
-        // TODO: Add check for showtimes before deleting
+
+        // Kiểm tra xem có lịch chiếu nào đang sử dụng phòng này không
+        List<Showtime> showtimes = showtimeRepository.findByRoomIdIn(List.of(roomId));
+        if (!showtimes.isEmpty()) {
+            throw new IllegalStateException("Cannot delete room with active showtimes.");
+        }
+
         roomRepository.delete(room);
     }
 
