@@ -1,7 +1,7 @@
-package com.example.Movie_Ticket_Booking_System.domain.entity;
+package com.example.Movie_Ticket_Booking_System.features.account;
 
+import com.example.Movie_Ticket_Booking_System.features.role.AccountRole;
 import jakarta.persistence.*;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +22,14 @@ public class Account {
     private String fullName;
 
     private String phone;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
+
+    @OneToMany(mappedBy = "account")
+    private List<AccountRole> accountRoles;
+
+    // Getters and Setters
 
     public UUID getId() {
         return id;
@@ -71,8 +79,11 @@ public class Account {
         this.accountRoles = accountRoles;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
 
-    // Liên kết tới bảng trung gian
-    @OneToMany(mappedBy = "account")
-    private List<AccountRole> accountRoles;
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }

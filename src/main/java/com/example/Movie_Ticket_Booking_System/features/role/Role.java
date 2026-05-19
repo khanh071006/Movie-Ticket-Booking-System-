@@ -1,7 +1,6 @@
-package com.example.Movie_Ticket_Booking_System.domain.entity;
+package com.example.Movie_Ticket_Booking_System.features.role;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -13,6 +12,11 @@ public class Role {
 
     @Column(nullable = false, unique = true, length = 50)
     private String name;
+
+    @OneToMany(mappedBy = "role")
+    private List<AccountRole> accountRoles;
+
+    // Getters and Setters
 
     public int getId() {
         return id;
@@ -37,8 +41,4 @@ public class Role {
     public void setAccountRoles(List<AccountRole> accountRoles) {
         this.accountRoles = accountRoles;
     }
-
-    // Liên kết tới bảng trung gian
-    @OneToMany(mappedBy = "role")
-    private List<AccountRole> accountRoles;
 }
