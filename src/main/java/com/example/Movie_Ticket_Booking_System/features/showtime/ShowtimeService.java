@@ -9,6 +9,6 @@ import java.util.UUID;
 public interface ShowtimeService {
     ShowtimeResponseDTO createShowtime(ShowtimeRequestDTO showtimeRequestDTO);
     void deleteShowtime(UUID showtimeId);
-    List<ShowtimeResponseDTO> getShowtimesByMovieAndCinema(UUID movieId, UUID cinemaId);
+    List<ShowtimeResponseDTO> getShowtimesByMovieAndCinema(UUID movieId, Integer cinemaId); // Thay đổi từ UUID sang Integer
     List<ShowtimeResponseDTO> getShowtimesByMovie(UUID movieId);
 }

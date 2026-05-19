@@ -11,13 +11,14 @@ import java.util.UUID;
 
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, UUID> {
-    List<Showtime> findByRoomIdIn(List<UUID> roomIds);
+    // Cập nhật để sử dụng Integer cho roomIds
+    List<Showtime> findByRoomIdIn(List<Integer> roomIds);
 
     @Query("SELECT s FROM Showtime s WHERE s.room.id = :roomId AND s.endTime > :startTime AND s.startTime < :endTime")
-    List<Showtime> findOverlappingShowtimes(@Param("roomId") UUID roomId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
+    List<Showtime> findOverlappingShowtimes(@Param("roomId") Integer roomId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 
     List<Showtime> findByMovieId(UUID movieId);
 
     @Query("SELECT s FROM Showtime s WHERE s.movie.id = :movieId AND s.room.cinema.id = :cinemaId")
-    List<Showtime> findByMovieIdAndCinemaId(@Param("movieId") UUID movieId, @Param("cinemaId") UUID cinemaId);
+    List<Showtime> findByMovieIdAndCinemaId(@Param("movieId") UUID movieId, @Param("cinemaId") Integer cinemaId);
 }

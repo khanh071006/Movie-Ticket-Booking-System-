@@ -65,6 +65,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         LocalDateTime startTime = dto.getStartTime();
         LocalDateTime endTime = startTime.plusMinutes(movie.getDurationMinutes() + 30);
 
+        // Sử dụng Integer cho roomId
         List<Showtime> overlapping = showtimeRepository.findOverlappingShowtimes(room.getId(), startTime, endTime);
         if (!overlapping.isEmpty()) {
             throw new IllegalStateException("Showtime conflicts with an existing showtime in the same room.");
@@ -84,11 +85,12 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     public void deleteShowtime(UUID showtimeId) {
         Showtime showtime = showtimeRepository.findById(showtimeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Showtime", "id", showtimeId));
+        // TODO: Add check if any booking is associated with this showtime
         showtimeRepository.delete(showtime);
     }
 
     @Override
-    public List<ShowtimeResponseDTO> getShowtimesByMovieAndCinema(UUID movieId, UUID cinemaId) {
+    public List<ShowtimeResponseDTO> getShowtimesByMovieAndCinema(UUID movieId, Integer cinemaId) { // Thay đổi từ UUID sang Integer
         List<Showtime> showtimes = showtimeRepository.findByMovieIdAndCinemaId(movieId, cinemaId);
         List<ShowtimeResponseDTO> dtos = new ArrayList<>();
         for (Showtime showtime : showtimes) {

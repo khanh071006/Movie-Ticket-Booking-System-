@@ -95,19 +95,19 @@ public class ShowtimeResponseDTO {
 
     // Inner class RoomInfo
     public static class RoomInfo {
-        private UUID id;
+        private Integer id; // Thay đổi từ UUID sang Integer
         private String name;
         private CinemaInfo cinema;
 
         public RoomInfo() {}
-        public RoomInfo(UUID id, String name, CinemaInfo cinema) {
+        public RoomInfo(Integer id, String name, CinemaInfo cinema) { // Thay đổi kiểu id
             this.id = id;
             this.name = name;
             this.cinema = cinema;
         }
 
-        public UUID getId() { return id; }
-        public void setId(UUID id) { this.id = id; }
+        public Integer getId() { return id; } // Thay đổi kiểu trả về
+        public void setId(Integer id) { this.id = id; } // Thay đổi kiểu tham số
         public String getName() { return name; }
         public void setName(String name) { this.name = name; }
         public CinemaInfo getCinema() { return cinema; }
@@ -118,11 +118,11 @@ public class ShowtimeResponseDTO {
         }
 
         public static class RoomInfoBuilder {
-            private UUID id;
+            private Integer id; // Thay đổi từ UUID sang Integer
             private String name;
             private CinemaInfo cinema;
 
-            public RoomInfoBuilder id(UUID id) { this.id = id; return this; }
+            public RoomInfoBuilder id(Integer id) { this.id = id; return this; } // Thay đổi kiểu id
             public RoomInfoBuilder name(String name) { this.name = name; return this; }
             public RoomInfoBuilder cinema(CinemaInfo cinema) { this.cinema = cinema; return this; }
 
@@ -134,17 +134,17 @@ public class ShowtimeResponseDTO {
 
     // Inner class CinemaInfo
     public static class CinemaInfo {
-        private UUID id;
+        private Integer id; // Thay đổi từ UUID sang Integer
         private String name;
 
         public CinemaInfo() {}
-        public CinemaInfo(UUID id, String name) {
+        public CinemaInfo(Integer id, String name) { // Thay đổi kiểu id
             this.id = id;
             this.name = name;
         }
 
-        public UUID getId() { return id; }
-        public void setId(UUID id) { this.id = id; }
+        public Integer getId() { return id; } // Thay đổi kiểu trả về
+        public void setId(Integer id) { this.id = id; } // Thay đổi kiểu tham số
         public String getName() { return name; }
         public void setName(String name) { this.name = name; }
 
@@ -153,10 +153,10 @@ public class ShowtimeResponseDTO {
         }
 
         public static class CinemaInfoBuilder {
-            private UUID id;
+            private Integer id; // Thay đổi từ UUID sang Integer
             private String name;
 
-            public CinemaInfoBuilder id(UUID id) { this.id = id; return this; }
+            public CinemaInfoBuilder id(Integer id) { this.id = id; return this; } // Thay đổi kiểu id
             public CinemaInfoBuilder name(String name) { this.name = name; return this; }
 
             public CinemaInfo build() {

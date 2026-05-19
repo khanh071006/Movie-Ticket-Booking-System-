@@ -10,7 +10,7 @@ public class ShowtimeRequestDTO {
     private UUID movieId;
 
     @NotNull(message = "Room ID cannot be null")
-    private UUID roomId;
+    private Integer roomId; // Thay đổi từ UUID sang Integer
 
     @NotNull(message = "Start time cannot be null")
     @Future(message = "Start time must be in the future")
@@ -18,7 +18,7 @@ public class ShowtimeRequestDTO {
 
     public ShowtimeRequestDTO() {}
 
-    public ShowtimeRequestDTO(UUID movieId, UUID roomId, LocalDateTime startTime) {
+    public ShowtimeRequestDTO(UUID movieId, Integer roomId, LocalDateTime startTime) {
         this.movieId = movieId;
         this.roomId = roomId;
         this.startTime = startTime;
@@ -32,11 +32,11 @@ public class ShowtimeRequestDTO {
         this.movieId = movieId;
     }
 
-    public UUID getRoomId() {
+    public Integer getRoomId() { // Thay đổi kiểu trả về
         return roomId;
     }
 
-    public void setRoomId(UUID roomId) {
+    public void setRoomId(Integer roomId) { // Thay đổi kiểu tham số
         this.roomId = roomId;
     }
 

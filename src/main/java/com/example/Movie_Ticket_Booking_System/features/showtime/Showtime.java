@@ -19,7 +19,7 @@ public class Showtime {
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "theatre_id", nullable = false) // Đổi từ room_id sang theatre_id theo DB.md
     private Room room;
 
     @Column(name = "start_time", nullable = false)
