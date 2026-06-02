@@ -100,114 +100,182 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
 
         // 3. Seed Movies from JSON
-        if (movieRepository.count() == 0) {
-            System.out.println(">>> SEED MOVIES: Parsing movies.json...");
-            try (InputStream is = getClass().getResourceAsStream("/movies.json")) {
-                if (is == null) {
-                    System.err.println(">>> SEED MOVIES FAILED: movies.json not found in classpath.");
-                    return;
-                }
-
+        List<MovieJson> moviesList = null;
+        try (InputStream is = getClass().getResourceAsStream("/movies.json")) {
+            if (is != null) {
                 ObjectMapper mapper = new ObjectMapper();
-                List<MovieJson> moviesList = mapper.readValue(is, new TypeReference<List<MovieJson>>() {});
+                moviesList = mapper.readValue(is, new TypeReference<List<MovieJson>>() {});
+            } else {
+                System.err.println(">>> SEED MOVIES FAILED: movies.json not found in classpath.");
+            }
+        } catch (Exception e) {
+            System.err.println(">>> SEED MOVIES: Error reading movies.json: " + e.getMessage());
+        }
+
+        if (moviesList != null) {
+            if (movieRepository.count() == 0) {
                 System.out.println(">>> SEED MOVIES: Found " + moviesList.size() + " movies to seed.");
+                try {
+                    // Seed a default MovieStatus
+                    MovieStatus defaultStatus = movieStatusRepository.findByName("Đang chiếu")
+                            .orElseGet(() -> {
+                                MovieStatus ms = new MovieStatus();
+                                ms.setName("Đang chiếu");
+                                return movieStatusRepository.save(ms);
+                            });
 
-                // Seed a default MovieStatus
-                MovieStatus defaultStatus = movieStatusRepository.findByName("Đang chiếu")
-                        .orElseGet(() -> {
-                            MovieStatus ms = new MovieStatus();
-                            ms.setName("Đang chiếu");
-                            return movieStatusRepository.save(ms);
-                        });
-
-                int seededCount = 0;
-                for (MovieJson mj : moviesList) {
-                    if (mj.title == null || mj.title.trim().isEmpty()) {
-                        continue;
-                    }
-
-                    Movie movie = new Movie();
-                    movie.setTitle(mj.title);
-                    movie.setDescription(mj.description);
-                    movie.setDurationMinutes(mj.duration_minutes);
-                    movie.setLanguage(mj.language != null ? mj.language : "Vietnamese");
-                    
-                    String posterUrl = mj.poster_url;
-                    if (posterUrl != null && posterUrl.startsWith("http")) {
-                        if (posterUrl.contains("tmdb.org")) {
-                            posterUrl = "https://images.weserv.nl/?url=" + posterUrl;
+                    int seededCount = 0;
+                    for (MovieJson mj : moviesList) {
+                        if (mj.title == null || mj.title.trim().isEmpty()) {
+                            continue;
                         }
-                    } else {
-                        posterUrl = getFallbackPoster(mj.title, mj.genres);
-                    }
-                    movie.setPosterUrl(posterUrl);
-                    
-                    movie.setTrailerUrl("https://www.youtube.com/embed/dQw4w9WgXcQ"); // Default placeholder trailer
 
+                        Movie movie = new Movie();
+                        movie.setTitle(mj.title);
+                        movie.setDescription(mj.description);
+                        movie.setDurationMinutes(mj.duration_minutes);
+                        movie.setLanguage(mj.language != null ? mj.language : "Vietnamese");
+                        
+                        String posterUrl = mj.poster_url;
+                        if (posterUrl != null && posterUrl.startsWith("http")) {
+                            if (posterUrl.contains("tmdb.org")) {
+                                posterUrl = "https://images.weserv.nl/?url=" + posterUrl;
+                            }
+                        } else {
+                            posterUrl = getFallbackPoster(mj.title, mj.genres);
+                        }
+                        movie.setPosterUrl(posterUrl);
+                        
+                        if (mj.trailer_url != null && !mj.trailer_url.trim().isEmpty()) {
+                            movie.setTrailerUrl(mj.trailer_url);
+                        } else {
+                            movie.setTrailerUrl("https://www.youtube.com/results?search_query=" + java.net.URLEncoder.encode(mj.title + " official trailer", "UTF-8"));
+                        }
 
+                        // Release Date
+                        movie.setReleaseDate(getStableReleaseDate(mj.title, mj.release_year));
 
-                    
-                    // Release Date
-                    int year = mj.release_year > 0 ? mj.release_year : 2024;
-                    movie.setReleaseDate(LocalDate.of(year, 1, 1));
+                        // Movie Status
+                        movie.setMovieStatus(defaultStatus);
 
-                    // Movie Status
-                    movie.setMovieStatus(defaultStatus);
-
-                    // Director
-                    if (mj.director != null && !mj.director.trim().isEmpty()) {
-                        Director director = directorRepository.findByName(mj.director.trim())
-                                .orElseGet(() -> {
-                                    Director d = new Director();
-                                    d.setName(mj.director.trim());
-                                    return directorRepository.save(d);
-                                });
-                        movie.setDirector(director);
-                    }
-
-                    // Genres
-                    if (mj.genres != null && !mj.genres.isEmpty()) {
-                        Set<MovieGenre> movieGenres = new HashSet<>();
-                        for (String genreName : mj.genres) {
-                            if (genreName.trim().isEmpty()) continue;
-                            Genre genre = genreRepository.findByName(genreName.trim())
+                        // Director
+                        if (mj.director != null && !mj.director.trim().isEmpty()) {
+                            Director director = directorRepository.findByName(mj.director.trim())
                                     .orElseGet(() -> {
-                                        Genre g = new Genre();
-                                        g.setName(genreName.trim());
-                                        return genreRepository.save(g);
+                                        Director d = new Director();
+                                        d.setName(mj.director.trim());
+                                        return directorRepository.save(d);
                                     });
-                            movieGenres.add(new MovieGenre(movie, genre));
+                            movie.setDirector(director);
                         }
-                        movie.setMovieGenres(movieGenres);
-                    }
 
-                    // Cast Members
-                    if (mj.main_cast != null && !mj.main_cast.isEmpty()) {
-                        Set<MovieCast> movieCasts = new HashSet<>();
-                        for (String castName : mj.main_cast) {
-                            if (castName.trim().isEmpty()) continue;
-                            CastMember castMember = castMemberRepository.findByName(castName.trim())
-                                    .orElseGet(() -> {
-                                        CastMember cm = new CastMember();
-                                        cm.setName(castName.trim());
-                                        return castMemberRepository.save(cm);
-                                    });
-                            movieCasts.add(new MovieCast(movie, castMember));
+                        // Genres
+                        if (mj.genres != null && !mj.genres.isEmpty()) {
+                            Set<MovieGenre> movieGenres = new HashSet<>();
+                            for (String genreName : mj.genres) {
+                                if (genreName.trim().isEmpty()) continue;
+                                Genre genre = genreRepository.findByName(genreName.trim())
+                                        .orElseGet(() -> {
+                                            Genre g = new Genre();
+                                            g.setName(genreName.trim());
+                                            return genreRepository.save(g);
+                                        });
+                                movieGenres.add(new MovieGenre(movie, genre));
+                            }
+                            movie.setMovieGenres(movieGenres);
                         }
-                        movie.setMovieCasts(movieCasts);
-                    }
 
-                    movieRepository.save(movie);
-                    seededCount++;
+                        // Cast Members
+                        if (mj.main_cast != null && !mj.main_cast.isEmpty()) {
+                            Set<MovieCast> movieCasts = new HashSet<>();
+                            for (String castName : mj.main_cast) {
+                                if (castName.trim().isEmpty()) continue;
+                                CastMember castMember = castMemberRepository.findByName(castName.trim())
+                                        .orElseGet(() -> {
+                                            CastMember cm = new CastMember();
+                                            cm.setName(castName.trim());
+                                            return castMemberRepository.save(cm);
+                                        });
+                                movieCasts.add(new MovieCast(movie, castMember));
+                            }
+                            movie.setMovieCasts(movieCasts);
+                        }
+
+                        movieRepository.save(movie);
+                        seededCount++;
+                    }
+                    System.out.println(">>> SEED DATA SUCCESS: Successfully seeded " + seededCount + " movies!");
+                } catch (Exception e) {
+                    System.err.println(">>> SEED MOVIES FAILED with error:");
+                    e.printStackTrace();
                 }
+            } else {
+                // Update trailer URLs, descriptions, and release dates for existing movies
+                System.out.println(">>> UPDATE MOVIES: Checking for placeholder trailer URLs and updating movie details...");
+                try {
+                    List<Movie> existingMovies = movieRepository.findAll();
+                    int updatedCount = 0;
+                    for (Movie m : existingMovies) {
+                        boolean updated = false;
+                        
+                        // Find matching movie from JSON list
+                        MovieJson matchedJson = null;
+                        for (MovieJson mj : moviesList) {
+                            if (mj.title != null && mj.title.equalsIgnoreCase(m.getTitle())) {
+                                matchedJson = mj;
+                                break;
+                            }
+                        }
 
-                System.out.println(">>> SEED DATA SUCCESS: Successfully seeded " + seededCount + " movies!");
+                        if (matchedJson != null) {
+                            // Update trailer URL if placeholder
+                            if (m.getTrailerUrl() == null || m.getTrailerUrl().contains("dQw4w9WgXcQ")) {
+                                if (matchedJson.trailer_url != null && !matchedJson.trailer_url.trim().isEmpty()) {
+                                    m.setTrailerUrl(matchedJson.trailer_url);
+                                    updated = true;
+                                }
+                            }
 
-            } catch (Exception e) {
-                System.err.println(">>> SEED MOVIES FAILED with error:");
-                e.printStackTrace();
+                            // Update description if it differs or is empty
+                            if (matchedJson.description != null && !matchedJson.description.trim().isEmpty()) {
+                                if (m.getDescription() == null || !m.getDescription().trim().equals(matchedJson.description.trim())) {
+                                    m.setDescription(matchedJson.description);
+                                    updated = true;
+                                }
+                            }
+                        }
+                        
+                        // Update release date if it is currently January 1st
+                        if (m.getReleaseDate() != null && m.getReleaseDate().getMonthValue() == 1 && m.getReleaseDate().getDayOfMonth() == 1) {
+                            int year = m.getReleaseDate().getYear();
+                            LocalDate stableDate = getStableReleaseDate(m.getTitle(), year);
+                            m.setReleaseDate(stableDate);
+                            updated = true;
+                        }
+                        
+                        if (updated) {
+                            movieRepository.save(m);
+                            updatedCount++;
+                        }
+                    }
+                    if (updatedCount > 0) {
+                        System.out.println(">>> UPDATE MOVIES SUCCESS: Updated details for " + updatedCount + " movies!");
+                    }
+                } catch (Exception e) {
+                    System.err.println(">>> UPDATE MOVIES FAILED with error:");
+                    e.printStackTrace();
+                }
             }
         }
+    }
+
+    private LocalDate getStableReleaseDate(String title, int releaseYear) {
+        int year = releaseYear > 0 ? releaseYear : 2024;
+        long seed = (title != null) ? title.hashCode() : 0L;
+        java.util.Random rand = new java.util.Random(seed);
+        int month = rand.nextInt(12) + 1;
+        int day = rand.nextInt(28) + 1; // 28 to avoid invalid date exceptions (e.g. Feb 29/30)
+        return LocalDate.of(year, month, day);
     }
 
     private String getFallbackPoster(String title, List<String> genres) {
@@ -275,5 +343,6 @@ public class DatabaseInitializer implements CommandLineRunner {
         public List<String> subtitle_languages;
         public String description;
         public String poster_url;
+        public String trailer_url;
     }
 }
