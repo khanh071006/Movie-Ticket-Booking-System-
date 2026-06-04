@@ -18,11 +18,18 @@ import com.example.Movie_Ticket_Booking_System.features.role.AccountRole;
 import com.example.Movie_Ticket_Booking_System.features.role.AccountRoleRepository;
 import com.example.Movie_Ticket_Booking_System.features.role.Role;
 import com.example.Movie_Ticket_Booking_System.features.role.RoleRepository;
+import com.example.Movie_Ticket_Booking_System.features.cinema.Cinema;
+import com.example.Movie_Ticket_Booking_System.features.cinema.CinemaRepository;
+import com.example.Movie_Ticket_Booking_System.features.room.Room;
+import com.example.Movie_Ticket_Booking_System.features.room.RoomRepository;
+import com.example.Movie_Ticket_Booking_System.features.showtime.Showtime;
+import com.example.Movie_Ticket_Booking_System.features.showtime.ShowtimeRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import java.time.LocalDateTime;
 
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -43,6 +50,9 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final DirectorRepository directorRepository;
     private final CastMemberRepository castMemberRepository;
     private final MovieStatusRepository movieStatusRepository;
+    private final CinemaRepository cinemaRepository;
+    private final RoomRepository roomRepository;
+    private final ShowtimeRepository showtimeRepository;
 
     public DatabaseInitializer(AccountRepository accountRepository,
                                RoleRepository roleRepository,
@@ -52,7 +62,10 @@ public class DatabaseInitializer implements CommandLineRunner {
                                GenreRepository genreRepository,
                                DirectorRepository directorRepository,
                                CastMemberRepository castMemberRepository,
-                               MovieStatusRepository movieStatusRepository) {
+                               MovieStatusRepository movieStatusRepository,
+                               CinemaRepository cinemaRepository,
+                               RoomRepository roomRepository,
+                               ShowtimeRepository showtimeRepository) {
         this.accountRepository = accountRepository;
         this.roleRepository = roleRepository;
         this.accountRoleRepository = accountRoleRepository;
@@ -62,6 +75,9 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.directorRepository = directorRepository;
         this.castMemberRepository = castMemberRepository;
         this.movieStatusRepository = movieStatusRepository;
+        this.cinemaRepository = cinemaRepository;
+        this.roomRepository = roomRepository;
+        this.showtimeRepository = showtimeRepository;
     }
 
     @Override
@@ -265,6 +281,121 @@ public class DatabaseInitializer implements CommandLineRunner {
                     System.err.println(">>> UPDATE MOVIES FAILED with error:");
                     e.printStackTrace();
                 }
+            }
+        }
+
+        // 4. Seed Cinemas and Rooms
+        if (cinemaRepository.count() == 0) {
+            System.out.println(">>> SEED CINEMAS: Seeding 6 cinemas and rooms...");
+            try {
+                String[][] cinemaData = {
+                    {"HUSTheatre Hai Bà Trưng", "1 Đống Đa, Hai Bà Trưng, Hà Nội"},
+                    {"HUSTheatre Cầu Giấy", "266 Cầu Giấy, Cầu Giấy, Hà Nội"},
+                    {"HUSTheatre Tây Hồ", "695 Lạc Long Quân, Tây Hồ, Hà Nội"},
+                    {"HUSTheatre Hà Đông", "10 Trần Phú, Hà Đông, Hà Nội"},
+                    {"HUSTheatre Thanh Xuân", "85 Nguyễn Trãi, Thanh Xuân, Hà Nội"},
+                    {"HUSTheatre Hoàn Kiếm", "12 Lý Thái Tổ, Hoàn Kiếm, Hà Nội"}
+                };
+
+                for (String[] data : cinemaData) {
+                    Cinema cinema = new Cinema();
+                    cinema.setName(data[0]);
+                    cinema.setAddress(data[1]);
+                    Cinema savedCinema = cinemaRepository.save(cinema);
+
+                    for (int i = 1; i <= 5; i++) {
+                        Room room = new Room();
+                        room.setName("Phòng Chiếu 0" + i);
+                        room.setCinema(savedCinema);
+                        roomRepository.save(room);
+                    }
+                }
+                System.out.println(">>> SEED CINEMAS SUCCESS: Seeding completed!");
+            } catch (Exception e) {
+                System.err.println(">>> SEED CINEMAS FAILED with error:");
+                e.printStackTrace();
+            }
+        }
+
+        // 5. Seed Showtimes
+        if (showtimeRepository.count() == 0) {
+            System.out.println(">>> SEED SHOWTIMES: Generating random showtimes for all movies...");
+            try {
+                List<Room> allRooms = roomRepository.findAll();
+                List<Movie> allMovies = movieRepository.findAll();
+                if (!allRooms.isEmpty() && !allMovies.isEmpty()) {
+                    int numRooms = allRooms.size();
+                    int numMovies = allMovies.size();
+                    int totalSlotsPerRoomPerDay = 4;
+                    int totalDays = 7; // Spanning 7 days (almost a week)
+
+                    Set<String> occupiedSlots = new HashSet<>();
+                    java.util.Random rand = new java.util.Random(42);
+
+                    int seededShowtimes = 0;
+                    for (Movie movie : allMovies) {
+                        int duration = movie.getDurationMinutes() > 0 ? movie.getDurationMinutes() : 120;
+                        int assignedCount = 0;
+                        int attempts = 0;
+                        int targetShowtimes = 3 + rand.nextInt(2); // 3 to 4 showtimes per movie
+                        while (assignedCount < targetShowtimes && attempts < 50) {
+                            attempts++;
+                            int roomIdx = rand.nextInt(numRooms);
+                            int dayOffset = rand.nextInt(totalDays);
+                            int slotIdx = rand.nextInt(totalSlotsPerRoomPerDay);
+
+                            String key = roomIdx + "_" + dayOffset + "_" + slotIdx;
+                            if (!occupiedSlots.contains(key)) {
+                                occupiedSlots.add(key);
+
+                                Room room = allRooms.get(roomIdx);
+                                LocalDate date = LocalDate.now().plusDays(dayOffset);
+
+                                int startHour = 9;
+                                int startMinute = 0;
+                                switch (slotIdx) {
+                                    case 0:
+                                        // 9:30, 9:45, 10:00
+                                        int r0 = rand.nextInt(3);
+                                        startHour = (r0 == 2) ? 10 : 9;
+                                        startMinute = (r0 == 2) ? 0 : (30 + r0 * 15);
+                                        break;
+                                    case 1:
+                                        startHour = 13;
+                                        startMinute = rand.nextInt(3) * 15; // 13:00, 13:15, 13:30
+                                        break;
+                                    case 2:
+                                        // 16:30, 16:45, 17:00
+                                        int r2 = rand.nextInt(3);
+                                        startHour = (r2 == 2) ? 17 : 16;
+                                        startMinute = (r2 == 2) ? 0 : (30 + r2 * 15);
+                                        break;
+                                    case 3:
+                                        startHour = 20;
+                                        startMinute = rand.nextInt(3) * 15; // 20:00, 20:15, 20:30
+                                        break;
+                                }
+
+                                LocalDateTime startTime = LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), startHour, startMinute);
+                                LocalDateTime endTime = startTime.plusMinutes(duration);
+
+                                Showtime showtime = new Showtime();
+                                showtime.setMovie(movie);
+                                showtime.setRoom(room);
+                                showtime.setStartTime(startTime);
+                                showtime.setEndTime(endTime);
+
+                                showtimeRepository.save(showtime);
+                                assignedCount++;
+                                seededShowtimes++;
+                            }
+                        }
+                    }
+                    System.out.println(">>> SEED SHOWTIMES SUCCESS: Created " + seededShowtimes + " showtimes!");
+                }
+            } catch (Exception e) {
+                System.err.println(">>> SEED SHOWTIMES FAILED with error:");
+                e.printStackTrace();
             }
         }
     }

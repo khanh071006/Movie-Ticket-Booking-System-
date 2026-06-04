@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Clock } from 'lucide-react';
+import { Clock, Search } from 'lucide-react';
 import { apiClient } from '../../api/axiosClient';
 import type { Movie } from '../../types/app';
 
@@ -29,33 +29,104 @@ export const MoviesPage = () => {
     }, [movies, keyword]);
 
     return (
-        <div className="container mx-auto px-4 py-10">
-            <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-white">Danh mục phim</h1>
-                    <p className="mt-1 text-slate-400">Tìm nhanh bộ phim bạn muốn xem hôm nay.</p>
-                </div>
-                <input
-                    className="h-10 w-full max-w-sm rounded-lg border border-white/20 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-400"
-                    placeholder="Tìm phim theo tên..."
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-                {filtered.map((movie) => (
-                    <Link key={movie.id} to={`/movies/${movie.id}`} className="group rounded-xl border border-white/10 bg-[#111111] p-3">
-                        <div className="aspect-[2/3] overflow-hidden rounded-lg">
-                            <img src={movie.posterUrl} alt={movie.title} className="h-full w-full object-cover transition-transform group-hover:scale-105" />
-                        </div>
-                        <h3 className="mt-3 line-clamp-1 font-semibold text-white">{movie.title}</h3>
-                        <p className="mt-1 flex items-center gap-1 text-xs text-slate-400">
-                            <Clock className="h-3.5 w-3.5" /> {movie.durationMinutes} phút
+        <div className="min-h-screen bg-[#0A0A0A] pt-24 pb-20 text-white font-sans selection:bg-blue-600/30">
+            <div className="container mx-auto px-6 md:px-12">
+                
+                {/* Hero Banner Section */}
+                <div className="relative mb-16 overflow-hidden rounded-3xl bg-gradient-to-br from-zinc-900 via-zinc-900 to-blue-950/30 border border-white/5 p-10 md:p-16 text-center">
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(59,130,246,0.15),transparent)]" />
+                    <div className="relative z-10 max-w-3xl mx-auto space-y-6">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-600/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-blue-400">
+                            Thư viện điện ảnh HUS
+                        </span>
+                        <h1 className="text-4xl font-black tracking-tight uppercase italic md:text-6xl">
+                            DANH MỤC <span className="text-blue-500">PHIM</span>
+                        </h1>
+                        <p className="text-lg text-slate-400 font-medium leading-relaxed">
+                            Khám phá danh sách đầy đủ các bộ phim bom tấn cực kỳ hấp dẫn đang có mặt tại hệ thống rạp HUSTheatre. 
+                            Đặt vé và chọn ghế ngồi yêu thích của bạn ngay hôm nay!
                         </p>
-                    </Link>
-                ))}
+                        
+                        <div className="group relative w-full max-w-md mx-auto">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 transition-colors group-focus-within:text-blue-500" size={18} />
+                            <input
+                                type="text"
+                                className="h-12 w-full rounded-full border border-white/10 bg-[#141414] pl-12 pr-4 text-sm transition-all focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 text-white"
+                                placeholder="Tìm phim theo tên..."
+                                value={keyword}
+                                onChange={(e) => setKeyword(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Movies Grid */}
+                {filtered.length > 0 ? (
+                    <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                        {filtered.map((movie) => (
+                            <Link
+                                key={movie.id}
+                                to={`/movies/${movie.id}`}
+                                className="group flex flex-col transition-all duration-300 hover:-translate-y-2"
+                            >
+                                <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-white/5 shadow-2xl">
+                                    {movie.posterUrl ? (
+                                        <img
+                                            src={movie.posterUrl}
+                                            alt={movie.title}
+                                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        />
+                                    ) : (
+                                        <div className="flex h-full w-full items-center justify-center bg-[#1A1A1A] text-gray-600">
+                                            No Poster
+                                        </div>
+                                    )}
+
+                                    {/* Language Badge */}
+                                    <div className="absolute left-3 top-3 rounded border border-white/10 bg-black/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider backdrop-blur-md">
+                                        {movie.language}
+                                    </div>
+
+                                    {/* Quick Action Overlay */}
+                                    <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-blue-900/90 via-transparent to-transparent p-4 opacity-0 transition-opacity group-hover:opacity-100">
+                                        <button className="w-full h-10 inline-flex items-center justify-center rounded-xl bg-blue-600 text-white text-xs font-black italic uppercase transition-all shadow-lg hover:bg-blue-500 cursor-pointer">
+                                            Chi tiết & Đặt Vé
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-4 space-y-1">
+                                    <h3 className="line-clamp-1 text-base font-bold transition-colors group-hover:text-blue-500">
+                                        {movie.title}
+                                    </h3>
+                                    <div className="flex items-center gap-3 text-xs font-medium text-gray-400">
+                                        <span className="flex items-center gap-1">
+                                            <Clock size={12} className="text-blue-500" /> {movie.durationMinutes} phút
+                                        </span>
+                                        <span className="h-1 w-1 rounded-full bg-gray-600" />
+                                        <span>{new Date(movie.releaseDate).getFullYear()}</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="py-20 text-center bg-zinc-950/40 rounded-3xl border border-white/5">
+                        <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/5 text-3xl">
+                            🔍
+                        </div>
+                        <p className="text-gray-400">Không tìm thấy phim phù hợp với "{keyword}"</p>
+                        <button
+                            className="mt-4 text-blue-500 hover:text-blue-400 text-sm font-bold underline cursor-pointer"
+                            onClick={() => setKeyword('')}
+                        >
+                            Xóa bộ lọc
+                        </button>
+                    </div>
+                )}
+
             </div>
         </div>
     );
 };
+

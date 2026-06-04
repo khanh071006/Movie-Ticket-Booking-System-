@@ -8,6 +8,8 @@ import { HomePage } from '../pages/public/HomePage';
 import { MoviesPage } from '../pages/public/MoviesPage';
 import { MovieDetailPage } from '../pages/public/MovieDetailPage';
 import { CinemasPage } from '../pages/public/CinemasPage';
+import { PromotionsPage } from '../pages/public/PromotionsPage';
+import { BookingPage } from '../pages/public/BookingPage';
 import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
 import { DashboardPage } from '../pages/admin/DashboardPage';
@@ -29,6 +31,8 @@ export const router = createBrowserRouter([
             { path: 'movies', element: <MoviesPage /> },
             { path: 'movies/:id', element: <MovieDetailPage /> },
             { path: 'cinemas', element: <CinemasPage /> },
+            { path: 'promotions', element: <PromotionsPage /> },
+            { path: 'booking/:movieId/:showtimeId', element: <BookingPage /> },
         ],
     },
     {

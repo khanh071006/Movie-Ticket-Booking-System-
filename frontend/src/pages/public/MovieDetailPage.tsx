@@ -13,6 +13,8 @@ export const MovieDetailPage = () => {
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
     const [allShowtimes, setAllShowtimes] = useState<Showtime[]>([]);
     const [selectedDate, setSelectedDate] = useState<string>('');
+    const [selectedShowtimeId, setSelectedShowtimeId] = useState<string>('');
+    const [selectedFormat, setSelectedFormat] = useState<'2D' | '3D' | 'IMAX'>('2D');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -109,6 +111,18 @@ export const MovieDetailPage = () => {
         );
     }
 
+    const handleBookTickets = () => {
+        if (!selectedShowtimeId) {
+            const element = document.getElementById('showtimes-section');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+            alert('Vui lòng chọn một suất chiếu ở phần Lịch Chiếu bên dưới!');
+            return;
+        }
+        navigate(`/booking/${movie.id}/${selectedShowtimeId}?format=${selectedFormat}`);
+    };
+
     return (
         <div className="min-h-screen bg-[#0A0A0A] text-white selection:bg-blue-600/30">
             {/* Hero Banner Section */}
@@ -177,7 +191,15 @@ export const MovieDetailPage = () => {
                             </div>
 
                             <div className="flex flex-wrap items-center gap-4 pt-4">
-                                <Button size="lg" className="h-14 rounded-xl bg-blue-600 px-10 text-lg font-black italic shadow-2xl shadow-blue-900/40 transition-transform active:scale-95">
+                                <Button 
+                                    size="lg" 
+                                    onClick={handleBookTickets}
+                                    className={`h-14 rounded-xl px-10 text-lg font-black italic shadow-2xl transition-transform active:scale-95 ${
+                                        selectedShowtimeId 
+                                            ? 'bg-blue-600 text-white shadow-blue-900/40' 
+                                            : 'bg-zinc-800 text-zinc-500 border border-white/5 cursor-not-allowed shadow-none'
+                                    }`}
+                                >
                                     <Ticket className="mr-3 h-6 w-6" />
                                     ĐẶT VÉ NGAY
                                 </Button>
@@ -210,7 +232,7 @@ export const MovieDetailPage = () => {
                         </div>
 
                         {/* Showtimes Section */}
-                        <div className="space-y-8">
+                        <div id="showtimes-section" className="space-y-8">
                             <div className="flex flex-col justify-between gap-6 border-b border-white/5 pb-8 md:flex-row md:items-end">
                                 <div className="space-y-2">
                                     <div className="flex items-center gap-3">
@@ -246,6 +268,36 @@ export const MovieDetailPage = () => {
                                 </div>
                             </div>
 
+                            {/* Format & Pricing Selector */}
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 p-6 rounded-3xl bg-zinc-900/30 border border-white/5">
+                                <div className="space-y-2">
+                                    <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Định dạng chiếu chọn mua:</span>
+                                    <div className="flex gap-2.5">
+                                        {(['2D', '3D', 'IMAX'] as const).map((fmt) => (
+                                            <button
+                                                key={fmt}
+                                                onClick={() => setSelectedFormat(fmt)}
+                                                className={`px-4.5 py-2.5 rounded-xl text-xs font-black italic tracking-wider transition-all active:scale-95 border cursor-pointer ${
+                                                    selectedFormat === fmt
+                                                        ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20'
+                                                        : 'bg-white/5 border-white/10 text-slate-400 hover:border-white/20'
+                                                }`}
+                                            >
+                                                {fmt}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="text-left md:text-right space-y-1 bg-white/[0.01] p-4 rounded-2xl border border-white/[0.03]">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Giá vé tương ứng ({selectedFormat})</span>
+                                    <p className="text-sm text-slate-300 font-bold">
+                                        Thường: <span className="text-blue-500 font-black">{selectedFormat === '2D' ? '80.000 đ' : selectedFormat === '3D' ? '110.000 đ' : '150.000 đ'}</span> <span className="text-slate-600">|</span> 
+                                        VIP: <span className="text-amber-500 font-black">{selectedFormat === '2D' ? '110.000 đ' : selectedFormat === '3D' ? '140.000 đ' : '180.000 đ'}</span> <span className="text-slate-600">|</span> 
+                                        Đôi: <span className="text-pink-500 font-black">{selectedFormat === '2D' ? '180.000 đ' : selectedFormat === '3D' ? '210.000 đ' : '250.000 đ'}</span>
+                                    </p>
+                                </div>
+                            </div>
+
                             {/* Showtimes Grouped by Cinema */}
                             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                                 {cinemas.map((cinema) => {
@@ -272,18 +324,26 @@ export const MovieDetailPage = () => {
                                             </div>
                                             <div className="p-8">
                                                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                                                    {cinemaShowtimes.sort((a,b) => a.startTime.localeCompare(b.startTime)).map((st) => (
-                                                        <button 
-                                                            key={st.id} 
-                                                            className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 py-4 transition-all hover:border-blue-500 hover:bg-blue-600 active:scale-95"
-                                                        >
-                                                            <span className="text-2xl font-black text-white">{formatTime(st.startTime)}</span>
-                                                            <span className="mt-1 text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-blue-100">
-                                                                {st.room?.name || 'SCREEN 01'}
-                                                            </span>
-                                                            <div className="absolute inset-0 bg-blue-400/10 opacity-0 transition-opacity group-hover:opacity-100" />
-                                                        </button>
-                                                    ))}
+                                                    {cinemaShowtimes.sort((a,b) => a.startTime.localeCompare(b.startTime)).map((st) => {
+                                                        const isSelected = selectedShowtimeId === st.id;
+                                                        return (
+                                                            <button 
+                                                                key={st.id} 
+                                                                onClick={() => setSelectedShowtimeId(st.id)}
+                                                                className={`group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border py-4 transition-all active:scale-95 ${
+                                                                    isSelected 
+                                                                        ? 'border-blue-500 bg-blue-600 text-white shadow-lg shadow-blue-500/20' 
+                                                                        : 'border-white/10 bg-white/5 hover:border-blue-500 hover:bg-blue-600/10'
+                                                                }`}
+                                                            >
+                                                                <span className={`text-2xl font-black ${isSelected ? 'text-white' : 'text-white'}`}>{formatTime(st.startTime)}</span>
+                                                                <span className={`mt-1 text-[10px] font-black uppercase tracking-widest ${isSelected ? 'text-blue-100' : 'text-slate-500 group-hover:text-blue-400'}`}>
+                                                                    {st.room?.name || 'SCREEN 01'}
+                                                                </span>
+                                                                <div className="absolute inset-0 bg-blue-400/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                                                            </button>
+                                                        );
+                                                    })}
                                                 </div>
                                             </div>
                                         </div>
@@ -329,7 +389,7 @@ export const MovieDetailPage = () => {
                                     <div className="h-px w-full bg-white/5" />
                                     <div className="space-y-1">
                                         <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">Định dạng</p>
-                                        <p className="text-base font-bold text-slate-200">2D, 3D, IMAX</p>
+                                        <p className="text-base font-bold text-slate-200">2D, 3D, IMAX (Đang chọn: <span className="text-blue-500">{selectedFormat}</span>)</p>
                                     </div>
                                 </div>
                             </Card>
@@ -341,9 +401,12 @@ export const MovieDetailPage = () => {
                                     <p className="text-sm font-medium text-blue-100">
                                         Giảm ngay 20% cho mỗi lượt đặt vé trực tuyến và tích điểm đổi quà.
                                     </p>
-                                    <Button className="w-full bg-white text-blue-900 font-black italic hover:bg-slate-100">
-                                        ĐĂNG KÝ NGAY
-                                    </Button>
+                                    <button 
+                                        className="w-full h-11 inline-flex items-center justify-center rounded-xl bg-white text-blue-900 font-black italic hover:bg-slate-100 active:scale-95 transition-all text-sm shadow-md"
+                                        onClick={() => navigate('/promotions')}
+                                    >
+                                        XEM CHI TIẾT
+                                    </button>
                                 </div>
                                 <Star className="absolute -bottom-4 -right-4 h-32 w-32 text-white/10 rotate-12" />
                             </div>

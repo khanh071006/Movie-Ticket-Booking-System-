@@ -45,6 +45,9 @@ export const PublicLayout = () => {
                         <Link to="/cinemas" className={`text-sm font-medium transition-colors ${location.pathname.startsWith('/cinemas') ? 'text-white' : 'text-slate-400 hover:text-white'}`}>
                             Hệ thống rạp
                         </Link>
+                        <Link to="/promotions" className={`text-sm font-medium transition-colors ${location.pathname.startsWith('/promotions') ? 'text-white' : 'text-slate-400 hover:text-white'}`}>
+                            Ưu đãi
+                        </Link>
                     </nav>
 
                     <div className="flex items-center gap-3">
@@ -135,6 +138,13 @@ export const PublicLayout = () => {
                                 className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${location.pathname.startsWith('/cinemas') ? 'bg-blue-600/20 text-blue-400' : 'text-slate-300 hover:bg-white/5'}`}
                             >
                                 Hệ thống rạp
+                            </Link>
+                            <Link 
+                                to="/promotions" 
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${location.pathname.startsWith('/promotions') ? 'bg-blue-600/20 text-blue-400' : 'text-slate-300 hover:bg-white/5'}`}
+                            >
+                                Ưu đãi
                             </Link>
                             {!isLoggedIn && (
                                 <Link 
