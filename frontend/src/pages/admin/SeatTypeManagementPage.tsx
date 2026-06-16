@@ -10,6 +10,7 @@ import type { SeatType } from '../../types/app';
 export const SeatTypeManagementPage = () => {
     const [items, setItems] = useState<SeatType[]>([]);
     const [name, setName] = useState('');
+    const [seatCount, setSeatCount] = useState<number>(1);
     const [editId, setEditId] = useState<number | null>(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -35,9 +36,10 @@ export const SeatTypeManagementPage = () => {
         event.preventDefault();
         setError('');
         try {
-            if (editId) await apiClient.seatTypes.update(editId, { name });
-            else await apiClient.seatTypes.create({ name });
+            if (editId) await apiClient.seatTypes.update(editId, { name, seatCount });
+            else await apiClient.seatTypes.create({ name, seatCount });
             setName('');
+            setSeatCount(1);
             setEditId(null);
             load();
         } catch (err) {
@@ -96,6 +98,18 @@ export const SeatTypeManagementPage = () => {
                                     required 
                                 />
                             </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Sức chứa (Số người/ghế)</label>
+                                <select 
+                                    className="h-12 w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20" 
+                                    value={seatCount} 
+                                    onChange={(e) => setSeatCount(Number(e.target.value))} 
+                                    required 
+                                >
+                                    <option value={1} className="bg-zinc-800">1 người (Ghế đơn)</option>
+                                    <option value={2} className="bg-zinc-800">2 người (Ghế đôi / Sweetbox)</option>
+                                </select>
+                            </div>
                             
                             <div className="flex flex-col gap-2 pt-2">
                                 <Button className="h-12 w-full gap-2 font-bold shadow-xl shadow-blue-900/20">
@@ -106,7 +120,7 @@ export const SeatTypeManagementPage = () => {
                                         type="button" 
                                         variant="outline" 
                                         className="h-12 w-full border-white/10 text-slate-400 hover:text-white" 
-                                        onClick={() => { setEditId(null); setName(''); }}
+                                        onClick={() => { setEditId(null); setName(''); setSeatCount(1); }}
                                     >
                                         Huỷ bỏ
                                     </Button>
@@ -134,6 +148,7 @@ export const SeatTypeManagementPage = () => {
                                     <tr>
                                         <th className="px-6 py-4 font-bold">Mã ID</th>
                                         <th className="px-6 py-4 font-bold">Tên loại ghế</th>
+                                        <th className="px-6 py-4 font-bold">Sức chứa</th>
                                         <th className="px-6 py-4 text-right font-bold">Quản lý</th>
                                     </tr>
                                 </thead>
@@ -147,13 +162,16 @@ export const SeatTypeManagementPage = () => {
                                                 <td className="px-6 py-4 font-medium text-slate-200 group-hover:text-blue-400 transition-colors">
                                                     {item.name}
                                                 </td>
+                                                <td className="px-6 py-4 font-medium text-slate-400">
+                                                    {item.seatCount ?? 1} người
+                                                </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex justify-end gap-1 opacity-100 transition-opacity">
                                                         <Button 
                                                             variant="ghost" 
                                                             size="icon" 
                                                             className="h-8 w-8 text-blue-500 hover:bg-blue-500/10" 
-                                                            onClick={() => { setEditId(item.id); setName(item.name); }}
+                                                            onClick={() => { setEditId(item.id); setName(item.name); setSeatCount(item.seatCount ?? 1); }}
                                                         >
                                                             <Edit2 className="h-3.5 w-3.5" />
                                                         </Button>
@@ -171,7 +189,7 @@ export const SeatTypeManagementPage = () => {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan={3} className="px-6 py-20 text-center text-slate-600 italic">
+                                            <td colSpan={4} className="px-6 py-20 text-center text-slate-600 italic">
                                                 {loading ? 'Đang tải dữ liệu...' : 'Chưa có dữ liệu loại ghế.'}
                                             </td>
                                         </tr>

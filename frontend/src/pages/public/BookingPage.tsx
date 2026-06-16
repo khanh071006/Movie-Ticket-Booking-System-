@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { CreditCard, CheckCircle2, Clock, MapPin, MonitorPlay } from 'lucide-react';
+import { CreditCard, CheckCircle2, Clock, MapPin, MonitorPlay, Coffee } from 'lucide-react';
 import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
-import type { Seat, TicketType, Showtime, BookingResponse } from '../../types/app';
+import type { Seat, TicketType, Showtime, BookingResponse, Snack, CinemaPricing } from '../../types/app';
 
 const indexToLetter = (index: number) => String.fromCharCode(65 + index);
 const letterToIndex = (letter: string) => letter.charCodeAt(0) - 65;
@@ -29,6 +29,7 @@ export const BookingPage = () => {
 
     const [showtime, setShowtime] = useState<Showtime | null>(null);
     const [ticketTypes, setTicketTypes] = useState<TicketType[]>([]);
+    const [snacks, setSnacks] = useState<Snack[]>([]);
     
     // Grid setup
     const [grid, setGrid] = useState<(Seat | null)[][]>([]);
@@ -36,11 +37,13 @@ export const BookingPage = () => {
     // User Selection
     const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
     const [ticketQuantities, setTicketQuantities] = useState<Record<number, number>>({});
+    const [snackQuantities, setSnackQuantities] = useState<Record<number, number>>({});
     
     // Status
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [bookingSuccess, setBookingSuccess] = useState<BookingResponse | null>(null);
+    const [pricing, setPricing] = useState<CinemaPricing | null>(null);
 
     const loadData = useCallback(async () => {
         if (!showtimeId) return;
@@ -51,19 +54,29 @@ export const BookingPage = () => {
             setShowtime(st);
 
             const roomId = st.room?.id;
+            const cinemaId = st.room?.cinema?.id;
             if (!roomId) throw new Error("Suất chiếu không có phòng chiếu");
 
-            const [roomSeats, types] = await Promise.all([
+            const [roomSeats, types, snacksData, pricingRes] = await Promise.all([
                 apiClient.rooms.getSeats(roomId),
-                apiClient.ticketTypes.getAll()
+                apiClient.ticketTypes.getAll(),
+                apiClient.snacks.getAll(),
+                cinemaId ? apiClient.cinemas.getPricing(cinemaId).catch(() => null) : Promise.resolve(null)
             ]);
             
             setTicketTypes(types);
+            setSnacks(snacksData);
+            if (pricingRes) setPricing(pricingRes);
 
-            // Init quantities to 0
-            const initialQuantities: Record<number, number> = {};
-            types.forEach(t => { initialQuantities[t.id] = 0; });
-            setTicketQuantities(initialQuantities);
+            // Init ticket quantities to 0
+            const initialTicketQuantities: Record<number, number> = {};
+            types.forEach(t => { initialTicketQuantities[t.id] = 0; });
+            setTicketQuantities(initialTicketQuantities);
+
+            // Init snack quantities to 0
+            const initialSnackQuantities: Record<number, number> = {};
+            snacksData.forEach(s => { initialSnackQuantities[s.id] = 0; });
+            setSnackQuantities(initialSnackQuantities);
 
             // Reconstruct grid
             if (roomSeats.length > 0) {
@@ -127,12 +140,22 @@ export const BookingPage = () => {
         });
     };
 
+    const handleSnackChange = (snackId: number, delta: number) => {
+        setSnackQuantities(prev => {
+            const current = prev[snackId] || 0;
+            const newVal = current + delta;
+            if (newVal < 0) return prev;
+            return { ...prev, [snackId]: newVal };
+        });
+    };
+
     const handleCheckout = async () => {
         if (!showtimeId) return;
         
         const totalTickets = Object.values(ticketQuantities).reduce((a, b) => a + b, 0);
-        if (totalTickets !== selectedSeats.length) {
-            setError(`Vui lòng chọn đúng ${selectedSeats.length} vé cho ${selectedSeats.length} ghế!`);
+        const totalSelectedSeatCount = selectedSeats.reduce((sum, s) => sum + (s.seatCount || 1), 0);
+        if (totalTickets !== totalSelectedSeatCount) {
+            setError(`Vui lòng chọn đúng ${totalSelectedSeatCount} vé cho ${selectedSeats.length} vị trí ghế!`);
             return;
         }
 
@@ -146,10 +169,18 @@ export const BookingPage = () => {
                     quantity: qty
                 }));
 
+            const snackRequest = Object.entries(snackQuantities)
+                .filter(([_, qty]) => qty > 0)
+                .map(([snackId, qty]) => ({
+                    snackId: Number(snackId),
+                    quantity: qty
+                }));
+
             const response = await apiClient.bookings.create({
                 showtimeId,
                 seatIds: selectedSeats.map(s => s.id as number),
-                ticketQuantities: ticketRequest
+                ticketQuantities: ticketRequest,
+                snackQuantities: snackRequest.length > 0 ? snackRequest : undefined
             });
             
             setBookingSuccess(response);
@@ -196,6 +227,12 @@ export const BookingPage = () => {
                             <span className="text-slate-500">Ghế đã đặt</span>
                             <span className="font-bold text-blue-400">{bookingSuccess.seatLocations.join(', ')}</span>
                         </div>
+                        {bookingSuccess.snacks && bookingSuccess.snacks.length > 0 && (
+                            <div className="flex justify-between border-b border-white/5 pb-4">
+                                <span className="text-slate-500">Đồ ăn / Combo</span>
+                                <span className="font-bold text-blue-400">{bookingSuccess.snacks.join(', ')}</span>
+                            </div>
+                        )}
                         <div className="flex justify-between pt-2">
                             <span className="text-slate-500">Tổng tiền thanh toán</span>
                             <span className="font-black text-xl text-emerald-400">{formatCurrency(bookingSuccess.totalAmount)}</span>
@@ -210,14 +247,35 @@ export const BookingPage = () => {
         );
     }
 
-    const totalSelectedSeats = selectedSeats.length;
+    const physicalSeatCount = selectedSeats.length;
+    const totalSelectedSeats = selectedSeats.reduce((sum, s) => sum + (s.seatCount || 1), 0);
     const totalSelectedTickets = Object.values(ticketQuantities).reduce((a, b) => a + b, 0);
     const isTicketsMatched = totalSelectedTickets === totalSelectedSeats;
     
     let totalPrice = 0;
+    let totalSeatSurcharge = 0;
+
     Object.entries(ticketQuantities).forEach(([typeId, qty]) => {
         const t = ticketTypes.find(type => type.id === Number(typeId));
-        if (t) totalPrice += t.basePrice * qty;
+        if (t) {
+            const override = pricing?.ticketPrices?.find(p => p.ticketTypeId === t.id);
+            totalPrice += (override ? override.price : t.basePrice) * qty;
+        }
+    });
+
+    selectedSeats.forEach(seat => {
+        if (seat.seatTypeId) {
+            const override = pricing?.seatPrices?.find(p => p.seatTypeId === seat.seatTypeId);
+            if (override && override.surcharge > 0) {
+                totalSeatSurcharge += override.surcharge;
+                totalPrice += override.surcharge;
+            }
+        }
+    });
+
+    Object.entries(snackQuantities).forEach(([snackId, qty]) => {
+        const s = snacks.find(snack => snack.id === Number(snackId));
+        if (s) totalPrice += s.basePrice * qty;
     });
 
     return (
@@ -265,8 +323,13 @@ export const BookingPage = () => {
                                         {indexToLetter(r)}
                                     </div>
                                     {rowArr.map((seat, c) => {
+                                        const prevSeat = c > 0 ? rowArr[c - 1] : null;
+                                        if (prevSeat && prevSeat.seatCount && prevSeat.seatCount >= 2) {
+                                            return null; // Skip rendering the right half to prevent row stretching
+                                        }
+
                                         if (!seat) {
-                                            return <div key={`empty-${r}-${c}`} className="w-8 h-8" />;
+                                            return <div key={`empty-${r}-${c}`} className="w-8 h-8 flex-shrink-0" />;
                                         }
                                         
                                         const isSelected = selectedSeats.some(s => s.id === seat.id);
@@ -274,14 +337,16 @@ export const BookingPage = () => {
                                             ? 'bg-emerald-500 border-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.5)] text-white' 
                                             : 'bg-white/10 border-white/20 text-slate-300 hover:bg-white/20';
 
+                                        const widthClass = (seat.seatCount && seat.seatCount >= 2) ? 'w-[72px]' : 'w-8';
+
                                         return (
                                             <div 
                                                 key={seat.id}
                                                 onClick={() => handleSeatClick(seat)}
-                                                className={`w-8 h-8 rounded-t-lg rounded-b-sm border cursor-pointer flex items-center justify-center text-[10px] font-bold transition-all ${colorClass}`}
-                                                title={`${seat.seatLocation} - ${seat.seatTypeName}`}
+                                                className={`${widthClass} h-8 flex-shrink-0 rounded-t-lg rounded-b-sm border cursor-pointer flex items-center justify-center text-[10px] font-bold transition-all ${colorClass}`}
+                                                title={`${seat.seatLocation} - ${seat.seatTypeName} (${seat.seatCount || 1} người)`}
                                             >
-                                                {c + 1}
+                                                {seat.seatCount && seat.seatCount >= 2 ? `${c + 1}-${c + 2}` : c + 1}
                                             </div>
                                         );
                                     })}
@@ -333,7 +398,9 @@ export const BookingPage = () => {
                                 <div key={ticket.id} className="flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5">
                                     <div>
                                         <p className="font-bold text-slate-200 text-sm">{ticket.name}</p>
-                                        <p className="text-xs text-blue-400">{formatCurrency(ticket.basePrice)}</p>
+                                        <p className="text-xs text-blue-400">
+                                            {formatCurrency(pricing?.ticketPrices?.find(p => p.ticketTypeId === ticket.id)?.price ?? ticket.basePrice)}
+                                        </p>
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <button 
@@ -353,7 +420,48 @@ export const BookingPage = () => {
                         </div>
                     </Card>
 
+                    {snacks.length > 0 && (
+                        <Card className="border-white/10 bg-zinc-900/50 p-6 backdrop-blur-md">
+                            <div className="flex justify-between items-end mb-4 border-b border-white/10 pb-4">
+                                <h3 className="font-bold text-white flex items-center gap-2">
+                                    <Coffee size={18} className="text-blue-500" /> Bắp / Nước uống
+                                </h3>
+                            </div>
+                            
+                            <div className="space-y-4 max-h-64 overflow-y-auto custom-scrollbar pr-2">
+                                {snacks.map(snack => (
+                                    <div key={snack.id} className="flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5">
+                                        <div>
+                                            <p className="font-bold text-slate-200 text-sm">{snack.name}</p>
+                                            <p className="text-xs text-slate-500">{snack.snackTypeName}</p>
+                                            <p className="text-xs text-blue-400 mt-1">{formatCurrency(snack.basePrice)}</p>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <button 
+                                                onClick={() => handleSnackChange(snack.id, -1)}
+                                                disabled={snackQuantities[snack.id] === 0 || totalSelectedSeats === 0}
+                                                className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/20 transition-colors"
+                                            >-</button>
+                                            <span className="w-4 text-center font-bold text-sm text-white">{snackQuantities[snack.id]}</span>
+                                            <button 
+                                                onClick={() => handleSnackChange(snack.id, 1)}
+                                                disabled={totalSelectedSeats === 0}
+                                                className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/20 transition-colors"
+                                            >+</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Card>
+                    )}
+
                     <Card className="border-emerald-500/30 bg-zinc-900/50 p-6 backdrop-blur-md shadow-lg shadow-emerald-900/10">
+                        {totalSeatSurcharge > 0 && (
+                            <div className="flex justify-between items-center mb-4">
+                                <span className="text-slate-400 font-medium text-sm">Phụ thu ghế ({physicalSeatCount} vị trí)</span>
+                                <span className="text-md font-bold text-emerald-400">+{formatCurrency(totalSeatSurcharge)}</span>
+                            </div>
+                        )}
                         <div className="flex justify-between items-center mb-6">
                             <span className="text-slate-400 font-medium">Tổng thanh toán</span>
                             <span className="text-2xl font-black text-emerald-400">{formatCurrency(totalPrice)}</span>

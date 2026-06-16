@@ -52,8 +52,8 @@ export const RoomSeatConfigPage = () => {
                     }
                 });
                 
-                const newRows = Math.max(10, maxR + 1);
-                const newCols = Math.max(14, maxC + 1);
+                const newRows = maxR + 1 > 0 ? maxR + 1 : 10;
+                const newCols = maxC + 1 > 0 ? maxC + 1 : 14;
                 setRows(newRows);
                 setCols(newCols);
                 
@@ -95,11 +95,39 @@ export const RoomSeatConfigPage = () => {
     const handleCellClick = (r: number, c: number) => {
         const newGrid = [...grid];
         newGrid[r] = [...newGrid[r]];
-        // Toggle if same type, otherwise set new type
-        if (newGrid[r][c] === selectedTypeId) {
-            newGrid[r][c] = null; // Xóa ghế
+        
+        const typeObj = selectedTypeId !== null ? seatTypes.find(t => t.id === selectedTypeId) : null;
+        const isSelectedCouple = typeObj && typeObj.seatCount && typeObj.seatCount >= 2;
+
+        if (isSelectedCouple) {
+            const base = c - (c % 2); // Force to even index
+            if (base + 1 < cols) {
+                if (newGrid[r][base] === selectedTypeId) {
+                    newGrid[r][base] = null; // Toggle off
+                } else {
+                    newGrid[r][base] = selectedTypeId;
+                    newGrid[r][base + 1] = null; // Clear right half
+                }
+            }
         } else {
-            newGrid[r][c] = selectedTypeId; // Đặt ghế
+            if (newGrid[r][c] === selectedTypeId) {
+                newGrid[r][c] = null;
+            } else {
+                newGrid[r][c] = selectedTypeId;
+            }
+        }
+        setGrid(newGrid);
+    };
+
+    const handleRowClick = (r: number) => {
+        const newGrid = [...grid];
+        const typeObj = selectedTypeId !== null ? seatTypes.find(t => t.id === selectedTypeId) : null;
+        const isSelectedCouple = typeObj && typeObj.seatCount && typeObj.seatCount >= 2;
+
+        if (isSelectedCouple) {
+            newGrid[r] = newGrid[r].map((_, c) => c % 2 === 0 ? selectedTypeId : null);
+        } else {
+            newGrid[r] = newGrid[r].map(() => selectedTypeId);
         }
         setGrid(newGrid);
     };
@@ -110,7 +138,7 @@ export const RoomSeatConfigPage = () => {
         setError('');
         setSuccessMsg('');
         try {
-            const payload: { seatLocation: string; seatTypeId: number }[] = [];
+            const payload: { seatLocation: string; seatTypeId: number; roomId: number }[] = [];
             for (let r = 0; r < rows; r++) {
                 for (let c = 0; c < cols; c++) {
                     if (grid[r][c] !== null) {
@@ -254,20 +282,41 @@ export const RoomSeatConfigPage = () => {
                         <div className="flex flex-col gap-2">
                             {grid.map((rowArr, r) => (
                                 <div key={r} className="flex gap-2 items-center">
-                                    <div className="w-6 font-bold text-xs text-slate-600 text-right pr-2">
+                                    <div 
+                                        className="w-6 font-bold text-xs text-slate-600 text-right pr-2 cursor-pointer hover:text-blue-400 transition-colors"
+                                        onClick={() => handleRowClick(r)}
+                                        title="Bấm để chọn/xóa cả hàng"
+                                    >
                                         {indexToLetter(r)}
                                     </div>
-                                    {rowArr.map((cellType, c) => (
-                                        <div 
-                                            key={`${r}-${c}`}
-                                            onClick={() => handleCellClick(r, c)}
-                                            className={`w-8 h-8 rounded-t-lg rounded-b-sm border cursor-pointer flex items-center justify-center text-[10px] font-bold transition-all ${getSeatColorClass(cellType)} hover:brightness-125`}
-                                            title={`${indexToLetter(r)}${c + 1}`}
-                                        >
-                                            {cellType !== null ? c + 1 : ''}
-                                        </div>
-                                    ))}
-                                    <div className="w-6 font-bold text-xs text-slate-600 pl-2">
+                                    {rowArr.map((cellType, c) => {
+                                        // Skip rendering if the previous cell was a couple seat
+                                        const prevCellType = c > 0 ? rowArr[c - 1] : null;
+                                        const prevTypeObj = prevCellType !== null ? seatTypes.find(t => t.id === prevCellType) : null;
+                                        if (prevTypeObj && prevTypeObj.seatCount && prevTypeObj.seatCount >= 2) {
+                                            return null;
+                                        }
+
+                                        const typeObj = cellType !== null ? seatTypes.find(t => t.id === cellType) : null;
+                                        const isCouple = typeObj && typeObj.seatCount && typeObj.seatCount >= 2;
+                                        const widthClass = isCouple ? 'w-[72px]' : 'w-8';
+                                        
+                                        return (
+                                            <div 
+                                                key={`${r}-${c}`}
+                                                onClick={() => handleCellClick(r, c)}
+                                                className={`${widthClass} h-8 flex-shrink-0 rounded-t-lg rounded-b-sm border cursor-pointer flex items-center justify-center text-[10px] font-bold transition-all ${getSeatColorClass(cellType)} hover:brightness-125`}
+                                                title={`${indexToLetter(r)}${c + 1}`}
+                                            >
+                                                {cellType !== null ? (isCouple ? `${c + 1}-${c + 2}` : c + 1) : ''}
+                                            </div>
+                                        );
+                                    })}
+                                    <div 
+                                        className="w-6 font-bold text-xs text-slate-600 pl-2 cursor-pointer hover:text-blue-400 transition-colors"
+                                        onClick={() => handleRowClick(r)}
+                                        title="Bấm để chọn/xóa cả hàng"
+                                    >
                                         {indexToLetter(r)}
                                     </div>
                                 </div>

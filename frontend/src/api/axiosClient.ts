@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import type { Account, ApiResponse, AuthPayload, CategoryItem, Cinema, Movie, Room, Showtime, SeatType, TicketType, Seat, BookingRequest, BookingResponse } from '../types/app';
+import type { Account, ApiResponse, AuthPayload, CategoryItem, Cinema, Movie, Room, Showtime, SeatType, TicketType, Seat, BookingRequest, BookingResponse, Snack } from '../types/app';
 import { getStoredToken, clearSession } from '../features/auth/utils/session';
 
 const http = axios.create({
@@ -102,16 +102,24 @@ export const apiClient = {
             const response = await http.get<Cinema[]>('/cinemas');
             return unwrap(response.data);
         },
-        async create(payload: Omit<Cinema, 'id'>): Promise<Cinema> {
+        async create(payload: Omit<Cinema, 'id' | 'stateName'>): Promise<Cinema> {
             const response = await http.post<Cinema>('/cinemas', payload, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async update(id: string, payload: Omit<Cinema, 'id'>): Promise<Cinema> {
+        async update(id: string, payload: Omit<Cinema, 'id' | 'stateName'>): Promise<Cinema> {
             const response = await http.put<Cinema>(`/cinemas/${id}`, payload, { headers: authHeader() });
             return unwrap(response.data);
         },
         async remove(id: string): Promise<void> {
             await http.delete(`/cinemas/${id}`, { headers: authHeader() });
+        },
+        async getPricing(cinemaId: string): Promise<import('../types/app').CinemaPricing> {
+            const response = await http.get<ApiResponse<import('../types/app').CinemaPricing>>(`/cinemas/${cinemaId}/pricing`, { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async updatePricing(cinemaId: string, payload: { ticketPrices: { ticketTypeId: number; price: number }[], seatPrices: { seatTypeId: number; surcharge: number }[] }): Promise<import('../types/app').CinemaPricing> {
+            const response = await http.put<ApiResponse<import('../types/app').CinemaPricing>>(`/cinemas/${cinemaId}/pricing`, payload, { headers: authHeader() });
+            return unwrap(response.data);
         },
     },
     rooms: {
@@ -134,7 +142,7 @@ export const apiClient = {
             const response = await http.get<ApiResponse<Seat[]> | Seat[]>(`/rooms/${roomId}/seats`);
             return unwrap(response.data);
         },
-        async configureSeats(roomId: string | number, seats: { seatLocation: string; seatTypeId: number }[]): Promise<Seat[]> {
+        async configureSeats(roomId: string | number, seats: { seatLocation: string; seatTypeId: number; roomId?: number }[]): Promise<Seat[]> {
             const response = await http.post<ApiResponse<Seat[]> | Seat[]>(`/rooms/${roomId}/seats`, seats, { headers: authHeader() });
             return unwrap(response.data);
         },
@@ -165,11 +173,11 @@ export const apiClient = {
             const response = await http.get<ApiResponse<SeatType[]> | SeatType[]>('/seat-types', { headers: authHeader() });
             return unwrap(response.data);
         },
-        async create(payload: { name: string }): Promise<SeatType> {
+        async create(payload: { name: string; seatCount?: number }): Promise<SeatType> {
             const response = await http.post<ApiResponse<SeatType> | SeatType>('/seat-types', payload, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async update(id: number, payload: { name: string }): Promise<SeatType> {
+        async update(id: number, payload: { name: string; seatCount?: number }): Promise<SeatType> {
             const response = await http.put<ApiResponse<SeatType> | SeatType>(`/seat-types/${id}`, payload, { headers: authHeader() });
             return unwrap(response.data);
         },
@@ -200,20 +208,37 @@ export const apiClient = {
             return unwrap(response.data);
         },
     },
+    snacks: {
+        async getAll(): Promise<Snack[]> {
+            const response = await http.get<ApiResponse<Snack[]> | Snack[]>('/snacks', { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async create(payload: { snackTypeId: number; name: string; basePrice: number; imageUrl?: string }): Promise<Snack> {
+            const response = await http.post<ApiResponse<Snack> | Snack>('/snacks', payload, { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async update(id: number, payload: { snackTypeId: number; name: string; basePrice: number; imageUrl?: string }): Promise<Snack> {
+            const response = await http.put<ApiResponse<Snack> | Snack>(`/snacks/${id}`, payload, { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async remove(id: number): Promise<void> {
+            await http.delete(`/snacks/${id}`, { headers: authHeader() });
+        },
+    },
     categories: {
-        async getAll(kind: 'directors' | 'genres' | 'movie-statuses' | 'cast-members'): Promise<CategoryItem[]> {
+        async getAll(kind: 'directors' | 'genres' | 'movie-statuses' | 'cast-members' | 'states' | 'snack-types'): Promise<CategoryItem[]> {
             const response = await http.get<ApiResponse<CategoryItem[]>>(`/${kind}`);
             return unwrap(response.data);
         },
-        async create(kind: 'directors' | 'genres' | 'movie-statuses' | 'cast-members', name: string): Promise<CategoryItem> {
-            const response = await http.post<ApiResponse<CategoryItem>>(`/${kind}`, { name }, { headers: authHeader() });
+        async create(kind: 'directors' | 'genres' | 'movie-statuses' | 'cast-members' | 'states' | 'snack-types', payload: { name: string; imageUrl?: string }): Promise<CategoryItem> {
+            const response = await http.post<ApiResponse<CategoryItem>>(`/${kind}`, payload, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async update(kind: 'directors' | 'genres' | 'movie-statuses' | 'cast-members', id: string, name: string): Promise<CategoryItem> {
-            const response = await http.put<ApiResponse<CategoryItem>>(`/${kind}/${id}`, { name }, { headers: authHeader() });
+        async update(kind: 'directors' | 'genres' | 'movie-statuses' | 'cast-members' | 'states' | 'snack-types', id: string, payload: { name: string; imageUrl?: string }): Promise<CategoryItem> {
+            const response = await http.put<ApiResponse<CategoryItem>>(`/${kind}/${id}`, payload, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async remove(kind: 'directors' | 'genres' | 'movie-statuses' | 'cast-members', id: string): Promise<void> {
+        async remove(kind: 'directors' | 'genres' | 'movie-statuses' | 'cast-members' | 'states' | 'snack-types', id: string): Promise<void> {
             await http.delete(`/${kind}/${id}`, { headers: authHeader() });
         },
     },
