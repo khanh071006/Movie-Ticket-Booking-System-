@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { apiClient, parseError } from '../../api/axiosClient';
 
-type Kind = 'directors' | 'genres' | 'movie-statuses' | 'cast-members';
+type Kind = 'directors' | 'genres' | 'movie-statuses' | 'cast-members' | 'states' | 'snack-types';
 
 interface CategorySelectProps {
     kind: Kind;
@@ -35,7 +35,7 @@ export const CategorySelect = ({ kind, isMulti = false, value, onChange, placeho
     const handleCreate = async (inputValue: string) => {
         setIsLoading(true);
         try {
-            const newItem = await apiClient.categories.create(kind, inputValue);
+            const newItem = await apiClient.categories.create(kind, { name: inputValue });
             const newOption = { label: newItem.name, value: newItem.id };
             setOptions((prev) => [...prev, newOption]);
 

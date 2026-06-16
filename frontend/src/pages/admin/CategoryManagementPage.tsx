@@ -7,19 +7,22 @@ import { Input } from '../../components/ui/Input';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { CategoryItem } from '../../types/app';
 
-type CategoryKey = 'directors' | 'genres' | 'movie-statuses' | 'cast-members';
+type CategoryKey = 'directors' | 'genres' | 'movie-statuses' | 'cast-members' | 'states' | 'snack-types';
 
 const kinds: Array<{ key: CategoryKey; label: string; icon: any }> = [
     { key: 'directors', label: 'Đạo diễn', icon: Tags },
-    { key: 'genres', label: 'Thể loại', icon: Hash },
-    { key: 'movie-statuses', label: 'Trạng thái', icon: Tags },
     { key: 'cast-members', label: 'Diễn viên', icon: Tags },
+    { key: 'states', label: 'Trạng thái rạp', icon: Tags },
+    { key: 'movie-statuses', label: 'Trạng thái phim', icon: Tags },
+    { key: 'genres', label: 'Thể loại phim', icon: Hash },
+    { key: 'snack-types', label: 'Loại đồ ăn', icon: Tags },
 ];
 
 export const CategoryManagementPage = () => {
     const [active, setActive] = useState<CategoryKey>('directors');
     const [items, setItems] = useState<CategoryItem[]>([]);
     const [name, setName] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
     const [editId, setEditId] = useState<string | null>(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -47,9 +50,10 @@ export const CategoryManagementPage = () => {
         event.preventDefault();
         setError('');
         try {
-            if (editId) await apiClient.categories.update(active, editId, name);
-            else await apiClient.categories.create(active, name);
+            if (editId) await apiClient.categories.update(active, editId, { name, imageUrl });
+            else await apiClient.categories.create(active, { name, imageUrl });
             setName('');
+            setImageUrl('');
             setEditId(null);
             load();
         } catch (err) {
@@ -96,6 +100,7 @@ export const CategoryManagementPage = () => {
                                 setActive(kind.key);
                                 setEditId(null);
                                 setName('');
+                                setImageUrl('');
                             }}
                             className={`relative flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition-all ${
                                 isActive 
@@ -134,6 +139,19 @@ export const CategoryManagementPage = () => {
                                     required 
                                 />
                             </div>
+
+                            {(active === 'directors' || active === 'cast-members') && (
+                                <div className="space-y-2">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Link ảnh chân dung (Tùy chọn)</label>
+                                    <Input 
+                                        type="url"
+                                        className="h-12 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus:border-blue-500 focus:ring-blue-500/20" 
+                                        placeholder="https://example.com/avatar.jpg"
+                                        value={imageUrl} 
+                                        onChange={(e) => setImageUrl(e.target.value)} 
+                                    />
+                                </div>
+                            )}
                             
                             <div className="flex flex-col gap-2 pt-2">
                                 <Button className="h-12 w-full gap-2 font-bold shadow-xl shadow-blue-900/20">
@@ -144,7 +162,7 @@ export const CategoryManagementPage = () => {
                                         type="button" 
                                         variant="outline" 
                                         className="h-12 w-full border-white/10 text-slate-400 hover:text-white" 
-                                        onClick={() => { setEditId(null); setName(''); }}
+                                        onClick={() => { setEditId(null); setName(''); setImageUrl(''); }}
                                     >
                                         Huỷ bỏ
                                     </Button>
@@ -176,8 +194,23 @@ export const CategoryManagementPage = () => {
                                     {items.length > 0 ? (
                                         items.map((item) => (
                                             <tr key={item.id} className="group hover:bg-white/[0.02] transition-colors">
-                                                <td className="px-6 py-4 font-medium text-slate-200 group-hover:text-blue-400 transition-colors">
-                                                    {item.name}
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center gap-3">
+                                                        {(active === 'directors' || active === 'cast-members') && (
+                                                            item.imageUrl ? (
+                                                                <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full border border-white/10 bg-zinc-800">
+                                                                    <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
+                                                                </div>
+                                                            ) : (
+                                                                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-zinc-800 text-xs font-bold text-slate-500">
+                                                                    N/A
+                                                                </div>
+                                                            )
+                                                        )}
+                                                        <span className="font-medium text-slate-200 group-hover:text-blue-400 transition-colors">
+                                                            {item.name}
+                                                        </span>
+                                                    </div>
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex justify-end gap-1 opacity-100 transition-opacity">
@@ -185,7 +218,7 @@ export const CategoryManagementPage = () => {
                                                             variant="ghost" 
                                                             size="icon" 
                                                             className="h-8 w-8 text-blue-500 hover:bg-blue-500/10" 
-                                                            onClick={() => { setEditId(item.id); setName(item.name); }}
+                                                            onClick={() => { setEditId(item.id); setName(item.name); setImageUrl(item.imageUrl || ''); }}
                                                         >
                                                             <Edit2 className="h-3.5 w-3.5" />
                                                         </Button>

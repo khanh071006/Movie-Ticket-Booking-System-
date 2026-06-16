@@ -19,6 +19,9 @@ public class CastMember {
     @OneToMany(mappedBy = "castMember", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MovieCast> movieCasts = new HashSet<>();
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     public CastMember() {
     }
 
@@ -50,5 +53,13 @@ public class CastMember {
 
     public void setMovieCasts(Set<MovieCast> movieCasts) {
         this.movieCasts = movieCasts;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

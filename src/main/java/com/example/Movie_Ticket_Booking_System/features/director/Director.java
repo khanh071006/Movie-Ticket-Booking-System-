@@ -13,6 +13,9 @@ public class Director {
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     public Director() {
     }
 
@@ -35,5 +38,13 @@ public class Director {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

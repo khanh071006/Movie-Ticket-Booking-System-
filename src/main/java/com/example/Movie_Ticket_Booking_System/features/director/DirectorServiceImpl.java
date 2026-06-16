@@ -29,6 +29,7 @@ public class DirectorServiceImpl implements DirectorService {
 
         Director director = new Director();
         director.setName(reqDirectorDTO.getName());
+        director.setImageUrl(reqDirectorDTO.getImageUrl());
         director = directorRepository.save(director);
         return ResDirectorDTO.fromDirector(director);
     }
@@ -63,9 +64,10 @@ public class DirectorServiceImpl implements DirectorService {
             if (directorWithNewName.isPresent()) {
                 throw new DuplicateResourceException("Director", "name", newName);
             }
-            existingDirector.setName(newName);
         }
-
+        
+        existingDirector.setName(newName);
+        existingDirector.setImageUrl(reqDirectorDTO.getImageUrl());
         Director updatedDirector = directorRepository.save(existingDirector);
         return ResDirectorDTO.fromDirector(updatedDirector);
     }

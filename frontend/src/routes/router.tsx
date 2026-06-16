@@ -20,6 +20,7 @@ import { ShowtimeManagementPage } from '../pages/admin/ShowtimeManagementPage';
 import { CategoryManagementPage } from '../pages/admin/CategoryManagementPage';
 import { SeatTypeManagementPage } from '../pages/admin/SeatTypeManagementPage';
 import { TicketTypeManagementPage } from '../pages/admin/TicketTypeManagementPage';
+import { SnackManagementPage } from '../pages/admin/SnackManagementPage';
 import { RoomSeatConfigPage } from '../pages/admin/RoomSeatConfigPage';
 import { BookingPage } from '../pages/public/BookingPage';
 import { ForbiddenPage } from '../pages/error/ForbiddenPage';
@@ -71,6 +72,7 @@ export const router = createBrowserRouter([
             { path: 'categories', element: <CategoryManagementPage /> },
             { path: 'seat-types', element: <SeatTypeManagementPage /> },
             { path: 'ticket-types', element: <TicketTypeManagementPage /> },
+            { path: 'snacks', element: <SnackManagementPage /> },
         ],
     },
     {

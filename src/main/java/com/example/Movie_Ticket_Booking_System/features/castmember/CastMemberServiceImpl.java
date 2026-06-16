@@ -28,6 +28,7 @@ public class CastMemberServiceImpl implements CastMemberService {
         }
         CastMember castMember = new CastMember();
         castMember.setName(reqCastMemberDTO.getName());
+        castMember.setImageUrl(reqCastMemberDTO.getImageUrl());
         castMember = castMemberRepository.save(castMember);
         return ResCastMemberDTO.fromCastMember(castMember);
     }
@@ -62,9 +63,10 @@ public class CastMemberServiceImpl implements CastMemberService {
             if (castMemberWithNewName.isPresent()) {
                 throw new DuplicateResourceException("CastMember", "name", newName);
             }
-            existingCastMember.setName(newName);
         }
 
+        existingCastMember.setName(newName);
+        existingCastMember.setImageUrl(reqCastMemberDTO.getImageUrl());
         CastMember updatedCastMember = castMemberRepository.save(existingCastMember);
         return ResCastMemberDTO.fromCastMember(updatedCastMember);
     }

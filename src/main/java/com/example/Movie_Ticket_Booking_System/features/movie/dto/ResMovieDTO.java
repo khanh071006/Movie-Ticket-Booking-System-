@@ -36,7 +36,7 @@ public class ResMovieDTO {
         this.trailerUrl = movie.getTrailerUrl();
 
         this.director = Optional.ofNullable(movie.getDirector())
-                .map(d -> new DirectorDTO(d.getId(), d.getName()))
+                .map(d -> new DirectorDTO(d.getId(), d.getName(), d.getImageUrl()))
                 .orElse(null);
 
         this.movieStatus = Optional.ofNullable(movie.getMovieStatus())
@@ -46,7 +46,7 @@ public class ResMovieDTO {
         this.castMembers = Optional.ofNullable(movie.getMovieCasts())
                 .map(casts -> casts.stream()
                         .map(MovieCast::getCastMember)
-                        .map(cast -> new CastMemberDTO(cast.getId(), cast.getName()))
+                        .map(cast -> new CastMemberDTO(cast.getId(), cast.getName(), cast.getImageUrl()))
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
 
@@ -76,9 +76,11 @@ public class ResMovieDTO {
     private static class DirectorDTO {
         private final Integer id;
         private final String name;
-        public DirectorDTO(Integer id, String name) { this.id = id; this.name = name; }
+        private final String imageUrl;
+        public DirectorDTO(Integer id, String name, String imageUrl) { this.id = id; this.name = name; this.imageUrl = imageUrl; }
         public Integer getId() { return id; }
         public String getName() { return name; }
+        public String getImageUrl() { return imageUrl; }
     }
 
     private static class MovieStatusDTO {
@@ -92,9 +94,11 @@ public class ResMovieDTO {
     private static class CastMemberDTO {
         private final Integer id;
         private final String name;
-        public CastMemberDTO(Integer id, String name) { this.id = id; this.name = name; }
+        private final String imageUrl;
+        public CastMemberDTO(Integer id, String name, String imageUrl) { this.id = id; this.name = name; this.imageUrl = imageUrl; }
         public Integer getId() { return id; }
         public String getName() { return name; }
+        public String getImageUrl() { return imageUrl; }
     }
 
     private static class GenreDTO {
