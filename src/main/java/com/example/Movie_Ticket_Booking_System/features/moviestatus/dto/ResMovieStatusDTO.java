@@ -2,13 +2,11 @@ package com.example.Movie_Ticket_Booking_System.features.moviestatus.dto;
 
 import com.example.Movie_Ticket_Booking_System.features.moviestatus.MovieStatus;
 
-import java.util.UUID;
-
 public class ResMovieStatusDTO {
-    private UUID id;
+    private Integer id;
     private String name;
 
-    public ResMovieStatusDTO(UUID id, String name) {
+    public ResMovieStatusDTO(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -17,11 +15,11 @@ public class ResMovieStatusDTO {
         return new ResMovieStatusDTO(movieStatus.getId(), movieStatus.getName());
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

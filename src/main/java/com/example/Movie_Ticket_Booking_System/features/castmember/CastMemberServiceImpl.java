@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CastMemberServiceImpl implements CastMemberService {
@@ -44,7 +43,7 @@ public class CastMemberServiceImpl implements CastMemberService {
     }
 
     @Override
-    public ResCastMemberDTO handleGetCastMemberById(UUID id) {
+    public ResCastMemberDTO handleGetCastMemberById(Integer id) {
         CastMember castMember = castMemberRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CastMember", "id", id));
         return ResCastMemberDTO.fromCastMember(castMember);
@@ -52,7 +51,7 @@ public class CastMemberServiceImpl implements CastMemberService {
 
     @Override
     @Transactional
-    public ResCastMemberDTO handleUpdateCastMember(UUID id, ReqCastMemberDTO reqCastMemberDTO) {
+    public ResCastMemberDTO handleUpdateCastMember(Integer id, ReqCastMemberDTO reqCastMemberDTO) {
         CastMember existingCastMember = castMemberRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CastMember", "id", id));
 
@@ -72,7 +71,7 @@ public class CastMemberServiceImpl implements CastMemberService {
 
     @Override
     @Transactional
-    public void handleDeleteCastMember(UUID id) {
+    public void handleDeleteCastMember(Integer id) {
         if (!castMemberRepository.existsById(id)) {
             throw new ResourceNotFoundException("CastMember", "id", id);
         }

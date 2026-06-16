@@ -4,10 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface MovieStatusRepository extends JpaRepository<MovieStatus, UUID> {
+public interface MovieStatusRepository extends JpaRepository<MovieStatus, Integer> {
     boolean existsByName(String name);
     Optional<MovieStatus> findByName(String name);
 }

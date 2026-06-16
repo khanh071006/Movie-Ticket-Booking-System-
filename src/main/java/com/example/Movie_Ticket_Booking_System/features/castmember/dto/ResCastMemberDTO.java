@@ -2,13 +2,11 @@ package com.example.Movie_Ticket_Booking_System.features.castmember.dto;
 
 import com.example.Movie_Ticket_Booking_System.features.castmember.CastMember;
 
-import java.util.UUID;
-
 public class ResCastMemberDTO {
-    private UUID id;
+    private Integer id;
     private String name;
 
-    public ResCastMemberDTO(UUID id, String name) {
+    public ResCastMemberDTO(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -17,11 +15,11 @@ public class ResCastMemberDTO {
         return new ResCastMemberDTO(castMember.getId(), castMember.getName());
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

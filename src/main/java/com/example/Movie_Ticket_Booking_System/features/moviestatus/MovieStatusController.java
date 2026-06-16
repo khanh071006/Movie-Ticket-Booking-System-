@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/movie-statuses")
@@ -31,17 +30,17 @@ public class MovieStatusController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResMovieStatusDTO>> getMovieStatusById(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<ResMovieStatusDTO>> getMovieStatusById(@PathVariable Integer id) {
         return ResponseEntity.ok(ApiResponse.success(movieStatusService.handleGetMovieStatusById(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResMovieStatusDTO>> updateMovieStatus(@PathVariable UUID id, @Valid @RequestBody ReqMovieStatusDTO reqMovieStatusDTO) {
+    public ResponseEntity<ApiResponse<ResMovieStatusDTO>> updateMovieStatus(@PathVariable Integer id, @Valid @RequestBody ReqMovieStatusDTO reqMovieStatusDTO) {
         return ResponseEntity.ok(ApiResponse.success(movieStatusService.handleUpdateMovieStatus(id, reqMovieStatusDTO)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteMovieStatus(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<Void>> deleteMovieStatus(@PathVariable Integer id) {
         movieStatusService.handleDeleteMovieStatus(id);
         return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }

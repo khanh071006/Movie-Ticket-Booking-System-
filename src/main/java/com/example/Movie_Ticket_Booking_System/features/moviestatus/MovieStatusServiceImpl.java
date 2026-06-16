@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class MovieStatusServiceImpl implements MovieStatusService {
@@ -44,7 +43,7 @@ public class MovieStatusServiceImpl implements MovieStatusService {
     }
 
     @Override
-    public ResMovieStatusDTO handleGetMovieStatusById(UUID id) {
+    public ResMovieStatusDTO handleGetMovieStatusById(Integer id) {
         MovieStatus movieStatus = movieStatusRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("MovieStatus", "id", id));
         return ResMovieStatusDTO.fromMovieStatus(movieStatus);
@@ -52,7 +51,7 @@ public class MovieStatusServiceImpl implements MovieStatusService {
 
     @Override
     @Transactional
-    public ResMovieStatusDTO handleUpdateMovieStatus(UUID id, ReqMovieStatusDTO reqMovieStatusDTO) {
+    public ResMovieStatusDTO handleUpdateMovieStatus(Integer id, ReqMovieStatusDTO reqMovieStatusDTO) {
         MovieStatus existingMovieStatus = movieStatusRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("MovieStatus", "id", id));
 
@@ -72,7 +71,7 @@ public class MovieStatusServiceImpl implements MovieStatusService {
 
     @Override
     @Transactional
-    public void handleDeleteMovieStatus(UUID id) {
+    public void handleDeleteMovieStatus(Integer id) {
         if (!movieStatusRepository.existsById(id)) {
             throw new ResourceNotFoundException("MovieStatus", "id", id);
         }

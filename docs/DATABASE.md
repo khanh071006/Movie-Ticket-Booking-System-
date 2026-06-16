@@ -8,7 +8,7 @@
 
 ## 1. Lược đồ đã hoàn thiện (Implemented Schema)
 
-Phần này mô tả cấu trúc database cho các tính năng đã được code trong project. Lược đồ này sử dụng `UUID` làm khóa chính cho các thực thể chính, đồng bộ với các lớp Entity trong mã nguồn Java.
+Phần này mô tả cấu trúc database cho các tính năng đã được code trong project. Lược đồ này sử dụng `VARCHAR(36)` (đại diện cho UUID) làm khóa chính cho các thực thể giao dịch chính, và `INT AUTO_INCREMENT` cho các bảng danh mục (thể loại, đạo diễn, diễn viên, v.v.), đồng bộ với các lớp Entity trong mã nguồn Java.
 
 ### 1.1. Sơ đồ thực thể kết nối (ER Diagram)
 
@@ -23,13 +23,13 @@ erDiagram
     }
 
     ROLES {
-        UUID id PK
+        Integer id PK
         String name
     }
 
     ACCOUNT_ROLES {
         UUID account_id PK, FK
-        UUID role_id PK, FK
+        Integer role_id PK, FK
     }
 
     MOVIES {
@@ -41,40 +41,40 @@ erDiagram
         String language
         String poster_url
         String trailer_url
-        UUID director_id FK
-        UUID status_id FK
+        Integer director_id FK
+        Integer status_id FK
     }
 
     DIRECTORS {
-        UUID id PK
+        Integer id PK
         String name
     }
 
     MOVIE_STATUS {
-        UUID id PK
+        Integer id PK
         String name
     }
 
     CAST_MEMBERS {
-        UUID id PK
+        Integer id PK
         String name
     }
 
     GENRES {
-        UUID id PK
+        Integer id PK
         String name
     }
 
     MOVIE_CAST {
         UUID id PK
         UUID movie_id FK
-        UUID cast_id FK
+        Integer cast_id FK
     }
 
     MOVIE_GENRE {
         UUID id PK
         UUID movie_id FK
-        UUID genre_id FK
+        Integer genre_id FK
     }
 
     CINEMAS {
@@ -118,7 +118,7 @@ erDiagram
 #### `movies`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính (UUID) |
 | `title` | `VARCHAR(255)` | `NOT NULL` | Tên phim |
 | `description` | `TEXT` | | Mô tả phim |
 | `duration_minutes` | `INT` | | Thời lượng (phút) |
@@ -126,69 +126,69 @@ erDiagram
 | `language` | `VARCHAR(255)` | | Ngôn ngữ |
 | `poster_url` | `VARCHAR(255)` | | Link ảnh poster |
 | `trailer_url` | `VARCHAR(255)` | | Link trailer |
-| `director_id` | `UUID` | `FOREIGN KEY (directors.id)` | Khóa ngoại đến đạo diễn |
-| `status_id` | `UUID` | `FOREIGN KEY (movie_status.id)` | Khóa ngoại đến trạng thái phim |
+| `director_id` | `INT` | `FOREIGN KEY (directors.id)` | Khóa ngoại đến đạo diễn |
+| `status_id` | `INT` | `FOREIGN KEY (movie_status.id)` | Khóa ngoại đến trạng thái phim |
 
 #### `directors`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của đạo diễn |
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính của đạo diễn |
 | `name` | `VARCHAR(100)` | `NOT NULL` | Tên đạo diễn |
 
 #### `movie_status`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của trạng thái phim |
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính của trạng thái phim |
 | `name` | `VARCHAR(50)` | `NOT NULL, UNIQUE` | Tên trạng thái (ví dụ: "Now Showing", "Coming Soon") |
 
 #### `cast_members`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của thành viên diễn viên |
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính của thành viên diễn viên |
 | `name` | `VARCHAR(100)` | `NOT NULL` | Tên diễn viên |
 
 #### `genres`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của thể loại |
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính của thể loại |
 | `name` | `VARCHAR(50)` | `NOT NULL, UNIQUE` | Tên thể loại (ví dụ: "Action", "Comedy") |
 
 #### `movie_cast`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của bảng trung gian |
-| `movie_id` | `UUID` | `NOT NULL, FOREIGN KEY (movies.id)` | Khóa ngoại đến phim |
-| `cast_id` | `UUID` | `NOT NULL, FOREIGN KEY (cast_members.id)` | Khóa ngoại đến diễn viên |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của bảng trung gian |
+| `movie_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (movies.id)` | Khóa ngoại đến phim |
+| `cast_id` | `INT` | `NOT NULL, FOREIGN KEY (cast_members.id)` | Khóa ngoại đến diễn viên |
 | | | `UNIQUE (movie_id, cast_id)` | Đảm bảo một diễn viên chỉ được gán cho một phim một lần |
 
 #### `movie_genre`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của bảng trung gian |
-| `movie_id` | `UUID` | `NOT NULL, FOREIGN KEY (movies.id)` | Khóa ngoại đến phim |
-| `genre_id` | `UUID` | `NOT NULL, FOREIGN KEY (genres.id)` | Khóa ngoại đến thể loại |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của bảng trung gian |
+| `movie_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (movies.id)` | Khóa ngoại đến phim |
+| `genre_id` | `INT` | `NOT NULL, FOREIGN KEY (genres.id)` | Khóa ngoại đến thể loại |
 | | | `UNIQUE (movie_id, genre_id)` | Đảm bảo một thể loại chỉ được gán cho một phim một lần |
 
 #### `cinemas`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của rạp |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của rạp |
 | `name` | `VARCHAR(255)` | `NOT NULL` | Tên rạp |
 | `address`| `VARCHAR(255)`| | Địa chỉ của rạp |
 
 #### `rooms`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của phòng chiếu |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của phòng chiếu |
 | `name` | `VARCHAR(255)` | `NOT NULL` | Tên phòng chiếu (ví dụ: "Phòng 1", "IMAX") |
-| `cinema_id` | `UUID` | `NOT NULL, FOREIGN KEY (cinemas.id)` | Khóa ngoại đến rạp chứa phòng này |
+| `cinema_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (cinemas.id)` | Khóa ngoại đến rạp chứa phòng này |
 
 #### `showtimes`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của lịch chiếu |
-| `movie_id` | `UUID` | `NOT NULL, FOREIGN KEY (movies.id)` | Khóa ngoại đến phim được chiếu |
-| `room_id` | `UUID` | `NOT NULL, FOREIGN KEY (rooms.id)` | Khóa ngoại đến phòng chiếu |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của lịch chiếu |
+| `movie_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (movies.id)` | Khóa ngoại đến phim được chiếu |
+| `room_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (rooms.id)` | Khóa ngoại đến phòng chiếu |
 | `start_time` | `DATETIME` | `NOT NULL` | Thời gian bắt đầu chiếu |
 | `end_time` | `DATETIME` | `NOT NULL` | Thời gian kết thúc (dự kiến) |
 
@@ -216,9 +216,9 @@ erDiagram
 #### `bookings`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của giao dịch |
-| `account_id` | `UUID` | `FOREIGN KEY (accounts.id)` | Khách hàng đặt vé |
-| `showing_id` | `UUID` | `NOT NULL, FOREIGN KEY (showtimes.id)` | Suất chiếu được đặt |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của giao dịch |
+| `account_id` | `VARCHAR(36)` | `FOREIGN KEY (accounts.id)` | Khách hàng đặt vé |
+| `showing_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (showtimes.id)` | Suất chiếu được đặt |
 | `total_amount` | `DECIMAL(12, 2)` | `NOT NULL` | Tổng số tiền |
 | `payment_status` | `VARCHAR(20)` | `NOT NULL` | Trạng thái thanh toán (PENDING, PAID) |
 | `created_datetime` | `DATETIME` | `NOT NULL` | Thời điểm tạo giao dịch |
@@ -226,8 +226,8 @@ erDiagram
 #### `booking_ticket`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của dòng mục vé |
-| `booking_id` | `UUID` | `NOT NULL, FOREIGN KEY (bookings.id)` | Giao dịch cha |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của dòng mục vé |
+| `booking_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (bookings.id)` | Giao dịch cha |
 | `ticket_type_id` | `INT` | `NOT NULL, FOREIGN KEY (ticket_type.id)` | Loại vé được mua |
 | `ticket_qty` | `INT` | `NOT NULL` | Số lượng vé của loại này |
 | `purchase_price` | `DECIMAL(10, 2)` | `NOT NULL` | Giá chốt tại thời điểm mua |
@@ -235,15 +235,15 @@ erDiagram
 #### `booking_seat`
 | Column | Type | Constraints | Description |
 |---|---|---|---|
-| `id` | `UUID` | `PRIMARY KEY` | Khóa chính của dòng mục ghế |
-| `booking_id` | `UUID` | `NOT NULL, FOREIGN KEY (bookings.id)` | Giao dịch cha |
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của dòng mục ghế |
+| `booking_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (bookings.id)` | Giao dịch cha |
 | `seat_id` | `INT` | `NOT NULL, FOREIGN KEY (seats.id)` | Ghế cụ thể được chọn |
 
 ---
 
 ## 2. Lược đồ toàn bộ dự án (Full Project Schema)
 
-Đây là kịch bản SQL đầy đủ cho toàn bộ các tính năng dự kiến của project. Lược đồ này sử dụng `INT AUTO_INCREMENT` cho các bảng danh mục và `UUID` (dưới dạng `VARCHAR(36)`) cho các bảng dữ liệu chính.
+Đây là kịch bản SQL đầy đủ cho toàn bộ các tính năng dự kiến của project. Lược đồ này sử dụng `INT AUTO_INCREMENT` cho các bảng danh mục và `VARCHAR(36)` (dành cho UUID) cho các bảng dữ liệu chính/giao dịch.
 
 ```sql
 -- Tạo Database (Bạn có thể đổi tên tùy ý)
@@ -305,22 +305,22 @@ CREATE TABLE movie_status (
 -- ==========================================
 
 CREATE TABLE cinemas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id VARCHAR(36) PRIMARY KEY, -- Sử dụng UUID
     name VARCHAR(100) NOT NULL,
     state_id INT,
     FOREIGN KEY (state_id) REFERENCES state(id)
 );
 
 CREATE TABLE theatres (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    cinema_id INT NOT NULL,
+    id VARCHAR(36) PRIMARY KEY, -- Sử dụng UUID
+    cinema_id VARCHAR(36) NOT NULL,
     theatre_num VARCHAR(20) NOT NULL,
     FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
 );
 
 CREATE TABLE seats (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    theatre_id INT NOT NULL,
+    theatre_id VARCHAR(36) NOT NULL,
     seat_type_id INT NOT NULL,
     seat_location VARCHAR(10) NOT NULL, -- e.g., A1, B2
     FOREIGN KEY (theatre_id) REFERENCES theatres(id),
@@ -342,7 +342,7 @@ CREATE TABLE accounts (
     password_hash VARCHAR(255) NOT NULL,
     full_name VARCHAR(100),
     phone VARCHAR(20),
-    cinema_id INT NULL, -- Cho phép NULL nếu là khách hàng bình thường
+    cinema_id VARCHAR(36) NULL, -- Cho phép NULL nếu là khách hàng bình thường
     FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
 );
 
@@ -357,37 +357,42 @@ CREATE TABLE account_roles (
 
 CREATE TABLE movies (
     id VARCHAR(36) PRIMARY KEY, -- Sử dụng UUID
-    director_id INT,
-    status_id INT NOT NULL,
     title VARCHAR(200) NOT NULL,
-    description TEXT,
-    duration_minutes INT,
-    release_date DATE,
-    FOREIGN KEY (director_id) REFERENCES directors(id),
-    FOREIGN KEY (status_id) REFERENCES movie_status(id)
+    `description` TEXT,
+    `duration_minutes` INT,
+    `release_date` DATE,
+    `language` VARCHAR(50),
+    `poster_url` VARCHAR(255),
+    `trailer_url` VARCHAR(255),
+    `director_id` INT NOT NULL,
+    `status_id` INT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`director_id`) REFERENCES `directors`(`id`),
+    FOREIGN KEY (`status_id`) REFERENCES `movie_status`(`id`)
 );
 
--- Bảng trung gian N-N
-CREATE TABLE movie_cast (
-    movie_id VARCHAR(36) NOT NULL,
-    cast_id INT NOT NULL,
-    PRIMARY KEY (movie_id, cast_id),
-    FOREIGN KEY (movie_id) REFERENCES movies(id),
-    FOREIGN KEY (cast_id) REFERENCES cast_members(id)
+CREATE TABLE `movie_genre` (
+  `id` VARCHAR(36) PRIMARY KEY,
+  `movie_id` VARCHAR(36) NOT NULL,
+  `genre_id` INT NOT NULL,
+  FOREIGN KEY (`movie_id`) REFERENCES `movies`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`genre_id`) REFERENCES `genres`(`id`) ON DELETE CASCADE
 );
 
-CREATE TABLE movie_genre (
-    movie_id VARCHAR(36) NOT NULL,
-    genre_id INT NOT NULL,
-    PRIMARY KEY (movie_id, genre_id),
-    FOREIGN KEY (movie_id) REFERENCES movies(id),
-    FOREIGN KEY (genre_id) REFERENCES genres(id)
+CREATE TABLE `movie_cast` (
+  `id` VARCHAR(36) PRIMARY KEY,
+  `movie_id` VARCHAR(36) NOT NULL,
+  `cast_member_id` INT NOT NULL,
+  `role_name` VARCHAR(100),
+  FOREIGN KEY (`movie_id`) REFERENCES `movies`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`cast_member_id`) REFERENCES `cast_members`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE showing_time (
     id VARCHAR(36) PRIMARY KEY, -- Sử dụng UUID
     movie_id VARCHAR(36) NOT NULL,
-    theatre_id INT NOT NULL,
+    theatre_id VARCHAR(36) NOT NULL,
     showing_datetime DATETIME NOT NULL,
     FOREIGN KEY (movie_id) REFERENCES movies(id),
     FOREIGN KEY (theatre_id) REFERENCES theatres(id)
@@ -435,3 +440,4 @@ CREATE TABLE booking_seat (
     FOREIGN KEY (booking_id) REFERENCES bookings(id),
     FOREIGN KEY (seat_id) REFERENCES seats(id)
 );
+```

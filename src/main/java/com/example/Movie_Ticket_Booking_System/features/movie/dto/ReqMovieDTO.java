@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
+import java.util.List;
 
 public class ReqMovieDTO {
 
@@ -26,14 +26,14 @@ public class ReqMovieDTO {
     private String trailerUrl;
 
     @NotNull(message = "ID đạo diễn không được để trống")
-    private UUID directorId;
+    private Integer directorId;
 
     @NotNull(message = "ID trạng thái phim không được để trống")
-    private UUID movieStatusId;
+    private Integer movieStatusId;
 
-    private List<UUID> castMemberIds;
+    private List<Integer> castMemberIds;
 
-    private List<UUID> genreIds;
+    private List<Integer> genreIds;
 
 
     // Getters and Setters
@@ -94,35 +94,35 @@ public class ReqMovieDTO {
         this.trailerUrl = trailerUrl;
     }
 
-    public UUID getDirectorId() {
+    public Integer getDirectorId() {
         return directorId;
     }
 
-    public void setDirectorId(UUID directorId) {
+    public void setDirectorId(Integer directorId) {
         this.directorId = directorId;
     }
 
-    public UUID getMovieStatusId() {
+    public Integer getMovieStatusId() {
         return movieStatusId;
     }
 
-    public void setMovieStatusId(UUID movieStatusId) {
+    public void setMovieStatusId(Integer movieStatusId) {
         this.movieStatusId = movieStatusId;
     }
 
-    public List<UUID> getCastMemberIds() {
+    public List<Integer> getCastMemberIds() {
         return castMemberIds;
     }
 
-    public void setCastMemberIds(List<UUID> castMemberIds) {
+    public void setCastMemberIds(List<Integer> castMemberIds) {
         this.castMemberIds = castMemberIds;
     }
 
-    public List<UUID> getGenreIds() {
+    public List<Integer> getGenreIds() {
         return genreIds;
     }
 
-    public void setGenreIds(List<UUID> genreIds) {
+    public void setGenreIds(List<Integer> genreIds) {
         this.genreIds = genreIds;
     }
 }

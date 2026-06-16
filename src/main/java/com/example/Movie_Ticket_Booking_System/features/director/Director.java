@@ -1,15 +1,14 @@
 package com.example.Movie_Ticket_Booking_System.features.director;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "directors")
 public class Director {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false)
     private String name;
@@ -17,16 +16,16 @@ public class Director {
     public Director() {
     }
 
-    public Director(UUID id, String name) {
+    public Director(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

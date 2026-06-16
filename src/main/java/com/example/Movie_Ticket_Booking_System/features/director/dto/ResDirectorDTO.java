@@ -2,13 +2,12 @@ package com.example.Movie_Ticket_Booking_System.features.director.dto;
 
 import com.example.Movie_Ticket_Booking_System.features.director.Director;
 
-import java.util.UUID;
 
 public class ResDirectorDTO {
-    private UUID id;
+    private Integer id;
     private String name;
 
-    public ResDirectorDTO(UUID id, String name) {
+    public ResDirectorDTO(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -18,11 +17,11 @@ public class ResDirectorDTO {
     }
 
     // Getters and setters
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

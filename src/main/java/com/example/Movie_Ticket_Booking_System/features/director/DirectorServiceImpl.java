@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class DirectorServiceImpl implements DirectorService {
@@ -45,7 +44,7 @@ public class DirectorServiceImpl implements DirectorService {
     }
 
     @Override
-    public ResDirectorDTO handleGetDirectorById(UUID id) {
+    public ResDirectorDTO handleGetDirectorById(Integer id) {
         Director director = directorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Director", "id", id));
         return ResDirectorDTO.fromDirector(director);
@@ -53,7 +52,7 @@ public class DirectorServiceImpl implements DirectorService {
 
     @Override
     @Transactional
-    public ResDirectorDTO handleUpdateDirector(UUID id, ReqDirectorDTO reqDirectorDTO) {
+    public ResDirectorDTO handleUpdateDirector(Integer id, ReqDirectorDTO reqDirectorDTO) {
         Director existingDirector = directorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Director", "id", id));
 
@@ -73,7 +72,7 @@ public class DirectorServiceImpl implements DirectorService {
 
     @Override
     @Transactional
-    public void handleDeleteDirector(UUID id) {
+    public void handleDeleteDirector(Integer id) {
         if (!directorRepository.existsById(id)) {
             throw new ResourceNotFoundException("Director", "id", id);
         }

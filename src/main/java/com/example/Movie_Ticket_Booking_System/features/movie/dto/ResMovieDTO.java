@@ -74,34 +74,34 @@ public class ResMovieDTO {
 
     // Inner DTOs
     private static class DirectorDTO {
-        private final UUID id;
+        private final Integer id;
         private final String name;
-        public DirectorDTO(UUID id, String name) { this.id = id; this.name = name; }
-        public UUID getId() { return id; }
+        public DirectorDTO(Integer id, String name) { this.id = id; this.name = name; }
+        public Integer getId() { return id; }
         public String getName() { return name; }
     }
 
     private static class MovieStatusDTO {
-        private final UUID id;
+        private final Integer id;
         private final String name;
-        public MovieStatusDTO(UUID id, String name) { this.id = id; this.name = name; }
-        public UUID getId() { return id; }
+        public MovieStatusDTO(Integer id, String name) { this.id = id; this.name = name; }
+        public Integer getId() { return id; }
         public String getName() { return name; }
     }
 
     private static class CastMemberDTO {
-        private final UUID id;
+        private final Integer id;
         private final String name;
-        public CastMemberDTO(UUID id, String name) { this.id = id; this.name = name; }
-        public UUID getId() { return id; }
+        public CastMemberDTO(Integer id, String name) { this.id = id; this.name = name; }
+        public Integer getId() { return id; }
         public String getName() { return name; }
     }
 
     private static class GenreDTO {
-        private final UUID id;
+        private final Integer id;
         private final String name;
-        public GenreDTO(UUID id, String name) { this.id = id; this.name = name; }
-        public UUID getId() { return id; }
+        public GenreDTO(Integer id, String name) { this.id = id; this.name = name; }
+        public Integer getId() { return id; }
         public String getName() { return name; }
     }
 }

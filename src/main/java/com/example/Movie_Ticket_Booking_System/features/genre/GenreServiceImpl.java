@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -44,7 +43,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public ResGenreDTO handleGetGenreById(UUID id) {
+    public ResGenreDTO handleGetGenreById(Integer id) {
         Genre genre = genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre", "id", id));
         return ResGenreDTO.fromGenre(genre);
@@ -52,7 +51,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
-    public ResGenreDTO handleUpdateGenre(UUID id, ReqGenreDTO reqGenreDTO) {
+    public ResGenreDTO handleUpdateGenre(Integer id, ReqGenreDTO reqGenreDTO) {
         Genre existingGenre = genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Genre", "id", id));
 
@@ -72,7 +71,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
-    public void handleDeleteGenre(UUID id) {
+    public void handleDeleteGenre(Integer id) {
         if (!genreRepository.existsById(id)) {
             throw new ResourceNotFoundException("Genre", "id", id);
         }

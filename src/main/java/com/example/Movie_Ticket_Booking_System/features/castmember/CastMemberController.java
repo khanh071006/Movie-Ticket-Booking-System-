@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/cast-members")
@@ -31,17 +30,17 @@ public class CastMemberController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResCastMemberDTO>> getCastMemberById(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<ResCastMemberDTO>> getCastMemberById(@PathVariable Integer id) {
         return ResponseEntity.ok(ApiResponse.success(castMemberService.handleGetCastMemberById(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResCastMemberDTO>> updateCastMember(@PathVariable UUID id, @Valid @RequestBody ReqCastMemberDTO reqCastMemberDTO) {
+    public ResponseEntity<ApiResponse<ResCastMemberDTO>> updateCastMember(@PathVariable Integer id, @Valid @RequestBody ReqCastMemberDTO reqCastMemberDTO) {
         return ResponseEntity.ok(ApiResponse.success(castMemberService.handleUpdateCastMember(id, reqCastMemberDTO)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteCastMember(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<Void>> deleteCastMember(@PathVariable Integer id) {
         castMemberService.handleDeleteCastMember(id);
         return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }

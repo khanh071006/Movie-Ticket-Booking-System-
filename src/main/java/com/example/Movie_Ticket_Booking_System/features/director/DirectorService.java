@@ -4,12 +4,11 @@ import com.example.Movie_Ticket_Booking_System.features.director.dto.ReqDirector
 import com.example.Movie_Ticket_Booking_System.features.director.dto.ResDirectorDTO;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface DirectorService {
     ResDirectorDTO handleCreateDirector(ReqDirectorDTO reqDirectorDTO);
     List<ResDirectorDTO> handleGetAllDirectors();
-    ResDirectorDTO handleGetDirectorById(UUID id);
-    ResDirectorDTO handleUpdateDirector(UUID id, ReqDirectorDTO reqDirectorDTO);
-    void handleDeleteDirector(UUID id);
+    ResDirectorDTO handleGetDirectorById(Integer id);
+    ResDirectorDTO handleUpdateDirector(Integer id, ReqDirectorDTO reqDirectorDTO);
+    void handleDeleteDirector(Integer id);
 }

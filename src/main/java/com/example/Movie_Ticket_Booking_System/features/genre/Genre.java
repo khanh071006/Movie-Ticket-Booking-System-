@@ -4,15 +4,14 @@ import com.example.Movie_Ticket_Booking_System.features.movie.MovieGenre;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "genres")
 public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -23,17 +22,17 @@ public class Genre {
     public Genre() {
     }
 
-    public Genre(UUID id, String name) {
+    public Genre(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
     // Getters and Setters
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

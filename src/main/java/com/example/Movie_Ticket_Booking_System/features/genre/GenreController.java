@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/genres")
@@ -31,17 +30,17 @@ public class GenreController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResGenreDTO>> getGenreById(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<ResGenreDTO>> getGenreById(@PathVariable Integer id) {
         return ResponseEntity.ok(ApiResponse.success(genreService.handleGetGenreById(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResGenreDTO>> updateGenre(@PathVariable UUID id, @Valid @RequestBody ReqGenreDTO reqGenreDTO) {
+    public ResponseEntity<ApiResponse<ResGenreDTO>> updateGenre(@PathVariable Integer id, @Valid @RequestBody ReqGenreDTO reqGenreDTO) {
         return ResponseEntity.ok(ApiResponse.success(genreService.handleUpdateGenre(id, reqGenreDTO)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteGenre(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<Void>> deleteGenre(@PathVariable Integer id) {
         genreService.handleDeleteGenre(id);
         return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }

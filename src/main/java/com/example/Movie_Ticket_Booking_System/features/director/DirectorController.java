@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/directors")
@@ -31,17 +30,17 @@ public class DirectorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResDirectorDTO>> getDirectorById(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<ResDirectorDTO>> getDirectorById(@PathVariable Integer id) {
         return ResponseEntity.ok(ApiResponse.success(directorService.handleGetDirectorById(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<ResDirectorDTO>> updateDirector(@PathVariable UUID id, @Valid @RequestBody ReqDirectorDTO reqDirectorDTO) {
+    public ResponseEntity<ApiResponse<ResDirectorDTO>> updateDirector(@PathVariable Integer id, @Valid @RequestBody ReqDirectorDTO reqDirectorDTO) {
         return ResponseEntity.ok(ApiResponse.success(directorService.handleUpdateDirector(id, reqDirectorDTO)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteDirector(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse<Void>> deleteDirector(@PathVariable Integer id) {
         directorService.handleDeleteDirector(id);
         return ResponseEntity.ok(ApiResponse.success("Deleted successfully", null));
     }
