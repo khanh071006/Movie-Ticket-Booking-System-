@@ -1,11 +1,24 @@
 import axios, { AxiosError } from 'axios';
-import type { Account, ApiResponse, AuthPayload, CategoryItem, Cinema, Movie, Room, Showtime } from '../types/app';
-import { getStoredToken } from '../features/auth/utils/session';
+import type { Account, ApiResponse, AuthPayload, CategoryItem, Cinema, Movie, Room, Showtime, SeatType, TicketType, Seat, BookingRequest, BookingResponse } from '../types/app';
+import { getStoredToken, clearSession } from '../features/auth/utils/session';
 
 const http = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'}/api/v1`,
     headers: { 'Content-Type': 'application/json' },
 });
+
+http.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            clearSession();
+            if (window.location.pathname !== '/login') {
+                window.location.href = '/login';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 
 const authHeader = () => {
     const token = getStoredToken();
@@ -117,8 +130,20 @@ export const apiClient = {
         async remove(id: string): Promise<void> {
             await http.delete(`/rooms/${id}`, { headers: authHeader() });
         },
+        async getSeats(roomId: string | number): Promise<Seat[]> {
+            const response = await http.get<ApiResponse<Seat[]> | Seat[]>(`/rooms/${roomId}/seats`);
+            return unwrap(response.data);
+        },
+        async configureSeats(roomId: string | number, seats: { seatLocation: string; seatTypeId: number }[]): Promise<Seat[]> {
+            const response = await http.post<ApiResponse<Seat[]> | Seat[]>(`/rooms/${roomId}/seats`, seats, { headers: authHeader() });
+            return unwrap(response.data);
+        },
     },
     showtimes: {
+        async getById(id: string): Promise<Showtime> {
+            const response = await http.get<Showtime>(`/showtimes/${id}`);
+            return unwrap(response.data);
+        },
         async getByMovie(movieId: string): Promise<Showtime[]> {
             const response = await http.get<Showtime[]>(`/showtimes/movie/${movieId}`);
             return unwrap(response.data);
@@ -133,6 +158,46 @@ export const apiClient = {
         },
         async remove(id: string): Promise<void> {
             await http.delete(`/showtimes/${id}`, { headers: authHeader() });
+        },
+    },
+    seatTypes: {
+        async getAll(): Promise<SeatType[]> {
+            const response = await http.get<ApiResponse<SeatType[]> | SeatType[]>('/seat-types', { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async create(payload: { name: string }): Promise<SeatType> {
+            const response = await http.post<ApiResponse<SeatType> | SeatType>('/seat-types', payload, { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async update(id: number, payload: { name: string }): Promise<SeatType> {
+            const response = await http.put<ApiResponse<SeatType> | SeatType>(`/seat-types/${id}`, payload, { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async remove(id: number): Promise<void> {
+            await http.delete(`/seat-types/${id}`, { headers: authHeader() });
+        },
+    },
+    ticketTypes: {
+        async getAll(): Promise<TicketType[]> {
+            const response = await http.get<ApiResponse<TicketType[]> | TicketType[]>('/ticket-types', { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async create(payload: { name: string; basePrice: number }): Promise<TicketType> {
+            const response = await http.post<ApiResponse<TicketType> | TicketType>('/ticket-types', payload, { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async update(id: number, payload: { name: string; basePrice: number }): Promise<TicketType> {
+            const response = await http.put<ApiResponse<TicketType> | TicketType>(`/ticket-types/${id}`, payload, { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async remove(id: number): Promise<void> {
+            await http.delete(`/ticket-types/${id}`, { headers: authHeader() });
+        },
+    },
+    bookings: {
+        async create(payload: BookingRequest): Promise<BookingResponse> {
+            const response = await http.post<ApiResponse<BookingResponse> | BookingResponse>('/bookings', payload, { headers: authHeader() });
+            return unwrap(response.data);
         },
     },
     categories: {

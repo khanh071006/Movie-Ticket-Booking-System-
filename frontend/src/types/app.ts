@@ -37,6 +37,10 @@ export interface Movie {
     language: string;
     posterUrl: string;
     trailerUrl: string;
+    director?: { id: string; name: string };
+    movieStatus?: { id: string; name: string };
+    castMembers?: { id: string; name: string }[];
+    genres?: { id: string; name: string }[];
 }
 
 export interface Cinema {
@@ -73,4 +77,45 @@ export interface Showtime {
 export interface CategoryItem {
     id: string;
     name: string;
+}
+
+export interface SeatType {
+    id: number;
+    name: string;
+}
+
+export interface TicketType {
+    id: number;
+    name: string;
+    basePrice: number;
+}
+
+export interface Seat {
+    id?: number;
+    seatLocation: string;
+    seatTypeId: number;
+    seatTypeName?: string;
+    roomId?: number;
+}
+
+export interface BookingTicketRequest {
+    ticketTypeId: number;
+    quantity: number;
+}
+
+export interface BookingRequest {
+    showtimeId: string;
+    seatIds: number[];
+    ticketQuantities: BookingTicketRequest[];
+}
+
+export interface BookingResponse {
+    id: string;
+    showtimeId: string;
+    movieTitle: string;
+    bookingTime: string;
+    totalAmount: number;
+    paymentStatus: string;
+    seatLocations: string[];
+    tickets: string[];
 }
