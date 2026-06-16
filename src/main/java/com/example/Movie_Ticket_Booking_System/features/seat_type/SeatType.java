@@ -12,6 +12,9 @@ public class SeatType {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(name = "seat_count", columnDefinition = "integer default 1")
+    private Integer seatCount = 1;
+
     public SeatType() {
     }
 
@@ -29,5 +32,13 @@ public class SeatType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getSeatCount() {
+        return seatCount;
+    }
+
+    public void setSeatCount(Integer seatCount) {
+        this.seatCount = seatCount;
     }
 }

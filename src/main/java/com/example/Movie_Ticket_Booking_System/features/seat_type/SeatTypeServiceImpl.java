@@ -24,6 +24,9 @@ public class SeatTypeServiceImpl implements SeatTypeService {
         });
         SeatType seatType = new SeatType();
         seatType.setName(seatTypeDTO.getName());
+        if (seatTypeDTO.getSeatCount() != null) {
+            seatType.setSeatCount(seatTypeDTO.getSeatCount());
+        }
         SeatType savedSeatType = seatTypeRepository.save(seatType);
         return convertToDTO(savedSeatType);
     }
@@ -38,6 +41,9 @@ public class SeatTypeServiceImpl implements SeatTypeService {
             }
         });
         seatType.setName(seatTypeDTO.getName());
+        if (seatTypeDTO.getSeatCount() != null) {
+            seatType.setSeatCount(seatTypeDTO.getSeatCount());
+        }
         SeatType updatedSeatType = seatTypeRepository.save(seatType);
         return convertToDTO(updatedSeatType);
     }
@@ -57,6 +63,6 @@ public class SeatTypeServiceImpl implements SeatTypeService {
     }
 
     private SeatTypeDTO convertToDTO(SeatType seatType) {
-        return new SeatTypeDTO(seatType.getId(), seatType.getName());
+        return new SeatTypeDTO(seatType.getId(), seatType.getName(), seatType.getSeatCount());
     }
 }

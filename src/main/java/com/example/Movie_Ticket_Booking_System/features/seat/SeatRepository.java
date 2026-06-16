@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, Integer> {
     List<Seat> findByRoomId(Integer roomId);
+    void deleteByRoomId(Integer roomId);
 }

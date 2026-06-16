@@ -14,18 +14,21 @@ public class SeatDTO {
 
     private String seatTypeName;
 
+    private Integer seatCount;
+
     @NotNull(message = "Room ID cannot be null")
     private Integer roomId;
 
     public SeatDTO() {
     }
 
-    public SeatDTO(Integer id, String seatLocation, Integer seatTypeId, String seatTypeName, Integer roomId) {
+    public SeatDTO(Integer id, String seatLocation, Integer seatTypeId, String seatTypeName, Integer roomId, Integer seatCount) {
         this.id = id;
         this.seatLocation = seatLocation;
         this.seatTypeId = seatTypeId;
         this.seatTypeName = seatTypeName;
         this.roomId = roomId;
+        this.seatCount = seatCount;
     }
 
     // Getters and Setters
@@ -39,4 +42,6 @@ public class SeatDTO {
     public void setSeatTypeName(String seatTypeName) { this.seatTypeName = seatTypeName; }
     public Integer getRoomId() { return roomId; }
     public void setRoomId(Integer roomId) { this.roomId = roomId; }
+    public Integer getSeatCount() { return seatCount; }
+    public void setSeatCount(Integer seatCount) { this.seatCount = seatCount; }
 }

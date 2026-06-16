@@ -8,12 +8,17 @@ public class SeatTypeDTO {
     @NotBlank(message = "Seat type name cannot be blank")
     private String name;
 
+    private Integer seatCount = 1;
+
     public SeatTypeDTO() {
     }
 
-    public SeatTypeDTO(Integer id, String name) {
+    public SeatTypeDTO(Integer id, String name, Integer seatCount) {
         this.id = id;
         this.name = name;
+        if (seatCount != null) {
+            this.seatCount = seatCount;
+        }
     }
 
     public Integer getId() {
@@ -30,5 +35,13 @@ public class SeatTypeDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getSeatCount() {
+        return seatCount;
+    }
+
+    public void setSeatCount(Integer seatCount) {
+        this.seatCount = seatCount;
     }
 }

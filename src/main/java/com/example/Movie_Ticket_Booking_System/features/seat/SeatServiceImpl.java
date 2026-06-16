@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SeatServiceImpl implements SeatService {
@@ -28,9 +29,18 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
+    @Transactional
     public List<SeatDTO> createSeatsForRoom(Integer roomId, List<SeatDTO> seatDTOs) {
         Room room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room", "id", roomId));
+
+        // Delete existing seats for this room
+        seatRepository.deleteByRoomId(roomId);
+
+        // If payload is empty, just return empty list
+        if (seatDTOs == null || seatDTOs.isEmpty()) {
+            return new ArrayList<>();
+        }
 
         // Fetch all required SeatTypes in one query
         List<Integer> seatTypeIds = seatDTOs.stream().map(SeatDTO::getSeatTypeId).distinct().toList();
@@ -70,7 +80,8 @@ public class SeatServiceImpl implements SeatService {
                 seat.getSeatLocation(),
                 seat.getSeatType().getId(),
                 seat.getSeatType().getName(),
-                seat.getRoom().getId()
+                seat.getRoom().getId(),
+                seat.getSeatType().getSeatCount()
         );
     }
 }
