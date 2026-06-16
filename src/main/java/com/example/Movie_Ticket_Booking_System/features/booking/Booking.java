@@ -39,6 +39,9 @@ public class Booking {
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<BookingSeat> bookingSeats;
 
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<BookingSnack> bookingSnacks;
+
     // Getters and Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
@@ -56,4 +59,6 @@ public class Booking {
     public void setBookingTickets(Set<BookingTicket> bookingTickets) { this.bookingTickets = bookingTickets; }
     public Set<BookingSeat> getBookingSeats() { return bookingSeats; }
     public void setBookingSeats(Set<BookingSeat> bookingSeats) { this.bookingSeats = bookingSeats; }
+    public Set<BookingSnack> getBookingSnacks() { return bookingSnacks; }
+    public void setBookingSnacks(Set<BookingSnack> bookingSnacks) { this.bookingSnacks = bookingSnacks; }
 }

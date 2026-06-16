@@ -12,6 +12,12 @@ import com.example.Movie_Ticket_Booking_System.features.showtime.Showtime;
 import com.example.Movie_Ticket_Booking_System.features.showtime.ShowtimeRepository;
 import com.example.Movie_Ticket_Booking_System.features.ticket_type.TicketType;
 import com.example.Movie_Ticket_Booking_System.features.ticket_type.TicketTypeRepository;
+import com.example.Movie_Ticket_Booking_System.features.snack.Snack;
+import com.example.Movie_Ticket_Booking_System.features.snack.SnackRepository;
+import com.example.Movie_Ticket_Booking_System.features.cinema_pricing.CinemaTicketPriceRepository;
+import com.example.Movie_Ticket_Booking_System.features.cinema_pricing.CinemaSeatPriceRepository;
+import com.example.Movie_Ticket_Booking_System.features.cinema_pricing.CinemaTicketPrice;
+import com.example.Movie_Ticket_Booking_System.features.cinema_pricing.CinemaSeatPrice;
 import com.example.Movie_Ticket_Booking_System.security.UserPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,13 +39,19 @@ public class BookingServiceImpl implements BookingService {
     private final ShowtimeRepository showtimeRepository;
     private final SeatRepository seatRepository;
     private final TicketTypeRepository ticketTypeRepository;
+    private final SnackRepository snackRepository;
+    private final CinemaTicketPriceRepository cinemaTicketPriceRepository;
+    private final CinemaSeatPriceRepository cinemaSeatPriceRepository;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, AccountRepository accountRepository, ShowtimeRepository showtimeRepository, SeatRepository seatRepository, TicketTypeRepository ticketTypeRepository) {
+    public BookingServiceImpl(BookingRepository bookingRepository, AccountRepository accountRepository, ShowtimeRepository showtimeRepository, SeatRepository seatRepository, TicketTypeRepository ticketTypeRepository, SnackRepository snackRepository, CinemaTicketPriceRepository cinemaTicketPriceRepository, CinemaSeatPriceRepository cinemaSeatPriceRepository) {
         this.bookingRepository = bookingRepository;
         this.accountRepository = accountRepository;
         this.showtimeRepository = showtimeRepository;
         this.seatRepository = seatRepository;
         this.ticketTypeRepository = ticketTypeRepository;
+        this.snackRepository = snackRepository;
+        this.cinemaTicketPriceRepository = cinemaTicketPriceRepository;
+        this.cinemaSeatPriceRepository = cinemaSeatPriceRepository;
     }
 
     @Override
@@ -76,31 +88,67 @@ public class BookingServiceImpl implements BookingService {
                 dto.getTicketQuantities().stream().map(ReqBookingDTO.TicketQuantity::getTicketTypeId).toList()
         ).stream().collect(Collectors.toMap(TicketType::getId, Function.identity()));
 
+        Integer cinemaId = showtime.getRoom().getCinema().getId();
+
         for (ReqBookingDTO.TicketQuantity tq : dto.getTicketQuantities()) {
             TicketType tt = ticketTypeMap.get(tq.getTicketTypeId());
             if (tt == null) throw new ResourceNotFoundException("TicketType", "id", tq.getTicketTypeId());
+
+            BigDecimal finalTicketPrice = tt.getBasePrice();
+            java.util.Optional<CinemaTicketPrice> ctp = cinemaTicketPriceRepository.findByCinemaIdAndTicketTypeId(cinemaId, tt.getId());
+            if (ctp.isPresent()) {
+                finalTicketPrice = ctp.get().getPrice();
+            }
 
             BookingTicket bt = new BookingTicket();
             bt.setBooking(booking);
             bt.setTicketType(tt);
             bt.setTicketQty(tq.getQuantity());
-            bt.setPurchasePrice(tt.getBasePrice()); // Chốt giá tại thời điểm mua
+            bt.setPurchasePrice(finalTicketPrice); // Chốt giá tại thời điểm mua
             bookingTickets.add(bt);
 
-            totalAmount = totalAmount.add(tt.getBasePrice().multiply(new BigDecimal(tq.getQuantity())));
+            totalAmount = totalAmount.add(finalTicketPrice.multiply(new BigDecimal(tq.getQuantity())));
         }
         booking.setBookingTickets(bookingTickets);
-        booking.setTotalAmount(totalAmount);
 
-        // Create BookingSeats
+        // Handle Snacks
+        Set<BookingSnack> bookingSnacks = new HashSet<>();
+        if (dto.getSnackQuantities() != null && !dto.getSnackQuantities().isEmpty()) {
+            Map<Integer, Snack> snackMap = snackRepository.findAllById(
+                    dto.getSnackQuantities().stream().map(ReqBookingDTO.SnackQuantity::getSnackId).toList()
+            ).stream().collect(Collectors.toMap(Snack::getId, Function.identity()));
+
+            for (ReqBookingDTO.SnackQuantity sq : dto.getSnackQuantities()) {
+                Snack snack = snackMap.get(sq.getSnackId());
+                if (snack == null) throw new ResourceNotFoundException("Snack", "id", sq.getSnackId());
+
+                BookingSnack bs = new BookingSnack();
+                bs.setBooking(booking);
+                bs.setSnack(snack);
+                bs.setSnackQty(sq.getQuantity());
+                bs.setPurchasePrice(snack.getBasePrice()); // Chốt giá thời điểm mua
+                bookingSnacks.add(bs);
+
+                totalAmount = totalAmount.add(snack.getBasePrice().multiply(new BigDecimal(sq.getQuantity())));
+            }
+        }
+        booking.setBookingSnacks(bookingSnacks);
+
+        // Create BookingSeats and add seat surcharge
         Set<BookingSeat> bookingSeats = new HashSet<>();
         for (Seat seat : seats) {
             BookingSeat bs = new BookingSeat();
             bs.setBooking(booking);
             bs.setSeat(seat);
             bookingSeats.add(bs);
+
+            java.util.Optional<CinemaSeatPrice> csp = cinemaSeatPriceRepository.findByCinemaIdAndSeatTypeId(cinemaId, seat.getSeatType().getId());
+            if (csp.isPresent()) {
+                totalAmount = totalAmount.add(csp.get().getSurcharge());
+            }
         }
         booking.setBookingSeats(bookingSeats);
+        booking.setTotalAmount(totalAmount);
 
         Booking savedBooking = bookingRepository.save(booking);
         return convertToDTO(savedBooking);
@@ -120,6 +168,11 @@ public class BookingServiceImpl implements BookingService {
         dto.setTickets(booking.getBookingTickets().stream()
                 .map(bt -> bt.getTicketQty() + "x " + bt.getTicketType().getName())
                 .collect(Collectors.toList()));
+        if (booking.getBookingSnacks() != null) {
+            dto.setSnacks(booking.getBookingSnacks().stream()
+                    .map(bs -> bs.getSnackQty() + "x " + bs.getSnack().getName())
+                    .collect(Collectors.toList()));
+        }
         return dto;
     }
 }

@@ -14,6 +14,7 @@ public class ResBookingDTO {
     private String paymentStatus;
     private List<String> seatLocations;
     private List<String> tickets;
+    private List<String> snacks;
 
     // Getters and Setters
     public UUID getId() { return id; }
@@ -32,4 +33,6 @@ public class ResBookingDTO {
     public void setSeatLocations(List<String> seatLocations) { this.seatLocations = seatLocations; }
     public List<String> getTickets() { return tickets; }
     public void setTickets(List<String> tickets) { this.tickets = tickets; }
+    public List<String> getSnacks() { return snacks; }
+    public void setSnacks(List<String> snacks) { this.snacks = snacks; }
 }
