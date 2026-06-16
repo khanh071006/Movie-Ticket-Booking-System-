@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Edit2, MapPin, Plus, Trash2, ChevronRight, Building2 } from 'lucide-react';
+import { Edit2, MapPin, Plus, Trash2, ChevronRight, Building2, DollarSign } from 'lucide-react';
 import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
+import { CategorySelect } from '../../components/ui/CategorySelect';
+import { CinemaPricingDialog } from './CinemaPricingDialog';
 import type { Cinema } from '../../types/app';
 
-const emptyForm = { name: '', address: '' };
+const emptyForm = { name: '', address: '', stateId: '' };
 
 export const CinemaManagementPage = () => {
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
@@ -16,12 +18,13 @@ export const CinemaManagementPage = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [deleteId, setDeleteId] = useState<string | null>(null);
+    const [pricingCinema, setPricingCinema] = useState<{ id: string, name: string } | null>(null);
 
     const load = async () => {
         setLoading(true);
         try {
-            const res = await apiClient.cinemas.getAll();
-            setCinemas(res);
+            const cinemasRes = await apiClient.cinemas.getAll();
+            setCinemas(cinemasRes);
         } catch (err) {
             setError(parseError(err));
         } finally {
@@ -37,8 +40,11 @@ export const CinemaManagementPage = () => {
         event.preventDefault();
         setError('');
         try {
-            if (editId) await apiClient.cinemas.update(editId, form);
-            else await apiClient.cinemas.create(form);
+            const sId = parseInt(form.stateId, 10);
+            const payload = { name: form.name, address: form.address, stateId: isNaN(sId) ? undefined : sId };
+            
+            if (editId) await apiClient.cinemas.update(editId, payload);
+            else await apiClient.cinemas.create(payload);
             setForm(emptyForm);
             setEditId(null);
             load();
@@ -49,7 +55,7 @@ export const CinemaManagementPage = () => {
 
     const startEdit = (cinema: Cinema) => {
         setEditId(cinema.id);
-        setForm({ name: cinema.name, address: cinema.address });
+        setForm({ name: cinema.name, address: cinema.address, stateId: cinema.stateId?.toString() || '' });
     };
 
     const confirmDelete = async () => {
@@ -114,6 +120,15 @@ export const CinemaManagementPage = () => {
                                     required 
                                 />
                             </div>
+
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Trạng thái rạp</label>
+                                <CategorySelect 
+                                    kind="states"
+                                    value={form.stateId}
+                                    onChange={(val) => setForm((p) => ({ ...p, stateId: val }))}
+                                />
+                            </div>
                             
                             <div className="flex flex-col gap-2 pt-2">
                                 <Button className="h-12 w-full gap-2 font-bold shadow-xl shadow-blue-900/20">
@@ -158,8 +173,15 @@ export const CinemaManagementPage = () => {
                                             <tr key={cinema.id} className="group hover:bg-white/[0.02] transition-colors">
                                                 <td className="px-6 py-4">
                                                     <div className="flex flex-col gap-1">
-                                                        <div className="text-base font-bold text-slate-200 group-hover:text-blue-400 transition-colors">
-                                                            {cinema.name}
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-base font-bold text-slate-200 group-hover:text-blue-400 transition-colors">
+                                                                {cinema.name}
+                                                            </span>
+                                                            {cinema.stateName && (
+                                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border bg-zinc-800 border-zinc-700 text-zinc-300">
+                                                                    {cinema.stateName}
+                                                                </span>
+                                                            )}
                                                         </div>
                                                         <div className="flex items-center gap-1.5 text-xs text-slate-400">
                                                             <MapPin className="h-3 w-3 text-blue-500" />
@@ -169,6 +191,15 @@ export const CinemaManagementPage = () => {
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
                                                     <div className="flex justify-end gap-1 opacity-100 transition-opacity">
+                                                        <Button 
+                                                            variant="ghost" 
+                                                            size="icon" 
+                                                            title="Bảng giá"
+                                                            className="h-9 w-9 text-green-500 hover:bg-green-500/10" 
+                                                            onClick={() => setPricingCinema({ id: cinema.id, name: cinema.name })}
+                                                        >
+                                                            <DollarSign size={16} />
+                                                        </Button>
                                                         <Button 
                                                             variant="ghost" 
                                                             size="icon" 
@@ -216,6 +247,13 @@ export const CinemaManagementPage = () => {
                 onConfirm={confirmDelete}
                 onCancel={() => setDeleteId(null)}
                 confirmText="Xóa rạp"
+            />
+
+            <CinemaPricingDialog
+                cinemaId={pricingCinema?.id || ''}
+                cinemaName={pricingCinema?.name || ''}
+                isOpen={!!pricingCinema}
+                onClose={() => setPricingCinema(null)}
             />
         </div>
     );

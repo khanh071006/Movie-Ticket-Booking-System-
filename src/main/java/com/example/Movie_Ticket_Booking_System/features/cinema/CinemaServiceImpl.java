@@ -4,6 +4,8 @@ import com.example.Movie_Ticket_Booking_System.exception.ResourceNotFoundExcepti
 import com.example.Movie_Ticket_Booking_System.features.cinema.dto.CinemaDTO;
 import com.example.Movie_Ticket_Booking_System.features.room.Room;
 import com.example.Movie_Ticket_Booking_System.features.room.RoomRepository;
+import com.example.Movie_Ticket_Booking_System.features.state.State;
+import com.example.Movie_Ticket_Booking_System.features.state.StateRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +16,12 @@ public class CinemaServiceImpl implements CinemaService {
 
     private final CinemaRepository cinemaRepository;
     private final RoomRepository roomRepository;
+    private final StateRepository stateRepository;
 
-    public CinemaServiceImpl(CinemaRepository cinemaRepository, RoomRepository roomRepository) {
+    public CinemaServiceImpl(CinemaRepository cinemaRepository, RoomRepository roomRepository, StateRepository stateRepository) {
         this.cinemaRepository = cinemaRepository;
         this.roomRepository = roomRepository;
+        this.stateRepository = stateRepository;
     }
 
     @Override
@@ -38,6 +42,11 @@ public class CinemaServiceImpl implements CinemaService {
         Cinema cinema = new Cinema();
         cinema.setName(cinemaDTO.getName());
         cinema.setAddress(cinemaDTO.getAddress());
+        if (cinemaDTO.getStateId() != null) {
+            State state = stateRepository.findById(cinemaDTO.getStateId())
+                    .orElseThrow(() -> new ResourceNotFoundException("State", "id", cinemaDTO.getStateId().toString()));
+            cinema.setState(state);
+        }
         Cinema savedCinema = cinemaRepository.save(cinema);
         return convertToDTO(savedCinema);
     }
@@ -47,6 +56,13 @@ public class CinemaServiceImpl implements CinemaService {
         Cinema cinema = findCinemaById(id);
         cinema.setName(cinemaDTO.getName());
         cinema.setAddress(cinemaDTO.getAddress());
+        if (cinemaDTO.getStateId() != null) {
+            State state = stateRepository.findById(cinemaDTO.getStateId())
+                    .orElseThrow(() -> new ResourceNotFoundException("State", "id", cinemaDTO.getStateId().toString()));
+            cinema.setState(state);
+        } else {
+            cinema.setState(null);
+        }
         Cinema updatedCinema = cinemaRepository.save(cinema);
         return convertToDTO(updatedCinema);
     }
@@ -67,6 +83,8 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     private CinemaDTO convertToDTO(Cinema cinema) {
-        return new CinemaDTO(cinema.getId(), cinema.getName(), cinema.getAddress());
+        Integer stateId = cinema.getState() != null ? cinema.getState().getId() : null;
+        String stateName = cinema.getState() != null ? cinema.getState().getName() : null;
+        return new CinemaDTO(cinema.getId(), cinema.getName(), cinema.getAddress(), stateId, stateName);
     }
 }

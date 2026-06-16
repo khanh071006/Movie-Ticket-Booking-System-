@@ -1,5 +1,6 @@
 package com.example.Movie_Ticket_Booking_System.features.cinema;
 
+import com.example.Movie_Ticket_Booking_System.features.state.State;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,10 @@ public class Cinema {
     private String name;
 
     private String address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "state_id")
+    private State state;
 
     // Getters and Setters
 
@@ -39,5 +44,13 @@ public class Cinema {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

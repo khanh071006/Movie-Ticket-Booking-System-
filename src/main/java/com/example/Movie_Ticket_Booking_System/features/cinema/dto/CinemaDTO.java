@@ -10,13 +10,19 @@ public class CinemaDTO {
 
     private String address;
 
+    private Integer stateId;
+    
+    private String stateName;
+
     public CinemaDTO() {
     }
 
-    public CinemaDTO(Integer id, String name, String address) {
+    public CinemaDTO(Integer id, String name, String address, Integer stateId, String stateName) {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.stateId = stateId;
+        this.stateName = stateName;
     }
 
     public Integer getId() {
@@ -41,5 +47,21 @@ public class CinemaDTO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(Integer stateId) {
+        this.stateId = stateId;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
     }
 }
