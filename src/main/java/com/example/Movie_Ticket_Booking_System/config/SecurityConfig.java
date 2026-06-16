@@ -88,7 +88,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("ADMIN")
 
                         // === PHÂN QUYỀN CHO CÁC TÍNH NĂNG MỚI ===
-                        // Phân quyền cho SeatType và TicketType (chỉ ADMIN)
+                        // Phân quyền cho SeatType và TicketType
+                        .requestMatchers(HttpMethod.GET, "/api/v1/seat-types/**", "/api/v1/ticket-types/**").permitAll()
                         .requestMatchers("/api/v1/seat-types/**", "/api/v1/ticket-types/**").hasRole("ADMIN")
 
                         // Phân quyền cho Booking (chỉ cần xác thực)

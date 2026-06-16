@@ -11,4 +11,5 @@ public interface ShowtimeService {
     void deleteShowtime(UUID showtimeId);
     List<ShowtimeResponseDTO> getShowtimesByMovieAndCinema(UUID movieId, Integer cinemaId); // Thay đổi từ UUID sang Integer
     List<ShowtimeResponseDTO> getShowtimesByMovie(UUID movieId);
+    ShowtimeResponseDTO getShowtimeById(UUID showtimeId);
 }

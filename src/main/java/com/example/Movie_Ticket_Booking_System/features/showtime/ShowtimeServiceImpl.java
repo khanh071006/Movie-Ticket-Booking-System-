@@ -108,4 +108,11 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         }
         return dtos;
     }
+
+    @Override
+    public ShowtimeResponseDTO getShowtimeById(UUID showtimeId) {
+        Showtime showtime = showtimeRepository.findById(showtimeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Showtime", "id", showtimeId));
+        return convertToResponseDTO(showtime);
+    }
 }

@@ -41,4 +41,9 @@ public class ShowtimeController {
     public ResponseEntity<List<ShowtimeResponseDTO>> getShowtimesByMovieAndCinema(@PathVariable UUID movieId, @PathVariable Integer cinemaId) { // Thay đổi từ UUID sang Integer
         return ResponseEntity.ok(showtimeService.getShowtimesByMovieAndCinema(movieId, cinemaId));
     }
+
+    @GetMapping("/{showtimeId}")
+    public ResponseEntity<ShowtimeResponseDTO> getShowtimeById(@PathVariable UUID showtimeId) {
+        return ResponseEntity.ok(showtimeService.getShowtimeById(showtimeId));
+    }
 }
