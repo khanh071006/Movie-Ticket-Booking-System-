@@ -1,4 +1,4 @@
-import { Film, LogIn, ChevronDown, User, Search, Menu, X } from 'lucide-react';
+import { Film, ChevronDown, User, Menu, X } from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Button } from './ui/Button';

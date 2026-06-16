@@ -1,4 +1,4 @@
-import { CalendarDays, Clapperboard, Film, LayoutDashboard, LogOut, MapPin, MonitorPlay, Tags, Users } from 'lucide-react';
+import { Armchair, CalendarDays, Clapperboard, Film, LayoutDashboard, LogOut, MapPin, MonitorPlay, Tags, Ticket, Users } from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { clearSession, getStoredAccount } from '../features/auth/utils/session';
 
@@ -9,6 +9,8 @@ const navItems = [
     { name: 'Rạp chiếu', path: '/admin/cinemas', icon: MapPin },
     { name: 'Phòng chiếu', path: '/admin/rooms', icon: MonitorPlay },
     { name: 'Lịch chiếu', path: '/admin/showtimes', icon: CalendarDays },
+    { name: 'Loại ghế', path: '/admin/seat-types', icon: Armchair },
+    { name: 'Loại vé', path: '/admin/ticket-types', icon: Ticket },
     { name: 'Danh mục', path: '/admin/categories', icon: Tags },
 ];
 

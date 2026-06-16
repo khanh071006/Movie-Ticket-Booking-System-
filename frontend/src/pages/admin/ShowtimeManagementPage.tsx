@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Plus, Trash2, CalendarDays, ChevronRight, Clock, MonitorPlay, Film, Building2 } from 'lucide-react';
+import { Plus, Trash2, CalendarDays, ChevronRight, Clock, MonitorPlay, Building2 } from 'lucide-react';
 import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
@@ -11,11 +11,11 @@ export const ShowtimeManagementPage = () => {
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
     const [rooms, setRooms] = useState<Room[]>([]);
     const [showtimes, setShowtimes] = useState<Showtime[]>([]);
-    const [movieId, setMovieId] = useState('');
-    const [cinemaId, setCinemaId] = useState('');
-    const [roomId, setRoomId] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [error, setError] = useState('');
+    const [movieId, setMovieId] = useState<string>('');
+    const [cinemaId, setCinemaId] = useState<string>('');
+    const [roomId, setRoomId] = useState<string>('');
+    const [startTime, setStartTime] = useState<string>('');
+    const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const [deleteId, setDeleteId] = useState<string | null>(null);
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Edit2, Plus, Trash2, ChevronRight, MonitorPlay, Building2 } from 'lucide-react';
+import { Edit2, Plus, Trash2, ChevronRight, MonitorPlay, Building2, Grid } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { apiClient, parseError } from '../../api/axiosClient';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
@@ -8,12 +9,13 @@ import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Cinema, Room } from '../../types/app';
 
 export const RoomManagementPage = () => {
+    const navigate = useNavigate();
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
-    const [selectedCinemaId, setSelectedCinemaId] = useState('');
+    const [selectedCinemaId, setSelectedCinemaId] = useState<string>('');
     const [rooms, setRooms] = useState<Room[]>([]);
-    const [name, setName] = useState('');
+    const [name, setName] = useState<string>('');
     const [editId, setEditId] = useState<string | null>(null);
-    const [error, setError] = useState('');
+    const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -175,15 +177,24 @@ export const RoomManagementPage = () => {
                                                             variant="ghost" 
                                                             size="icon" 
                                                             className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" 
-                                                            onClick={() => { setEditId(room.id); setName(room.name); }}
+                                                            onClick={() => { setEditId(String(room.id)); setName(room.name); }}
                                                         >
                                                             <Edit2 size={16} />
                                                         </Button>
                                                         <Button 
                                                             variant="ghost" 
                                                             size="icon" 
+                                                            title="Cấu hình ghế"
+                                                            className="h-9 w-9 text-green-500 hover:bg-green-500/10" 
+                                                            onClick={() => navigate(`/admin/rooms/${room.id}/seats`)}
+                                                        >
+                                                            <Grid size={16} />
+                                                        </Button>
+                                                        <Button 
+                                                            variant="ghost" 
+                                                            size="icon" 
                                                             className="h-9 w-9 text-red-500 hover:bg-red-500/10" 
-                                                            onClick={() => setDeleteId(room.id)}
+                                                            onClick={() => setDeleteId(String(room.id))}
                                                         >
                                                             <Trash2 size={16} />
                                                         </Button>

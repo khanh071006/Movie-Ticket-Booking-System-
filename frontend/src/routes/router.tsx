@@ -12,11 +12,16 @@ import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
 import { DashboardPage } from '../pages/admin/DashboardPage';
 import { AccountManagementPage } from '../pages/admin/AccountManagementPage';
-import { MovieManagementPage } from '../pages/admin/MovieManagementPage';
+import { MovieListPage } from '../pages/admin/movies/MovieListPage';
+import { MovieFormPage } from '../pages/admin/movies/MovieFormPage';
 import { CinemaManagementPage } from '../pages/admin/CinemaManagementPage';
 import { RoomManagementPage } from '../pages/admin/RoomManagementPage';
 import { ShowtimeManagementPage } from '../pages/admin/ShowtimeManagementPage';
 import { CategoryManagementPage } from '../pages/admin/CategoryManagementPage';
+import { SeatTypeManagementPage } from '../pages/admin/SeatTypeManagementPage';
+import { TicketTypeManagementPage } from '../pages/admin/TicketTypeManagementPage';
+import { RoomSeatConfigPage } from '../pages/admin/RoomSeatConfigPage';
+import { BookingPage } from '../pages/public/BookingPage';
 import { ForbiddenPage } from '../pages/error/ForbiddenPage';
 import { NotFoundPage } from '../pages/error/NotFoundPage';
 
@@ -29,6 +34,7 @@ export const router = createBrowserRouter([
             { path: 'movies', element: <MoviesPage /> },
             { path: 'movies/:id', element: <MovieDetailPage /> },
             { path: 'cinemas', element: <CinemasPage /> },
+            { path: 'booking/:showtimeId', element: <BookingPage /> },
         ],
     },
     {
@@ -55,11 +61,16 @@ export const router = createBrowserRouter([
             { index: true, element: <DashboardPage /> },
             { path: 'dashboard', element: <Navigate to="/admin" replace /> },
             { path: 'accounts', element: <AccountManagementPage /> },
-            { path: 'movies', element: <MovieManagementPage /> },
+            { path: 'movies', element: <MovieListPage /> },
+            { path: 'movies/create', element: <MovieFormPage /> },
+            { path: 'movies/:id', element: <MovieFormPage /> },
             { path: 'cinemas', element: <CinemaManagementPage /> },
             { path: 'rooms', element: <RoomManagementPage /> },
+            { path: 'rooms/:id/seats', element: <RoomSeatConfigPage /> },
             { path: 'showtimes', element: <ShowtimeManagementPage /> },
             { path: 'categories', element: <CategoryManagementPage /> },
+            { path: 'seat-types', element: <SeatTypeManagementPage /> },
+            { path: 'ticket-types', element: <TicketTypeManagementPage /> },
         ],
     },
     {

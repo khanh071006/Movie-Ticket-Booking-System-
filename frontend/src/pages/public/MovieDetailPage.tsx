@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Calendar, Clock, Globe, MapPin, Play, Ticket, ChevronRight, Info, Star, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, Globe, MapPin, Play, Ticket, Info, Star, ArrowLeft } from 'lucide-react';
 import { apiClient } from '../../api/axiosClient';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -275,6 +275,7 @@ export const MovieDetailPage = () => {
                                                     {cinemaShowtimes.sort((a,b) => a.startTime.localeCompare(b.startTime)).map((st) => (
                                                         <button 
                                                             key={st.id} 
+                                                            onClick={() => navigate(`/booking/${st.id}`)}
                                                             className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 py-4 transition-all hover:border-blue-500 hover:bg-blue-600 active:scale-95"
                                                         >
                                                             <span className="text-2xl font-black text-white">{formatTime(st.startTime)}</span>
