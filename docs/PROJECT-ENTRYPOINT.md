@@ -275,7 +275,34 @@
 
 ---
 
-## 9. Feature: Seat Configuration (Cấu hình Ghế)
+## 9. Feature: Snack & Food (Đồ ăn thức uống)
+
+### 9.1. Snack Type (`/api/v1/snack-types`)
+-   **Mô tả**: Quản lý danh mục đồ ăn/thức uống.
+-   **Yêu cầu xác thực**: GET công khai, POST/PUT/DELETE yêu cầu `ADMIN`.
+-   **Ví dụ `POST`**:
+    -   **Request Body**: `{"name": "Popcorn"}`
+
+### 9.2. Snack (`/api/v1/snacks`)
+-   **Mô tả**: Quản lý các mặt hàng đồ ăn và giá bán.
+-   **Yêu cầu xác thực**: GET công khai, POST/PUT/DELETE yêu cầu `ADMIN`.
+-   **Ví dụ `POST`**:
+    -   **Request Body**: `{"snackTypeId": 1, "name": "Cheese Popcorn", "basePrice": 5.00}`
+    -   **Response (201 Created)**:
+        ```json
+        {
+            "id": 1,
+            "snackTypeId": 1,
+            "snackTypeName": "Popcorn",
+            "name": "Cheese Popcorn",
+            "basePrice": 5.00
+        }
+        ```
+
+---
+
+## 10. Feature: Seat Configuration (Cấu hình Ghế)
+
 
 ### 9.1. Lấy danh sách ghế của một phòng
 -   **Endpoint**: `GET /api/v1/rooms/{roomId}/seats`
@@ -322,11 +349,11 @@
 
 ---
 
-## 10. Feature: Booking (Đặt vé)
+## 11. Feature: Booking (Đặt vé)
 
-### 10.1. Tạo một Booking mới
+### 11.1. Tạo một Booking mới
 -   **Endpoint**: `POST /api/v1/bookings`
--   **Mô tả**: Tạo một giao dịch đặt vé mới cho một suất chiếu.
+-   **Mô tả**: Tạo một giao dịch đặt vé mới cho một suất chiếu, hỗ trợ đặt kèm đồ ăn (`snackQuantities` là không bắt buộc).
 -   **Yêu cầu xác thực**: `Bearer Token` (Role `USER` hoặc `ADMIN`).
 -   **Request Body**:
     ```json
@@ -342,6 +369,12 @@
                 "ticketTypeId": 2,
                 "quantity": 1
             }
+        ],
+        "snackQuantities": [
+            {
+                "snackId": 1,
+                "quantity": 1
+            }
         ]
     }
     ```
@@ -352,9 +385,10 @@
         "showtimeId": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
         "movieTitle": "Inception",
         "bookingTime": "2024-08-02T10:30:00",
-        "totalAmount": 20.00,
+        "totalAmount": 25.00,
         "paymentStatus": "PENDING",
         "seatLocations": ["A1", "A2"],
-        "tickets": ["1x Adult", "1x Child"]
+        "tickets": ["1x Adult", "1x Child"],
+        "snacks": ["1x Cheese Popcorn"]
     }
     ```

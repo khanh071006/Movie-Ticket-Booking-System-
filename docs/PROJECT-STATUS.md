@@ -26,9 +26,11 @@
     -   **Cấu trúc lại `Seat`**: Cập nhật Entity `Seat` để sử dụng `id (INT)` và có quan hệ `ManyToOne` đến `SeatType` và `Room`.
     -   **API Cấu hình Ghế**: Cung cấp API `POST /api/v1/rooms/{roomId}/seats` cho phép `ADMIN` tạo hàng loạt ghế cho một phòng chiếu.
 -   **Xây dựng nền tảng Đặt vé (Booking)**:
-    -   **Feature `TicketType`**: Hoàn thiện CRUD API (`/api/v1/ticket-types`) cho phép `ADMIN` quản lý các loại vé và giá vé gốc (ví dụ: "Người lớn", "Trẻ em").
-    -   **Thiết kế Entities**: Tạo các entity `Booking`, `BookingSeat`, `BookingTicket` theo đúng thiết kế trong `DB.md`, sử dụng `CascadeType.ALL` để quản lý vòng đời các thực thể con.
-    -   **API Đặt vé**: Triển khai API `POST /api/v1/bookings` cho phép người dùng đã xác thực tạo booking mới, nhận vào `showtimeId`, danh sách `seatIds`, và số lượng vé theo từng `ticketTypeId`.
+    -   **Feature `TicketType`**: Hoàn thiện CRUD API (`/api/v1/ticket-types`) cho phép `ADMIN` quản lý các loại vé.
+    -   **Feature Đồ ăn (Snacks)**: Đã triển khai hoàn tất `SnackType`, `Snack` và API mua đồ ăn đi kèm hóa đơn qua `BookingSnack`.
+    -   **Feature `State`**: Cập nhật quan hệ `State` cho `Cinema` để theo dõi trạng thái hoạt động của rạp.
+    -   **Thiết kế Entities**: Tạo các entity `Booking`, `BookingSeat`, `BookingTicket`, `BookingSnack` theo đúng thiết kế trong `DB.md`, sử dụng `CascadeType.ALL` để quản lý vòng đời.
+    -   **API Đặt vé**: Triển khai API `POST /api/v1/bookings` cho phép người dùng đặt vé, mua kèm đồ ăn (`snackQuantities`), Backend sẽ tự động tính toán tổng hóa đơn `totalAmount` chính xác.
 
 ### 3. **Bảo mật (Security)**
 -   **Cấu hình Spring Security**: Tắt CSRF, `STATELESS`, cấu hình `PasswordEncoder`, `DaoAuthenticationProvider`.
@@ -39,24 +41,36 @@
     -   Các API đọc dữ liệu công khai (`xem phim`, `xem lịch chiếu`...) được `permitAll`.
     -   API đặt vé (`/bookings`) yêu cầu người dùng phải `authenticated`.
 
-### 4. **Các tính năng khác đã hoàn thiện**
--   Hoàn thiện CRUD cho `Account`, `Movie`, `Role`, `Cinema`, `Room`, `Showtime`, và các danh mục phim (`Director`, `Genre`...).
+### 4. **Các tính năng Fullstack mới hoàn thiện**
+-   **Tính năng Ghế Đôi (Couple Seats/Sweetbox)**:
+    -   Thêm thuộc tính `seatCount` vào bảng `SeatType`.
+    -   Cập nhật thuật toán tính toán sơ đồ ghế (Frontend) để hỗ trợ gộp 2 ô cho ghế đôi (chiếm dụng 2 slot trên lưới không gian) và tự động tính tiền vé dựa trên sức chứa của ghế.
+    -   Sửa lỗi dọn dẹp Database (xoá ghế cũ trước khi tạo sơ đồ mới) cho phòng chiếu bằng `@Transactional`.
+-   **Cấu hình Giá vé & Phụ thu (Cinema Pricing)**:
+    -   Xây dựng UI cấu hình giá vé riêng và phụ thu ghế ngồi cho từng rạp chiếu.
+    -   Tích hợp tính toán tự động trên giao diện đặt vé.
+-   **Quản lý Bắp nước (Snacks)**:
+    -   Hoàn thiện toàn bộ hệ thống CRUD Bắp nước, loại bắp nước trên Admin.
+    -   Tích hợp chọn bắp nước và cộng tiền hóa đơn ở bước Booking.
+-   **Cập nhật các thông tin mở rộng**: Bổ sung URL hình ảnh cho Diễn viên, Đạo diễn.
 
 ---
 
 ## 🎯 Nhiệm vụ tiếp theo (Next Tasks)
 
-**[P0 - Ưu tiên cao: Hoàn thiện Booking & Bảo mật]**
-1.  **Chống Double-Booking**: Bổ sung logic trong `BookingServiceImpl` để kiểm tra xem các ghế được chọn đã bị đặt trong các booking khác cho cùng một suất chiếu (`Showtime`) hay chưa.
-2.  **Viết Test cho Security & Booking**:
-    -   Viết các bài test tích hợp để xác thực các quy tắc phân quyền (ví dụ: `USER` không thể gọi API của `ADMIN`).
-    -   Viết test cho API `POST /api/v1/bookings` để xác thực các kịch bản thành công và thất bại.
+**[P0 - Ưu tiên cao: Thanh toán & Đặt vé Frontend]**
+1.  **Tích hợp Cổng thanh toán (Payment Gateway)**: Tích hợp VNPay, Momo hoặc Stripe để hoàn tất quy trình booking. Hiện tại Booking mới lưu vào DB mà chưa qua bước thanh toán thực tế.
+2.  **Flow Đặt vé Frontend**:
+    -   Hoàn thiện luồng User: Trang chủ -> Chọn phim -> Chọn suất chiếu -> Chọn ghế (đã làm) -> Thanh toán -> Nhận vé (QR Code).
+3.  **Chống Double-Booking**: Bổ sung logic trong `BookingServiceImpl` và locking cơ sở dữ liệu để chống tình trạng 2 người cùng chọn 1 ghế trong cùng 1 thời điểm.
 
-**[P1 - Ưu tiên trung bình: Cải thiện]**
-3.  **Hoàn thiện Logic `delete`**: Triển khai logic kiểm tra ràng buộc trước khi xóa trong các service `SeatTypeServiceImpl` và `TicketTypeServiceImpl` để ngăn ngừa việc xóa các danh mục đang được sử dụng.
+**[P1 - Ưu tiên trung bình: Cải thiện hệ thống]**
+4.  **Hoàn thiện Logic `delete`**: Triển khai logic kiểm tra ràng buộc trước khi xóa các thực thể (Ví dụ: Không được xóa Loại ghế đang có người đặt).
+5.  **Báo cáo & Thống kê**: Xây dựng biểu đồ doanh thu cho Admin Dashboard (dựa trên các Booking thành công).
 
 ---
 
 ## ⚠️ Lưu ý / Rủi ro (Warnings)
 
 -   Cần có cơ chế dọn dẹp hoặc lưu trữ các lịch chiếu đã qua để tránh làm database bị phình to theo thời gian.
+-   Vấn đề Concurrency khi booking (Double-booking) cần được xử lý sớm trước khi Go-live.

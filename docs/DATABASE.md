@@ -97,6 +97,54 @@ erDiagram
         LocalDateTime end_time
     }
 
+    STATE {
+        Integer id PK
+        String name
+    }
+
+    SNACK_TYPE {
+        Integer id PK
+        String name
+    }
+
+    SNACKS {
+        Integer id PK
+        Integer snack_type_id FK
+        String name
+        DECIMAL base_price
+    }
+
+    BOOKINGS {
+        UUID id PK
+        UUID account_id FK
+        UUID showing_id FK
+        DECIMAL total_amount
+        String payment_status
+        DATETIME created_datetime
+    }
+
+    BOOKING_TICKET {
+        UUID id PK
+        UUID booking_id FK
+        Integer ticket_type_id FK
+        Integer ticket_qty
+        DECIMAL purchase_price
+    }
+
+    BOOKING_SEAT {
+        UUID id PK
+        UUID booking_id FK
+        Integer seat_id FK
+    }
+
+    BOOKING_SNACK {
+        UUID id PK
+        UUID booking_id FK
+        Integer snack_id FK
+        Integer snack_qty
+        DECIMAL purchase_price
+    }
+
     ACCOUNTS ||--o{ ACCOUNT_ROLES : "has"
     ROLES ||--o{ ACCOUNT_ROLES : "assigned_to"
     CINEMAS ||--o{ ROOMS : "contains"
@@ -108,6 +156,12 @@ erDiagram
     GENRES ||--o{ MOVIE_GENRE : "has"
     DIRECTORS ||--o{ MOVIES : "directs"
     MOVIE_STATUS ||--o{ MOVIES : "has_status"
+    STATE ||--o{ CINEMAS : "describes_state_of"
+    SNACK_TYPE ||--o{ SNACKS : "categorizes"
+    BOOKINGS ||--o{ BOOKING_SNACK : "includes"
+    SNACKS ||--o{ BOOKING_SNACK : "ordered_in"
+    BOOKINGS ||--o{ BOOKING_TICKET : "includes"
+    BOOKINGS ||--o{ BOOKING_SEAT : "reserves"
 ```
 
 ### 1.2. Bảng (Tables)
@@ -175,6 +229,13 @@ erDiagram
 | `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của rạp |
 | `name` | `VARCHAR(255)` | `NOT NULL` | Tên rạp |
 | `address`| `VARCHAR(255)`| | Địa chỉ của rạp |
+| `state_id` | `INT` | `FOREIGN KEY (state.id)` | Khóa ngoại chỉ định trạng thái của rạp |
+
+#### `state`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính |
+| `name` | `VARCHAR(50)` | `NOT NULL` | Tên trạng thái (Active, Maintenance...) |
 
 #### `rooms`
 | Column | Type | Constraints | Description |
@@ -238,6 +299,29 @@ erDiagram
 | `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của dòng mục ghế |
 | `booking_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (bookings.id)` | Giao dịch cha |
 | `seat_id` | `INT` | `NOT NULL, FOREIGN KEY (seats.id)` | Ghế cụ thể được chọn |
+
+#### `snack_type`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính |
+| `name` | `VARCHAR(50)` | `NOT NULL` | Loại đồ ăn/uống |
+
+#### `snacks`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `INT` | `PRIMARY KEY, AUTO_INCREMENT` | Khóa chính |
+| `snack_type_id` | `INT` | `NOT NULL, FOREIGN KEY (snack_type.id)` | Khóa ngoại loại đồ ăn |
+| `name` | `VARCHAR(100)` | `NOT NULL` | Tên đồ ăn |
+| `base_price` | `DECIMAL(10, 2)` | `NOT NULL` | Giá bán gốc |
+
+#### `booking_snack`
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính |
+| `booking_id` | `VARCHAR(36)` | `NOT NULL, FOREIGN KEY (bookings.id)` | Giao dịch cha |
+| `snack_id` | `INT` | `NOT NULL, FOREIGN KEY (snacks.id)` | Đồ ăn được mua |
+| `snack_qty` | `INT` | `NOT NULL` | Số lượng mua |
+| `purchase_price` | `DECIMAL(10, 2)` | `NOT NULL` | Giá chốt tại thời điểm mua |
 
 ---
 
