@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ShowtimeServiceImpl implements ShowtimeService {
@@ -37,6 +38,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         ShowtimeResponseDTO.CinemaInfo cinemaInfo = ShowtimeResponseDTO.CinemaInfo.builder()
                 .id(showtime.getRoom().getCinema().getId())
                 .name(showtime.getRoom().getCinema().getName())
+                .city(showtime.getRoom().getCinema().getCity())
                 .build();
 
         ShowtimeResponseDTO.RoomInfo roomInfo = ShowtimeResponseDTO.RoomInfo.builder()
@@ -112,7 +114,16 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     @Override
     public ShowtimeResponseDTO getShowtimeById(UUID showtimeId) {
         Showtime showtime = showtimeRepository.findById(showtimeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Showtime", "id", showtimeId));
+                .orElseThrow(() ->  new ResourceNotFoundException("Showtime", "id", showtimeId));
+
         return convertToResponseDTO(showtime);
+    }
+
+    @Override
+    public List<ShowtimeResponseDTO> getShowtimesByDate(java.time.LocalDate date) {
+        java.time.LocalDateTime startOfDay = date.atStartOfDay();
+        java.time.LocalDateTime endOfDay = date.atTime(23, 59, 59, 999999999);
+        List<Showtime> showtimes = showtimeRepository.findByStartTimeBetweenOrderByStartTimeAsc(startOfDay, endOfDay);
+        return showtimes.stream().map(this::convertToResponseDTO).collect(Collectors.toList());
     }
 }

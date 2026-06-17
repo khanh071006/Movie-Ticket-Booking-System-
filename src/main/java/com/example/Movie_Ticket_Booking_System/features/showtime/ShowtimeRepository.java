@@ -21,4 +21,6 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, UUID> {
 
     @Query("SELECT s FROM Showtime s WHERE s.movie.id = :movieId AND s.room.cinema.id = :cinemaId")
     List<Showtime> findByMovieIdAndCinemaId(@Param("movieId") UUID movieId, @Param("cinemaId") Integer cinemaId);
+
+    List<Showtime> findByStartTimeBetweenOrderByStartTimeAsc(LocalDateTime startOfDay, LocalDateTime endOfDay);
 }

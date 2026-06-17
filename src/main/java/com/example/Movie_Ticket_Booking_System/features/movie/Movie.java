@@ -36,6 +36,9 @@ public class Movie {
     @Column(name = "trailer_url")
     private String trailerUrl;
 
+    @Column(name = "age_restriction", columnDefinition = "integer default 0")
+    private Integer ageRestriction;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "director_id")
     private Director director;
@@ -118,6 +121,14 @@ public class Movie {
 
     public void setTrailerUrl(String trailerUrl) {
         this.trailerUrl = trailerUrl;
+    }
+
+    public Integer getAgeRestriction() {
+        return ageRestriction;
+    }
+
+    public void setAgeRestriction(Integer ageRestriction) {
+        this.ageRestriction = ageRestriction;
     }
 
     public Director getDirector() {

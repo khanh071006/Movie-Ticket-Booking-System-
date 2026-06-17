@@ -82,6 +82,7 @@ public class MovieServiceImpl implements MovieService {
         entity.setLanguage(dto.getLanguage());
         entity.setPosterUrl(dto.getPosterUrl());
         entity.setTrailerUrl(dto.getTrailerUrl());
+        entity.setAgeRestriction(dto.getAgeRestriction() != null ? dto.getAgeRestriction() : 0);
 
         Director director = directorRepository.findById(dto.getDirectorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Director", "id", dto.getDirectorId().toString()));
@@ -91,32 +92,44 @@ public class MovieServiceImpl implements MovieService {
                 .orElseThrow(() -> new ResourceNotFoundException("MovieStatus", "id", dto.getMovieStatusId().toString()));
         entity.setMovieStatus(movieStatus);
 
-        // Clear existing collections to handle updates correctly
-        entity.getMovieCasts().clear();
-        entity.getMovieGenres().clear();
-
         if (dto.getCastMemberIds() != null) {
-            Set<MovieCast> castMembers = dto.getCastMemberIds().stream().map(castMemberId -> {
-                CastMember castMember = castMemberRepository.findById(castMemberId)
-                        .orElseThrow(() -> new ResourceNotFoundException("CastMember", "id", castMemberId.toString()));
-                MovieCast movieCast = new MovieCast();
-                movieCast.setMovie(entity);
-                movieCast.setCastMember(castMember);
-                return movieCast;
-            }).collect(Collectors.toSet());
-            entity.getMovieCasts().addAll(castMembers);
+            entity.getMovieCasts().removeIf(mc -> !dto.getCastMemberIds().contains(mc.getCastMember().getId()));
+            Set<Integer> existingCastIds = entity.getMovieCasts().stream()
+                    .map(mc -> mc.getCastMember().getId())
+                    .collect(Collectors.toSet());
+            
+            for (Integer castMemberId : dto.getCastMemberIds()) {
+                if (!existingCastIds.contains(castMemberId)) {
+                    CastMember castMember = castMemberRepository.findById(castMemberId)
+                            .orElseThrow(() -> new ResourceNotFoundException("CastMember", "id", castMemberId.toString()));
+                    MovieCast movieCast = new MovieCast();
+                    movieCast.setMovie(entity);
+                    movieCast.setCastMember(castMember);
+                    entity.getMovieCasts().add(movieCast);
+                }
+            }
+        } else {
+            entity.getMovieCasts().clear();
         }
 
         if (dto.getGenreIds() != null) {
-            Set<MovieGenre> genres = dto.getGenreIds().stream().map(genreId -> {
-                Genre genre = genreRepository.findById(genreId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Genre", "id", genreId.toString()));
-                MovieGenre movieGenre = new MovieGenre();
-                movieGenre.setMovie(entity);
-                movieGenre.setGenre(genre);
-                return movieGenre;
-            }).collect(Collectors.toSet());
-            entity.getMovieGenres().addAll(genres);
+            entity.getMovieGenres().removeIf(mg -> !dto.getGenreIds().contains(mg.getGenre().getId()));
+            Set<Integer> existingGenreIds = entity.getMovieGenres().stream()
+                    .map(mg -> mg.getGenre().getId())
+                    .collect(Collectors.toSet());
+            
+            for (Integer genreId : dto.getGenreIds()) {
+                if (!existingGenreIds.contains(genreId)) {
+                    Genre genre = genreRepository.findById(genreId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Genre", "id", genreId.toString()));
+                    MovieGenre movieGenre = new MovieGenre();
+                    movieGenre.setMovie(entity);
+                    movieGenre.setGenre(genre);
+                    entity.getMovieGenres().add(movieGenre);
+                }
+            }
+        } else {
+            entity.getMovieGenres().clear();
         }
     }
 }

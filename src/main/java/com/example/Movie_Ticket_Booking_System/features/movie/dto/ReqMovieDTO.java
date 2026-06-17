@@ -25,6 +25,8 @@ public class ReqMovieDTO {
 
     private String trailerUrl;
 
+    private Integer ageRestriction;
+
     @NotNull(message = "ID đạo diễn không được để trống")
     private Integer directorId;
 
@@ -92,6 +94,14 @@ public class ReqMovieDTO {
 
     public void setTrailerUrl(String trailerUrl) {
         this.trailerUrl = trailerUrl;
+    }
+
+    public Integer getAgeRestriction() {
+        return ageRestriction;
+    }
+
+    public void setAgeRestriction(Integer ageRestriction) {
+        this.ageRestriction = ageRestriction;
     }
 
     public Integer getDirectorId() {

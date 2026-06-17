@@ -42,6 +42,7 @@ public class CinemaServiceImpl implements CinemaService {
         Cinema cinema = new Cinema();
         cinema.setName(cinemaDTO.getName());
         cinema.setAddress(cinemaDTO.getAddress());
+        cinema.setCity(cinemaDTO.getCity());
         if (cinemaDTO.getStateId() != null) {
             State state = stateRepository.findById(cinemaDTO.getStateId())
                     .orElseThrow(() -> new ResourceNotFoundException("State", "id", cinemaDTO.getStateId().toString()));
@@ -56,6 +57,7 @@ public class CinemaServiceImpl implements CinemaService {
         Cinema cinema = findCinemaById(id);
         cinema.setName(cinemaDTO.getName());
         cinema.setAddress(cinemaDTO.getAddress());
+        cinema.setCity(cinemaDTO.getCity());
         if (cinemaDTO.getStateId() != null) {
             State state = stateRepository.findById(cinemaDTO.getStateId())
                     .orElseThrow(() -> new ResourceNotFoundException("State", "id", cinemaDTO.getStateId().toString()));
@@ -85,6 +87,6 @@ public class CinemaServiceImpl implements CinemaService {
     private CinemaDTO convertToDTO(Cinema cinema) {
         Integer stateId = cinema.getState() != null ? cinema.getState().getId() : null;
         String stateName = cinema.getState() != null ? cinema.getState().getName() : null;
-        return new CinemaDTO(cinema.getId(), cinema.getName(), cinema.getAddress(), stateId, stateName);
+        return new CinemaDTO(cinema.getId(), cinema.getName(), cinema.getAddress(), cinema.getCity(), stateId, stateName);
     }
 }

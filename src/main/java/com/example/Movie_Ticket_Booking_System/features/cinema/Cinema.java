@@ -16,6 +16,9 @@ public class Cinema {
 
     private String address;
 
+    @Column(nullable = false)
+    private String city;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "state_id")
     private State state;
@@ -44,6 +47,14 @@ public class Cinema {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public State getState() {

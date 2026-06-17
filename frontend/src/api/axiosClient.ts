@@ -160,6 +160,10 @@ export const apiClient = {
             const response = await http.get<Showtime[]>(`/showtimes/movie/${movieId}/cinema/${cinemaId}`);
             return unwrap(response.data);
         },
+        async getByDate(date: string): Promise<Showtime[]> {
+            const response = await http.get<Showtime[]>(`/showtimes/date/${date}`);
+            return unwrap(response.data);
+        },
         async create(payload: { movieId: string; roomId: string; startTime: string }): Promise<Showtime> {
             const response = await http.post<Showtime>('/showtimes', payload, { headers: authHeader() });
             return unwrap(response.data);

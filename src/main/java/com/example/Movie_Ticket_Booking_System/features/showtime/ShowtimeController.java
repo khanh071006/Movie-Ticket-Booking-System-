@@ -46,4 +46,10 @@ public class ShowtimeController {
     public ResponseEntity<ShowtimeResponseDTO> getShowtimeById(@PathVariable UUID showtimeId) {
         return ResponseEntity.ok(showtimeService.getShowtimeById(showtimeId));
     }
+
+    @GetMapping("/date/{date}")
+    public ResponseEntity<List<ShowtimeResponseDTO>> getShowtimesByDate(
+            @PathVariable @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE) java.time.LocalDate date) {
+        return ResponseEntity.ok(showtimeService.getShowtimesByDate(date));
+    }
 }

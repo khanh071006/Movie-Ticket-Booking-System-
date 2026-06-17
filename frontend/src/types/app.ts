@@ -37,6 +37,7 @@ export interface Movie {
     language: string;
     posterUrl: string;
     trailerUrl: string;
+    ageRestriction: number;
     director?: { id: string; name: string; imageUrl?: string };
     movieStatus?: { id: string; name: string };
     castMembers?: { id: string; name: string; imageUrl?: string }[];
@@ -44,9 +45,10 @@ export interface Movie {
 }
 
 export interface Cinema {
-    id: string;
+    id: number;
     name: string;
     address: string;
+    city: string;
     stateId?: number;
     stateName?: string;
 }

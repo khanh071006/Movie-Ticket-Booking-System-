@@ -134,33 +134,39 @@ public class ShowtimeResponseDTO {
 
     // Inner class CinemaInfo
     public static class CinemaInfo {
-        private Integer id; // Thay đổi từ UUID sang Integer
+        private Integer id; 
         private String name;
+        private String city;
 
         public CinemaInfo() {}
-        public CinemaInfo(Integer id, String name) { // Thay đổi kiểu id
+        public CinemaInfo(Integer id, String name, String city) { 
             this.id = id;
             this.name = name;
+            this.city = city;
         }
 
-        public Integer getId() { return id; } // Thay đổi kiểu trả về
-        public void setId(Integer id) { this.id = id; } // Thay đổi kiểu tham số
+        public Integer getId() { return id; }
+        public void setId(Integer id) { this.id = id; }
         public String getName() { return name; }
         public void setName(String name) { this.name = name; }
+        public String getCity() { return city; }
+        public void setCity(String city) { this.city = city; }
 
         public static CinemaInfoBuilder builder() {
             return new CinemaInfoBuilder();
         }
 
         public static class CinemaInfoBuilder {
-            private Integer id; // Thay đổi từ UUID sang Integer
+            private Integer id; 
             private String name;
+            private String city;
 
-            public CinemaInfoBuilder id(Integer id) { this.id = id; return this; } // Thay đổi kiểu id
+            public CinemaInfoBuilder id(Integer id) { this.id = id; return this; } 
             public CinemaInfoBuilder name(String name) { this.name = name; return this; }
+            public CinemaInfoBuilder city(String city) { this.city = city; return this; }
 
             public CinemaInfo build() {
-                return new CinemaInfo(id, name);
+                return new CinemaInfo(id, name, city);
             }
         }
     }

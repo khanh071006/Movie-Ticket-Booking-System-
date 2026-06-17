@@ -12,4 +12,5 @@ public interface ShowtimeService {
     List<ShowtimeResponseDTO> getShowtimesByMovieAndCinema(UUID movieId, Integer cinemaId); // Thay đổi từ UUID sang Integer
     List<ShowtimeResponseDTO> getShowtimesByMovie(UUID movieId);
     ShowtimeResponseDTO getShowtimeById(UUID showtimeId);
+    List<ShowtimeResponseDTO> getShowtimesByDate(java.time.LocalDate date);
 }

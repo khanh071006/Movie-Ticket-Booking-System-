@@ -20,6 +20,7 @@ public class ResMovieDTO {
     private final String language;
     private final String posterUrl;
     private final String trailerUrl;
+    private final Integer ageRestriction;
     private final DirectorDTO director;
     private final MovieStatusDTO movieStatus;
     private final List<CastMemberDTO> castMembers;
@@ -34,6 +35,7 @@ public class ResMovieDTO {
         this.language = movie.getLanguage();
         this.posterUrl = movie.getPosterUrl();
         this.trailerUrl = movie.getTrailerUrl();
+        this.ageRestriction = movie.getAgeRestriction() != null ? movie.getAgeRestriction() : 0;
 
         this.director = Optional.ofNullable(movie.getDirector())
                 .map(d -> new DirectorDTO(d.getId(), d.getName(), d.getImageUrl()))
@@ -67,6 +69,7 @@ public class ResMovieDTO {
     public String getLanguage() { return language; }
     public String getPosterUrl() { return posterUrl; }
     public String getTrailerUrl() { return trailerUrl; }
+    public Integer getAgeRestriction() { return ageRestriction; }
     public DirectorDTO getDirector() { return director; }
     public MovieStatusDTO getMovieStatus() { return movieStatus; }
     public List<CastMemberDTO> getCastMembers() { return castMembers; }
