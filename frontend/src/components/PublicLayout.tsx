@@ -25,7 +25,7 @@ export const PublicLayout = () => {
     return (
         <div className="min-h-screen bg-[#0A0A0A] text-slate-50 selection:bg-blue-500/30 font-sans">
             <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/80 backdrop-blur-lg">
-                <div className="container mx-auto flex h-16 items-center justify-between px-4">
+                <div className="container relative mx-auto flex h-16 items-center justify-between px-4">
                     <Link to="/" className="group flex items-center gap-2.5">
                         <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2 shadow-lg shadow-blue-500/20 transition-shadow group-hover:shadow-blue-500/40">
                             <Film className="h-5 w-5 text-white" />
@@ -35,17 +35,25 @@ export const PublicLayout = () => {
                         </span>
                     </Link>
                     
-                    <nav className="hidden md:flex items-center gap-6">
-                        <Link to="/" className={`text-sm font-medium transition-colors ${location.pathname === '/' ? 'text-white' : 'text-slate-400 hover:text-white'}`}>
-                            Trang chủ
-                        </Link>
-                        <Link to="/movies" className={`text-sm font-medium transition-colors ${location.pathname.startsWith('/movies') ? 'text-white' : 'text-slate-400 hover:text-white'}`}>
-                            Phim
-                        </Link>
-                        <Link to="/cinemas" className={`text-sm font-medium transition-colors ${location.pathname.startsWith('/cinemas') ? 'text-white' : 'text-slate-400 hover:text-white'}`}>
-                            Hệ thống rạp
-                        </Link>
-                    </nav>
+                    <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:block">
+                        <nav className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur-md">
+                            <Link to="/movies" className={`rounded-full px-5 py-2 text-sm font-bold transition-all ${location.pathname === '/movies' ? 'bg-blue-600 text-white shadow-[0_0_10px_rgba(37,99,235,0.5)]' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}>
+                                Kho Phim
+                            </Link>
+                            <Link to="/showtimes" className={`rounded-full px-5 py-2 text-sm font-bold transition-all ${location.pathname.startsWith('/showtimes') ? 'bg-blue-600 text-white shadow-[0_0_10px_rgba(37,99,235,0.5)]' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}>
+                                Lịch Chiếu
+                            </Link>
+                            <Link to="/cinemas" className={`rounded-full px-5 py-2 text-sm font-bold transition-all ${location.pathname.startsWith('/cinemas') ? 'bg-white/15 text-white shadow-md' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}>
+                                Rạp Chiếu
+                            </Link>
+                            <a href="#" className="rounded-full px-5 py-2 text-sm font-bold transition-all text-slate-300 hover:bg-white/10 hover:text-white">
+                                Giá Vé
+                            </a>
+                            <a href="#" className="rounded-full px-5 py-2 text-sm font-bold transition-all text-slate-300 hover:bg-white/10 hover:text-white">
+                                Khuyến Mãi
+                            </a>
+                        </nav>
+                    </div>
 
                     <div className="flex items-center gap-3">
                         {!isLoggedIn ? (
@@ -125,9 +133,16 @@ export const PublicLayout = () => {
                             <Link 
                                 to="/movies" 
                                 onClick={() => setMobileMenuOpen(false)}
-                                className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${location.pathname.startsWith('/movies') ? 'bg-blue-600/20 text-blue-400' : 'text-slate-300 hover:bg-white/5'}`}
+                                className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${location.pathname === '/movies' ? 'bg-blue-600/20 text-blue-400' : 'text-slate-300 hover:bg-white/5'}`}
                             >
-                                Phim
+                                Kho Phim
+                            </Link>
+                            <Link 
+                                to="/showtimes" 
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${location.pathname.startsWith('/showtimes') ? 'bg-blue-600/20 text-blue-400' : 'text-slate-300 hover:bg-white/5'}`}
+                            >
+                                Lịch Chiếu
                             </Link>
                             <Link 
                                 to="/cinemas" 

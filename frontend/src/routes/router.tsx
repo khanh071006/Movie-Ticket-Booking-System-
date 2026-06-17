@@ -6,7 +6,9 @@ import { GuestGuard } from '../guards/GuestGuard';
 import { AdminGuard } from '../guards/AdminGuard';
 import { HomePage } from '../pages/public/HomePage';
 import { MoviesPage } from '../pages/public/MoviesPage';
+import { ShowtimesPage } from '../pages/public/ShowtimesPage';
 import { MovieDetailPage } from '../pages/public/MovieDetailPage';
+import { SelectShowtimePage } from '../pages/public/SelectShowtimePage';
 import { CinemasPage } from '../pages/public/CinemasPage';
 import { LoginPage } from '../pages/auth/LoginPage';
 import { RegisterPage } from '../pages/auth/RegisterPage';
@@ -33,7 +35,9 @@ export const router = createBrowserRouter([
         children: [
             { index: true, element: <HomePage /> },
             { path: 'movies', element: <MoviesPage /> },
+            { path: 'showtimes', element: <ShowtimesPage /> },
             { path: 'movies/:id', element: <MovieDetailPage /> },
+            { path: 'movies/:id/booking', element: <SelectShowtimePage /> },
             { path: 'cinemas', element: <CinemasPage /> },
             { path: 'booking/:showtimeId', element: <BookingPage /> },
         ],

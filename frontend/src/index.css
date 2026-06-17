@@ -25,3 +25,42 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #3b82f6;
 }
+
+/* Ẩn scrollbar cho carousels */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Swiper Theme Variables */
+:root {
+    --swiper-theme-color: #2563eb;
+    --swiper-navigation-size: 24px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white !important;
+    transition: all 0.3s;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 20px !important;
+    font-weight: bold;
+}
