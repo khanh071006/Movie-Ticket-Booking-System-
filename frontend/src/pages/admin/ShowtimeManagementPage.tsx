@@ -12,8 +12,8 @@ export const ShowtimeManagementPage = () => {
     const [rooms, setRooms] = useState<Room[]>([]);
     const [showtimes, setShowtimes] = useState<Showtime[]>([]);
     const [movieId, setMovieId] = useState<string>('');
-    const [cinemaId, setCinemaId] = useState<string>('');
-    const [roomId, setRoomId] = useState<string>('');
+    const [cinemaId, setCinemaId] = useState<number | ''>('');
+    const [roomId, setRoomId] = useState<number | ''>('');
     const [startTime, setStartTime] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ export const ShowtimeManagementPage = () => {
 
     useEffect(() => {
         if (!cinemaId) return;
-        apiClient.rooms.getByCinema(cinemaId).then((res) => {
+        apiClient.rooms.getByCinema(cinemaId as number).then((res) => {
             setRooms(res);
             if (res.length) setRoomId(res[0].id);
         });
@@ -57,7 +57,7 @@ export const ShowtimeManagementPage = () => {
         event.preventDefault();
         setError('');
         try {
-            await apiClient.showtimes.create({ movieId, roomId, startTime });
+            await apiClient.showtimes.create({ movieId, roomId: roomId as number, startTime });
             setStartTime('');
             loadShowtimes();
         } catch (err) {
@@ -119,7 +119,7 @@ export const ShowtimeManagementPage = () => {
                             <select 
                                 className="h-11 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" 
                                 value={cinemaId} 
-                                onChange={(e) => setCinemaId(e.target.value)}
+                                onChange={(e) => setCinemaId(Number(e.target.value))}
                             >
                                 {cinemas.map((cinema) => (
                                     <option key={cinema.id} value={cinema.id} className="bg-[#141414]">{cinema.name}</option>
@@ -131,7 +131,7 @@ export const ShowtimeManagementPage = () => {
                             <select 
                                 className="h-11 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" 
                                 value={roomId} 
-                                onChange={(e) => setRoomId(e.target.value)}
+                                onChange={(e) => setRoomId(Number(e.target.value))}
                             >
                                 {rooms.map((room) => (
                                     <option key={room.id} value={room.id} className="bg-[#141414]">{room.name}</option>

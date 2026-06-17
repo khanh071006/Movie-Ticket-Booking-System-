@@ -1,14 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Play, Search, Info } from 'lucide-react';
 import { apiClient } from '../../api/axiosClient';
 import type { Movie } from '../../types/app';
-import { Button } from '../../components/ui/Button';
 import { MovieCarousel } from '../../components/ui/MovieCarousel';
 
 export const HomePage = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
-    const [keyword, setKeyword] = useState('');
+
 
     useEffect(() => {
         // Fetch all movies on component mount

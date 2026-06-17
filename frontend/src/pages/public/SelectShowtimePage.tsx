@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Calendar, MapPin, Info, ArrowLeft, Clock, ChevronLeft, ChevronRight, Ticket, ChevronDown } from 'lucide-react';
 import { apiClient, parseError } from '../../api/axiosClient';
 import type { Movie, Showtime } from '../../types/app';
-import { Card } from '../../components/ui/Card';
+
 import { Button } from '../../components/ui/Button';
 
 // Group showtimes by City -> Date -> Cinema -> Showtimes

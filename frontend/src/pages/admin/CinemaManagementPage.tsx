@@ -9,16 +9,16 @@ import { CategorySelect } from '../../components/ui/CategorySelect';
 import { CinemaPricingDialog } from './CinemaPricingDialog';
 import type { Cinema } from '../../types/app';
 
-const emptyForm = { name: '', address: '', stateId: '' };
+const emptyForm = { name: '', address: '', city: '', stateId: '' };
 
 export const CinemaManagementPage = () => {
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
     const [form, setForm] = useState(emptyForm);
-    const [editId, setEditId] = useState<string | null>(null);
+    const [editId, setEditId] = useState<number | null>(null);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [deleteId, setDeleteId] = useState<string | null>(null);
-    const [pricingCinema, setPricingCinema] = useState<{ id: string, name: string } | null>(null);
+    const [deleteId, setDeleteId] = useState<number | null>(null);
+    const [pricingCinema, setPricingCinema] = useState<{ id: number, name: string } | null>(null);
 
     const load = async () => {
         setLoading(true);
@@ -41,7 +41,7 @@ export const CinemaManagementPage = () => {
         setError('');
         try {
             const sId = parseInt(form.stateId, 10);
-            const payload = { name: form.name, address: form.address, stateId: isNaN(sId) ? undefined : sId };
+            const payload = { name: form.name, address: form.address, city: form.city, stateId: isNaN(sId) ? undefined : sId };
             
             if (editId) await apiClient.cinemas.update(editId, payload);
             else await apiClient.cinemas.create(payload);
@@ -55,7 +55,7 @@ export const CinemaManagementPage = () => {
 
     const startEdit = (cinema: Cinema) => {
         setEditId(cinema.id);
-        setForm({ name: cinema.name, address: cinema.address, stateId: cinema.stateId?.toString() || '' });
+        setForm({ name: cinema.name, address: cinema.address, city: cinema.city || '', stateId: cinema.stateId?.toString() || '' });
     };
 
     const confirmDelete = async () => {
@@ -117,6 +117,17 @@ export const CinemaManagementPage = () => {
                                     placeholder="VD: Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội" 
                                     value={form.address} 
                                     onChange={(e) => setForm((p) => ({ ...p, address: e.target.value }))} 
+                                    required 
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Tỉnh/Thành phố</label>
+                                <Input 
+                                    className="h-12 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus:border-blue-500" 
+                                    placeholder="VD: Hà Nội" 
+                                    value={form.city} 
+                                    onChange={(e) => setForm((p) => ({ ...p, city: e.target.value }))} 
                                     required 
                                 />
                             </div>
@@ -250,7 +261,7 @@ export const CinemaManagementPage = () => {
             />
 
             <CinemaPricingDialog
-                cinemaId={pricingCinema?.id || ''}
+                cinemaId={pricingCinema?.id || 0}
                 cinemaName={pricingCinema?.name || ''}
                 isOpen={!!pricingCinema}
                 onClose={() => setPricingCinema(null)}

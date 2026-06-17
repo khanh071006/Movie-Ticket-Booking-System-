@@ -388,7 +388,6 @@ export const BookingPage = () => {
                                                     
                                                     const isSelected = selectedSeats.some(s => s.id === seat.id);
                                                     const isBooked = bookedSeatIds.includes(seat.id as number);
-                                                    const isVIP = seat.seatTypeName?.toLowerCase().includes('vip');
                                                     const isCouple = seat.seatCount && seat.seatCount >= 2;
                                                     
                                                     let colorClass = 'bg-slate-800 border-white/10 text-slate-400 hover:bg-slate-700 hover:border-slate-500';

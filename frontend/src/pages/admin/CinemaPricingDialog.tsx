@@ -6,7 +6,7 @@ import { Input } from '../../components/ui/Input';
 import type { SeatType, TicketType } from '../../types/app';
 
 interface CinemaPricingDialogProps {
-    cinemaId: string;
+    cinemaId: number;
     cinemaName: string;
     isOpen: boolean;
     onClose: () => void;
