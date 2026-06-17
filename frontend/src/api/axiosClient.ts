@@ -4,7 +4,10 @@ import { getStoredToken, clearSession } from '../features/auth/utils/session';
 
 const http = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'}/api/v1`,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+    },
 });
 
 http.interceptors.response.use(
