@@ -11,6 +11,7 @@ const emptyMovie = {
     title: '',
     description: '',
     durationMinutes: 120,
+    ageRestriction: 0,
     releaseDate: '',
     language: '',
     posterUrl: '',
@@ -42,6 +43,7 @@ export const MovieFormPage = () => {
                 title: movie.title,
                 description: movie.description,
                 durationMinutes: movie.durationMinutes,
+                ageRestriction: movie.ageRestriction || 0,
                 releaseDate: movie.releaseDate,
                 language: movie.language,
                 posterUrl: movie.posterUrl,
@@ -157,6 +159,20 @@ export const MovieFormPage = () => {
                                 onChange={(e) => setForm((p) => ({ ...p, releaseDate: e.target.value }))} 
                                 required 
                             />
+                        </div>
+
+                        <div className="md:col-span-1 space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Giới hạn tuổi</label>
+                            <select
+                                className="w-full h-12 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                                value={form.ageRestriction}
+                                onChange={(e) => setForm((p) => ({ ...p, ageRestriction: Number(e.target.value) }))}
+                            >
+                                <option value={0} className="bg-zinc-900">P - Phổ biến</option>
+                                <option value={13} className="bg-zinc-900">T13 - Từ 13 tuổi</option>
+                                <option value={16} className="bg-zinc-900">T16 - Từ 16 tuổi</option>
+                                <option value={18} className="bg-zinc-900">T18 - Từ 18 tuổi</option>
+                            </select>
                         </div>
 
                         <div className="md:col-span-2 space-y-2">
