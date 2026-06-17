@@ -211,6 +211,16 @@ export const apiClient = {
             const response = await http.post<ApiResponse<BookingResponse> | BookingResponse>('/bookings', payload, { headers: authHeader() });
             return unwrap(response.data);
         },
+        async getBookedSeats(showtimeId: string): Promise<number[]> {
+            const response = await http.get<ApiResponse<number[]> | number[]>(`/bookings/showtime/${showtimeId}/booked-seats`);
+            return unwrap(response.data);
+        }
+    },
+    payments: {
+        async createUrl(bookingId: string): Promise<string> {
+            const response = await http.post<{ paymentUrl: string }>(`/payments/vnpay/create-url?bookingId=${bookingId}`, {}, { headers: authHeader() });
+            return response.data.paymentUrl;
+        }
     },
     snacks: {
         async getAll(): Promise<Snack[]> {

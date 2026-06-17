@@ -23,8 +23,13 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<ResBookingDTO> createBooking(@Valid @RequestBody ReqBookingDTO bookingDTO, @AuthenticationPrincipal UserPrincipal principal) {
-        ResBookingDTO createdBooking = bookingService.createBooking(bookingDTO, principal);
+    public ResponseEntity<ResBookingDTO> createBooking(@Valid @RequestBody ReqBookingDTO bookingDTO, @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt) {
+        ResBookingDTO createdBooking = bookingService.createBooking(bookingDTO, jwt.getSubject());
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
+    }
+
+    @org.springframework.web.bind.annotation.GetMapping("/showtime/{showtimeId}/booked-seats")
+    public ResponseEntity<java.util.List<Integer>> getBookedSeats(@org.springframework.web.bind.annotation.PathVariable java.util.UUID showtimeId) {
+        return ResponseEntity.ok(bookingService.getBookedSeats(showtimeId));
     }
 }

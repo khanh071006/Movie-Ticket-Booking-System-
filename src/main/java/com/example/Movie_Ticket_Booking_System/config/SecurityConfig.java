@@ -48,6 +48,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/payments/vnpay/**").permitAll()
 
                         // Phân quyền cho Feature Account
                         .requestMatchers(HttpMethod.GET, "/api/v1/accounts", "/api/v1/accounts/**").hasRole("ADMIN")
@@ -78,7 +79,8 @@ public class SecurityConfig {
 
                         // Phân quyền cho Feature Showtime
                         .requestMatchers(HttpMethod.GET, "/api/v1/showtimes/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/showtimes").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/bookings/showtime/*/booked-seats").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/showtimes/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/showtimes/**").hasRole("ADMIN")
 
                         // Phân quyền cho các Feature Danh mục (cũ)

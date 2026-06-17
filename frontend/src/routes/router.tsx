@@ -28,6 +28,8 @@ import { BookingPage } from '../pages/public/BookingPage';
 import { ForbiddenPage } from '../pages/error/ForbiddenPage';
 import { NotFoundPage } from '../pages/error/NotFoundPage';
 
+import { PaymentReturnPage } from '../pages/public/PaymentReturnPage';
+
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -40,6 +42,7 @@ export const router = createBrowserRouter([
             { path: 'movies/:id/booking', element: <SelectShowtimePage /> },
             { path: 'cinemas', element: <CinemasPage /> },
             { path: 'booking/:showtimeId', element: <BookingPage /> },
+            { path: 'payment/vnpay-return', element: <PaymentReturnPage /> },
         ],
     },
     {

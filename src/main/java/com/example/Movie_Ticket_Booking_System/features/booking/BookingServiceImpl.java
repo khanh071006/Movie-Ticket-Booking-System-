@@ -42,8 +42,9 @@ public class BookingServiceImpl implements BookingService {
     private final SnackRepository snackRepository;
     private final CinemaTicketPriceRepository cinemaTicketPriceRepository;
     private final CinemaSeatPriceRepository cinemaSeatPriceRepository;
+    private final BookingSeatRepository bookingSeatRepository;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, AccountRepository accountRepository, ShowtimeRepository showtimeRepository, SeatRepository seatRepository, TicketTypeRepository ticketTypeRepository, SnackRepository snackRepository, CinemaTicketPriceRepository cinemaTicketPriceRepository, CinemaSeatPriceRepository cinemaSeatPriceRepository) {
+    public BookingServiceImpl(BookingRepository bookingRepository, AccountRepository accountRepository, ShowtimeRepository showtimeRepository, SeatRepository seatRepository, TicketTypeRepository ticketTypeRepository, SnackRepository snackRepository, CinemaTicketPriceRepository cinemaTicketPriceRepository, CinemaSeatPriceRepository cinemaSeatPriceRepository, BookingSeatRepository bookingSeatRepository) {
         this.bookingRepository = bookingRepository;
         this.accountRepository = accountRepository;
         this.showtimeRepository = showtimeRepository;
@@ -52,27 +53,35 @@ public class BookingServiceImpl implements BookingService {
         this.snackRepository = snackRepository;
         this.cinemaTicketPriceRepository = cinemaTicketPriceRepository;
         this.cinemaSeatPriceRepository = cinemaSeatPriceRepository;
+        this.bookingSeatRepository = bookingSeatRepository;
     }
 
     @Override
     @Transactional
-    public ResBookingDTO createBooking(ReqBookingDTO dto, UserPrincipal principal) {
-        // Validation
+    public ResBookingDTO createBooking(ReqBookingDTO dto, String userEmail) {
+        // Validation of quantities
         int totalTicketsFromQuantities = dto.getTicketQuantities().stream().mapToInt(ReqBookingDTO.TicketQuantity::getQuantity).sum();
-        if (totalTicketsFromQuantities != dto.getSeatIds().size()) {
-            throw new BadRequestException("The number of seats must match the total number of tickets.");
-        }
 
         // Fetch entities
-        Account account = accountRepository.findById(principal.getAccountId())
-                .orElseThrow(() -> new ResourceNotFoundException("Account", "id", principal.getAccountId()));
+        Account account = accountRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("Account", "email", userEmail));
         Showtime showtime = showtimeRepository.findById(dto.getShowtimeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Showtime", "id", dto.getShowtimeId()));
-        List<Seat> seats = seatRepository.findAllById(dto.getSeatIds());
+        List<Seat> seats = seatRepository.findByIdsWithLock(dto.getSeatIds());
         if (seats.size() != dto.getSeatIds().size()) {
             throw new ResourceNotFoundException("Seat", "id", "One or more seats not found");
         }
-        // TODO: Check for already booked seats
+        
+        int totalSeatCapacity = seats.stream().mapToInt(seat -> seat.getSeatType().getSeatCount() != null ? seat.getSeatType().getSeatCount() : 1).sum();
+        if (totalTicketsFromQuantities != totalSeatCapacity) {
+            throw new BadRequestException("The number of seats must match the total number of tickets.");
+        }
+        
+        // Check for already booked seats
+        List<BookingSeat> existingBookings = bookingSeatRepository.findByBooking_ShowtimeIdAndSeatIdIn(dto.getShowtimeId(), dto.getSeatIds());
+        if (!existingBookings.isEmpty()) {
+            throw new BadRequestException("One or more selected seats are already booked.");
+        }
 
         // Create Booking
         Booking booking = new Booking();
@@ -174,5 +183,10 @@ public class BookingServiceImpl implements BookingService {
                     .collect(Collectors.toList()));
         }
         return dto;
+    }
+
+    @Override
+    public List<Integer> getBookedSeats(java.util.UUID showtimeId) {
+        return bookingSeatRepository.findBookedSeatIdsByShowtimeId(showtimeId);
     }
 }
