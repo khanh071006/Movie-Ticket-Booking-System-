@@ -26,6 +26,15 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<AccountRole> accountRoles;
 
+    @Column(name = "is_active", columnDefinition = "boolean default false")
+    private boolean isActive = false;
+
+    @Column(name = "otp_code", length = 6)
+    private String otpCode;
+
+    @Column(name = "otp_expiry_time")
+    private java.time.LocalDateTime otpExpiryTime;
+
     // Getters and Setters
 
     public UUID getId() {
@@ -74,5 +83,29 @@ public class Account {
 
     public void setAccountRoles(List<AccountRole> accountRoles) {
         this.accountRoles = accountRoles;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public String getOtpCode() {
+        return otpCode;
+    }
+
+    public void setOtpCode(String otpCode) {
+        this.otpCode = otpCode;
+    }
+
+    public java.time.LocalDateTime getOtpExpiryTime() {
+        return otpExpiryTime;
+    }
+
+    public void setOtpExpiryTime(java.time.LocalDateTime otpExpiryTime) {
+        this.otpExpiryTime = otpExpiryTime;
     }
 }

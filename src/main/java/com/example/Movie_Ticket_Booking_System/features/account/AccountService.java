@@ -22,4 +22,6 @@ public interface AccountService {
     Account handleUpdateAccount(UUID id, ReqUpdateAccountDTO dto);
 
     void handleDeleteAccount(UUID id);
+
+    void handleVerifyOtp(String email, String otpCode);
 }

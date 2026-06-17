@@ -25,12 +25,14 @@ public class AccountServiceImpl implements AccountService {
     private final RoleRepository roleRepository;
     private final AccountRoleRepository accountRoleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final com.example.Movie_Ticket_Booking_System.features.email.EmailService emailService;
 
-    public AccountServiceImpl(AccountRepository accountRepository, RoleRepository roleRepository, AccountRoleRepository accountRoleRepository, PasswordEncoder passwordEncoder) {
+    public AccountServiceImpl(AccountRepository accountRepository, RoleRepository roleRepository, AccountRoleRepository accountRoleRepository, PasswordEncoder passwordEncoder, com.example.Movie_Ticket_Booking_System.features.email.EmailService emailService) {
         this.accountRepository = accountRepository;
         this.roleRepository = roleRepository;
         this.accountRoleRepository = accountRoleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     @Override
@@ -40,11 +42,16 @@ public class AccountServiceImpl implements AccountService {
             throw new DuplicateResourceException("Account", "email", dto.getEmail());
         }
 
+        String otp = String.format("%06d", new java.util.Random().nextInt(999999));
+
         Account account = new Account();
         account.setEmail(dto.getEmail());
         account.setFullName(dto.getFullName());
         account.setPhone(dto.getPhone());
         account.setPasswordHash(this.passwordEncoder.encode(dto.getPassword()));
+        account.setActive(false);
+        account.setOtpCode(otp);
+        account.setOtpExpiryTime(java.time.LocalDateTime.now().plusMinutes(5));
 
         Account newAccount = this.accountRepository.save(account);
 
@@ -55,6 +62,8 @@ public class AccountServiceImpl implements AccountService {
         newAccountRole.setAccount(newAccount);
         newAccountRole.setRole(userRole);
         this.accountRoleRepository.save(newAccountRole);
+
+        emailService.sendOtpVerificationEmail(newAccount.getEmail(), otp);
 
         return newAccount;
     }
@@ -146,5 +155,29 @@ public class AccountServiceImpl implements AccountService {
         Account account = handleGetAccountById(id);
         accountRoleRepository.deleteByAccount(account);
         accountRepository.delete(account);
+    }
+
+    @Override
+    @Transactional
+    public void handleVerifyOtp(String email, String otpCode) {
+        Account account = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Account", "email", email));
+
+        if (account.isActive()) {
+            throw new IllegalArgumentException("Tài khoản đã được kích hoạt.");
+        }
+
+        if (!otpCode.equals(account.getOtpCode())) {
+            throw new IllegalArgumentException("Mã OTP không hợp lệ.");
+        }
+
+        if (account.getOtpExpiryTime() != null && account.getOtpExpiryTime().isBefore(java.time.LocalDateTime.now())) {
+            throw new IllegalArgumentException("Mã OTP đã hết hạn.");
+        }
+
+        account.setActive(true);
+        account.setOtpCode(null);
+        account.setOtpExpiryTime(null);
+        accountRepository.save(account);
     }
 }

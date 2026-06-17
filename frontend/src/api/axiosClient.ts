@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import type { Account, ApiResponse, AuthPayload, CategoryItem, Cinema, Movie, Room, Showtime, SeatType, TicketType, Seat, BookingRequest, BookingResponse, Snack } from '../types/app';
+import type { Account, ApiResponse, AuthPayload, CategoryItem, Cinema, Movie, Room, Showtime, SeatType, TicketType, Seat, BookingRequest, BookingResponse, Snack, BookingHistoryResponse } from '../types/app';
 import { getStoredToken, clearSession } from '../features/auth/utils/session';
 
 const http = axios.create({
@@ -61,6 +61,9 @@ export const apiClient = {
         },
         async register(data: { fullName: string; email: string; password: string; phone?: string }): Promise<void> {
             await http.post('/auth/register', data);
+        },
+        async verifyOtp(email: string, otpCode: string): Promise<void> {
+            await http.post('/auth/verify-otp', { email, otpCode });
         },
     },
     accounts: {
@@ -217,6 +220,10 @@ export const apiClient = {
         },
         async getBookedSeats(showtimeId: string): Promise<number[]> {
             const response = await http.get<ApiResponse<number[]> | number[]>(`/bookings/showtime/${showtimeId}/booked-seats`);
+            return unwrap(response.data);
+        },
+        async getMyBookings(): Promise<BookingHistoryResponse[]> {
+            const response = await http.get<ApiResponse<BookingHistoryResponse[]> | BookingHistoryResponse[]>('/bookings/my-bookings', { headers: authHeader() });
             return unwrap(response.data);
         }
     },

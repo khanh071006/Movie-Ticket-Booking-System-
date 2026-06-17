@@ -16,10 +16,12 @@ public class PaymentController {
 
     private final PaymentService paymentService;
     private final BookingRepository bookingRepository;
+    private final com.example.Movie_Ticket_Booking_System.features.email.EmailService emailService;
 
-    public PaymentController(PaymentService paymentService, BookingRepository bookingRepository) {
+    public PaymentController(PaymentService paymentService, BookingRepository bookingRepository, com.example.Movie_Ticket_Booking_System.features.email.EmailService emailService) {
         this.paymentService = paymentService;
         this.bookingRepository = bookingRepository;
+        this.emailService = emailService;
     }
 
     @PostMapping("/vnpay/create-url")
@@ -62,6 +64,8 @@ public class PaymentController {
         if ("00".equals(responseCode)) {
             booking.setPaymentStatus("PAID");
             bookingRepository.save(booking);
+            // Send confirmation email asynchronously
+            emailService.sendBookingConfirmation(booking.getId());
             return ResponseEntity.ok(Map.of("status", "success", "message", "Payment verified and updated"));
         } else {
             booking.setPaymentStatus("FAILED");
