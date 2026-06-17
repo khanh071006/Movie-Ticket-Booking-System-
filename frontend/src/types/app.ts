@@ -54,9 +54,9 @@ export interface Cinema {
 }
 
 export interface Room {
-    id: string;
+    id: number;
     name: string;
-    cinemaId: string;
+    cinemaId: number;
 }
 
 export interface Showtime {
@@ -67,13 +67,16 @@ export interface Showtime {
         id: string;
         title: string;
         durationMinutes: number;
+        posterUrl?: string;
+        ageRestriction?: number;
     };
     room?: {
-        id: string;
+        id: number;
         name: string;
         cinema?: {
-            id: string;
+            id: number;
             name: string;
+            city?: string;
         };
     };
 }

@@ -106,24 +106,24 @@ export const apiClient = {
             const response = await http.post<Cinema>('/cinemas', payload, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async update(id: string, payload: Omit<Cinema, 'id' | 'stateName'>): Promise<Cinema> {
+        async update(id: string | number, payload: Omit<Cinema, 'id' | 'stateName'>): Promise<Cinema> {
             const response = await http.put<Cinema>(`/cinemas/${id}`, payload, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async remove(id: string): Promise<void> {
+        async remove(id: string | number): Promise<void> {
             await http.delete(`/cinemas/${id}`, { headers: authHeader() });
         },
-        async getPricing(cinemaId: string): Promise<import('../types/app').CinemaPricing> {
+        async getPricing(cinemaId: string | number): Promise<import('../types/app').CinemaPricing> {
             const response = await http.get<ApiResponse<import('../types/app').CinemaPricing>>(`/cinemas/${cinemaId}/pricing`, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async updatePricing(cinemaId: string, payload: { ticketPrices: { ticketTypeId: number; price: number }[], seatPrices: { seatTypeId: number; surcharge: number }[] }): Promise<import('../types/app').CinemaPricing> {
+        async updatePricing(cinemaId: string | number, payload: { ticketPrices: { ticketTypeId: number; price: number }[], seatPrices: { seatTypeId: number; surcharge: number }[] }): Promise<import('../types/app').CinemaPricing> {
             const response = await http.put<ApiResponse<import('../types/app').CinemaPricing>>(`/cinemas/${cinemaId}/pricing`, payload, { headers: authHeader() });
             return unwrap(response.data);
         },
     },
     rooms: {
-        async getByCinema(cinemaId: string): Promise<Room[]> {
+        async getByCinema(cinemaId: string | number): Promise<Room[]> {
             const response = await http.get<Room[]>(`/rooms/cinema/${cinemaId}`);
             return unwrap(response.data);
         },
@@ -131,11 +131,11 @@ export const apiClient = {
             const response = await http.post<Room>('/rooms', payload, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async update(id: string, payload: Omit<Room, 'id'>): Promise<Room> {
+        async update(id: string | number, payload: Omit<Room, 'id'>): Promise<Room> {
             const response = await http.put<Room>(`/rooms/${id}`, payload, { headers: authHeader() });
             return unwrap(response.data);
         },
-        async remove(id: string): Promise<void> {
+        async remove(id: string | number): Promise<void> {
             await http.delete(`/rooms/${id}`, { headers: authHeader() });
         },
         async getSeats(roomId: string | number): Promise<Seat[]> {
@@ -156,7 +156,7 @@ export const apiClient = {
             const response = await http.get<Showtime[]>(`/showtimes/movie/${movieId}`);
             return unwrap(response.data);
         },
-        async getByMovieAndCinema(movieId: string, cinemaId: string): Promise<Showtime[]> {
+        async getByMovieAndCinema(movieId: string, cinemaId: string | number): Promise<Showtime[]> {
             const response = await http.get<Showtime[]>(`/showtimes/movie/${movieId}/cinema/${cinemaId}`);
             return unwrap(response.data);
         },
@@ -164,7 +164,7 @@ export const apiClient = {
             const response = await http.get<Showtime[]>(`/showtimes/date/${date}`);
             return unwrap(response.data);
         },
-        async create(payload: { movieId: string; roomId: string; startTime: string }): Promise<Showtime> {
+        async create(payload: { movieId: string; roomId: number; startTime: string }): Promise<Showtime> {
             const response = await http.post<Showtime>('/showtimes', payload, { headers: authHeader() });
             return unwrap(response.data);
         },

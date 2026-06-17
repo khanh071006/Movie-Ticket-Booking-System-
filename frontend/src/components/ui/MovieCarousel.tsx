@@ -1,7 +1,7 @@
 import { Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { Movie } from '../../types/app';
-import { Button } from './Button';
+
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,7 +11,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 // import required modules
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 
 interface MovieCarouselProps {
     title: string;

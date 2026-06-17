@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Clock, Ticket, MapPin, ChevronDown } from 'lucide-react';
 import { apiClient } from '../../api/axiosClient';
 import type { Movie, Showtime, Cinema } from '../../types/app';
-import { Button } from '../../components/ui/Button';
+
 
 // Utility to get next 14 days
 const getNextDays = (count: number) => {
@@ -98,16 +98,18 @@ export const ShowtimesPage = () => {
         }> = {};
 
         showtimes.forEach(st => {
-            const movieId = st.movie.id;
-            const cinema = st.room.cinema;
-            const cinemaId = cinema.id;
+            const movieId = st.movie?.id;
+            const cinema = st.room?.cinema;
+            const cinemaId = cinema?.id;
+
+            if (!movieId || !cinema || cinemaId === undefined) return;
 
             const city = cinema.city || 'Khác';
 
             // Lọc theo Khu vực
             if (selectedCity !== 'ALL' && city !== selectedCity) return;
             // Lọc theo Rạp cụ thể
-            if (selectedCinemaId !== 'ALL' && cinemaId !== selectedCinemaId) return;
+            if (selectedCinemaId !== 'ALL' && cinemaId !== Number(selectedCinemaId)) return;
 
             const fullMovie = movies.find(m => m.id === movieId);
             if (!fullMovie) return; 

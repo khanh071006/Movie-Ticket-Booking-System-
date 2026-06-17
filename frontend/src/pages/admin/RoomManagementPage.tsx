@@ -11,13 +11,13 @@ import type { Cinema, Room } from '../../types/app';
 export const RoomManagementPage = () => {
     const navigate = useNavigate();
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
-    const [selectedCinemaId, setSelectedCinemaId] = useState<string>('');
+    const [selectedCinemaId, setSelectedCinemaId] = useState<number | ''>('');
     const [rooms, setRooms] = useState<Room[]>([]);
     const [name, setName] = useState<string>('');
-    const [editId, setEditId] = useState<string | null>(null);
+    const [editId, setEditId] = useState<number | null>(null);
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState(false);
-    const [deleteId, setDeleteId] = useState<string | null>(null);
+    const [deleteId, setDeleteId] = useState<number | null>(null);
 
     useEffect(() => {
         apiClient.cinemas.getAll().then((res) => {
@@ -26,7 +26,7 @@ export const RoomManagementPage = () => {
         });
     }, []);
 
-    const loadRooms = (cinemaId: string) => {
+    const loadRooms = (cinemaId: number | '') => {
         if (!cinemaId) return;
         setLoading(true);
         apiClient.rooms.getByCinema(cinemaId)
@@ -44,8 +44,8 @@ export const RoomManagementPage = () => {
         setError('');
         try {
             if (!selectedCinemaId) return;
-            if (editId) await apiClient.rooms.update(editId, { name, cinemaId: selectedCinemaId });
-            else await apiClient.rooms.create({ name, cinemaId: selectedCinemaId });
+            if (editId) await apiClient.rooms.update(editId, { name, cinemaId: selectedCinemaId as number });
+            else await apiClient.rooms.create({ name, cinemaId: selectedCinemaId as number });
             setName('');
             setEditId(null);
             loadRooms(selectedCinemaId);
@@ -100,7 +100,7 @@ export const RoomManagementPage = () => {
                                 <select
                                     className="h-12 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
                                     value={selectedCinemaId}
-                                    onChange={(e) => setSelectedCinemaId(e.target.value)}
+                                    onChange={(e) => setSelectedCinemaId(Number(e.target.value))}
                                 >
                                     {cinemas.map((cinema) => (
                                         <option key={cinema.id} value={cinema.id} className="bg-[#141414]">
@@ -177,7 +177,7 @@ export const RoomManagementPage = () => {
                                                             variant="ghost" 
                                                             size="icon" 
                                                             className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" 
-                                                            onClick={() => { setEditId(String(room.id)); setName(room.name); }}
+                                                            onClick={() => { setEditId(room.id); setName(room.name); }}
                                                         >
                                                             <Edit2 size={16} />
                                                         </Button>
@@ -194,7 +194,7 @@ export const RoomManagementPage = () => {
                                                             variant="ghost" 
                                                             size="icon" 
                                                             className="h-9 w-9 text-red-500 hover:bg-red-500/10" 
-                                                            onClick={() => setDeleteId(String(room.id))}
+                                                            onClick={() => setDeleteId(room.id)}
                                                         >
                                                             <Trash2 size={16} />
                                                         </Button>
