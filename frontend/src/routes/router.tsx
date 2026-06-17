@@ -30,6 +30,8 @@ import { NotFoundPage } from '../pages/error/NotFoundPage';
 
 import { PaymentReturnPage } from '../pages/public/PaymentReturnPage';
 
+import { ProfilePage } from '../pages/public/ProfilePage';
+
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -43,6 +45,7 @@ export const router = createBrowserRouter([
             { path: 'cinemas', element: <CinemasPage /> },
             { path: 'booking/:showtimeId', element: <BookingPage /> },
             { path: 'payment/vnpay-return', element: <PaymentReturnPage /> },
+            { path: 'profile', element: <ProfilePage /> },
         ],
     },
     {

@@ -100,6 +100,9 @@ export const PublicLayout = () => {
                                                     Trang Quản trị
                                                 </Link>
                                             )}
+                                            <Link to="/profile" className="block rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition mt-1">
+                                                Hồ sơ & Đặt vé
+                                            </Link>
                                             <button type="button" onClick={handleLogout} className="mt-1 w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-red-500 hover:bg-red-500/10 transition">
                                                 Đăng xuất
                                             </button>

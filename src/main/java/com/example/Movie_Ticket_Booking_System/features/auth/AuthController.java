@@ -40,4 +40,14 @@ public class AuthController {
         ResAuthDTO res = authService.handleLogin(dto);
         return ResponseEntity.ok(ApiResponse.success("Đăng nhập thành công", res));
     }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<ApiResponse<Object>> verifyOtp(@Valid @RequestBody com.example.Movie_Ticket_Booking_System.features.auth.dto.ReqVerifyOtpDTO dto) {
+        try {
+            accountService.handleVerifyOtp(dto.getEmail(), dto.getOtpCode());
+            return ResponseEntity.ok(ApiResponse.success("Xác thực tài khoản thành công", null));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
 }

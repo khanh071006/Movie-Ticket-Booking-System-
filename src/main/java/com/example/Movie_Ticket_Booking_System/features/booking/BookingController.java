@@ -32,4 +32,9 @@ public class BookingController {
     public ResponseEntity<java.util.List<Integer>> getBookedSeats(@org.springframework.web.bind.annotation.PathVariable java.util.UUID showtimeId) {
         return ResponseEntity.ok(bookingService.getBookedSeats(showtimeId));
     }
+
+    @org.springframework.web.bind.annotation.GetMapping("/my-bookings")
+    public ResponseEntity<java.util.List<com.example.Movie_Ticket_Booking_System.features.booking.dto.ResBookingHistoryDTO>> getMyBookings(@AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt) {
+        return ResponseEntity.ok(bookingService.getMyBookings(jwt.getSubject()));
+    }
 }

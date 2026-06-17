@@ -173,3 +173,19 @@ export interface CinemaPricing {
     ticketPrices: TicketPrice[];
     seatPrices: SeatPrice[];
 }
+
+export interface BookingHistoryResponse {
+    id: string;
+    totalAmount: number;
+    paymentStatus: string;
+    createdDatetime: string;
+    movieTitle: string;
+    moviePosterUrl?: string;
+    cinemaName: string;
+    roomName: string;
+    showtimeStartTime: string;
+    showtimeEndTime: string;
+    tickets: string[];
+    seats: string[];
+    snacks?: string[];
+}

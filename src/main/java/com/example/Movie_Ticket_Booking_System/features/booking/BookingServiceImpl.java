@@ -189,4 +189,41 @@ public class BookingServiceImpl implements BookingService {
     public List<Integer> getBookedSeats(java.util.UUID showtimeId) {
         return bookingSeatRepository.findBookedSeatIdsByShowtimeId(showtimeId);
     }
+
+    @Override
+    public List<com.example.Movie_Ticket_Booking_System.features.booking.dto.ResBookingHistoryDTO> getMyBookings(String userEmail) {
+        List<Booking> bookings = bookingRepository.findByAccount_EmailOrderByCreatedDatetimeDesc(userEmail);
+        return bookings.stream().map(this::convertToHistoryDTO).collect(Collectors.toList());
+    }
+
+    private com.example.Movie_Ticket_Booking_System.features.booking.dto.ResBookingHistoryDTO convertToHistoryDTO(Booking booking) {
+        com.example.Movie_Ticket_Booking_System.features.booking.dto.ResBookingHistoryDTO dto = new com.example.Movie_Ticket_Booking_System.features.booking.dto.ResBookingHistoryDTO();
+        dto.setId(booking.getId());
+        dto.setTotalAmount(booking.getTotalAmount());
+        dto.setPaymentStatus(booking.getPaymentStatus());
+        dto.setCreatedDatetime(booking.getCreatedDatetime());
+        
+        dto.setMovieTitle(booking.getShowtime().getMovie().getTitle());
+        dto.setMoviePosterUrl(booking.getShowtime().getMovie().getPosterUrl());
+        dto.setCinemaName(booking.getShowtime().getRoom().getCinema().getName());
+        dto.setRoomName(booking.getShowtime().getRoom().getName());
+        dto.setShowtimeStartTime(booking.getShowtime().getStartTime());
+        dto.setShowtimeEndTime(booking.getShowtime().getEndTime());
+        
+        dto.setTickets(booking.getBookingTickets().stream()
+                .map(bt -> bt.getTicketQty() + "x " + bt.getTicketType().getName())
+                .collect(Collectors.toList()));
+        
+        dto.setSeats(booking.getBookingSeats().stream()
+                .map(bs -> bs.getSeat().getSeatLocation())
+                .collect(Collectors.toList()));
+                
+        if (booking.getBookingSnacks() != null) {
+            dto.setSnacks(booking.getBookingSnacks().stream()
+                    .map(bs -> bs.getSnackQty() + "x " + bs.getSnack().getName())
+                    .collect(Collectors.toList()));
+        }
+        
+        return dto;
+    }
 }

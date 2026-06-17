@@ -61,23 +61,35 @@
     -   Tích hợp chọn bắp nước và cộng tiền hóa đơn ở bước Booking.
 -   **Cập nhật các thông tin mở rộng**: Bổ sung URL hình ảnh cho Diễn viên, Đạo diễn.
 
+### 5. **Thanh toán & Đặt vé (Payment & Booking Flow)**
+-   **Tích hợp VNPay (Payment Gateway)**: Triển khai thành công VNPay vào hệ thống.
+-   **Flow Đặt vé Frontend hoàn chỉnh**: `Trang chủ -> Chọn phim -> Chọn suất chiếu -> Chọn ghế -> Thanh toán VNPay -> Nhận vé (QR Code)`.
+-   **Chống Double-Booking**: Sử dụng cơ chế Pessimistic Locking (`@Lock(LockModeType.PESSIMISTIC_WRITE)`) trong cơ sở dữ liệu (`SeatRepository`) để đảm bảo không xảy ra tình trạng hai người dùng đặt cùng một ghế trong cùng một thời điểm.
+
+### 6. **Triển khai & CI/CD (Deployment)**
+-   **Vercel Deployment**: 
+    -   Thêm `vercel.json` hỗ trợ SPA Routing cho Frontend.
+    -   Sửa các lỗi build TypeScript nghiêm ngặt (Strict mode).
+-   **CORS & Proxy Bypass**: 
+    -   Cấu hình Spring Security CORS để cho phép các domain của Vercel gọi API.
+    -   Tích hợp các headers bypass (`ngrok-skip-browser-warning`, pinggy bypass) vào `axiosClient.ts` để quá trình testing thông qua hầm ngrok/pinggy diễn ra trơn tru.
+
 ---
 
 ## 🎯 Nhiệm vụ tiếp theo (Next Tasks)
 
-**[P0 - Ưu tiên cao: Thanh toán & Đặt vé Frontend]**
-1.  **Tích hợp Cổng thanh toán (Payment Gateway)**: Tích hợp VNPay, Momo hoặc Stripe để hoàn tất quy trình booking. Hiện tại Booking mới lưu vào DB mà chưa qua bước thanh toán thực tế.
-2.  **Flow Đặt vé Frontend**:
-    -   Hoàn thiện luồng User: Trang chủ -> Chọn phim -> Chọn suất chiếu -> Chọn ghế (đã làm) -> Thanh toán -> Nhận vé (QR Code).
-3.  **Chống Double-Booking**: Bổ sung logic trong `BookingServiceImpl` và locking cơ sở dữ liệu để chống tình trạng 2 người cùng chọn 1 ghế trong cùng 1 thời điểm.
+**[P0 - Ưu tiên cao: Trải nghiệm người dùng sau đặt vé]**
+1.  **Hồ sơ & Lịch sử đặt vé (User Profile & Booking History)**: Xây dựng trang quản lý tài khoản cho người dùng để họ có thể xem lại lịch sử giao dịch và chi tiết các vé đã mua (kèm mã QR).
+2.  **Gửi Email Xác nhận (Email Notification)**: Tích hợp dịch vụ gửi email (ví dụ: Spring Mail, SendGrid) để tự động gửi thông tin vé và mã QR cho khách hàng ngay sau khi thanh toán thành công.
 
-**[P1 - Ưu tiên trung bình: Cải thiện hệ thống]**
+**[P1 - Ưu tiên trung bình: Quản trị & Vận hành (Admin/Staff Ops)]**
+3.  **Tích hợp QR Code & Quét vé (Ticket Validation)**: Tích hợp thư viện generate mã QR thực tế thay vì dùng Icon tĩnh, đồng thời xây dựng API cho nhân viên soát vé (Staff) quét mã QR để cập nhật trạng thái sử dụng của vé.
 4.  **Hoàn thiện Logic `delete`**: Triển khai logic kiểm tra ràng buộc trước khi xóa các thực thể (Ví dụ: Không được xóa Loại ghế đang có người đặt).
-5.  **Báo cáo & Thống kê**: Xây dựng biểu đồ doanh thu cho Admin Dashboard (dựa trên các Booking thành công).
+5.  **Báo cáo & Thống kê**: Xây dựng biểu đồ doanh thu cho Admin Dashboard (dựa trên các Booking thành công) theo phim, rạp, và thời gian.
 
 ---
 
 ## ⚠️ Lưu ý / Rủi ro (Warnings)
 
 -   Cần có cơ chế dọn dẹp hoặc lưu trữ các lịch chiếu đã qua để tránh làm database bị phình to theo thời gian.
--   Vấn đề Concurrency khi booking (Double-booking) cần được xử lý sớm trước khi Go-live.
+-   Hệ thống QRCode nhận vé hiện tại ở Frontend sử dụng Icon placeholder. Cần cân nhắc tích hợp thư viện generate QR code thực tế (ví dụ: `qrcode.react`) trong tương lai nếu muốn tích hợp với máy quét.

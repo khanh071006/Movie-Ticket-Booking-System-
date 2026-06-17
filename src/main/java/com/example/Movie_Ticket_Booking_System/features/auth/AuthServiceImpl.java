@@ -40,6 +40,10 @@ public class AuthServiceImpl implements AuthService {
         // 3. Lấy thông tin người dùng để trả về
         Account currentAccount = accountService.handleGetAccountByEmail(authentication.getName());
 
+        if (currentAccount != null && !currentAccount.isActive()) {
+            throw new org.springframework.security.authentication.DisabledException("Tài khoản chưa được kích hoạt. Vui lòng kiểm tra email để xác thực.");
+        }
+
         // 4. Tạo đối tượng TokenInfo
         ResAuthDTO.TokenInfo tokenInfo = new ResAuthDTO.TokenInfo(accessToken, "Bearer", expiresIn);
 

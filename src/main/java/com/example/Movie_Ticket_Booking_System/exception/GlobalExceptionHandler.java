@@ -95,6 +95,15 @@ public class GlobalExceptionHandler {
         return fieldError.getField() + ": " + fieldError.getDefaultMessage();
     }
 
+    // ========== SPRING SECURITY EXCEPTIONS ==========
+
+    @ExceptionHandler(org.springframework.security.core.AuthenticationException.class)
+    public ResponseEntity<ApiResponse<Void>> handleAuthenticationException(org.springframework.security.core.AuthenticationException ex) {
+        log.warn("AuthenticationException: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ApiResponse.ofError(401, ex.getMessage(), "Unauthorized"));
+    }
+
     // ========== CATCH-ALL ==========
 
     @ExceptionHandler(Exception.class)
