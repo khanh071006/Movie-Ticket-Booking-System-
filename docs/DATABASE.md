@@ -180,6 +180,7 @@ erDiagram
 | `language` | `VARCHAR(255)` | | Ngôn ngữ |
 | `poster_url` | `VARCHAR(255)` | | Link ảnh poster |
 | `trailer_url` | `VARCHAR(255)` | | Link trailer |
+| `age_restriction` | `INT` | `DEFAULT 0` | Giới hạn độ tuổi (0 là P, 13, 16, 18) |
 | `director_id` | `INT` | `FOREIGN KEY (directors.id)` | Khóa ngoại đến đạo diễn |
 | `status_id` | `INT` | `FOREIGN KEY (movie_status.id)` | Khóa ngoại đến trạng thái phim |
 
@@ -229,6 +230,7 @@ erDiagram
 | `id` | `VARCHAR(36)` | `PRIMARY KEY` | Khóa chính của rạp |
 | `name` | `VARCHAR(255)` | `NOT NULL` | Tên rạp |
 | `address`| `VARCHAR(255)`| | Địa chỉ của rạp |
+| `city` | `VARCHAR(100)` | | Thành phố / Khu vực của rạp |
 | `state_id` | `INT` | `FOREIGN KEY (state.id)` | Khóa ngoại chỉ định trạng thái của rạp |
 
 #### `state`
@@ -391,6 +393,8 @@ CREATE TABLE movie_status (
 CREATE TABLE cinemas (
     id VARCHAR(36) PRIMARY KEY, -- Sử dụng UUID
     name VARCHAR(100) NOT NULL,
+    address VARCHAR(255),
+    city VARCHAR(100),
     state_id INT,
     FOREIGN KEY (state_id) REFERENCES state(id)
 );
@@ -448,6 +452,7 @@ CREATE TABLE movies (
     `language` VARCHAR(50),
     `poster_url` VARCHAR(255),
     `trailer_url` VARCHAR(255),
+    `age_restriction` INT DEFAULT 0,
     `director_id` INT NOT NULL,
     `status_id` INT NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

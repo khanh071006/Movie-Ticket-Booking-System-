@@ -1,7 +1,7 @@
 # Project Status
 
 > **Dự án**: Movie Ticket Booking System
-> **Cập nhật lần cuối**: [Ngày hiện tại]
+> **Cập nhật lần cuối**: [Đã cập nhật sau đợt đại tu UX]
 > **Trạng thái hiện tại**: Đã hoàn thiện lõi tính năng Booking và phân quyền chi tiết cho toàn bộ hệ thống.
 
 ---
@@ -42,6 +42,13 @@
     -   API đặt vé (`/bookings`) yêu cầu người dùng phải `authenticated`.
 
 ### 4. **Các tính năng Fullstack mới hoàn thiện**
+-   **Đồng bộ hoá Trải nghiệm Người Dùng (Premium UX)**:
+    -   Hoàn thiện toàn bộ hệ thống UI cho Frontend với phong cách thiết kế cao cấp (Glassmorphism, Dark Theme, Glow effects).
+    -   Xây dựng hệ thống Banner Carousel phim tương tác mượt mà ở Trang chủ.
+    -   Thiết kế lại luồng Đặt vé (Booking Flow): `Trang chủ -> Danh sách Phim -> Lịch Chiếu -> Rạp Chiếu` được đồng bộ 100% về giao diện và UX.
+    -   Tối ưu hóa **Lọc Khu Vực (City Filter)**: Áp dụng Dropdown Glassmorphism thông minh, giải quyết triệt để vấn đề tràn màn hình khi hệ thống có đủ 63 tỉnh/thành phố.
+-   **Tự động tạo Dữ liệu (Data Seeding)**:
+    -   Xây dựng script Python (`seed_data.py`) tự động khởi tạo hệ thống dữ liệu thực tế: toàn bộ 63 tỉnh/thành, 195 hệ thống rạp, và hơn 8,100 suất chiếu trên toàn quốc.
 -   **Tính năng Ghế Đôi (Couple Seats/Sweetbox)**:
     -   Thêm thuộc tính `seatCount` vào bảng `SeatType`.
     -   Cập nhật thuật toán tính toán sơ đồ ghế (Frontend) để hỗ trợ gộp 2 ô cho ghế đôi (chiếm dụng 2 slot trên lưới không gian) và tự động tính tiền vé dựa trên sức chứa của ghế.
