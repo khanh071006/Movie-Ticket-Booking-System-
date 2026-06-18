@@ -83,19 +83,19 @@
 ### 8. **Quản trị & Vận hành Nâng cao (Advanced Admin Ops)**
 -   **An toàn Dữ liệu Toàn cục (Global Delete Safe-guard)**: Áp dụng bắt lỗi `DataIntegrityViolationException` tại `GlobalExceptionHandler`. Bảo vệ hệ thống khỏi việc xóa nhầm các dữ liệu (ghế, phòng, phim...) đang được sử dụng ở các bảng khác mà không cần viết logic thủ công cho từng API.
 -   **Báo cáo Doanh thu (Revenue Dashboard)**: Tích hợp thư viện `recharts` vẽ biểu đồ trực quan (Biểu đồ đường theo ngày, Biểu đồ cột top doanh thu phim) trên Admin Dashboard. Áp dụng các truy vấn JPA/Native tối ưu (`GROUP BY DATE`) lấy dữ liệu từ các giao dịch thanh toán thành công (`payment_status = 'PAID'`).
+-   **Kiểm soát Truy cập Phân quyền (Strict RBAC)**: Hoàn thiện tính năng giới hạn quyền thao tác dựa trên vai trò (`MANAGER` và `STAFF`). Quản lý không thể xóa/sửa hoặc cấp quyền cho tài khoản `SUPERADMIN`. Giao diện tự động thích ứng với Role (nhân viên không thấy chức năng chỉnh sửa phòng/lịch chiếu/phim). Dashboard của Quản lý chỉ hiển thị dữ liệu của rạp được phân công.
+-   **Hoàn thiện UI/UX Khách hàng (Public UX)**: Nút "Đặt vé ngay" được ẩn/hiện thông minh dựa trên trạng thái "Đang chiếu" của phim. Tối ưu Header để phù hợp với ngữ cảnh hiển thị.
 
 ---
 
 ## 🎯 Nhiệm vụ tiếp theo (Next Tasks)
 
 **[P0 - Ưu tiên cao: Vận hành & Trải nghiệm thực tế]**
-1.  **Quét Mã QR & Soát Vé (Ticket Validation API)**: Xây dựng API và giao diện cho nhân viên rạp chiếu phim (Staff) sử dụng để quét mã QR thực tế của khách hàng, cập nhật trạng thái vé thành "Đã sử dụng" (Used/Checked-in) khi khách vào rạp.
-2.  **Phân quyền Nhân viên (STAFF Role)**: Tạo riêng Role `STAFF` cho nhân viên từng rạp. Chỉ cho phép nhân viên quét vé và xem thống kê của rạp mình làm việc, tách biệt với quyền `SUPERADMIN` và `MANAGER`. (Đã hoàn thành)
-3.  **Quản lý Rạp (MANAGER Role)**: Role dành cho quản lý từng rạp, được phép quản lý phòng chiếu, lịch chiếu, đồ ăn, ghế ngồi của rạp đó. (Đã hoàn thành)
+1.  **Quét Mã QR & Soát Vé (Ticket Validation API)**: Hoàn thiện logic API xác nhận vé khi nhân viên quét QR ở cửa rạp. 
 
 **[P1 - Ưu tiên trung bình: Nâng cấp Dịch vụ Khách hàng]**
-3.  **Hệ thống Khuyến Mãi (Voucher/Promotion)**: Quản lý mã giảm giá và áp dụng khi người dùng thanh toán vé.
-4.  **Hỗ trợ In vé cứng (Physical Ticket)**: Giao diện hỗ trợ nhân viên xuất file PDF hoặc kết nối máy in để in vé cứng cho khách hàng lấy vé tại quầy.
+2.  **Hệ thống Khuyến Mãi (Voucher/Promotion)**: Quản lý mã giảm giá và áp dụng khi người dùng thanh toán vé.
+3.  **Hỗ trợ In vé cứng (Physical Ticket)**: Giao diện hỗ trợ nhân viên xuất file PDF hoặc kết nối máy hiện để in vé cứng cho khách hàng lấy vé tại quầy.
 
 ---
 

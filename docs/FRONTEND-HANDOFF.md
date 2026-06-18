@@ -114,6 +114,7 @@ Nên FE đang tương thích với các nhóm API hiện có của backend.
 - Entry chính: `src/main.tsx` -> dùng `router` từ `src/routes/router.tsx`
 - `SuperAdminGuard`, `ManagerGuard`, `StaffGuard`: chặn/mở route tuỳ theo Role.
 - `GuestGuard`: Smart redirect về dashboard (`/superadmin`, `/manager`, `/staff`) nếu có quyền backoffice, ngược lại về `/` nếu đã login. Bỏ chặn vào trang `login/register`.
+- **Kiểm soát giao diện theo Role (RBAC UI)**: Các component `ManagerLayout`, `StaffLayout` và các trang quản trị (Phòng, Lịch chiếu) sẽ tự động ẩn các form tạo mới, nút sửa/xoá hoặc menu không được phép nếu người dùng chỉ có quyền Staff. Public header cũng tự động hiện nút "Quản lý" và "Đặt vé" đúng ngữ cảnh.
 
 > Lưu ý: `src/App.tsx` hiện là file cũ, **không phải entrypoint runtime** (không dùng trong `main.tsx`).
 
