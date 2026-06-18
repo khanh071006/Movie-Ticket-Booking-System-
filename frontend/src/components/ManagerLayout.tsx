@@ -4,7 +4,6 @@ import { clearSession, getStoredAccount } from '../features/auth/utils/session';
 
 const navItems = [
     { name: 'Bảng điều khiển', path: '/manager', icon: LayoutDashboard },
-    { name: 'Soát vé', path: '/manager/scan-ticket', icon: QrCode },
     { name: 'Tài khoản', path: '/manager/accounts', icon: Users },
     { name: 'Phim', path: '/manager/movies', icon: Clapperboard },
     { name: 'Phòng chiếu', path: '/manager/rooms', icon: MonitorPlay },

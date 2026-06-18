@@ -6,6 +6,7 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Account, Cinema } from '../../types/app';
+import { getStoredAccount } from '../../features/auth/utils/session';
 
 const emptyCreate = { fullName: '', email: '', password: '', phone: '', role: 'USER', cinemaId: '' };
 const emptyUpdate = { fullName: '', phone: '', role: 'USER', cinemaId: '' };
@@ -20,6 +21,8 @@ export const AccountManagementPage = () => {
     const [updateForm, setUpdateForm] = useState(emptyUpdate);
     const [loading, setLoading] = useState(false);
     const [deleteId, setDeleteId] = useState<string | null>(null);
+    const currentUser = getStoredAccount();
+    const isSuperAdmin = currentUser?.roles?.includes('SUPERADMIN') || currentUser?.roles?.includes('ROLE_SUPERADMIN');
 
     const loadData = async () => {
         setLoading(true);
@@ -61,7 +64,7 @@ export const AccountManagementPage = () => {
                 password: createForm.password,
                 phone: createForm.phone.trim() ? createForm.phone : undefined,
                 roles: [createForm.role],
-                cinemaId: createForm.role === 'STAFF' && createForm.cinemaId ? Number(createForm.cinemaId) : undefined,
+                cinemaId: (createForm.role === 'STAFF' || createForm.role === 'MANAGER') && createForm.cinemaId ? Number(createForm.cinemaId) : undefined,
             } as any);
             setCreateForm(emptyCreate);
             loadData();
@@ -72,10 +75,15 @@ export const AccountManagementPage = () => {
 
     const startEdit = (acc: Account) => {
         setEditId(acc.id);
+        const accRoles = acc.roles || [];
+        const role = accRoles.includes('SUPERADMIN') || accRoles.includes('ROLE_SUPERADMIN') ? 'SUPERADMIN' 
+                   : accRoles.includes('MANAGER') || accRoles.includes('ROLE_MANAGER') ? 'MANAGER'
+                   : accRoles.includes('STAFF') || accRoles.includes('ROLE_STAFF') ? 'STAFF' 
+                   : 'USER';
         setUpdateForm({
             fullName: acc.fullName,
             phone: acc.phone ?? '',
-            role: acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN') ? 'ADMIN' : acc.roles?.includes('STAFF') || acc.roles?.includes('ROLE_STAFF') ? 'STAFF' : 'USER',
+            role,
             cinemaId: acc.cinemaId ? String(acc.cinemaId) : '',
         });
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
@@ -89,7 +97,7 @@ export const AccountManagementPage = () => {
                 fullName: updateForm.fullName,
                 phone: updateForm.phone.trim() ? updateForm.phone : undefined,
                 roles: [updateForm.role],
-                cinemaId: updateForm.role === 'STAFF' && updateForm.cinemaId ? Number(updateForm.cinemaId) : null,
+                cinemaId: (updateForm.role === 'STAFF' || updateForm.role === 'MANAGER') && updateForm.cinemaId ? Number(updateForm.cinemaId) : null,
             } as any);
             setEditId(null);
             setUpdateForm(emptyUpdate);
@@ -175,9 +183,10 @@ export const AccountManagementPage = () => {
                             >
                                 <option value="USER">Khách hàng</option>
                                 <option value="STAFF">Nhân viên rạp</option>
-                                <option value="ADMIN">Quản trị viên</option>
+                                <option value="MANAGER">Quản lý rạp</option>
+                                {isSuperAdmin && <option value="SUPERADMIN">Quản trị hệ thống</option>}
                             </select>
-                            {createForm.role === 'STAFF' && (
+                            {(createForm.role === 'STAFF' || createForm.role === 'MANAGER') && (
                                 <select
                                     className="h-11 rounded-md border border-white/10 bg-zinc-900 px-3 text-sm text-white focus:border-blue-500 focus:outline-none"
                                     value={createForm.cinemaId}
@@ -230,7 +239,11 @@ export const AccountManagementPage = () => {
                             <tbody className="divide-y divide-white/5">
                                 {rows.length > 0 ? (
                                     rows.map((acc) => {
-                                        const role = acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN') ? 'ADMIN' : acc.roles?.includes('STAFF') || acc.roles?.includes('ROLE_STAFF') ? 'STAFF' : 'USER';
+                                        const accRoles = acc.roles || [];
+                                        const role = accRoles.includes('SUPERADMIN') || accRoles.includes('ROLE_SUPERADMIN') ? 'SUPERADMIN' 
+                                                   : accRoles.includes('MANAGER') || accRoles.includes('ROLE_MANAGER') ? 'MANAGER'
+                                                   : accRoles.includes('STAFF') || accRoles.includes('ROLE_STAFF') ? 'STAFF' 
+                                                   : 'USER';
                                         return (
                                             <tr key={acc.id} className="group hover:bg-white/[0.02] transition-colors">
                                                 <td className="px-6 py-4">
@@ -257,10 +270,18 @@ export const AccountManagementPage = () => {
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    {role === 'ADMIN' && (
+                                                    {role === 'SUPERADMIN' && (
                                                         <span className="inline-flex items-center gap-1 rounded-full bg-red-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-red-500 border border-red-500/20">
-                                                            <Shield size={10} /> Quản trị
+                                                            <Shield size={10} /> Hệ thống
                                                         </span>
+                                                    )}
+                                                    {role === 'MANAGER' && (
+                                                        <div className="flex flex-col gap-1">
+                                                            <span className="inline-flex w-max items-center gap-1 rounded-full bg-purple-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-purple-400 border border-purple-500/20">
+                                                                <Shield size={10} /> Quản lý
+                                                            </span>
+                                                            <span className="text-xs text-slate-400">{acc.cinemaName}</span>
+                                                        </div>
                                                     )}
                                                     {role === 'STAFF' && (
                                                         <div className="flex flex-col gap-1">
@@ -350,9 +371,10 @@ export const AccountManagementPage = () => {
                                 >
                                     <option value="USER">Khách hàng</option>
                                     <option value="STAFF">Nhân viên rạp</option>
-                                    <option value="ADMIN">Quản trị viên</option>
+                                    <option value="MANAGER">Quản lý rạp</option>
+                                    {isSuperAdmin && <option value="SUPERADMIN">Quản trị hệ thống</option>}
                                 </select>
-                                {updateForm.role === 'STAFF' && (
+                                {(updateForm.role === 'STAFF' || updateForm.role === 'MANAGER') && (
                                     <select
                                         className="h-11 rounded-md border border-white/10 bg-zinc-900 px-3 text-sm text-white focus:border-blue-500 focus:outline-none"
                                         value={updateForm.cinemaId}

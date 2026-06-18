@@ -76,8 +76,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public List<Account> handleGetAccounts() {
-        return this.accountRepository.findAll();
+        List<Account> accounts = this.accountRepository.findAll();
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        boolean isSuperAdmin = auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_SUPERADMIN"));
+        
+        if (!isSuperAdmin) {
+            return accounts.stream().filter(acc -> 
+                acc.getAccountRoles() == null || acc.getAccountRoles().stream().noneMatch(ar -> ar.getRole().getName().equals("SUPERADMIN"))
+            ).collect(java.util.stream.Collectors.toList());
+        }
+        return accounts;
     }
 
     @Override
@@ -87,11 +97,19 @@ public class AccountServiceImpl implements AccountService {
             throw new DuplicateResourceException("Account", "email", dto.getEmail());
         }
 
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        boolean isSuperAdmin = auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_SUPERADMIN"));
+
+        if (dto.getRoles() != null && dto.getRoles().contains("SUPERADMIN") && !isSuperAdmin) {
+            throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Bạn không có quyền tạo tài khoản SUPERADMIN.");
+        }
+
         Account account = new Account();
         account.setEmail(dto.getEmail());
         account.setFullName(dto.getFullName());
         account.setPhone(dto.getPhone());
         account.setPasswordHash(passwordEncoder.encode(dto.getPassword()));
+        account.setActive(true);
 
         Account newAccount = accountRepository.save(account);
 
@@ -103,9 +121,9 @@ public class AccountServiceImpl implements AccountService {
                 roles.add(role);
             }
 
-            if (dto.getRoles().contains("STAFF")) {
+            if (dto.getRoles().contains("STAFF") || dto.getRoles().contains("MANAGER")) {
                 if (dto.getCinemaId() == null) {
-                    throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Nhân viên phải được gán vào một rạp chiếu phim (cinemaId không được trống)");
+                    throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Nhân viên/Quản lý phải được gán vào một rạp chiếu phim (cinemaId không được trống)");
                 }
                 com.example.Movie_Ticket_Booking_System.features.cinema.Cinema cinema = cinemaRepository.findById(dto.getCinemaId())
                         .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", dto.getCinemaId().toString()));
@@ -134,6 +152,19 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public Account handleUpdateAccount(UUID id, ReqUpdateAccountDTO dto) {
         Account account = handleGetAccountById(id);
+        
+        boolean targetIsSuperAdmin = account.getAccountRoles() != null && account.getAccountRoles().stream().anyMatch(ar -> ar.getRole().getName().equals("SUPERADMIN"));
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        boolean isSuperAdmin = auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_SUPERADMIN"));
+        
+        if (targetIsSuperAdmin && !isSuperAdmin) {
+            throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Bạn không có quyền chỉnh sửa tài khoản SUPERADMIN.");
+        }
+        
+        if (dto.getRoles() != null && dto.getRoles().contains("SUPERADMIN") && !isSuperAdmin) {
+            throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Bạn không có quyền cấp vai trò SUPERADMIN.");
+        }
+
         account.setFullName(dto.getFullName());
         account.setPhone(dto.getPhone());
 
@@ -157,9 +188,9 @@ public class AccountServiceImpl implements AccountService {
                 accountRoleRepository.save(newAccountRole);
             }
 
-            if (dto.getRoles().contains("STAFF")) {
+            if (dto.getRoles().contains("STAFF") || dto.getRoles().contains("MANAGER")) {
                 if (dto.getCinemaId() == null) {
-                    throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Nhân viên phải được gán vào một rạp chiếu phim (cinemaId không được trống)");
+                    throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Nhân viên/Quản lý phải được gán vào một rạp chiếu phim (cinemaId không được trống)");
                 }
                 com.example.Movie_Ticket_Booking_System.features.cinema.Cinema cinema = cinemaRepository.findById(dto.getCinemaId())
                         .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", dto.getCinemaId().toString()));
@@ -176,6 +207,15 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public void handleDeleteAccount(UUID id) {
         Account account = handleGetAccountById(id);
+        
+        boolean targetIsSuperAdmin = account.getAccountRoles() != null && account.getAccountRoles().stream().anyMatch(ar -> ar.getRole().getName().equals("SUPERADMIN"));
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        boolean isSuperAdmin = auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_SUPERADMIN"));
+        
+        if (targetIsSuperAdmin && !isSuperAdmin) {
+            throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Bạn không có quyền xóa tài khoản SUPERADMIN.");
+        }
+
         accountRoleRepository.deleteByAccount(account);
         accountRepository.delete(account);
     }

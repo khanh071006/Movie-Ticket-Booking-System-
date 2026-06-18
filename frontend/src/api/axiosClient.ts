@@ -273,11 +273,11 @@ export const apiClient = {
     },
     reports: {
         async getRevenueByDate(): Promise<any[]> {
-            const response = await http.get<ApiResponse<any[]>>('/reports/revenue/daily', { headers: authHeader() });
+            const response = await http.get<ApiResponse<any[]>>('/reports/revenue-by-date', { headers: authHeader() });
             return unwrap(response.data);
         },
         async getRevenueByMovie(): Promise<any[]> {
-            const response = await http.get<ApiResponse<any[]>>('/reports/revenue/movies', { headers: authHeader() });
+            const response = await http.get<ApiResponse<any[]>>('/reports/revenue-by-movie', { headers: authHeader() });
             return unwrap(response.data);
         },
         async getRevenueByCinema(): Promise<any[]> {
