@@ -75,7 +75,7 @@ export const PublicLayout = () => {
                                 {isBackoffice && (
                                     <button onClick={handleDashboardNavigate} className="hidden sm:block">
                                         <Button size="sm" className="border-0 bg-blue-600/20 text-blue-500 hover:bg-blue-600/30">
-                                            Admin
+                                            Quản lý
                                         </Button>
                                     </button>
                                 )}

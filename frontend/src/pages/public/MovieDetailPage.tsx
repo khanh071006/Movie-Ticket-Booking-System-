@@ -164,14 +164,16 @@ export const MovieDetailPage = () => {
                     </div>
 
                     {/* Centered Button for the entire page */}
-                    <div className="w-full flex justify-center mt-6">
-                        <Button 
-                            onClick={() => navigate(`/movies/${movie.id}/booking`)}
-                            className="w-full sm:w-auto min-w-[320px] bg-blue-600 hover:bg-blue-500 text-white font-black text-xl py-6 rounded-2xl shadow-[0_0_30px_rgba(37,99,235,0.5)] transition-all transform hover:scale-105 flex items-center justify-center gap-3 border border-blue-400/50"
-                        >
-                            <Ticket size={24} /> ĐẶT VÉ NGAY
-                        </Button>
-                    </div>
+                    {movie.movieStatus?.name === 'Đang Chiếu' && (
+                        <div className="w-full flex justify-center mt-6">
+                            <Button 
+                                onClick={() => navigate(`/movies/${movie.id}/booking`)}
+                                className="w-full sm:w-auto min-w-[320px] bg-blue-600 hover:bg-blue-500 text-white font-black text-xl py-6 rounded-2xl shadow-[0_0_30px_rgba(37,99,235,0.5)] transition-all transform hover:scale-105 flex items-center justify-center gap-3 border border-blue-400/50"
+                            >
+                                <Ticket size={24} /> ĐẶT VÉ NGAY
+                            </Button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Sleek Divider */}
