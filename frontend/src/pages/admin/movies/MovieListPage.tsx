@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Plus, Search, Trash2, Clapperboard, Clock, Calendar, Image as ImageIcon, Film, ChevronRight, Edit2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { apiClient, parseError } from '../../../api/axiosClient';
 import { Card } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
@@ -10,6 +10,9 @@ import type { Movie } from '../../../types/app';
 
 export const MovieListPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const basePath = location.pathname.startsWith('/superadmin') ? '/superadmin' : location.pathname.startsWith('/staff') ? '/staff' : '/manager';
+    const isSuperAdmin = basePath === '/superadmin';
     const [movies, setMovies] = useState<Movie[]>([]);
     const [query, setQuery] = useState('');
     const [error, setError] = useState('');
@@ -74,13 +77,15 @@ export const MovieListPage = () => {
                     </h1>
                     <p className="text-slate-400">Cập nhật kho phim, poster và thông tin chi tiết cho khán giả.</p>
                 </div>
-                <Button 
-                    className="h-11 px-6 font-bold shadow-xl shadow-blue-900/20 gap-2 shrink-0"
-                    onClick={() => navigate('/manager/movies/create')}
-                >
-                    <Plus size={18} />
-                    Thêm phim mới
-                </Button>
+                {isSuperAdmin && (
+                    <Button 
+                        className="h-11 px-6 font-bold shadow-xl shadow-blue-900/20 gap-2 shrink-0"
+                        onClick={() => navigate(`${basePath}/movies/create`)}
+                    >
+                        <Plus size={18} />
+                        Thêm phim mới
+                    </Button>
+                )}
             </div>
 
             {error && (
@@ -115,7 +120,7 @@ export const MovieListPage = () => {
                                     <th className="px-6 py-4 font-bold">Thông tin phim</th>
                                     <th className="px-6 py-4 font-bold">Chi tiết</th>
                                     <th className="px-6 py-4 font-bold">Ngôn ngữ</th>
-                                    <th className="px-6 py-4 text-right font-bold">Thao tác</th>
+                                    {isSuperAdmin && <th className="px-6 py-4 text-right font-bold">Thao tác</th>}
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-white/5">
@@ -159,16 +164,18 @@ export const MovieListPage = () => {
                                                     {movie.language}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 text-right">
-                                                <div className="flex justify-end gap-1 opacity-100 transition-opacity">
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" onClick={() => navigate(`/manager/movies/${movie.id}`)}>
-                                                        <Edit2 size={16} />
-                                                    </Button>
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 text-red-500 hover:bg-red-500/10" onClick={() => setDeleteId(movie.id)}>
-                                                        <Trash2 size={16} />
-                                                    </Button>
-                                                </div>
-                                            </td>
+                                            {isSuperAdmin && (
+                                                <td className="px-6 py-4 text-right">
+                                                    <div className="flex justify-end gap-1 opacity-100 transition-opacity">
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" onClick={() => navigate(`${basePath}/movies/${movie.id}`)}>
+                                                            <Edit2 size={16} />
+                                                        </Button>
+                                                        <Button variant="ghost" size="icon" className="h-9 w-9 text-red-500 hover:bg-red-500/10" onClick={() => setDeleteId(movie.id)}>
+                                                            <Trash2 size={16} />
+                                                        </Button>
+                                                    </div>
+                                                </td>
+                                            )}
                                         </tr>
                                     ))
                                 ) : (

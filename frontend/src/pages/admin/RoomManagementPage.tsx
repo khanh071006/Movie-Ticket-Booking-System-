@@ -7,6 +7,7 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Cinema, Room } from '../../types/app';
+import { getStoredAccount } from '../../features/auth/utils/session';
 
 export const RoomManagementPage = () => {
     const navigate = useNavigate();
@@ -18,6 +19,9 @@ export const RoomManagementPage = () => {
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const [deleteId, setDeleteId] = useState<number | null>(null);
+
+    const account = getStoredAccount();
+    const isStaff = account?.roles?.includes('STAFF') || account?.roles?.includes('ROLE_STAFF');
 
     useEffect(() => {
         apiClient.cinemas.getAll().then((res) => {
@@ -83,65 +87,67 @@ export const RoomManagementPage = () => {
 
             <div className="grid gap-8 lg:grid-cols-12">
                 {/* Form Section */}
-                <div className="lg:col-span-4">
-                    <Card className="sticky top-8 border-white/10 bg-zinc-900/50 p-6 backdrop-blur-md">
-                        <div className="mb-6 flex items-center gap-3">
-                            <div className="rounded-lg bg-blue-600/20 p-2 text-blue-500">
-                                {editId ? <Edit2 className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
-                            </div>
-                            <h2 className="text-lg font-bold text-white">
-                                {editId ? 'Sửa phòng chiếu' : 'Thêm phòng mới'}
-                            </h2>
-                        </div>
-                        
-                        <form onSubmit={submit} className="space-y-4">
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Chọn rạp chiếu</label>
-                                <select
-                                    className="h-12 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
-                                    value={selectedCinemaId}
-                                    onChange={(e) => setSelectedCinemaId(Number(e.target.value))}
-                                >
-                                    {cinemas.map((cinema) => (
-                                        <option key={cinema.id} value={cinema.id} className="bg-[#141414]">
-                                            {cinema.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Tên phòng chiếu</label>
-                                <Input 
-                                    className="h-12 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus:border-blue-500" 
-                                    placeholder="VD: Phòng 01 - IMAX" 
-                                    value={name} 
-                                    onChange={(e) => setName(e.target.value)} 
-                                    required 
-                                />
+                {!isStaff && (
+                    <div className="lg:col-span-4">
+                        <Card className="sticky top-8 border-white/10 bg-zinc-900/50 p-6 backdrop-blur-md">
+                            <div className="mb-6 flex items-center gap-3">
+                                <div className="rounded-lg bg-blue-600/20 p-2 text-blue-500">
+                                    {editId ? <Edit2 className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                                </div>
+                                <h2 className="text-lg font-bold text-white">
+                                    {editId ? 'Sửa phòng chiếu' : 'Thêm phòng mới'}
+                                </h2>
                             </div>
                             
-                            <div className="flex flex-col gap-2 pt-2">
-                                <Button className="h-12 w-full gap-2 font-bold shadow-xl shadow-blue-900/20">
-                                    {editId ? 'Cập nhật phòng' : 'Thêm phòng chiếu'}
-                                </Button>
-                                {editId && (
-                                    <Button 
-                                        type="button" 
-                                        variant="outline" 
-                                        className="h-12 w-full border-white/10 text-slate-400 hover:text-white" 
-                                        onClick={() => { setEditId(null); setName(''); }}
+                            <form onSubmit={submit} className="space-y-4">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Chọn rạp chiếu</label>
+                                    <select
+                                        className="h-12 w-full rounded-md border border-white/10 bg-white/5 px-3 text-sm text-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                        value={selectedCinemaId}
+                                        onChange={(e) => setSelectedCinemaId(Number(e.target.value))}
                                     >
-                                        Huỷ bỏ
+                                        {cinemas.map((cinema) => (
+                                            <option key={cinema.id} value={cinema.id} className="bg-[#141414]">
+                                                {cinema.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-slate-500">Tên phòng chiếu</label>
+                                    <Input 
+                                        className="h-12 border-white/10 bg-white/5 text-white placeholder:text-slate-600 focus:border-blue-500" 
+                                        placeholder="VD: Phòng 01 - IMAX" 
+                                        value={name} 
+                                        onChange={(e) => setName(e.target.value)} 
+                                        required 
+                                    />
+                                </div>
+                                
+                                <div className="flex flex-col gap-2 pt-2">
+                                    <Button className="h-12 w-full gap-2 font-bold shadow-xl shadow-blue-900/20">
+                                        {editId ? 'Cập nhật phòng' : 'Thêm phòng chiếu'}
                                     </Button>
-                                )}
-                            </div>
-                        </form>
-                    </Card>
-                </div>
+                                    {editId && (
+                                        <Button 
+                                            type="button" 
+                                            variant="outline" 
+                                            className="h-12 w-full border-white/10 text-slate-400 hover:text-white" 
+                                            onClick={() => { setEditId(null); setName(''); }}
+                                        >
+                                            Huỷ bỏ
+                                        </Button>
+                                    )}
+                                </div>
+                            </form>
+                        </Card>
+                    </div>
+                )}
 
                 {/* List Section */}
-                <div className="lg:col-span-8 space-y-4">
+                <div className={`space-y-4 ${isStaff ? 'lg:col-span-12' : 'lg:col-span-8'}`}>
                     <div className="flex items-center justify-between">
                         <h3 className="text-xl font-bold text-white flex items-center gap-2">
                             <MonitorPlay className="text-blue-500" />
@@ -159,7 +165,7 @@ export const RoomManagementPage = () => {
                                 <thead className="border-b border-white/5 bg-white/5 text-[10px] uppercase tracking-widest text-slate-500">
                                     <tr>
                                         <th className="px-6 py-4 font-bold">Tên phòng chiếu</th>
-                                        <th className="px-6 py-4 text-right font-bold">Thao tác</th>
+                                        {!isStaff && <th className="px-6 py-4 text-right font-bold">Thao tác</th>}
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-white/5">
@@ -171,35 +177,37 @@ export const RoomManagementPage = () => {
                                                         {room.name}
                                                     </div>
                                                 </td>
-                                                <td className="px-6 py-4 text-right">
-                                                    <div className="flex justify-end gap-1 opacity-100 transition-opacity">
-                                                        <Button 
-                                                            variant="ghost" 
-                                                            size="icon" 
-                                                            className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" 
-                                                            onClick={() => { setEditId(room.id); setName(room.name); }}
-                                                        >
-                                                            <Edit2 size={16} />
-                                                        </Button>
-                                                        <Button 
-                                                            variant="ghost" 
-                                                            size="icon" 
-                                                            title="Cấu hình ghế"
-                                                            className="h-9 w-9 text-green-500 hover:bg-green-500/10" 
-                                                            onClick={() => navigate(`/manager/rooms/${room.id}/seats`)}
-                                                        >
-                                                            <Grid size={16} />
-                                                        </Button>
-                                                        <Button 
-                                                            variant="ghost" 
-                                                            size="icon" 
-                                                            className="h-9 w-9 text-red-500 hover:bg-red-500/10" 
-                                                            onClick={() => setDeleteId(room.id)}
-                                                        >
-                                                            <Trash2 size={16} />
-                                                        </Button>
-                                                    </div>
-                                                </td>
+                                                {!isStaff && (
+                                                    <td className="px-6 py-4 text-right">
+                                                        <div className="flex justify-end gap-1 opacity-100 transition-opacity">
+                                                            <Button 
+                                                                variant="ghost" 
+                                                                size="icon" 
+                                                                className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" 
+                                                                onClick={() => { setEditId(room.id); setName(room.name); }}
+                                                            >
+                                                                <Edit2 size={16} />
+                                                            </Button>
+                                                            <Button 
+                                                                variant="ghost" 
+                                                                size="icon" 
+                                                                title="Cấu hình ghế"
+                                                                className="h-9 w-9 text-green-500 hover:bg-green-500/10" 
+                                                                onClick={() => navigate(`/manager/rooms/${room.id}/seats`)}
+                                                            >
+                                                                <Grid size={16} />
+                                                            </Button>
+                                                            <Button 
+                                                                variant="ghost" 
+                                                                size="icon" 
+                                                                className="h-9 w-9 text-red-500 hover:bg-red-500/10" 
+                                                                onClick={() => setDeleteId(room.id)}
+                                                            >
+                                                                <Trash2 size={16} />
+                                                            </Button>
+                                                        </div>
+                                                    </td>
+                                                )}
                                             </tr>
                                         ))
                                     ) : (

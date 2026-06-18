@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Edit2, Plus, ChevronRight, ArrowLeft } from 'lucide-react';
 import { apiClient, parseError } from '../../../api/axiosClient';
 import { Card } from '../../../components/ui/Card';
@@ -25,6 +25,8 @@ const emptyMovie = {
 export const MovieFormPage = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const location = useLocation();
+    const basePath = location.pathname.startsWith('/superadmin') ? '/superadmin' : location.pathname.startsWith('/staff') ? '/staff' : '/manager';
     const [form, setForm] = useState(emptyMovie);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -71,7 +73,7 @@ export const MovieFormPage = () => {
             } else {
                 await apiClient.movies.create(payload);
             }
-            navigate('/manager/movies');
+            navigate(`${basePath}/movies`);
         } catch (err) {
             setError(parseError(err));
         } finally {
@@ -83,7 +85,7 @@ export const MovieFormPage = () => {
         <div className="w-full space-y-8 animate-in fade-in duration-500">
             {/* Header */}
             <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 text-sm font-medium text-slate-400 mb-2 cursor-pointer hover:text-white w-fit transition-colors" onClick={() => navigate('/manager/movies')}>
+                <div className="flex items-center gap-2 text-sm font-medium text-slate-400 mb-2 cursor-pointer hover:text-white w-fit transition-colors" onClick={() => navigate(`${basePath}/movies`)}>
                     <ArrowLeft className="h-4 w-4" />
                     <span>Quay lại danh sách</span>
                 </div>
@@ -249,7 +251,7 @@ export const MovieFormPage = () => {
                             type="button" 
                             variant="outline" 
                             className="h-11 px-6 text-slate-400 hover:text-white" 
-                            onClick={() => navigate('/manager/movies')}
+                            onClick={() => navigate(`${basePath}/movies`)}
                             disabled={loading}
                         >
                             Huỷ
