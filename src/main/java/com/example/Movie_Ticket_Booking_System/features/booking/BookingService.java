@@ -13,4 +13,5 @@ public interface BookingService {
     ResBookingDTO createBooking(ReqBookingDTO dto, String userEmail);
     List<Integer> getBookedSeats(UUID showtimeId);
     List<ResBookingHistoryDTO> getMyBookings(String userEmail);
+    ResBookingHistoryDTO checkinTicket(UUID bookingId, Long cinemaId);
 }

@@ -1,19 +1,25 @@
-import { Film, ChevronDown, User, Menu, X } from 'lucide-react';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Film, Menu, X, User, ChevronDown } from 'lucide-react';
+import { clearSession, getStoredToken, getStoredAccount, getStoredUser, hasBackofficeAccess, hasSuperAdminRole, hasManagerRole, hasStaffRole } from '../features/auth/utils/session';
 import { Button } from './ui/Button';
-import { clearSession, getStoredToken, getStoredAccount, getStoredUser, hasAdminRole } from '../features/auth/utils/session';
 
 export const PublicLayout = () => {
     const token = getStoredToken();
     const navigate = useNavigate();
     const location = useLocation();
-    const isAdmin = hasAdminRole(token);
     const isLoggedIn = Boolean(token);
+    const isBackoffice = hasBackofficeAccess(token);
     const currentAccount = getStoredAccount();
     const storedUser = getStoredUser();
     const displayName = currentAccount?.fullName || storedUser || 'Khách hàng';
     const displayEmail = currentAccount?.email || '';
+
+    const handleDashboardNavigate = () => {
+        if (hasSuperAdminRole(token)) navigate('/superadmin');
+        else if (hasManagerRole(token)) navigate('/manager');
+        else if (hasStaffRole(token)) navigate('/staff');
+    };
     
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -46,12 +52,7 @@ export const PublicLayout = () => {
                             <Link to="/cinemas" className={`rounded-full px-5 py-2 text-sm font-bold transition-all ${location.pathname.startsWith('/cinemas') ? 'bg-white/15 text-white shadow-md' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}>
                                 Rạp Chiếu
                             </Link>
-                            <a href="#" className="rounded-full px-5 py-2 text-sm font-bold transition-all text-slate-300 hover:bg-white/10 hover:text-white">
-                                Giá Vé
-                            </a>
-                            <a href="#" className="rounded-full px-5 py-2 text-sm font-bold transition-all text-slate-300 hover:bg-white/10 hover:text-white">
-                                Khuyến Mãi
-                            </a>
+
                         </nav>
                     </div>
 
@@ -71,12 +72,12 @@ export const PublicLayout = () => {
                             </>
                         ) : (
                             <div className="flex items-center gap-3">
-                                {isAdmin && (
-                                    <Link to="/admin" className="hidden sm:block">
+                                {isBackoffice && (
+                                    <button onClick={handleDashboardNavigate} className="hidden sm:block">
                                         <Button size="sm" className="border-0 bg-blue-600/20 text-blue-500 hover:bg-blue-600/30">
                                             Admin
                                         </Button>
-                                    </Link>
+                                    </button>
                                 )}
                                 
                                 {/* User Dropdown */}
@@ -95,10 +96,10 @@ export const PublicLayout = () => {
                                                 <p className="text-sm font-bold text-white line-clamp-1">{displayName}</p>
                                                 {displayEmail && <p className="text-xs text-slate-400 line-clamp-1">{displayEmail}</p>}
                                             </div>
-                                            {isAdmin && (
-                                                <Link to="/admin" className="sm:hidden block rounded-lg px-3 py-2 text-sm text-blue-400 hover:bg-white/10 hover:text-blue-300 transition">
+                                            {isBackoffice && (
+                                                <button onClick={handleDashboardNavigate} className="sm:hidden block w-full text-left rounded-lg px-3 py-2 text-sm text-blue-400 hover:bg-white/10 hover:text-blue-300 transition">
                                                     Trang Quản trị
-                                                </Link>
+                                                </button>
                                             )}
                                             <Link to="/profile" className="block rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition mt-1">
                                                 Hồ sơ & Đặt vé

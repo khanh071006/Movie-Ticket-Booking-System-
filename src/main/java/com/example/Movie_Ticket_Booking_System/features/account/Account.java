@@ -26,6 +26,10 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<AccountRole> accountRoles;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cinema_id")
+    private com.example.Movie_Ticket_Booking_System.features.cinema.Cinema cinema;
+
     @Column(name = "is_active", columnDefinition = "boolean default false")
     private boolean isActive = false;
 
@@ -107,5 +111,13 @@ public class Account {
 
     public void setOtpExpiryTime(java.time.LocalDateTime otpExpiryTime) {
         this.otpExpiryTime = otpExpiryTime;
+    }
+
+    public com.example.Movie_Ticket_Booking_System.features.cinema.Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(com.example.Movie_Ticket_Booking_System.features.cinema.Cinema cinema) {
+        this.cinema = cinema;
     }
 }

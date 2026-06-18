@@ -55,6 +55,25 @@ export const hasAdminRole = (token: string): boolean => {
     return roles.includes('ROLE_ADMIN') || roles.includes('ADMIN');
 };
 
+export const hasStaffRole = (token: string): boolean => {
+    const roles = getRolesFromToken(token);
+    return roles.includes('ROLE_STAFF') || roles.includes('STAFF');
+};
+
+export const hasSuperAdminRole = (token: string): boolean => {
+    const roles = getRolesFromToken(token);
+    return roles.includes('ROLE_SUPERADMIN') || roles.includes('SUPERADMIN');
+};
+
+export const hasManagerRole = (token: string): boolean => {
+    const roles = getRolesFromToken(token);
+    return roles.includes('ROLE_MANAGER') || roles.includes('MANAGER');
+};
+
+export const hasBackofficeAccess = (token: string): boolean => {
+    return hasAdminRole(token) || hasStaffRole(token) || hasSuperAdminRole(token) || hasManagerRole(token);
+};
+
 export const isLoggedIn = (): boolean => Boolean(getStoredToken());
 
 export const clearSession = (): void => {

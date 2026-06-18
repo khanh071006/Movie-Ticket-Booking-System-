@@ -7,6 +7,9 @@ import com.example.Movie_Ticket_Booking_System.features.room.RoomRepository;
 import com.example.Movie_Ticket_Booking_System.features.showtime.dto.ShowtimeRequestDTO;
 import com.example.Movie_Ticket_Booking_System.features.showtime.dto.ShowtimeResponseDTO;
 import com.example.Movie_Ticket_Booking_System.exception.ResourceNotFoundException;
+import com.example.Movie_Ticket_Booking_System.features.account.Account;
+import com.example.Movie_Ticket_Booking_System.features.account.AccountRepository;
+import com.example.Movie_Ticket_Booking_System.security.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,11 +24,29 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     private final ShowtimeRepository showtimeRepository;
     private final MovieRepository movieRepository;
     private final RoomRepository roomRepository;
+    private final AccountRepository accountRepository;
 
-    public ShowtimeServiceImpl(ShowtimeRepository showtimeRepository, MovieRepository movieRepository, RoomRepository roomRepository) {
+    public ShowtimeServiceImpl(ShowtimeRepository showtimeRepository, MovieRepository movieRepository, RoomRepository roomRepository, AccountRepository accountRepository) {
         this.showtimeRepository = showtimeRepository;
         this.movieRepository = movieRepository;
         this.roomRepository = roomRepository;
+        this.accountRepository = accountRepository;
+    }
+
+    private void checkCinemaAccess(Integer targetCinemaId) {
+        String currentUserEmail = SecurityUtil.getCurrentUserLogin().orElse(null);
+        if (currentUserEmail != null) {
+            Account account = accountRepository.findByEmail(currentUserEmail).orElse(null);
+            if (account != null) {
+                boolean isSuperAdmin = account.getAccountRoles().stream()
+                        .anyMatch(r -> r.getRole().getName().equals("ROLE_SUPERADMIN"));
+                if (!isSuperAdmin) {
+                    if (account.getCinema() == null || !account.getCinema().getId().equals(targetCinemaId)) {
+                        throw new RuntimeException("Bạn không có quyền thao tác trên Rạp chiếu này.");
+                    }
+                }
+            }
+        }
     }
 
     private ShowtimeResponseDTO convertToResponseDTO(Showtime showtime) {
@@ -63,6 +84,8 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
         Room room = roomRepository.findById(dto.getRoomId())
                 .orElseThrow(() -> new ResourceNotFoundException("Room", "id", dto.getRoomId()));
+
+        checkCinemaAccess(room.getCinema().getId());
 
         LocalDateTime startTime = dto.getStartTime();
         LocalDateTime endTime = startTime.plusMinutes(movie.getDurationMinutes() + 30);

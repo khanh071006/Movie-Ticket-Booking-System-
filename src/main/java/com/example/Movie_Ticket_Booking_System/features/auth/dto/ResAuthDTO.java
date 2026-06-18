@@ -41,17 +41,30 @@ public class ResAuthDTO {
         private java.util.UUID id;
         private String email;
         private String fullName;
+        private java.util.Set<String> roles;
+        private Integer cinemaId;
+        private String cinemaName;
 
         public AccountInfo(Account account) {
             this.id = account.getId();
             this.email = account.getEmail();
             this.fullName = account.getFullName();
+            if (account.getAccountRoles() != null) {
+                this.roles = account.getAccountRoles().stream().map(r -> r.getRole().getName()).collect(java.util.stream.Collectors.toSet());
+            } else {
+                this.roles = new java.util.HashSet<>();
+            }
+            this.cinemaId = account.getCinema() != null ? account.getCinema().getId() : null;
+            this.cinemaName = account.getCinema() != null ? account.getCinema().getName() : null;
         }
 
         // Getters
         public java.util.UUID getId() { return id; }
         public String getEmail() { return email; }
         public String getFullName() { return fullName; }
+        public java.util.Set<String> getRoles() { return roles; }
+        public Integer getCinemaId() { return cinemaId; }
+        public String getCinemaName() { return cinemaName; }
     }
 
     // Getters

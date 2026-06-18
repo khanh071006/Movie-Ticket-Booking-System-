@@ -219,8 +219,12 @@ export const apiClient = {
             return unwrap(response.data);
         },
         async getBookedSeats(showtimeId: string): Promise<number[]> {
-            const response = await http.get<ApiResponse<number[]> | number[]>(`/bookings/showtime/${showtimeId}/booked-seats`);
-            return unwrap(response.data);
+            const { data } = await http.get(`/bookings/showtime/${showtimeId}/booked-seats`);
+            return data;
+        },
+        async checkinTicket(bookingId: string): Promise<any> {
+            const { data } = await http.put(`/bookings/${bookingId}/checkin`, {}, { headers: authHeader() });
+            return data;
         },
         async getMyBookings(): Promise<BookingHistoryResponse[]> {
             const response = await http.get<ApiResponse<BookingHistoryResponse[]> | BookingHistoryResponse[]>('/bookings/my-bookings', { headers: authHeader() });
@@ -267,6 +271,20 @@ export const apiClient = {
             await http.delete(`/${kind}/${id}`, { headers: authHeader() });
         },
     },
+    reports: {
+        async getRevenueByDate(): Promise<any[]> {
+            const response = await http.get<ApiResponse<any[]>>('/reports/revenue/daily', { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async getRevenueByMovie(): Promise<any[]> {
+            const response = await http.get<ApiResponse<any[]>>('/reports/revenue/movies', { headers: authHeader() });
+            return unwrap(response.data);
+        },
+        async getRevenueByCinema(): Promise<any[]> {
+            const response = await http.get<ApiResponse<any[]>>('/reports/revenue/cinemas', { headers: authHeader() });
+            return unwrap(response.data);
+        }
+    }
 };
 
 export { parseError };

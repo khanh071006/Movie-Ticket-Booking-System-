@@ -22,6 +22,8 @@ public class ReqCreateAccountDTO {
 
     private Set<String> roles;
 
+    private Integer cinemaId;
+
     public String getEmail() {
         return email;
     }
@@ -60,5 +62,13 @@ public class ReqCreateAccountDTO {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public Integer getCinemaId() {
+        return cinemaId;
+    }
+
+    public void setCinemaId(Integer cinemaId) {
+        this.cinemaId = cinemaId;
     }
 }

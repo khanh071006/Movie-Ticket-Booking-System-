@@ -392,3 +392,51 @@
         "snacks": ["1x Cheese Popcorn"]
     }
     ```
+
+---
+
+## 12. Feature: Reports (Báo cáo Doanh thu)
+
+-   **Mô tả**: Các API phục vụ vẽ biểu đồ và thống kê trên Admin Dashboard.
+-   **Yêu cầu xác thực**: Bắt buộc có Role `ADMIN`.
+
+### 12.1. Doanh thu theo ngày
+-   **Endpoint**: `GET /api/v1/reports/revenue/daily`
+-   **Response (200 OK)**:
+    ```json
+    {
+        "statusCode": 200,
+        "message": "Success",
+        "data": [
+            { "date": "2024-08-01", "total": 1500000 },
+            { "date": "2024-08-02", "total": 2300000 }
+        ]
+    }
+    ```
+
+### 12.2. Doanh thu theo Phim
+-   **Endpoint**: `GET /api/v1/reports/revenue/movies`
+-   **Response (200 OK)**:
+    ```json
+    {
+        "statusCode": 200,
+        "message": "Success",
+        "data": [
+            { "movieTitle": "Inception", "total": 45000000 },
+            { "movieTitle": "Avatar", "total": 38000000 }
+        ]
+    }
+    ```
+
+### 12.3. Doanh thu theo Rạp
+-   **Endpoint**: `GET /api/v1/reports/revenue/cinemas`
+-   **Response (200 OK)**:
+    ```json
+    {
+        "statusCode": 200,
+        "message": "Success",
+        "data": [
+            { "cinemaName": "CGV Vincom", "total": 120000000 }
+        ]
+    }
+    ```

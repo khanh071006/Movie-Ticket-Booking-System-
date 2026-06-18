@@ -28,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @org.springframework.transaction.annotation.Transactional
     public ResAuthDTO handleLogin(ReqLoginDTO loginDTO) {
         // 1. Xác thực người dùng
         Authentication authentication = authenticationManager.authenticate(

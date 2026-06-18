@@ -74,22 +74,31 @@
     -   Cấu hình Spring Security CORS để cho phép các domain của Vercel gọi API.
     -   Tích hợp các headers bypass (`ngrok-skip-browser-warning`, pinggy bypass) vào `axiosClient.ts` để quá trình testing thông qua hầm ngrok/pinggy diễn ra trơn tru.
 
+### 7. **Quản lý Tài Khoản & Giao Tiếp (Account & Communication)**
+-   **Xác thực Email (OTP Verification)**: Hoàn thiện luồng đăng ký tài khoản yêu cầu xác thực bằng mã OTP 6 số gửi qua Email. Bổ sung `is_active`, `otp_code` vào `Account`. Xử lý lỗi ngoại lệ HTTP 400 rõ ràng.
+-   **Gửi vé điện tử (E-Ticket)**: Tích hợp thư viện `zxing` tạo mã QR code động cho từng mã Booking, tự động gửi Email đính kèm mã QR và chi tiết vé sau khi thanh toán thành công.
+-   **Hồ sơ & Lịch sử đặt vé (User Profile)**: Bổ sung màn hình `/profile` để người dùng xem lại thông tin cá nhân và chi tiết các vé đã mua (kèm tình trạng thanh toán và vé điện tử).
+-   **Tinh chỉnh UI**: Loại bỏ "Giá Vé" và "Khuyến Mãi" khỏi thanh điều hướng theo yêu cầu để giao diện tinh gọn hơn.
+
+### 8. **Quản trị & Vận hành Nâng cao (Advanced Admin Ops)**
+-   **An toàn Dữ liệu Toàn cục (Global Delete Safe-guard)**: Áp dụng bắt lỗi `DataIntegrityViolationException` tại `GlobalExceptionHandler`. Bảo vệ hệ thống khỏi việc xóa nhầm các dữ liệu (ghế, phòng, phim...) đang được sử dụng ở các bảng khác mà không cần viết logic thủ công cho từng API.
+-   **Báo cáo Doanh thu (Revenue Dashboard)**: Tích hợp thư viện `recharts` vẽ biểu đồ trực quan (Biểu đồ đường theo ngày, Biểu đồ cột top doanh thu phim) trên Admin Dashboard. Áp dụng các truy vấn JPA/Native tối ưu (`GROUP BY DATE`) lấy dữ liệu từ các giao dịch thanh toán thành công (`payment_status = 'PAID'`).
+
 ---
 
 ## 🎯 Nhiệm vụ tiếp theo (Next Tasks)
 
-**[P0 - Ưu tiên cao: Trải nghiệm người dùng sau đặt vé]**
-1.  **Hồ sơ & Lịch sử đặt vé (User Profile & Booking History)**: Xây dựng trang quản lý tài khoản cho người dùng để họ có thể xem lại lịch sử giao dịch và chi tiết các vé đã mua (kèm mã QR).
-2.  **Gửi Email Xác nhận (Email Notification)**: Tích hợp dịch vụ gửi email (ví dụ: Spring Mail, SendGrid) để tự động gửi thông tin vé và mã QR cho khách hàng ngay sau khi thanh toán thành công.
+**[P0 - Ưu tiên cao: Vận hành & Trải nghiệm thực tế]**
+1.  **Quét Mã QR & Soát Vé (Ticket Validation API)**: Xây dựng API và giao diện cho nhân viên rạp chiếu phim (Staff) sử dụng để quét mã QR thực tế của khách hàng, cập nhật trạng thái vé thành "Đã sử dụng" (Used/Checked-in) khi khách vào rạp.
+2.  **Phân quyền Nhân viên (STAFF Role)**: Tạo riêng Role `STAFF` cho nhân viên từng rạp. Chỉ cho phép nhân viên quét vé và xem thống kê của rạp mình làm việc, tách biệt với quyền `ADMIN` tổng.
 
-**[P1 - Ưu tiên trung bình: Quản trị & Vận hành (Admin/Staff Ops)]**
-3.  **Tích hợp QR Code & Quét vé (Ticket Validation)**: Tích hợp thư viện generate mã QR thực tế thay vì dùng Icon tĩnh, đồng thời xây dựng API cho nhân viên soát vé (Staff) quét mã QR để cập nhật trạng thái sử dụng của vé.
-4.  **Hoàn thiện Logic `delete`**: Triển khai logic kiểm tra ràng buộc trước khi xóa các thực thể (Ví dụ: Không được xóa Loại ghế đang có người đặt).
-5.  **Báo cáo & Thống kê**: Xây dựng biểu đồ doanh thu cho Admin Dashboard (dựa trên các Booking thành công) theo phim, rạp, và thời gian.
+**[P1 - Ưu tiên trung bình: Nâng cấp Dịch vụ Khách hàng]**
+3.  **Hệ thống Khuyến Mãi (Voucher/Promotion)**: Quản lý mã giảm giá và áp dụng khi người dùng thanh toán vé.
+4.  **Hỗ trợ In vé cứng (Physical Ticket)**: Giao diện hỗ trợ nhân viên xuất file PDF hoặc kết nối máy in để in vé cứng cho khách hàng lấy vé tại quầy.
 
 ---
 
 ## ⚠️ Lưu ý / Rủi ro (Warnings)
 
 -   Cần có cơ chế dọn dẹp hoặc lưu trữ các lịch chiếu đã qua để tránh làm database bị phình to theo thời gian.
--   Hệ thống QRCode nhận vé hiện tại ở Frontend sử dụng Icon placeholder. Cần cân nhắc tích hợp thư viện generate QR code thực tế (ví dụ: `qrcode.react`) trong tương lai nếu muốn tích hợp với máy quét.
+-   Hiện tại OTP gửi qua Email đang gặp rủi ro nhỏ (Gửi email bất đồng bộ trước khi commit DB). Cần cân nhắc chuyển sang sự kiện `@TransactionalEventListener` để đảm bảo Email chỉ gửi đi khi Database đã commit thành công.

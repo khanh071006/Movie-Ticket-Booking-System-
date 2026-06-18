@@ -15,6 +15,10 @@ public class Snack {
     @JoinColumn(name = "snack_type_id", nullable = false)
     private SnackType snackType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cinema_id")
+    private com.example.Movie_Ticket_Booking_System.features.cinema.Cinema cinema;
+
     @Column(nullable = false)
     private String name;
 
@@ -65,5 +69,13 @@ public class Snack {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public com.example.Movie_Ticket_Booking_System.features.cinema.Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(com.example.Movie_Ticket_Booking_System.features.cinema.Cinema cinema) {
+        this.cinema = cinema;
     }
 }

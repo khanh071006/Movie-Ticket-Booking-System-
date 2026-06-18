@@ -12,6 +12,8 @@ public class ReqUpdateAccountDTO {
 
     private Set<String> roles;
 
+    private Integer cinemaId;
+
     // Không cho phép update mật khẩu hoặc email qua api này. Sẽ làm một api riêng nếu cần thiết.
     
     public String getFullName() {
@@ -36,5 +38,13 @@ public class ReqUpdateAccountDTO {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public Integer getCinemaId() {
+        return cinemaId;
+    }
+
+    public void setCinemaId(Integer cinemaId) {
+        this.cinemaId = cinemaId;
     }
 }

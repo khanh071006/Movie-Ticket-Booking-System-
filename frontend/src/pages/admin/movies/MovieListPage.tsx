@@ -76,7 +76,7 @@ export const MovieListPage = () => {
                 </div>
                 <Button 
                     className="h-11 px-6 font-bold shadow-xl shadow-blue-900/20 gap-2 shrink-0"
-                    onClick={() => navigate('/admin/movies/create')}
+                    onClick={() => navigate('/manager/movies/create')}
                 >
                     <Plus size={18} />
                     Thêm phim mới
@@ -161,7 +161,7 @@ export const MovieListPage = () => {
                                             </td>
                                             <td className="px-6 py-4 text-right">
                                                 <div className="flex justify-end gap-1 opacity-100 transition-opacity">
-                                                    <Button variant="ghost" size="icon" className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" onClick={() => navigate(`/admin/movies/${movie.id}`)}>
+                                                    <Button variant="ghost" size="icon" className="h-9 w-9 text-blue-500 hover:bg-blue-500/10" onClick={() => navigate(`/manager/movies/${movie.id}`)}>
                                                         <Edit2 size={16} />
                                                     </Button>
                                                     <Button variant="ghost" size="icon" className="h-9 w-9 text-red-500 hover:bg-red-500/10" onClick={() => setDeleteId(movie.id)}>

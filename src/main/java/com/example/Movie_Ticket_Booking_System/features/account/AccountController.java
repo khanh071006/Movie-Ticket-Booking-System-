@@ -33,7 +33,9 @@ public class AccountController {
                 roles.add(accountRole.getRole().getName());
             }
         }
-        return new ResAccountDTO(account.getId(), account.getEmail(), account.getFullName(), account.getPhone(), roles);
+        Integer cinemaId = account.getCinema() != null ? account.getCinema().getId() : null;
+        String cinemaName = account.getCinema() != null ? account.getCinema().getName() : null;
+        return new ResAccountDTO(account.getId(), account.getEmail(), account.getFullName(), account.getPhone(), roles, cinemaId, cinemaName);
     }
 
     @GetMapping

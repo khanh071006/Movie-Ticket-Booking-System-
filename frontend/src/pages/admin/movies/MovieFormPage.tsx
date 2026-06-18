@@ -71,7 +71,7 @@ export const MovieFormPage = () => {
             } else {
                 await apiClient.movies.create(payload);
             }
-            navigate('/admin/movies');
+            navigate('/manager/movies');
         } catch (err) {
             setError(parseError(err));
         } finally {
@@ -83,7 +83,7 @@ export const MovieFormPage = () => {
         <div className="w-full space-y-8 animate-in fade-in duration-500">
             {/* Header */}
             <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 text-sm font-medium text-slate-400 mb-2 cursor-pointer hover:text-white w-fit transition-colors" onClick={() => navigate('/admin/movies')}>
+                <div className="flex items-center gap-2 text-sm font-medium text-slate-400 mb-2 cursor-pointer hover:text-white w-fit transition-colors" onClick={() => navigate('/manager/movies')}>
                     <ArrowLeft className="h-4 w-4" />
                     <span>Quay lại danh sách</span>
                 </div>
@@ -249,7 +249,7 @@ export const MovieFormPage = () => {
                             type="button" 
                             variant="outline" 
                             className="h-11 px-6 text-slate-400 hover:text-white" 
-                            onClick={() => navigate('/admin/movies')}
+                            onClick={() => navigate('/manager/movies')}
                             disabled={loading}
                         >
                             Huỷ

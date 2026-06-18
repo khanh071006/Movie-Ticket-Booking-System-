@@ -4,6 +4,9 @@ import com.example.Movie_Ticket_Booking_System.exception.ResourceNotFoundExcepti
 import com.example.Movie_Ticket_Booking_System.features.snack.dto.ReqSnackDTO;
 import com.example.Movie_Ticket_Booking_System.features.snack_type.SnackType;
 import com.example.Movie_Ticket_Booking_System.features.snack_type.SnackTypeRepository;
+import com.example.Movie_Ticket_Booking_System.features.account.Account;
+import com.example.Movie_Ticket_Booking_System.features.account.AccountRepository;
+import com.example.Movie_Ticket_Booking_System.security.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +16,12 @@ public class SnackServiceImpl implements SnackService {
 
     private final SnackRepository snackRepository;
     private final SnackTypeRepository snackTypeRepository;
+    private final AccountRepository accountRepository;
 
-    public SnackServiceImpl(SnackRepository snackRepository, SnackTypeRepository snackTypeRepository) {
+    public SnackServiceImpl(SnackRepository snackRepository, SnackTypeRepository snackTypeRepository, AccountRepository accountRepository) {
         this.snackRepository = snackRepository;
         this.snackTypeRepository = snackTypeRepository;
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -34,6 +39,15 @@ public class SnackServiceImpl implements SnackService {
     public Snack createSnack(ReqSnackDTO dto) {
         Snack snack = new Snack();
         mapDtoToEntity(dto, snack);
+        
+        String currentUserEmail = SecurityUtil.getCurrentUserLogin().orElse(null);
+        if (currentUserEmail != null) {
+            Account account = accountRepository.findByEmail(currentUserEmail).orElse(null);
+            if (account != null && account.getCinema() != null) {
+                snack.setCinema(account.getCinema());
+            }
+        }
+        
         return snackRepository.save(snack);
     }
 

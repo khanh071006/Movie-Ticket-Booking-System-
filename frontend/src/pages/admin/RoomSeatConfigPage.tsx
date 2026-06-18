@@ -179,7 +179,7 @@ export const RoomSeatConfigPage = () => {
             {/* Header Section */}
             <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-blue-500">
-                    <span className="cursor-pointer hover:underline" onClick={() => navigate('/admin/rooms')}>Phòng chiếu</span>
+                    <span className="cursor-pointer hover:underline" onClick={() => navigate('/manager/rooms')}>Phòng chiếu</span>
                     <ChevronRight className="h-4 w-4 text-slate-600" />
                     <span className="text-slate-400">Sơ đồ ghế</span>
                 </div>

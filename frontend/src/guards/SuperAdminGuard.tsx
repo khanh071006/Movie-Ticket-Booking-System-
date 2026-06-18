@@ -1,14 +1,14 @@
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { getStoredToken, hasBackofficeAccess } from '../features/auth/utils/session';
+import { getStoredToken, hasSuperAdminRole } from '../features/auth/utils/session';
 
-export const AdminGuard = ({ children }: { children: ReactNode }) => {
+export const SuperAdminGuard = ({ children }: { children: ReactNode }) => {
     const token = getStoredToken();
     if (!token) {
         return <Navigate to="/login" replace />;
     }
 
-    if (!hasBackofficeAccess(token)) {
+    if (!hasSuperAdminRole(token)) {
         return <Navigate to="/403" replace />;
     }
 

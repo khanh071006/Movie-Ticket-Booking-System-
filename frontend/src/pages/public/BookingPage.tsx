@@ -51,6 +51,14 @@ export const BookingPage = () => {
 
     const loadData = useCallback(async () => {
         if (!showtimeId) return;
+        
+        // Redirect to login if guest
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         setLoading(true);
         setError('');
         try {
@@ -118,7 +126,7 @@ export const BookingPage = () => {
         } finally {
             setLoading(false);
         }
-    }, [showtimeId]);
+    }, [showtimeId, navigate]);
 
     useEffect(() => {
         loadData();

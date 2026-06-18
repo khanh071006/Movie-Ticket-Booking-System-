@@ -51,51 +51,74 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/payments/vnpay/**").permitAll()
 
                         // Phân quyền cho Feature Account
-                        .requestMatchers(HttpMethod.GET, "/api/v1/accounts", "/api/v1/accounts/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/accounts").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/accounts/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/accounts/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/accounts/me").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/accounts", "/api/v1/accounts/**").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/accounts").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/accounts/**").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/accounts/**").hasAnyRole("SUPERADMIN", "MANAGER")
 
                         // Phân quyền cho Feature Movie
                         .requestMatchers(HttpMethod.GET, "/api/v1/movies/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/movies/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/movies/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/movies").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/movies/**").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/**").hasRole("SUPERADMIN")
 
-                        // Phân quyền cho Feature Role
-                        .requestMatchers("/api/v1/roles/**").hasRole("ADMIN")
+                        // Phân quyền cho Feature Category
+                        .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/categories").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/categories/**").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/categories/**").hasRole("SUPERADMIN")
 
-                        // Phân quyền cho Feature Cinema
-                        .requestMatchers(HttpMethod.GET, "/api/v1/cinemas/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/cinemas").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/cinemas/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/cinemas/**").hasRole("ADMIN")
-
-                        // Phân quyền cho Feature Room (Theatre)
-                        .requestMatchers(HttpMethod.GET, "/api/v1/rooms/**").permitAll() // Cho phép xem phòng và ghế
-                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms", "/api/v1/rooms/*/seats").hasRole("ADMIN") // Sửa lỗi: dùng * thay cho **
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/rooms/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/rooms/**").hasRole("ADMIN")
+                        // Phân quyền cho Feature Room
+                        .requestMatchers(HttpMethod.GET, "/api/v1/rooms/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/rooms").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/rooms/**").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/rooms/**").hasAnyRole("SUPERADMIN", "MANAGER")
 
                         // Phân quyền cho Feature Showtime
                         .requestMatchers(HttpMethod.GET, "/api/v1/showtimes/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/showtimes").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/showtimes/**").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/showtimes/**").hasAnyRole("SUPERADMIN", "MANAGER")
                         .requestMatchers(HttpMethod.GET, "/api/v1/bookings/showtime/*/booked-seats").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/showtimes/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/showtimes/**").hasRole("ADMIN")
 
-                        // Phân quyền cho các Feature Danh mục (cũ)
+                        // Danh mục (cũ)
                         .requestMatchers(HttpMethod.GET, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/directors", "/api/v1/genres", "/api/v1/movie-statuses", "/api/v1/cast-members").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/directors", "/api/v1/genres", "/api/v1/movie-statuses", "/api/v1/cast-members").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/directors/**", "/api/v1/genres/**", "/api/v1/movie-statuses/**", "/api/v1/cast-members/**").hasRole("SUPERADMIN")
 
-                        // === PHÂN QUYỀN CHO CÁC TÍNH NĂNG MỚI ===
-                        // Phân quyền cho SeatType, TicketType, State, SnackType, Snack
+                        // Role
+                        .requestMatchers("/api/v1/roles/**").hasRole("SUPERADMIN")
+
+                        // Cinema
+                        .requestMatchers(HttpMethod.GET, "/api/v1/cinemas/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/cinemas").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/cinemas/**").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/cinemas/**").hasRole("SUPERADMIN")
+
+                        // SeatType, TicketType, State, SnackType, Snack
                         .requestMatchers(HttpMethod.GET, "/api/v1/seat-types/**", "/api/v1/ticket-types/**", "/api/v1/states/**", "/api/v1/snack-types/**", "/api/v1/snacks/**").permitAll()
-                        .requestMatchers("/api/v1/seat-types/**", "/api/v1/ticket-types/**", "/api/v1/states/**", "/api/v1/snack-types/**", "/api/v1/snacks/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/seat-types", "/api/v1/ticket-types", "/api/v1/states", "/api/v1/snack-types").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/seat-types/**", "/api/v1/ticket-types/**", "/api/v1/states/**", "/api/v1/snack-types/**").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/seat-types/**", "/api/v1/ticket-types/**", "/api/v1/states/**", "/api/v1/snack-types/**").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/snacks").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/snacks/**").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/snacks/**").hasAnyRole("SUPERADMIN", "MANAGER")
 
-                        // Phân quyền cho Booking (chỉ cần xác thực)
+                        // Promotions
+                        .requestMatchers(HttpMethod.GET, "/api/v1/promotions/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/promotions").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/promotions/**").hasRole("SUPERADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/promotions/**").hasRole("SUPERADMIN")
+
+                        // Booking checkin
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/bookings/*/checkin").hasAnyRole("SUPERADMIN", "MANAGER", "STAFF")
                         .requestMatchers("/api/v1/bookings/**").authenticated()
+
+                        // Stats and Reports
+                        .requestMatchers(HttpMethod.GET, "/api/v1/stats/**").hasAnyRole("SUPERADMIN", "MANAGER")
+                        .requestMatchers("/api/v1/reports/**").hasAnyRole("SUPERADMIN", "MANAGER", "STAFF")
 
                         .anyRequest().authenticated()
                 )

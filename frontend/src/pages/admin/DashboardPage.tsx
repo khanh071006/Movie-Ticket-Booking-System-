@@ -3,6 +3,7 @@ import { CalendarDays, Clapperboard, MapPin, Ticket, Users, ArrowUpRight, Activi
 import { apiClient } from '../../api/axiosClient';
 import { Card, CardContent } from '../../components/ui/Card';
 import type { Showtime } from '../../types/app';
+import { getStoredToken, hasSuperAdminRole } from '../../features/auth/utils/session';
 
 interface RecentOrder {
     id: string;
@@ -18,12 +19,15 @@ export const DashboardPage = () => {
     const [upcomingShowtimes, setUpcomingShowtimes] = useState<Showtime[]>([]);
     const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([]);
 
+    const token = getStoredToken();
+    const isSuperAdmin = hasSuperAdminRole(token);
+
     useEffect(() => {
         const load = async () => {
             const [movies, cinemas, accounts] = await Promise.all([
-                apiClient.movies.getAll(),
-                apiClient.cinemas.getAll(),
-                apiClient.accounts.getAll()
+                apiClient.movies.getAll().catch(() => []),
+                apiClient.cinemas.getAll().catch(() => []),
+                isSuperAdmin ? apiClient.accounts.getAll().catch(() => []) : Promise.resolve([])
             ]);
             const showtimesByMovie = await Promise.all(
                 movies.map((movie) => apiClient.showtimes.getByMovie(movie.id).catch(() => []))

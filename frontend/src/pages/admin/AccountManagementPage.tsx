@@ -5,13 +5,14 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
-import type { Account } from '../../types/app';
+import type { Account, Cinema } from '../../types/app';
 
-const emptyCreate = { fullName: '', email: '', password: '', phone: '', isAdmin: false };
-const emptyUpdate = { fullName: '', phone: '', isAdmin: false };
+const emptyCreate = { fullName: '', email: '', password: '', phone: '', role: 'USER', cinemaId: '' };
+const emptyUpdate = { fullName: '', phone: '', role: 'USER', cinemaId: '' };
 
 export const AccountManagementPage = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
+    const [cinemas, setCinemas] = useState<Cinema[]>([]);
     const [query, setQuery] = useState('');
     const [error, setError] = useState('');
     const [createForm, setCreateForm] = useState(emptyCreate);
@@ -20,11 +21,15 @@ export const AccountManagementPage = () => {
     const [loading, setLoading] = useState(false);
     const [deleteId, setDeleteId] = useState<string | null>(null);
 
-    const loadAccounts = async () => {
+    const loadData = async () => {
         setLoading(true);
         try {
-            const data = await apiClient.accounts.getAll();
-            setAccounts(data);
+            const [accountsData, cinemasData] = await Promise.all([
+                apiClient.accounts.getAll(),
+                apiClient.cinemas.getAll()
+            ]);
+            setAccounts(accountsData);
+            setCinemas(cinemasData);
         } catch (err) {
             setError(parseError(err));
         } finally {
@@ -33,7 +38,7 @@ export const AccountManagementPage = () => {
     };
 
     useEffect(() => {
-        loadAccounts();
+        loadData();
     }, []);
 
     const rows = useMemo(() => {
@@ -55,10 +60,11 @@ export const AccountManagementPage = () => {
                 email: createForm.email,
                 password: createForm.password,
                 phone: createForm.phone.trim() ? createForm.phone : undefined,
-                roles: createForm.isAdmin ? ['ADMIN'] : ['USER'],
-            });
+                roles: [createForm.role],
+                cinemaId: createForm.role === 'STAFF' && createForm.cinemaId ? Number(createForm.cinemaId) : undefined,
+            } as any);
             setCreateForm(emptyCreate);
-            loadAccounts();
+            loadData();
         } catch (err) {
             setError(parseError(err));
         }
@@ -69,7 +75,8 @@ export const AccountManagementPage = () => {
         setUpdateForm({
             fullName: acc.fullName,
             phone: acc.phone ?? '',
-            isAdmin: Boolean(acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN')),
+            role: acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN') ? 'ADMIN' : acc.roles?.includes('STAFF') || acc.roles?.includes('ROLE_STAFF') ? 'STAFF' : 'USER',
+            cinemaId: acc.cinemaId ? String(acc.cinemaId) : '',
         });
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     };
@@ -81,11 +88,12 @@ export const AccountManagementPage = () => {
             await apiClient.accounts.update(editId, {
                 fullName: updateForm.fullName,
                 phone: updateForm.phone.trim() ? updateForm.phone : undefined,
-                roles: updateForm.isAdmin ? ['ADMIN'] : ['USER'],
-            });
+                roles: [updateForm.role],
+                cinemaId: updateForm.role === 'STAFF' && updateForm.cinemaId ? Number(updateForm.cinemaId) : null,
+            } as any);
             setEditId(null);
             setUpdateForm(emptyUpdate);
-            loadAccounts();
+            loadData();
         } catch (err) {
             setError(parseError(err));
         }
@@ -96,7 +104,7 @@ export const AccountManagementPage = () => {
         try {
             await apiClient.accounts.remove(deleteId);
             setDeleteId(null);
-            loadAccounts();
+            loadData();
         } catch (err) {
             setError(parseError(err));
             setDeleteId(null);
@@ -159,19 +167,30 @@ export const AccountManagementPage = () => {
                         />
                     </div>
                     <div className="mt-6 flex items-center justify-between border-t border-white/5 pt-6">
-                        <label className="flex cursor-pointer items-center gap-3 group">
-                            <div className="relative flex h-6 w-11 items-center">
-                                <input 
-                                    type="checkbox" 
-                                    className="peer sr-only"
-                                    checked={createForm.isAdmin} 
-                                    onChange={(e) => setCreateForm((p) => ({ ...p, isAdmin: e.target.checked }))} 
-                                />
-                                <div className="h-6 w-11 rounded-full bg-white/10 transition-colors peer-checked:bg-blue-600"></div>
-                                <div className="absolute left-1 h-4 w-4 rounded-full bg-white transition-transform peer-checked:translate-x-5"></div>
-                            </div>
-                            <span className="text-sm font-bold text-slate-400 group-hover:text-white transition-colors">Cấp quyền Quản trị viên</span>
-                        </label>
+                        <div className="flex gap-4">
+                            <select
+                                className="h-11 rounded-md border border-white/10 bg-zinc-900 px-3 text-sm text-white focus:border-blue-500 focus:outline-none"
+                                value={createForm.role}
+                                onChange={(e) => setCreateForm((p) => ({ ...p, role: e.target.value }))}
+                            >
+                                <option value="USER">Khách hàng</option>
+                                <option value="STAFF">Nhân viên rạp</option>
+                                <option value="ADMIN">Quản trị viên</option>
+                            </select>
+                            {createForm.role === 'STAFF' && (
+                                <select
+                                    className="h-11 rounded-md border border-white/10 bg-zinc-900 px-3 text-sm text-white focus:border-blue-500 focus:outline-none"
+                                    value={createForm.cinemaId}
+                                    onChange={(e) => setCreateForm((p) => ({ ...p, cinemaId: e.target.value }))}
+                                    required
+                                >
+                                    <option value="" disabled>-- Chọn rạp chiếu --</option>
+                                    {cinemas.map((c) => (
+                                        <option key={c.id} value={c.id}>{c.name}</option>
+                                    ))}
+                                </select>
+                            )}
+                        </div>
                         <Button className="h-11 px-8 font-bold shadow-xl shadow-blue-900/20 gap-2">
                             <Plus size={18} /> Xác nhận tạo
                         </Button>
@@ -211,7 +230,7 @@ export const AccountManagementPage = () => {
                             <tbody className="divide-y divide-white/5">
                                 {rows.length > 0 ? (
                                     rows.map((acc) => {
-                                        const isAdmin = acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN');
+                                        const role = acc.roles?.includes('ADMIN') || acc.roles?.includes('ROLE_ADMIN') ? 'ADMIN' : acc.roles?.includes('STAFF') || acc.roles?.includes('ROLE_STAFF') ? 'STAFF' : 'USER';
                                         return (
                                             <tr key={acc.id} className="group hover:bg-white/[0.02] transition-colors">
                                                 <td className="px-6 py-4">
@@ -238,11 +257,20 @@ export const AccountManagementPage = () => {
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    {isAdmin ? (
+                                                    {role === 'ADMIN' && (
                                                         <span className="inline-flex items-center gap-1 rounded-full bg-red-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-red-500 border border-red-500/20">
                                                             <Shield size={10} /> Quản trị
                                                         </span>
-                                                    ) : (
+                                                    )}
+                                                    {role === 'STAFF' && (
+                                                        <div className="flex flex-col gap-1">
+                                                            <span className="inline-flex w-max items-center gap-1 rounded-full bg-orange-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-orange-500 border border-orange-500/20">
+                                                                Nhân viên
+                                                            </span>
+                                                            <span className="text-xs text-slate-400">{acc.cinemaName}</span>
+                                                        </div>
+                                                    )}
+                                                    {role === 'USER' && (
                                                         <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest text-blue-500 border border-blue-500/20">
                                                             Khách hàng
                                                         </span>
@@ -314,19 +342,30 @@ export const AccountManagementPage = () => {
                         </div>
                         
                         <div className="flex items-center justify-between pt-4 border-t border-white/5">
-                            <label className="flex cursor-pointer items-center gap-3 group">
-                                <div className="relative flex h-6 w-11 items-center">
-                                    <input 
-                                        type="checkbox" 
-                                        className="peer sr-only"
-                                        checked={updateForm.isAdmin} 
-                                        onChange={(e) => setUpdateForm((p) => ({ ...p, isAdmin: e.target.checked }))} 
-                                    />
-                                    <div className="h-6 w-11 rounded-full bg-white/10 transition-colors peer-checked:bg-red-600"></div>
-                                    <div className="absolute left-1 h-4 w-4 rounded-full bg-white transition-transform peer-checked:translate-x-5"></div>
-                                </div>
-                                <span className="text-sm font-bold text-slate-400 group-hover:text-white">Quyền Quản trị viên</span>
-                            </label>
+                            <div className="flex gap-4">
+                                <select
+                                    className="h-11 rounded-md border border-white/10 bg-zinc-900 px-3 text-sm text-white focus:border-blue-500 focus:outline-none"
+                                    value={updateForm.role}
+                                    onChange={(e) => setUpdateForm((p) => ({ ...p, role: e.target.value }))}
+                                >
+                                    <option value="USER">Khách hàng</option>
+                                    <option value="STAFF">Nhân viên rạp</option>
+                                    <option value="ADMIN">Quản trị viên</option>
+                                </select>
+                                {updateForm.role === 'STAFF' && (
+                                    <select
+                                        className="h-11 rounded-md border border-white/10 bg-zinc-900 px-3 text-sm text-white focus:border-blue-500 focus:outline-none"
+                                        value={updateForm.cinemaId}
+                                        onChange={(e) => setUpdateForm((p) => ({ ...p, cinemaId: e.target.value }))}
+                                        required
+                                    >
+                                        <option value="" disabled>-- Chọn rạp chiếu --</option>
+                                        {cinemas.map((c) => (
+                                            <option key={c.id} value={c.id}>{c.name}</option>
+                                        ))}
+                                    </select>
+                                )}
+                            </div>
                             <div className="flex gap-2">
                                 <Button type="button" variant="outline" className="h-11 px-6 border-white/10 text-slate-400 hover:text-white" onClick={() => setEditId(null)}>
                                     Huỷ bỏ

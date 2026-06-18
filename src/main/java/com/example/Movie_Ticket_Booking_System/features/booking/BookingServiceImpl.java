@@ -224,6 +224,36 @@ public class BookingServiceImpl implements BookingService {
                     .collect(Collectors.toList()));
         }
         
+        dto.setUsed(booking.isUsed());
         return dto;
+    }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public com.example.Movie_Ticket_Booking_System.features.booking.dto.ResBookingHistoryDTO checkinTicket(java.util.UUID bookingId, Long cinemaId) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy mã đặt vé này."));
+        
+        if (!"PAID".equals(booking.getPaymentStatus())) {
+            throw new IllegalArgumentException("Vé này chưa được thanh toán hoặc đã bị hủy.");
+        }
+        
+        if (cinemaId != null) {
+            Integer bookingCinemaId = booking.getShowtime().getRoom().getCinema().getId();
+            System.out.println("DEBUG: jwt cinemaId=" + cinemaId + " (type " + cinemaId.getClass().getName() + ")");
+            System.out.println("DEBUG: bookingCinemaId=" + bookingCinemaId);
+            if (cinemaId.intValue() != bookingCinemaId) {
+                throw new IllegalArgumentException("Vé này thuộc Rạp ID=" + bookingCinemaId + " nhưng bạn đang quản lý Rạp ID=" + cinemaId);
+            }
+        }
+        
+        if (booking.isUsed()) {
+            throw new IllegalArgumentException("Vé này ĐÃ ĐƯỢC SỬ DỤNG trước đó.");
+        }
+        
+        booking.setUsed(true);
+        bookingRepository.save(booking);
+        
+        return convertToHistoryDTO(booking);
     }
 }

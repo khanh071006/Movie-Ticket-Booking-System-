@@ -158,7 +158,10 @@ export function ProfilePage() {
                         
                         <div className="p-8 text-center bg-gradient-to-b from-red-900/20 to-zinc-900">
                             <h2 className="text-2xl font-bold mb-2">VÉ ĐIỆN TỬ</h2>
-                            <p className="text-zinc-400 text-sm mb-6">Mã giao dịch: {selectedBooking.id.substring(0, 8).toUpperCase()}</p>
+                            <p className="text-zinc-400 text-sm mb-6 flex flex-col items-center gap-1">
+                                <span>Mã giao dịch (Booking ID):</span>
+                                <span className="font-mono text-white text-xs bg-black/50 px-2 py-1 rounded select-all cursor-pointer" title="Click đúp để bôi đen và copy">{selectedBooking.id}</span>
+                            </p>
                             
                             <div className="bg-white p-4 rounded-xl inline-block mb-6 shadow-[0_0_30px_rgba(255,255,255,0.1)]">
                                 <QRCodeCanvas value={selectedBooking.id} size={200} level="H" />

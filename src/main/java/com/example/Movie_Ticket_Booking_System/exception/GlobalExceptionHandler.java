@@ -104,6 +104,20 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.ofError(401, ex.getMessage(), "Unauthorized"));
     }
 
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse<Void>> handleDataIntegrityViolation(org.springframework.dao.DataIntegrityViolationException ex) {
+        log.warn("DataIntegrityViolationException: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.conflict("Không thể xóa hoặc thay đổi dữ liệu này vì nó đang được tham chiếu và sử dụng trong hệ thống."));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiResponse<Void>> handleIllegalArgument(IllegalArgumentException ex) {
+        log.warn("IllegalArgumentException: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.badRequest(ex.getMessage()));
+    }
+
     // ========== CATCH-ALL ==========
 
     @ExceptionHandler(Exception.class)

@@ -186,7 +186,7 @@ export const RoomManagementPage = () => {
                                                             size="icon" 
                                                             title="Cấu hình ghế"
                                                             className="h-9 w-9 text-green-500 hover:bg-green-500/10" 
-                                                            onClick={() => navigate(`/admin/rooms/${room.id}/seats`)}
+                                                            onClick={() => navigate(`/manager/rooms/${room.id}/seats`)}
                                                         >
                                                             <Grid size={16} />
                                                         </Button>

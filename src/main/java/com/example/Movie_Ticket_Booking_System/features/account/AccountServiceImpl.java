@@ -26,13 +26,15 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRoleRepository accountRoleRepository;
     private final PasswordEncoder passwordEncoder;
     private final com.example.Movie_Ticket_Booking_System.features.email.EmailService emailService;
+    private final com.example.Movie_Ticket_Booking_System.features.cinema.CinemaRepository cinemaRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository, RoleRepository roleRepository, AccountRoleRepository accountRoleRepository, PasswordEncoder passwordEncoder, com.example.Movie_Ticket_Booking_System.features.email.EmailService emailService) {
+    public AccountServiceImpl(AccountRepository accountRepository, RoleRepository roleRepository, AccountRoleRepository accountRoleRepository, PasswordEncoder passwordEncoder, com.example.Movie_Ticket_Booking_System.features.email.EmailService emailService, com.example.Movie_Ticket_Booking_System.features.cinema.CinemaRepository cinemaRepository) {
         this.accountRepository = accountRepository;
         this.roleRepository = roleRepository;
         this.accountRoleRepository = accountRoleRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.cinemaRepository = cinemaRepository;
     }
 
     @Override
@@ -101,6 +103,16 @@ public class AccountServiceImpl implements AccountService {
                 roles.add(role);
             }
 
+            if (dto.getRoles().contains("STAFF")) {
+                if (dto.getCinemaId() == null) {
+                    throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Nhân viên phải được gán vào một rạp chiếu phim (cinemaId không được trống)");
+                }
+                com.example.Movie_Ticket_Booking_System.features.cinema.Cinema cinema = cinemaRepository.findById(dto.getCinemaId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", dto.getCinemaId().toString()));
+                newAccount.setCinema(cinema);
+                accountRepository.save(newAccount);
+            }
+
             for (Role role : roles) {
                 AccountRole newAccountRole = new AccountRole();
                 newAccountRole.setAccount(newAccount);
@@ -143,6 +155,17 @@ public class AccountServiceImpl implements AccountService {
                 newAccountRole.setAccount(account);
                 newAccountRole.setRole(role);
                 accountRoleRepository.save(newAccountRole);
+            }
+
+            if (dto.getRoles().contains("STAFF")) {
+                if (dto.getCinemaId() == null) {
+                    throw new com.example.Movie_Ticket_Booking_System.exception.BadRequestException("Nhân viên phải được gán vào một rạp chiếu phim (cinemaId không được trống)");
+                }
+                com.example.Movie_Ticket_Booking_System.features.cinema.Cinema cinema = cinemaRepository.findById(dto.getCinemaId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Cinema", "id", dto.getCinemaId().toString()));
+                account.setCinema(cinema);
+            } else {
+                account.setCinema(null);
             }
         }
 

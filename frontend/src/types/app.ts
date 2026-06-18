@@ -13,6 +13,8 @@ export interface Account {
     fullName: string;
     phone?: string | null;
     roles?: string[];
+    cinemaId?: number | null;
+    cinemaName?: string | null;
 }
 
 export interface AuthTokenInfo {

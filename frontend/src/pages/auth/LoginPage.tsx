@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Film, Loader2, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { login } from '../../api/authApi';
-import { hasAdminRole, setStoredAccount, setStoredToken } from '../../features/auth/utils/session';
+import { setStoredAccount, setStoredToken, hasSuperAdminRole, hasManagerRole, hasStaffRole } from '../../features/auth/utils/session';
 
 export const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -20,7 +20,10 @@ export const LoginPage = () => {
             const { token, account } = await login(email, password);
             if (token) setStoredToken(token);
             setStoredAccount(account);
-            navigate(hasAdminRole(token) ? '/admin' : '/');
+            if (hasSuperAdminRole(token)) navigate('/superadmin');
+            else if (hasManagerRole(token)) navigate('/manager');
+            else if (hasStaffRole(token)) navigate('/staff');
+            else navigate('/');
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Đăng nhập thất bại.');
         } finally {

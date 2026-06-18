@@ -21,6 +21,7 @@ public class ResBookingHistoryDTO {
     private List<String> tickets;
     private List<String> seats;
     private List<String> snacks;
+    private boolean isUsed;
 
     // Getters and Setters
     public UUID getId() { return id; }
@@ -61,4 +62,7 @@ public class ResBookingHistoryDTO {
     
     public List<String> getSnacks() { return snacks; }
     public void setSnacks(List<String> snacks) { this.snacks = snacks; }
+    
+    public boolean isUsed() { return isUsed; }
+    public void setUsed(boolean isUsed) { this.isUsed = isUsed; }
 }

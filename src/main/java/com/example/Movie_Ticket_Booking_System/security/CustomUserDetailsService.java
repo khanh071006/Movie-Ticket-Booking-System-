@@ -36,8 +36,11 @@ public class CustomUserDetailsService implements UserDetailsService {
             }
         }
 
+        Integer cinemaId = account.getCinema() != null ? account.getCinema().getId() : null;
+
         return new UserPrincipal(
                 account.getId(),
+                cinemaId,
                 account.getEmail(),
                 account.getPasswordHash(),
                 authorities

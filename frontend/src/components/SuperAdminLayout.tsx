@@ -1,38 +1,26 @@
-import { Armchair, CalendarDays, Clapperboard, Film, LayoutDashboard, LogOut, MapPin, MonitorPlay, Tags, Ticket, Users, Coffee, QrCode } from 'lucide-react';
+import { LayoutDashboard, LogOut, MapPin, Film, Users, Tags } from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { clearSession, getStoredAccount, getStoredToken, hasAdminRole } from '../features/auth/utils/session';
+import { clearSession, getStoredAccount } from '../features/auth/utils/session';
 
 const navItems = [
-    { name: 'Bảng điều khiển', path: '/admin', icon: LayoutDashboard },
-    { name: 'Soát vé', path: '/admin/scan-ticket', icon: QrCode },
-    { name: 'Tài khoản', path: '/admin/accounts', icon: Users },
-    { name: 'Phim', path: '/admin/movies', icon: Clapperboard },
-    { name: 'Rạp chiếu', path: '/admin/cinemas', icon: MapPin },
-    { name: 'Phòng chiếu', path: '/admin/rooms', icon: MonitorPlay },
-    { name: 'Lịch chiếu', path: '/admin/showtimes', icon: CalendarDays },
-    { name: 'Loại ghế', path: '/admin/seat-types', icon: Armchair },
-    { name: 'Loại vé', path: '/admin/ticket-types', icon: Ticket },
-    { name: 'Đồ ăn', path: '/admin/snacks', icon: Coffee },
-    { name: 'Danh mục', path: '/admin/categories', icon: Tags },
+    { name: 'Bảng điều khiển', path: '/superadmin', icon: LayoutDashboard },
+    { name: 'Rạp chiếu', path: '/superadmin/cinemas', icon: MapPin },
+    { name: 'Tài khoản', path: '/superadmin/accounts', icon: Users },
+    { name: 'Phim', path: '/superadmin/movies', icon: Film },
+    { name: 'Danh mục', path: '/superadmin/categories', icon: Tags },
 ];
 
-export const AdminLayout = () => {
+export const SuperAdminLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const account = getStoredAccount();
-    const token = getStoredToken();
-    const isAdmin = hasAdminRole(token);
 
     const handleLogout = () => {
         clearSession();
         navigate('/');
     };
 
-    const filteredNavItems = navItems.filter(item => {
-        if (isAdmin) return true;
-        // Staff only sees Dashboard, Quét vé, Phim, Lịch chiếu, Phòng chiếu
-        return ['/admin', '/admin/scan-ticket', '/admin/movies', '/admin/showtimes', '/admin/rooms'].includes(item.path);
-    });
+    const filteredNavItems = navItems;
 
     return (
         /* H-screen để cố định chiều cao layout bằng màn hình, overflow-hidden để chặn cuộn toàn trang */
@@ -48,7 +36,7 @@ export const AdminLayout = () => {
                         </div>
                         <span className="font-bold tracking-tight text-white italic">HUSTheatre</span>
                         <span className="ml-2 rounded bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-500 border border-blue-500/20">
-                            {isAdmin ? 'Quản trị' : 'Nhân viên'}
+                            Super Admin
                         </span>
                     </Link>
                 </div>
@@ -56,7 +44,7 @@ export const AdminLayout = () => {
                 {/* 2. Scrollable Menu: flex-1 kết hợp overflow-y-auto giúp phần này tự cuộn nếu menu quá dài */}
                 <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-6 custom-scrollbar">
                     {filteredNavItems.map((item) => {
-                        const active = location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path));
+                        const active = location.pathname === item.path || (item.path !== '/superadmin' && location.pathname.startsWith(item.path));
                         return (
                             <Link
                                 key={item.name}
@@ -83,8 +71,10 @@ export const AdminLayout = () => {
                         <div className="overflow-hidden">
                             <p className="truncate text-sm font-bold text-white">{account?.fullName ?? 'Quản trị viên'}</p>
                             <p className="truncate text-[10px] text-slate-500 font-medium uppercase tracking-tighter">{account?.email ?? 'admin@gmail.com'}</p>
-                            {!isAdmin && account?.cinemaName && (
-                                <p className="truncate text-[10px] text-blue-400 font-bold mt-0.5">{account.cinemaName}</p>
+                            {account?.cinemaName && (
+                                <span className="text-xs text-slate-400 block mt-0.5 font-medium border border-slate-700 rounded px-2 py-0.5 bg-slate-800">
+                                    {account.cinemaName}
+                                </span>
                             )}
                         </div>
                     </div>

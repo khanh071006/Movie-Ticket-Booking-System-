@@ -8,13 +8,19 @@ import java.util.UUID;
 
 public class UserPrincipal extends User {
     private final UUID accountId;
+    private final Integer cinemaId;
 
-    public UserPrincipal(UUID accountId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(UUID accountId, Integer cinemaId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.accountId = accountId;
+        this.cinemaId = cinemaId;
     }
 
     public UUID getAccountId() {
         return accountId;
+    }
+
+    public Integer getCinemaId() {
+        return cinemaId;
     }
 }

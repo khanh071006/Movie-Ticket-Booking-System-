@@ -48,14 +48,38 @@ public class SecurityUtil {
 
         JwsHeader jwsHeader = JwsHeader.with(MacAlgorithm.HS256).build();
 
-        JwtClaimsSet claims = JwtClaimsSet.builder()
+        JwtClaimsSet.Builder claimsBuilder = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plus(expiresIn, ChronoUnit.SECONDS)) // Sử dụng giá trị từ properties
                 .subject(authentication.getName())
-                .claim("scope", scope)
-                .build();
+                .claim("scope", scope);
 
+        if (authentication.getPrincipal() instanceof UserPrincipal) {
+            UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+            if (userPrincipal.getCinemaId() != null) {
+                claimsBuilder.claim("cinemaId", userPrincipal.getCinemaId());
+            }
+        }
+
+        JwtClaimsSet claims = claimsBuilder.build();
         return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
+    }
+
+    public static java.util.Optional<String> getCurrentUserLogin() {
+        org.springframework.security.core.context.SecurityContext securityContext = org.springframework.security.core.context.SecurityContextHolder.getContext();
+        return java.util.Optional.ofNullable(securityContext.getAuthentication())
+                .map(authentication -> {
+                    if (authentication.getPrincipal() instanceof org.springframework.security.core.userdetails.UserDetails) {
+                        org.springframework.security.core.userdetails.UserDetails springSecurityUser = (org.springframework.security.core.userdetails.UserDetails) authentication.getPrincipal();
+                        return springSecurityUser.getUsername();
+                    } else if (authentication.getPrincipal() instanceof org.springframework.security.oauth2.jwt.Jwt) {
+                        org.springframework.security.oauth2.jwt.Jwt jwt = (org.springframework.security.oauth2.jwt.Jwt) authentication.getPrincipal();
+                        return jwt.getSubject();
+                    } else if (authentication.getPrincipal() instanceof String) {
+                        return (String) authentication.getPrincipal();
+                    }
+                    return null;
+                });
     }
 }

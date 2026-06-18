@@ -42,6 +42,9 @@ public class Booking {
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<BookingSnack> bookingSnacks;
 
+    @Column(name = "is_used", columnDefinition = "boolean default false", nullable = false)
+    private boolean isUsed = false;
+
     // Getters and Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
@@ -61,4 +64,6 @@ public class Booking {
     public void setBookingSeats(Set<BookingSeat> bookingSeats) { this.bookingSeats = bookingSeats; }
     public Set<BookingSnack> getBookingSnacks() { return bookingSnacks; }
     public void setBookingSnacks(Set<BookingSnack> bookingSnacks) { this.bookingSnacks = bookingSnacks; }
+    public boolean isUsed() { return isUsed; }
+    public void setUsed(boolean used) { isUsed = used; }
 }

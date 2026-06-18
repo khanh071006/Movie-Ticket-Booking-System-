@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { login } from '../api/authApi';
 import { Link, useNavigate } from 'react-router-dom'; // Đảm bảo import đầy đủ
 import { Loader2, Film, Mail, Lock } from 'lucide-react';
-import { hasAdminRole, setStoredAccount } from '../utils/session';
+import { hasSuperAdminRole, hasManagerRole, hasStaffRole, setStoredAccount } from '../utils/session';
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -25,7 +25,17 @@ export const LoginForm = () => {
             }
             localStorage.setItem('currentUser', response.user);
             setStoredAccount(response.account);
-            navigate(hasAdminRole(response.token) ? '/admin' : '/');
+
+            const token = response.token;
+            if (hasSuperAdminRole(token)) {
+                navigate('/superadmin');
+            } else if (hasManagerRole(token)) {
+                navigate('/manager');
+            } else if (hasStaffRole(token)) {
+                navigate('/staff/scan-ticket');
+            } else {
+                navigate('/');
+            }
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : String(err);
             setError(errorMessage);

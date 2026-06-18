@@ -1,6 +1,6 @@
 import { Bell, ChevronDown, Search, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { clearSession, getStoredToken, getStoredAccount, getStoredUser, hasAdminRole } from '../features/auth/utils/session';
+import { clearSession, getStoredToken, getStoredAccount, getStoredUser, hasBackofficeAccess, hasSuperAdminRole, hasManagerRole, hasStaffRole } from '../features/auth/utils/session';
 
 interface AppBarProps {
     showSearch?: boolean;
@@ -10,7 +10,7 @@ interface AppBarProps {
 export const AppBar = ({ showSearch = true, onSearchChange }: AppBarProps) => {
     const token = getStoredToken();
     const isLoggedIn = Boolean(token);
-    const isAdmin = hasAdminRole(token);
+    const isBackoffice = hasBackofficeAccess(token);
     const currentAccount = getStoredAccount();
     const storedUser = getStoredUser();
     const displayName = currentAccount?.fullName || storedUser || 'Khách hàng';
@@ -55,10 +55,14 @@ export const AppBar = ({ showSearch = true, onSearchChange }: AppBarProps) => {
                     </div>
                 ) : (
                     <div className="flex items-center gap-3">
-                        {isAdmin && (
-                            <Link to="/admin" className="rounded-lg bg-[#E50914] px-3 py-1.5 text-sm font-semibold text-white hover:bg-[#c50711]">
+                        {isBackoffice && (
+                            <button onClick={() => {
+                                if (hasSuperAdminRole(token)) navigate('/superadmin');
+                                else if (hasManagerRole(token)) navigate('/manager');
+                                else if (hasStaffRole(token)) navigate('/staff');
+                            }} className="rounded-lg bg-[#E50914] px-3 py-1.5 text-sm font-semibold text-white hover:bg-[#c50711]">
                                 Trang quản trị
-                            </Link>
+                            </button>
                         )}
                         <button type="button" className="rounded-lg border border-white/10 p-2 text-[#A3A3A3] hover:text-white">
                             <Bell size={16} />

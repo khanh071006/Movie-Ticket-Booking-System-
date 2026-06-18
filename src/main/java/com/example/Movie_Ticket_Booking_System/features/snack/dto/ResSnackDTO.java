@@ -10,6 +10,7 @@ public class ResSnackDTO {
     private String name;
     private BigDecimal basePrice;
     private String imageUrl;
+    private Integer cinemaId;
 
     public ResSnackDTO(Snack snack) {
         this.id = snack.getId();
@@ -20,6 +21,9 @@ public class ResSnackDTO {
         this.name = snack.getName();
         this.basePrice = snack.getBasePrice();
         this.imageUrl = snack.getImageUrl();
+        if (snack.getCinema() != null) {
+            this.cinemaId = snack.getCinema().getId();
+        }
     }
 
     public Integer getId() {
@@ -68,5 +72,13 @@ public class ResSnackDTO {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Integer getCinemaId() {
+        return cinemaId;
+    }
+
+    public void setCinemaId(Integer cinemaId) {
+        this.cinemaId = cinemaId;
     }
 }

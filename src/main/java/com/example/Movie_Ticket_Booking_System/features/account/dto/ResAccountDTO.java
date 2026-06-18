@@ -9,13 +9,17 @@ public class ResAccountDTO {
     private String fullName;
     private String phone;
     private Set<String> roles;
+    private Integer cinemaId;
+    private String cinemaName;
 
-    public ResAccountDTO(UUID id, String email, String fullName, String phone, Set<String> roles) {
+    public ResAccountDTO(UUID id, String email, String fullName, String phone, Set<String> roles, Integer cinemaId, String cinemaName) {
         this.id = id;
         this.email = email;
         this.fullName = fullName;
         this.phone = phone;
         this.roles = roles;
+        this.cinemaId = cinemaId;
+        this.cinemaName = cinemaName;
     }
 
     // Getters and Setters
@@ -57,5 +61,21 @@ public class ResAccountDTO {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+
+    public Integer getCinemaId() {
+        return cinemaId;
+    }
+
+    public void setCinemaId(Integer cinemaId) {
+        this.cinemaId = cinemaId;
+    }
+
+    public String getCinemaName() {
+        return cinemaName;
+    }
+
+    public void setCinemaName(String cinemaName) {
+        this.cinemaName = cinemaName;
     }
 }
