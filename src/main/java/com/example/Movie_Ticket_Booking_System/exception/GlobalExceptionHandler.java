@@ -100,8 +100,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(org.springframework.security.core.AuthenticationException.class)
     public ResponseEntity<ApiResponse<Void>> handleAuthenticationException(org.springframework.security.core.AuthenticationException ex) {
         log.warn("AuthenticationException: {}", ex.getMessage());
+        String msg = "Sai email hoặc mật khẩu.";
+        if (ex.getMessage() != null) {
+            if (ex.getMessage().equalsIgnoreCase("User is disabled")) {
+                msg = "Tài khoản của bạn chưa được kích hoạt hoặc đã bị khóa.";
+            } else if (ex.getMessage().equalsIgnoreCase("Bad credentials")) {
+                msg = "Sai email hoặc mật khẩu.";
+            } else {
+                msg = "Đăng nhập thất bại: " + ex.getMessage();
+            }
+        }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(ApiResponse.ofError(401, ex.getMessage(), "Unauthorized"));
+                .body(ApiResponse.ofError(401, msg, "Unauthorized"));
     }
 
     @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)

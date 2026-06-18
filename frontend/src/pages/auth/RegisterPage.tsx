@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Film, Loader2, Mail, Lock, User, Phone, EyeOff, Eye, ShieldCheck } from 'lucide-react';
-import { apiClient } from '../../api/axiosClient';
+import { apiClient, parseError } from '../../api/axiosClient';
 
 export const RegisterPage = () => {
     const [form, setForm] = useState({ fullName: '', email: '', password: '', phone: '' });
@@ -33,7 +33,7 @@ export const RegisterPage = () => {
             setSuccess('Đăng ký thành công! Vui lòng kiểm tra email để lấy mã OTP.');
             setIsOtpMode(true);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Đăng ký thất bại.');
+            setError(parseError(err));
         } finally {
             setLoading(false);
         }
@@ -49,7 +49,7 @@ export const RegisterPage = () => {
             setSuccess('Xác thực thành công, đang chuyển tới đăng nhập...');
             setTimeout(() => navigate('/login'), 1500);
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Xác thực OTP thất bại.');
+            setError(parseError(err));
         } finally {
             setLoading(false);
         }

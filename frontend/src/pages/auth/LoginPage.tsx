@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Film, Loader2, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { login } from '../../api/authApi';
+import { parseError } from '../../api/axiosClient';
 import { setStoredAccount, setStoredToken, hasSuperAdminRole, hasManagerRole, hasStaffRole } from '../../features/auth/utils/session';
 
 export const LoginPage = () => {
@@ -25,7 +26,7 @@ export const LoginPage = () => {
             else if (hasStaffRole(token)) navigate('/staff');
             else navigate('/');
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Đăng nhập thất bại.');
+            setError(parseError(err));
         } finally {
             setLoading(false);
         }
