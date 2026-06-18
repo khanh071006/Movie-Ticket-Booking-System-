@@ -39,15 +39,24 @@ public class AccountController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ResAccountDTO>>> getAccounts() {
-        List<Account> accounts = this.accountService.handleGetAccounts();
+    public ResponseEntity<ApiResponse<com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<ResAccountDTO>>> getAccounts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String query) {
+        
+        com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Account> pagedAccounts = this.accountService.handleGetAccounts(page, size, query);
         
         List<ResAccountDTO> resAccounts = new ArrayList<>();
-        for (Account account : accounts) {
+        for (Account account : pagedAccounts.getContent()) {
             resAccounts.add(mapToResDTO(account));
         }
 
-        return ResponseEntity.ok(ApiResponse.success("Lấy danh sách tài khoản thành công", resAccounts));
+        com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<ResAccountDTO> resPage = new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(
+            resAccounts, pagedAccounts.getPageNo(), pagedAccounts.getPageSize(),
+            pagedAccounts.getTotalElements(), pagedAccounts.getTotalPages(), pagedAccounts.isLast()
+        );
+
+        return ResponseEntity.ok(ApiResponse.success("Lấy danh sách tài khoản thành công", resPage));
     }
 
     @PostMapping

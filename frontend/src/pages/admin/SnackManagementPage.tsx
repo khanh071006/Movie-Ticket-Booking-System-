@@ -7,9 +7,13 @@ import { Input } from '../../components/ui/Input';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import { CategorySelect } from '../../components/ui/CategorySelect';
 import type { Snack } from '../../types/app';
+import { Pagination } from '../../components/ui/Pagination';
 
 export const SnackManagementPage = () => {
     const [items, setItems] = useState<Snack[]>([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalElements, setTotalElements] = useState(0);
     
     // Form state
     const [name, setName] = useState('');
@@ -25,14 +29,16 @@ export const SnackManagementPage = () => {
     const load = useCallback(async () => {
         setLoading(true);
         try {
-            const snacksData = await apiClient.snacks.getAll();
-            setItems(snacksData);
+            const snacksData = await apiClient.snacks.getAll(currentPage, 10);
+            setItems(snacksData.content);
+            setTotalPages(snacksData.totalPages);
+            setTotalElements(snacksData.totalElements);
         } catch (err) {
             setError(parseError(err));
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [currentPage]);
 
     useEffect(() => {
         load();
@@ -189,7 +195,7 @@ export const SnackManagementPage = () => {
                                 <Coffee size={18} className="text-blue-500" /> Danh sách món ăn
                             </h3>
                             <span className="rounded-full bg-blue-500/10 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest text-blue-500 border border-blue-500/20">
-                                {items.length} mục
+                                {totalElements} mục
                             </span>
                         </div>
                         
@@ -268,6 +274,11 @@ export const SnackManagementPage = () => {
                             </table>
                         </div>
                     </Card>
+                    <Pagination 
+                        currentPage={currentPage} 
+                        totalPages={totalPages} 
+                        onPageChange={setCurrentPage} 
+                    />
                 </div>
             </div>
 

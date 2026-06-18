@@ -7,6 +7,7 @@ import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
 import { ConfirmDialog } from '../../../components/ui/ConfirmDialog';
 import type { Movie } from '../../../types/app';
+import { Pagination } from '../../../components/ui/Pagination';
 
 export const MovieListPage = () => {
     const navigate = useNavigate();
@@ -14,6 +15,9 @@ export const MovieListPage = () => {
     const basePath = location.pathname.startsWith('/superadmin') ? '/superadmin' : location.pathname.startsWith('/staff') ? '/staff' : '/manager';
     const isSuperAdmin = basePath === '/superadmin';
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalElements, setTotalElements] = useState(0);
     const [query, setQuery] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -31,8 +35,10 @@ export const MovieListPage = () => {
     const loadMovies = async () => {
         setLoading(true);
         try {
-            const data = await apiClient.movies.getAll();
-            setMovies(data);
+            const data = await apiClient.movies.getAll(currentPage, 10, query);
+            setMovies(data.content);
+            setTotalPages(data.totalPages);
+            setTotalElements(data.totalElements);
         } catch (err) {
             setError(parseError(err));
         } finally {
@@ -41,14 +47,13 @@ export const MovieListPage = () => {
     };
 
     useEffect(() => {
-        loadMovies();
-    }, []);
+        const timeoutId = setTimeout(() => {
+            loadMovies();
+        }, 300);
+        return () => clearTimeout(timeoutId);
+    }, [currentPage, query]);
 
-    const rows = useMemo(() => {
-        const q = query.trim().toLowerCase();
-        if (!q) return movies;
-        return movies.filter((m) => m.title.toLowerCase().includes(q));
-    }, [movies, query]);
+    const rows = movies;
 
     const confirmDelete = async () => {
         if (!deleteId) return;
@@ -99,7 +104,7 @@ export const MovieListPage = () => {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
                         <Clapperboard className="text-blue-500" />
-                        Danh sách phim ({rows.length})
+                        Danh sách phim ({totalElements})
                     </h3>
                     <div className="relative w-full sm:w-72">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
@@ -107,7 +112,10 @@ export const MovieListPage = () => {
                             className="h-10 border-white/10 bg-zinc-900 pl-10 text-white placeholder:text-slate-600 focus:border-blue-500" 
                             placeholder="Tìm kiếm theo tên..." 
                             value={query} 
-                            onChange={(e) => setQuery(e.target.value)} 
+                            onChange={(e) => {
+                                setQuery(e.target.value);
+                                setCurrentPage(0);
+                            }} 
                         />
                     </div>
                 </div>
@@ -189,6 +197,12 @@ export const MovieListPage = () => {
                         </table>
                     </div>
                 </Card>
+
+                <Pagination 
+                    currentPage={currentPage} 
+                    totalPages={totalPages} 
+                    onPageChange={setCurrentPage} 
+                />
             </div>
 
             <ConfirmDialog

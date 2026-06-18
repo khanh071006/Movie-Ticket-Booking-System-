@@ -9,8 +9,10 @@ export const HomePage = () => {
 
     useEffect(() => {
         // Fetch all movies on component mount
-        apiClient.movies.getAll()
-            .then(setMovies)
+        apiClient.movies.getAll(0, 20)
+            .then(res => {
+                setMovies(res.content);
+            })
             .catch((err) => {
                 console.error('Failed to fetch movies:', err);
                 setMovies([]);

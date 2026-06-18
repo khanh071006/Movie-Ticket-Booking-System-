@@ -7,4 +7,5 @@ import java.util.UUID;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, UUID> {
+    org.springframework.data.domain.Page<Movie> findByTitleContainingIgnoreCase(String title, org.springframework.data.domain.Pageable pageable);
 }

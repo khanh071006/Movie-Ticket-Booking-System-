@@ -34,8 +34,8 @@ export const ShowtimesPage = () => {
 
     // Fetch full movies list and cinemas
     useEffect(() => {
-        apiClient.movies.getAll().then(setMovies).catch(console.error);
-        apiClient.cinemas.getAll().then(setAllCinemas).catch(console.error);
+        apiClient.movies.getAll(0, 1000).then(res => setMovies(res.content)).catch(console.error);
+        apiClient.cinemas.getAll(0, 1000).then(res => setAllCinemas(res.content)).catch(console.error);
     }, []);
 
     // Fetch showtimes when date changes

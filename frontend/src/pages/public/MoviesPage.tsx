@@ -13,7 +13,7 @@ export const MoviesPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        apiClient.movies.getAll().then(setMovies).catch(() => setMovies([]));
+        apiClient.movies.getAll(0, 1000).then(res => setMovies(res.content)).catch(() => setMovies([]));
     }, []);
 
     const filtered = useMemo(() => {

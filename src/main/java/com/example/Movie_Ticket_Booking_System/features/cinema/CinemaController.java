@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/v1/cinemas")
@@ -19,8 +20,23 @@ public class CinemaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CinemaDTO>> getAllCinemas() {
-        return ResponseEntity.ok(cinemaService.getAllCinemas());
+    public ResponseEntity<com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<CinemaDTO>> getAllCinemas(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Cinema> pagedCinemas = cinemaService.getAllCinemas(page, size);
+        
+        List<CinemaDTO> resList = new ArrayList<>();
+        for (Cinema c : pagedCinemas.getContent()) {
+            resList.add(new CinemaDTO(c.getId(), c.getName(), c.getAddress(), c.getCity(), 
+                c.getState() != null ? c.getState().getId() : null, 
+                c.getState() != null ? c.getState().getName() : null));
+        }
+        
+        com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<CinemaDTO> resPage = new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(
+            resList, pagedCinemas.getPageNo(), pagedCinemas.getPageSize(),
+            pagedCinemas.getTotalElements(), pagedCinemas.getTotalPages(), pagedCinemas.isLast()
+        );
+        return ResponseEntity.ok(resPage);
     }
 
     @GetMapping("/{id}")

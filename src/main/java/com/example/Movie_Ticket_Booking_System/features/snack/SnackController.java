@@ -21,11 +21,18 @@ public class SnackController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResSnackDTO>> getAllSnacks() {
-        List<ResSnackDTO> snacks = snackService.getAllSnacks().stream()
-                .map(ResSnackDTO::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(snacks);
+    public ResponseEntity<com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<ResSnackDTO>> getAllSnacks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Snack> pagedSnacks = snackService.getAllSnacks(page, size);
+        List<ResSnackDTO> dtos = pagedSnacks.getContent().stream()
+            .map(ResSnackDTO::new)
+            .collect(Collectors.toList());
+        com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<ResSnackDTO> resPage = new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(
+            dtos, pagedSnacks.getPageNo(), pagedSnacks.getPageSize(),
+            pagedSnacks.getTotalElements(), pagedSnacks.getTotalPages(), pagedSnacks.isLast()
+        );
+        return ResponseEntity.ok(resPage);
     }
 
     @GetMapping("/{id}")

@@ -25,10 +25,16 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     @Override
-    public List<CinemaDTO> getAllCinemas() {
-        return cinemaRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+    public com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Cinema> getAllCinemas(int page, int size) {
+        org.springframework.data.domain.Page<Cinema> cinemaPage = cinemaRepository.findAll(org.springframework.data.domain.PageRequest.of(page, size));
+        return new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(
+            cinemaPage.getContent(),
+            cinemaPage.getNumber(),
+            cinemaPage.getSize(),
+            cinemaPage.getTotalElements(),
+            cinemaPage.getTotalPages(),
+            cinemaPage.isLast()
+        );
     }
 
     @Override

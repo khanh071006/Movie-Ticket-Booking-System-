@@ -25,8 +25,16 @@ public class SnackServiceImpl implements SnackService {
     }
 
     @Override
-    public List<Snack> getAllSnacks() {
-        return snackRepository.findAll();
+    public com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Snack> getAllSnacks(int page, int size) {
+        org.springframework.data.domain.Page<Snack> snackPage = snackRepository.findAll(org.springframework.data.domain.PageRequest.of(page, size));
+        return new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(
+            snackPage.getContent(),
+            snackPage.getNumber(),
+            snackPage.getSize(),
+            snackPage.getTotalElements(),
+            snackPage.getTotalPages(),
+            snackPage.isLast()
+        );
     }
 
     @Override

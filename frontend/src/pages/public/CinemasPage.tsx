@@ -19,8 +19,8 @@ export const CinemasPage = () => {
             try {
                 setLoading(true);
                 const [cinemasData, moviesData] = await Promise.all([
-                    apiClient.cinemas.getAll(),
-                    apiClient.movies.getAll(),
+                    apiClient.cinemas.getAll(0, 1000).then(res => res.content),
+                    apiClient.movies.getAll(0, 1000).then(res => res.content),
                 ]);
                 setCinemas(cinemasData);
 

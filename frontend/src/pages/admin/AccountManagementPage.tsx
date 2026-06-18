@@ -7,12 +7,16 @@ import { Input } from '../../components/ui/Input';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import type { Account, Cinema } from '../../types/app';
 import { getStoredAccount } from '../../features/auth/utils/session';
+import { Pagination } from '../../components/ui/Pagination';
 
 const emptyCreate = { fullName: '', email: '', password: '', phone: '', role: 'USER', cinemaId: '' };
 const emptyUpdate = { fullName: '', phone: '', role: 'USER', cinemaId: '' };
 
 export const AccountManagementPage = () => {
     const [accounts, setAccounts] = useState<Account[]>([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalElements, setTotalElements] = useState(0);
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
     const [query, setQuery] = useState('');
     const [error, setError] = useState('');
@@ -28,10 +32,12 @@ export const AccountManagementPage = () => {
         setLoading(true);
         try {
             const [accountsData, cinemasData] = await Promise.all([
-                apiClient.accounts.getAll(),
-                apiClient.cinemas.getAll()
+                apiClient.accounts.getAll(currentPage, 10, query),
+                apiClient.cinemas.getAll(0, 1000).then(res => res.content)
             ]);
-            setAccounts(accountsData);
+            setAccounts(accountsData.content);
+            setTotalPages(accountsData.totalPages);
+            setTotalElements(accountsData.totalElements);
             setCinemas(cinemasData);
         } catch (err) {
             setError(parseError(err));
@@ -41,18 +47,13 @@ export const AccountManagementPage = () => {
     };
 
     useEffect(() => {
-        loadData();
-    }, []);
+        const timeoutId = setTimeout(() => {
+            loadData();
+        }, 300);
+        return () => clearTimeout(timeoutId);
+    }, [currentPage, query]);
 
-    const rows = useMemo(() => {
-        const q = query.trim().toLowerCase();
-        if (!q) return accounts;
-        return accounts.filter((acc) => 
-            acc.fullName.toLowerCase().includes(q) || 
-            acc.email.toLowerCase().includes(q) ||
-            (acc.phone && acc.phone.includes(q))
-        );
-    }, [accounts, query]);
+    const rows = accounts;
 
     const onCreate = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -212,7 +213,7 @@ export const AccountManagementPage = () => {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <h3 className="text-xl font-bold text-white flex items-center gap-2">
                         <Users className="text-blue-500" />
-                        Danh sách thành viên ({rows.length})
+                        Danh sách thành viên ({totalElements})
                     </h3>
                     <div className="relative w-full sm:w-80">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
@@ -220,7 +221,10 @@ export const AccountManagementPage = () => {
                             className="h-10 border-white/10 bg-zinc-900 pl-10 text-white placeholder:text-slate-600 focus:border-blue-500" 
                             placeholder="Tìm kiếm theo tên hoặc email..." 
                             value={query} 
-                            onChange={(e) => setQuery(e.target.value)} 
+                            onChange={(e) => {
+                                setQuery(e.target.value);
+                                setCurrentPage(0); // Reset to first page on new search
+                            }} 
                         />
                     </div>
                 </div>
@@ -321,6 +325,12 @@ export const AccountManagementPage = () => {
                         </table>
                     </div>
                 </Card>
+
+                <Pagination 
+                    currentPage={currentPage} 
+                    totalPages={totalPages} 
+                    onPageChange={setCurrentPage} 
+                />
             </div>
 
             {/* Edit Modal (Inline Card) */}

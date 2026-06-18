@@ -24,9 +24,9 @@ export const RoomManagementPage = () => {
     const isStaff = account?.roles?.includes('STAFF') || account?.roles?.includes('ROLE_STAFF');
 
     useEffect(() => {
-        apiClient.cinemas.getAll().then((res) => {
-            setCinemas(res);
-            if (res.length) setSelectedCinemaId(res[0].id);
+        apiClient.cinemas.getAll(0, 1000).then((res) => {
+            setCinemas(res.content);
+            if (res.content.length > 0) setSelectedCinemaId(res.content[0].id);
         });
     }, []);
 

@@ -77,17 +77,85 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public List<Account> handleGetAccounts() {
+    public com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Account> handleGetAccounts(int page, int size, String query) {
         List<Account> accounts = this.accountRepository.findAll();
         org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
-        boolean isSuperAdmin = auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_SUPERADMIN"));
         
-        if (!isSuperAdmin) {
-            return accounts.stream().filter(acc -> 
-                acc.getAccountRoles() == null || acc.getAccountRoles().stream().noneMatch(ar -> ar.getRole().getName().equals("SUPERADMIN"))
-            ).collect(java.util.stream.Collectors.toList());
+        if (auth == null) {
+            return new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(new java.util.ArrayList<>(), page, size, 0, 0, true);
         }
-        return accounts;
+
+        boolean isSuperAdmin = false;
+        for (org.springframework.security.core.GrantedAuthority authority : auth.getAuthorities()) {
+            if (authority.getAuthority().equals("ROLE_SUPERADMIN")) {
+                isSuperAdmin = true;
+                break;
+            }
+        }
+
+        List<Account> roleFilteredAccounts;
+        if (isSuperAdmin) {
+            roleFilteredAccounts = accounts;
+        } else {
+            String email = auth.getName();
+            Account currentUser = accountRepository.findByEmail(email).orElse(null);
+            Object cinemaId = (currentUser != null && currentUser.getCinema() != null) ? currentUser.getCinema().getId() : null;
+
+            roleFilteredAccounts = new java.util.ArrayList<>();
+            for (Account acc : accounts) {
+                boolean isTargetSuperAdmin = false;
+                if (acc.getAccountRoles() != null) {
+                    for (AccountRole ar : acc.getAccountRoles()) {
+                        if (ar.getRole().getName().equals("SUPERADMIN")) {
+                            isTargetSuperAdmin = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (isTargetSuperAdmin) {
+                    continue;
+                }
+
+                if (cinemaId != null) {
+                    if (acc.getCinema() != null && acc.getCinema().getId().equals(cinemaId)) {
+                        roleFilteredAccounts.add(acc);
+                    }
+                } else {
+                    roleFilteredAccounts.add(acc);
+                }
+            }
+        }
+
+        List<Account> filteredAccounts = new java.util.ArrayList<>();
+        if (query != null && !query.trim().isEmpty()) {
+            String q = query.trim().toLowerCase();
+            for (Account acc : roleFilteredAccounts) {
+                boolean matches = (acc.getFullName() != null && acc.getFullName().toLowerCase().contains(q)) ||
+                                  (acc.getEmail() != null && acc.getEmail().toLowerCase().contains(q)) ||
+                                  (acc.getPhone() != null && acc.getPhone().contains(q));
+                if (matches) {
+                    filteredAccounts.add(acc);
+                }
+            }
+        } else {
+            filteredAccounts = roleFilteredAccounts;
+        }
+
+        int totalElements = filteredAccounts.size();
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+        int start = Math.min(page * size, totalElements);
+        int end = Math.min((page + 1) * size, totalElements);
+        
+        List<Account> pageContent = new java.util.ArrayList<>();
+        if (start < end) {
+            for (int i = start; i < end; i++) {
+                pageContent.add(filteredAccounts.get(i));
+            }
+        }
+        
+        boolean isLast = (page + 1) >= totalPages;
+        return new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(pageContent, page, size, totalElements, totalPages, isLast);
     }
 
     @Override

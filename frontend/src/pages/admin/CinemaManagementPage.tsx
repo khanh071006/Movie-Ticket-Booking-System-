@@ -8,11 +8,15 @@ import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import { CategorySelect } from '../../components/ui/CategorySelect';
 import { CinemaPricingDialog } from './CinemaPricingDialog';
 import type { Cinema } from '../../types/app';
+import { Pagination } from '../../components/ui/Pagination';
 
 const emptyForm = { name: '', address: '', city: '', stateId: '' };
 
 export const CinemaManagementPage = () => {
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalElements, setTotalElements] = useState(0);
     const [form, setForm] = useState(emptyForm);
     const [editId, setEditId] = useState<number | null>(null);
     const [error, setError] = useState('');
@@ -23,8 +27,10 @@ export const CinemaManagementPage = () => {
     const load = async () => {
         setLoading(true);
         try {
-            const cinemasRes = await apiClient.cinemas.getAll();
-            setCinemas(cinemasRes);
+            const cinemasRes = await apiClient.cinemas.getAll(currentPage, 10);
+            setCinemas(cinemasRes.content);
+            setTotalPages(cinemasRes.totalPages);
+            setTotalElements(cinemasRes.totalElements);
         } catch (err) {
             setError(parseError(err));
         } finally {
@@ -34,7 +40,7 @@ export const CinemaManagementPage = () => {
 
     useEffect(() => {
         load();
-    }, []);
+    }, [currentPage]);
 
     const submit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -165,7 +171,7 @@ export const CinemaManagementPage = () => {
                     <div className="flex items-center justify-between">
                         <h3 className="text-xl font-bold text-white flex items-center gap-2">
                             <Building2 className="text-blue-500" />
-                            Danh sách rạp chiếu ({cinemas.length})
+                            Danh sách rạp chiếu ({totalElements})
                         </h3>
                     </div>
 
@@ -242,6 +248,12 @@ export const CinemaManagementPage = () => {
                             </table>
                         </div>
                     </Card>
+
+                    <Pagination 
+                        currentPage={currentPage} 
+                        totalPages={totalPages} 
+                        onPageChange={setCurrentPage} 
+                    />
                 </div>
             </div>
 

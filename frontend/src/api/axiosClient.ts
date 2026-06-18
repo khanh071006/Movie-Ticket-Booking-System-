@@ -2,6 +2,15 @@ import axios, { AxiosError } from 'axios';
 import type { Account, ApiResponse, AuthPayload, CategoryItem, Cinema, Movie, Room, Showtime, SeatType, TicketType, Seat, BookingRequest, BookingResponse, Snack, BookingHistoryResponse } from '../types/app';
 import { getStoredToken, clearSession } from '../features/auth/utils/session';
 
+export interface PageResponseDTO<T> {
+    content: T[];
+    pageNo: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+}
+
 const http = axios.create({
     baseURL: `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'}/api/v1`,
     headers: { 
@@ -67,9 +76,10 @@ export const apiClient = {
         },
     },
     accounts: {
-        async getAll(): Promise<Account[]> {
-            const response = await http.get<ApiResponse<Account[]>>('/accounts', { headers: authHeader() });
-            return unwrap(response.data);
+        async getAll(page: number = 0, size: number = 10, query?: string): Promise<PageResponseDTO<Account>> {
+            const url = query ? `/accounts?page=${page}&size=${size}&query=${encodeURIComponent(query)}` : `/accounts?page=${page}&size=${size}`;
+            const response = await http.get<ApiResponse<PageResponseDTO<Account>>>(url, { headers: authHeader() });
+            return unwrap(response.data) as any;
         },
         async create(payload: { fullName: string; email: string; password: string; phone?: string; roles?: string[] }): Promise<Account> {
             const response = await http.post<ApiResponse<Account>>('/accounts', payload, { headers: authHeader() });
@@ -84,9 +94,10 @@ export const apiClient = {
         },
     },
     movies: {
-        async getAll(): Promise<Movie[]> {
-            const response = await http.get<ApiResponse<Movie[]>>('/movies');
-            return unwrap(response.data);
+        async getAll(page: number = 0, size: number = 10, query?: string): Promise<PageResponseDTO<Movie>> {
+            const url = query ? `/movies?page=${page}&size=${size}&query=${encodeURIComponent(query)}` : `/movies?page=${page}&size=${size}`;
+            const response = await http.get<ApiResponse<PageResponseDTO<Movie>>>(url);
+            return unwrap(response.data) as any;
         },
         async getById(id: string): Promise<Movie> {
             const response = await http.get<ApiResponse<Movie>>(`/movies/${id}`);
@@ -105,9 +116,9 @@ export const apiClient = {
         },
     },
     cinemas: {
-        async getAll(): Promise<Cinema[]> {
-            const response = await http.get<Cinema[]>('/cinemas');
-            return unwrap(response.data);
+        async getAll(page: number = 0, size: number = 10): Promise<PageResponseDTO<Cinema>> {
+            const response = await http.get<ApiResponse<PageResponseDTO<Cinema>>>(`/cinemas?page=${page}&size=${size}`);
+            return unwrap(response.data) as any;
         },
         async create(payload: Omit<Cinema, 'id' | 'stateName'>): Promise<Cinema> {
             const response = await http.post<Cinema>('/cinemas', payload, { headers: authHeader() });
@@ -238,9 +249,9 @@ export const apiClient = {
         }
     },
     snacks: {
-        async getAll(): Promise<Snack[]> {
-            const response = await http.get<ApiResponse<Snack[]> | Snack[]>('/snacks', { headers: authHeader() });
-            return unwrap(response.data);
+        async getAll(page: number = 0, size: number = 10): Promise<PageResponseDTO<Snack>> {
+            const response = await http.get<ApiResponse<PageResponseDTO<Snack>>>(`/snacks?page=${page}&size=${size}`, { headers: authHeader() });
+            return unwrap(response.data) as any;
         },
         async create(payload: { snackTypeId: number; name: string; basePrice: number; imageUrl?: string }): Promise<Snack> {
             const response = await http.post<ApiResponse<Snack> | Snack>('/snacks', payload, { headers: authHeader() });

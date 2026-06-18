@@ -38,10 +38,10 @@ export const DashboardPage = () => {
     useEffect(() => {
         const load = async () => {
             if (isSuperAdmin) {
-                const [movies, cinemas, accounts] = await Promise.all([
-                    apiClient.movies.getAll().catch(() => []),
-                    apiClient.cinemas.getAll().catch(() => []),
-                    apiClient.accounts.getAll().catch(() => []),
+                const [cinemas, movies, accounts] = await Promise.all([
+                    apiClient.cinemas.getAll(0, 1000).then(res => res.content).catch(() => []),
+                    apiClient.movies.getAll(0, 1000).then(res => res.content).catch(() => []),
+                    apiClient.accounts.getAll(0, 1000).then(res => res.content).catch(() => []),
                 ]);
 
                 const showtimesByMovie = await Promise.all(
@@ -84,7 +84,7 @@ export const DashboardPage = () => {
                 setMycinemaName(account.cinemaName ?? '');
 
                 const [movies, rooms] = await Promise.all([
-                    apiClient.movies.getAll().catch(() => []),
+                    apiClient.movies.getAll(0, 1000).then(res => res.content).catch(() => []),
                     apiClient.rooms.getByCinema(cinemaId).catch(() => []),
                 ]);
 

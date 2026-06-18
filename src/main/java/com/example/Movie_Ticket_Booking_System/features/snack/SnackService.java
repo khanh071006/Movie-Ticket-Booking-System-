@@ -4,7 +4,7 @@ import com.example.Movie_Ticket_Booking_System.features.snack.dto.ReqSnackDTO;
 import java.util.List;
 
 public interface SnackService {
-    List<Snack> getAllSnacks();
+    com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Snack> getAllSnacks(int page, int size);
     Snack getSnackById(Integer id);
     Snack createSnack(ReqSnackDTO reqSnackDTO);
     Snack updateSnack(Integer id, ReqSnackDTO reqSnackDTO);

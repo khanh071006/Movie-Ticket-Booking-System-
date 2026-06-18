@@ -32,15 +32,24 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ResMovieDTO>>> getAllMovies() {
-        List<Movie> movies = movieService.getAllMovies();
+    public ResponseEntity<ApiResponse<com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<ResMovieDTO>>> getAllMovies(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String query) {
+        
+        com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Movie> pagedMovies = movieService.getAllMovies(page, size, query);
         
         List<ResMovieDTO> res = new ArrayList<>();
-        for (Movie movie : movies) {
+        for (Movie movie : pagedMovies.getContent()) {
             res.add(new ResMovieDTO(movie));
         }
 
-        return ResponseEntity.ok(ApiResponse.success("Lấy danh sách phim thành công", res));
+        com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<ResMovieDTO> resPage = new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(
+            res, pagedMovies.getPageNo(), pagedMovies.getPageSize(),
+            pagedMovies.getTotalElements(), pagedMovies.getTotalPages(), pagedMovies.isLast()
+        );
+
+        return ResponseEntity.ok(ApiResponse.success("Lấy danh sách phim thành công", resPage));
     }
 
     @GetMapping("/{id}")

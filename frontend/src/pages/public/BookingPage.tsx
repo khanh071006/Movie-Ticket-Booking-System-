@@ -72,7 +72,7 @@ export const BookingPage = () => {
             const [roomSeats, types, snacksData, pricingRes, bookedIds] = await Promise.all([
                 apiClient.rooms.getSeats(roomId),
                 apiClient.ticketTypes.getAll(),
-                apiClient.snacks.getAll(),
+                apiClient.snacks.getAll(0, 1000).then(res => res.content),
                 cinemaId ? apiClient.cinemas.getPricing(cinemaId).catch(() => null) : Promise.resolve(null),
                 apiClient.bookings.getBookedSeats(showtimeId).catch(() => [])
             ]);

@@ -13,7 +13,7 @@ public interface AccountService {
 
     Account handleGetAccountByEmail(String email);
 
-    List<Account> handleGetAccounts();
+    com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Account> handleGetAccounts(int page, int size, String query);
 
     Account handleCreateAccount(ReqCreateAccountDTO dto);
 

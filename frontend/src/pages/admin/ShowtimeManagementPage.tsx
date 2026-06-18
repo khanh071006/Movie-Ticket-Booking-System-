@@ -24,7 +24,7 @@ export const ShowtimeManagementPage = () => {
     const isStaff = account?.roles?.includes('STAFF') || account?.roles?.includes('ROLE_STAFF');
 
     useEffect(() => {
-        Promise.all([apiClient.movies.getAll(), apiClient.cinemas.getAll()])
+        Promise.all([apiClient.movies.getAll(0, 1000).then(res => res.content), apiClient.cinemas.getAll(0, 1000).then(res => res.content)])
             .then(([m, c]) => {
                 setMovies(m);
                 setCinemas(c);

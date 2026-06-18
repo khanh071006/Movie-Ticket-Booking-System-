@@ -55,8 +55,22 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    public com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<Movie> getAllMovies(int page, int size, String query) {
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(page, size);
+        org.springframework.data.domain.Page<Movie> moviePage;
+        if (query != null && !query.trim().isEmpty()) {
+            moviePage = movieRepository.findByTitleContainingIgnoreCase(query.trim(), pageable);
+        } else {
+            moviePage = movieRepository.findAll(pageable);
+        }
+        return new com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<>(
+            moviePage.getContent(),
+            moviePage.getNumber(),
+            moviePage.getSize(),
+            moviePage.getTotalElements(),
+            moviePage.getTotalPages(),
+            moviePage.isLast()
+        );
     }
 
     @Override
