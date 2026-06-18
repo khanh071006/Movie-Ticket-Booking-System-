@@ -89,10 +89,10 @@ Client
 
 ### Permission Check Flow
 ```
-   Request arrives with JWT
-   → JWT contains: sub (email), userId, roles
-   → For endpoint-level: Spring Security checks roles
-   → For fine-grained: Permission entity maps (apiPath + method) to Role
+### 2. Authorization
+   → Role-based Access Control (RBAC) via Spring Security
+   → JWT contains: sub (email), userId, roles (SUPERADMIN, MANAGER, STAFF, USER)
+   → For endpoint-level: Spring Security checks roles (`@PreAuthorize` or `SecurityConfig` `hasRole()`)
    → Service layer can check: does user's role have permission for this action?
 ```
 

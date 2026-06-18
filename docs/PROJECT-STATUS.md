@@ -90,7 +90,8 @@
 
 **[P0 - Ưu tiên cao: Vận hành & Trải nghiệm thực tế]**
 1.  **Quét Mã QR & Soát Vé (Ticket Validation API)**: Xây dựng API và giao diện cho nhân viên rạp chiếu phim (Staff) sử dụng để quét mã QR thực tế của khách hàng, cập nhật trạng thái vé thành "Đã sử dụng" (Used/Checked-in) khi khách vào rạp.
-2.  **Phân quyền Nhân viên (STAFF Role)**: Tạo riêng Role `STAFF` cho nhân viên từng rạp. Chỉ cho phép nhân viên quét vé và xem thống kê của rạp mình làm việc, tách biệt với quyền `ADMIN` tổng.
+2.  **Phân quyền Nhân viên (STAFF Role)**: Tạo riêng Role `STAFF` cho nhân viên từng rạp. Chỉ cho phép nhân viên quét vé và xem thống kê của rạp mình làm việc, tách biệt với quyền `SUPERADMIN` và `MANAGER`. (Đã hoàn thành)
+3.  **Quản lý Rạp (MANAGER Role)**: Role dành cho quản lý từng rạp, được phép quản lý phòng chiếu, lịch chiếu, đồ ăn, ghế ngồi của rạp đó. (Đã hoàn thành)
 
 **[P1 - Ưu tiên trung bình: Nâng cấp Dịch vụ Khách hàng]**
 3.  **Hệ thống Khuyến Mãi (Voucher/Promotion)**: Quản lý mã giảm giá và áp dụng khi người dùng thanh toán vé.

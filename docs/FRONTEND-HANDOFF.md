@@ -11,14 +11,28 @@ Frontend đang chạy theo kiến trúc **React + Vite + React Router**, đã c�
 - **Auth**
   - `/login` Đăng nhập
   - `/register` Đăng ký
-- **Admin**
-  - `/admin` Dashboard
-  - `/admin/accounts` Quản lý tài khoản
-  - `/admin/movies` Quản lý phim
-  - `/admin/cinemas` Quản lý rạp
-  - `/admin/rooms` Quản lý phòng chiếu
-  - `/admin/showtimes` Quản lý lịch chiếu
-  - `/admin/categories` Quản lý danh mục (đạo diễn/thể loại/trạng thái phim/diễn viên)
+- **SuperAdmin**
+  - `/superadmin` Dashboard (toàn hệ thống)
+  - `/superadmin/accounts` Quản lý tài khoản
+  - `/superadmin/cinemas` Quản lý rạp
+  - `/superadmin/movies` Quản lý phim
+  - `/superadmin/categories` Quản lý danh mục (đạo diễn/thể loại/trạng thái phim/diễn viên)
+- **Manager (Quản lý Rạp)**
+  - `/manager` Dashboard (của rạp)
+  - `/manager/accounts` Quản lý tài khoản nhân viên
+  - `/manager/rooms` Quản lý phòng chiếu
+  - `/manager/showtimes` Quản lý lịch chiếu
+  - `/manager/seat-types` Quản lý loại ghế
+  - `/manager/ticket-types` Quản lý loại vé
+  - `/manager/snacks` Quản lý đồ ăn
+  - `/manager/movies` Xem danh sách phim
+  - `/manager/scan-ticket` Soát vé
+- **Staff (Nhân viên Rạp)**
+  - `/staff` Dashboard (của rạp)
+  - `/staff/scan-ticket` Soát vé
+  - `/staff/movies` Xem danh sách phim
+  - `/staff/rooms` Xem phòng chiếu
+  - `/staff/showtimes` Xem lịch chiếu
 
 ## 2) Cấu trúc frontend (thực tế đang dùng)
 
@@ -70,7 +84,7 @@ VITE_API_BASE_URL=http://localhost:8080
 
 - Token lấy từ login và lưu localStorage (`accessToken`) tại `features/auth/utils/session.ts`
 - Các endpoint admin dùng `Authorization: Bearer <token>` (qua `authHeader()` trong `axiosClient.ts`)
-- Role admin check từ JWT claim `scope` (`ROLE_ADMIN`/`ADMIN`) để mở route admin
+- Role check từ JWT claim `scope` (`ROLE_SUPERADMIN`, `ROLE_MANAGER`, `ROLE_STAFF`) để mở route quản trị tương ứng thông qua các Guard.
 
 ### 3.3 Kiểu response backend đã xử lý
 
@@ -98,8 +112,8 @@ Nên FE đang tương thích với các nhóm API hiện có của backend.
 ## 4) Guard, layout và entrypoint cần nhớ
 
 - Entry chính: `src/main.tsx` -> dùng `router` từ `src/routes/router.tsx`
-- `AdminGuard`: chặn vào `/admin` nếu không có quyền admin
-- `GuestGuard`: nếu đã login thì không cho vào trang login/register
+- `SuperAdminGuard`, `ManagerGuard`, `StaffGuard`: chặn/mở route tuỳ theo Role.
+- `GuestGuard`: Smart redirect về dashboard (`/superadmin`, `/manager`, `/staff`) nếu có quyền backoffice, ngược lại về `/` nếu đã login. Bỏ chặn vào trang `login/register`.
 
 > Lưu ý: `src/App.tsx` hiện là file cũ, **không phải entrypoint runtime** (không dùng trong `main.tsx`).
 
