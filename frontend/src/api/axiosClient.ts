@@ -45,6 +45,17 @@ const unwrap = <T>(payload: ApiResponse<T> | T): T => {
     return payload as T;
 };
 
+const unwrapPage = <T>(payload: any): PageResponseDTO<T> => {
+    const data = unwrap(payload) as any;
+    if (Array.isArray(data)) {
+        return { content: data, pageNo: 0, pageSize: data.length, totalElements: data.length, totalPages: 1, last: true };
+    }
+    if (data && Array.isArray(data.content)) {
+        return data;
+    }
+    return { content: [], pageNo: 0, pageSize: 0, totalElements: 0, totalPages: 0, last: true };
+};
+
 const parseError = (error: unknown): string => {
     if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<ApiResponse<unknown>>;
@@ -79,7 +90,7 @@ export const apiClient = {
         async getAll(page: number = 0, size: number = 10, query?: string): Promise<PageResponseDTO<Account>> {
             const url = query ? `/accounts?page=${page}&size=${size}&query=${encodeURIComponent(query)}` : `/accounts?page=${page}&size=${size}`;
             const response = await http.get<ApiResponse<PageResponseDTO<Account>>>(url, { headers: authHeader() });
-            return unwrap(response.data) as any;
+            return unwrapPage(response.data);
         },
         async create(payload: { fullName: string; email: string; password: string; phone?: string; roles?: string[] }): Promise<Account> {
             const response = await http.post<ApiResponse<Account>>('/accounts', payload, { headers: authHeader() });
@@ -97,7 +108,7 @@ export const apiClient = {
         async getAll(page: number = 0, size: number = 10, query?: string): Promise<PageResponseDTO<Movie>> {
             const url = query ? `/movies?page=${page}&size=${size}&query=${encodeURIComponent(query)}` : `/movies?page=${page}&size=${size}`;
             const response = await http.get<ApiResponse<PageResponseDTO<Movie>>>(url);
-            return unwrap(response.data) as any;
+            return unwrapPage(response.data);
         },
         async getById(id: string): Promise<Movie> {
             const response = await http.get<ApiResponse<Movie>>(`/movies/${id}`);
@@ -118,7 +129,7 @@ export const apiClient = {
     cinemas: {
         async getAll(page: number = 0, size: number = 10): Promise<PageResponseDTO<Cinema>> {
             const response = await http.get<ApiResponse<PageResponseDTO<Cinema>>>(`/cinemas?page=${page}&size=${size}`);
-            return unwrap(response.data) as any;
+            return unwrapPage(response.data);
         },
         async create(payload: Omit<Cinema, 'id' | 'stateName'>): Promise<Cinema> {
             const response = await http.post<Cinema>('/cinemas', payload, { headers: authHeader() });
@@ -251,7 +262,7 @@ export const apiClient = {
     snacks: {
         async getAll(page: number = 0, size: number = 10): Promise<PageResponseDTO<Snack>> {
             const response = await http.get<ApiResponse<PageResponseDTO<Snack>>>(`/snacks?page=${page}&size=${size}`, { headers: authHeader() });
-            return unwrap(response.data) as any;
+            return unwrapPage(response.data);
         },
         async create(payload: { snackTypeId: number; name: string; basePrice: number; imageUrl?: string }): Promise<Snack> {
             const response = await http.post<ApiResponse<Snack> | Snack>('/snacks', payload, { headers: authHeader() });
