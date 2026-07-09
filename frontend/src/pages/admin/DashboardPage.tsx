@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CalendarDays, Clapperboard, MapPin, Ticket, Users, ArrowUpRight, Activity, TrendingUp, Star } from 'lucide-react';
+import { CalendarDays, Clapperboard, MapPin, Ticket, Users, ArrowUpRight, Activity, TrendingUp } from 'lucide-react';
 import { apiClient } from '../../api/axiosClient';
 import { Card, CardContent } from '../../components/ui/Card';
 import type { Showtime } from '../../types/app';
@@ -262,7 +262,7 @@ export const DashboardPage = () => {
                                             fontSize={12}
                                             tickLine={false}
                                             axisLine={false}
-                                            tickFormatter={(value) => formatCompactNumber(value)}
+                                            tickFormatter={(value) => formatCompactNumber(value).toString()}
                                             dx={-10}
                                         />
                                         <Tooltip content={<CustomTooltip />} />

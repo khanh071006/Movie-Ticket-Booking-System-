@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Search, Trash2, Clapperboard, Clock, Calendar, Image as ImageIcon, Film, ChevronRight, Edit2 } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apiClient, parseError } from '../../../api/axiosClient';

@@ -1,4 +1,4 @@
-import { Armchair, CalendarDays, Clapperboard, Film, LayoutDashboard, LogOut, MonitorPlay, Ticket, Users, Coffee, QrCode } from 'lucide-react';
+import { Armchair, CalendarDays, Clapperboard, Film, LayoutDashboard, LogOut, MonitorPlay, Ticket, Users, Coffee } from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { clearSession, getStoredAccount } from '../features/auth/utils/session';
 

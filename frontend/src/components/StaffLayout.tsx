@@ -1,4 +1,4 @@
-import { CalendarDays, Clapperboard, Film, LogOut, MonitorPlay, QrCode } from 'lucide-react';
+import { CalendarDays, Film, LogOut, QrCode } from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { clearSession, getStoredAccount } from '../features/auth/utils/session';
 
