@@ -39,3 +39,5 @@ src/main/resources/application-local.properties
 ### Data seeding scripts
 seed_data.py
 *.py
+
+docs/
