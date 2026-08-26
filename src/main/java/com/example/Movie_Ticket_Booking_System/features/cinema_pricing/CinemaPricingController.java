@@ -17,14 +17,15 @@ public class CinemaPricingController {
         this.cinemaPricingService = cinemaPricingService;
     }
 
+@PreAuthorize("hasAuthority('PRICING_MANAGE')")
     @GetMapping
     public ResponseEntity<ApiResponse<ResCinemaPricingDTO>> getPricing(@PathVariable Integer cinemaId) {
         ResCinemaPricingDTO res = cinemaPricingService.getPricingByCinemaId(cinemaId);
         return ResponseEntity.ok(ApiResponse.success("Cinema pricing retrieved successfully", res));
     }
 
+@PreAuthorize("hasAuthority('PRICING_MANAGE')")
     @PutMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ApiResponse<ResCinemaPricingDTO>> updatePricing(@PathVariable Integer cinemaId, @RequestBody ReqCinemaPricingDTO dto) {
         ResCinemaPricingDTO res = cinemaPricingService.updatePricing(cinemaId, dto);
         return ResponseEntity.ok(ApiResponse.success("Cinema pricing updated successfully", res));

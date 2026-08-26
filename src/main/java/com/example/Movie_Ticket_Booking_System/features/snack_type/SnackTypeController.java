@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/snack-types")
@@ -32,6 +34,7 @@ public class SnackTypeController {
         return ResponseEntity.ok(new ResSnackTypeDTO(snackTypeService.getSnackTypeById(id)));
     }
 
+@PreAuthorize("hasAuthority('CONFIG_CREATE')")
     @PostMapping
     public ResponseEntity<ResSnackTypeDTO> createSnackType(@RequestBody Map<String, String> request) {
         String name = request.get("name");
@@ -39,6 +42,7 @@ public class SnackTypeController {
         return new ResponseEntity<>(new ResSnackTypeDTO(snackType), HttpStatus.CREATED);
     }
 
+@PreAuthorize("hasAuthority('CONFIG_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<ResSnackTypeDTO> updateSnackType(@PathVariable Integer id, @RequestBody Map<String, String> request) {
         String name = request.get("name");
@@ -46,6 +50,7 @@ public class SnackTypeController {
         return ResponseEntity.ok(new ResSnackTypeDTO(snackType));
     }
 
+@PreAuthorize("hasAuthority('CONFIG_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSnackType(@PathVariable Integer id) {
         snackTypeService.deleteSnackType(id);

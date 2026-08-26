@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/movie-statuses")
@@ -19,6 +21,7 @@ public class MovieStatusController {
         this.movieStatusService = movieStatusService;
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_CREATE')")
     @PostMapping
     public ResponseEntity<ApiResponse<ResMovieStatusDTO>> createMovieStatus(@Valid @RequestBody ReqMovieStatusDTO reqMovieStatusDTO) {
         return ResponseEntity.status(201).body(ApiResponse.created(movieStatusService.handleCreateMovieStatus(reqMovieStatusDTO)));
@@ -34,11 +37,13 @@ public class MovieStatusController {
         return ResponseEntity.ok(ApiResponse.success(movieStatusService.handleGetMovieStatusById(id)));
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ResMovieStatusDTO>> updateMovieStatus(@PathVariable Integer id, @Valid @RequestBody ReqMovieStatusDTO reqMovieStatusDTO) {
         return ResponseEntity.ok(ApiResponse.success(movieStatusService.handleUpdateMovieStatus(id, reqMovieStatusDTO)));
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteMovieStatus(@PathVariable Integer id) {
         movieStatusService.handleDeleteMovieStatus(id);

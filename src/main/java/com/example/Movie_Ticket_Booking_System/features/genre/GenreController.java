@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/genres")
@@ -19,6 +21,7 @@ public class GenreController {
         this.genreService = genreService;
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_CREATE')")
     @PostMapping
     public ResponseEntity<ApiResponse<ResGenreDTO>> createGenre(@Valid @RequestBody ReqGenreDTO reqGenreDTO) {
         return ResponseEntity.status(201).body(ApiResponse.created(genreService.handleCreateGenre(reqGenreDTO)));
@@ -34,11 +37,13 @@ public class GenreController {
         return ResponseEntity.ok(ApiResponse.success(genreService.handleGetGenreById(id)));
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ResGenreDTO>> updateGenre(@PathVariable Integer id, @Valid @RequestBody ReqGenreDTO reqGenreDTO) {
         return ResponseEntity.ok(ApiResponse.success(genreService.handleUpdateGenre(id, reqGenreDTO)));
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteGenre(@PathVariable Integer id) {
         genreService.handleDeleteGenre(id);

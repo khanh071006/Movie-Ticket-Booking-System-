@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/cast-members")
@@ -19,6 +21,7 @@ public class CastMemberController {
         this.castMemberService = castMemberService;
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_CREATE')")
     @PostMapping
     public ResponseEntity<ApiResponse<ResCastMemberDTO>> createCastMember(@Valid @RequestBody ReqCastMemberDTO reqCastMemberDTO) {
         return ResponseEntity.status(201).body(ApiResponse.created(castMemberService.handleCreateCastMember(reqCastMemberDTO)));
@@ -34,11 +37,13 @@ public class CastMemberController {
         return ResponseEntity.ok(ApiResponse.success(castMemberService.handleGetCastMemberById(id)));
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ResCastMemberDTO>> updateCastMember(@PathVariable Integer id, @Valid @RequestBody ReqCastMemberDTO reqCastMemberDTO) {
         return ResponseEntity.ok(ApiResponse.success(castMemberService.handleUpdateCastMember(id, reqCastMemberDTO)));
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteCastMember(@PathVariable Integer id) {
         castMemberService.handleDeleteCastMember(id);

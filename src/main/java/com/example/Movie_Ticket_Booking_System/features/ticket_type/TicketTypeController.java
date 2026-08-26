@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/ticket-types")
@@ -18,17 +20,20 @@ public class TicketTypeController {
         this.ticketTypeService = ticketTypeService;
     }
 
+@PreAuthorize("hasAuthority('CONFIG_CREATE')")
     @PostMapping
     public ResponseEntity<TicketTypeDTO> createTicketType(@Valid @RequestBody TicketTypeDTO dto) {
         TicketTypeDTO created = ticketTypeService.createTicketType(dto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
+@PreAuthorize("hasAuthority('CONFIG_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<TicketTypeDTO> updateTicketType(@PathVariable Integer id, @Valid @RequestBody TicketTypeDTO dto) {
         return ResponseEntity.ok(ticketTypeService.updateTicketType(id, dto));
     }
 
+@PreAuthorize("hasAuthority('CONFIG_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTicketType(@PathVariable Integer id) {
         ticketTypeService.deleteTicketType(id);

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/movies")
@@ -23,6 +25,7 @@ public class MovieController {
         this.movieService = movieService;
     }
 
+@PreAuthorize("hasAuthority('MOVIE_CREATE')")
     @PostMapping
     public ResponseEntity<ApiResponse<ResMovieDTO>> createMovie(@Valid @RequestBody ReqMovieDTO reqMovieDTO) {
         Movie movie = movieService.createMovie(reqMovieDTO);
@@ -59,6 +62,7 @@ public class MovieController {
         return ResponseEntity.ok(ApiResponse.success("Lấy thông tin phim thành công", res));
     }
 
+@PreAuthorize("hasAuthority('MOVIE_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ResMovieDTO>> updateMovie(@PathVariable UUID id, @Valid @RequestBody ReqMovieDTO reqMovieDTO) {
         Movie movie = movieService.updateMovie(id, reqMovieDTO);
@@ -66,6 +70,7 @@ public class MovieController {
         return ResponseEntity.ok(ApiResponse.success("Cập nhật thông tin phim thành công", res));
     }
 
+@PreAuthorize("hasAuthority('MOVIE_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteMovie(@PathVariable UUID id) {
         movieService.deleteMovie(id);

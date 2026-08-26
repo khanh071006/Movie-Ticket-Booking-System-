@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/cinemas")
@@ -44,17 +46,20 @@ public class CinemaController {
         return ResponseEntity.ok(cinemaService.getCinemaById(id));
     }
 
+@PreAuthorize("hasAuthority('CINEMA_CREATE')")
     @PostMapping
     public ResponseEntity<CinemaDTO> createCinema(@Valid @RequestBody CinemaDTO cinemaDTO) {
         CinemaDTO createdCinema = cinemaService.createCinema(cinemaDTO);
         return new ResponseEntity<>(createdCinema, HttpStatus.CREATED);
     }
 
+@PreAuthorize("hasAuthority('CINEMA_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<CinemaDTO> updateCinema(@PathVariable Integer id, @Valid @RequestBody CinemaDTO cinemaDTO) {
         return ResponseEntity.ok(cinemaService.updateCinema(id, cinemaDTO));
     }
 
+@PreAuthorize("hasAuthority('CINEMA_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCinema(@PathVariable Integer id) {
         cinemaService.deleteCinema(id);

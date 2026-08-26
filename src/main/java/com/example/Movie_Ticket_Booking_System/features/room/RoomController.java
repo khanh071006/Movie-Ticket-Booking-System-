@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/rooms")
@@ -28,17 +30,20 @@ public class RoomController {
         return ResponseEntity.ok(roomService.getAllRoomsByCinema(cinemaId));
     }
 
+@PreAuthorize("hasAuthority('ROOM_CREATE')")
     @PostMapping
     public ResponseEntity<RoomDTO> createRoom(@Valid @RequestBody RoomDTO roomDTO) {
         RoomDTO createdRoom = roomService.createRoom(roomDTO);
         return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
     }
 
+@PreAuthorize("hasAuthority('ROOM_UPDATE')")
     @PutMapping("/{roomId}")
     public ResponseEntity<RoomDTO> updateRoom(@PathVariable Integer roomId, @Valid @RequestBody RoomDTO roomDTO) {
         return ResponseEntity.ok(roomService.updateRoom(roomId, roomDTO));
     }
 
+@PreAuthorize("hasAuthority('ROOM_DELETE')")
     @DeleteMapping("/{roomId}")
     public ResponseEntity<Void> deleteRoom(@PathVariable Integer roomId) {
         roomService.deleteRoom(roomId);
@@ -46,6 +51,7 @@ public class RoomController {
     }
 
     // Seat configuration endpoints
+@PreAuthorize("hasAuthority('ROOM_CREATE')")
     @PostMapping("/{roomId}/seats")
     public ResponseEntity<List<SeatDTO>> createSeatsForRoom(@PathVariable Integer roomId, @Valid @RequestBody List<SeatDTO> seatDTOs) {
         List<SeatDTO> createdSeats = seatService.createSeatsForRoom(roomId, seatDTOs);

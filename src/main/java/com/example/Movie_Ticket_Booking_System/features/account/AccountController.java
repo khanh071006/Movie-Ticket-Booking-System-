@@ -6,6 +6,7 @@ import com.example.Movie_Ticket_Booking_System.features.account.dto.ReqUpdateAcc
 import com.example.Movie_Ticket_Booking_System.features.account.dto.ResAccountDTO;
 import com.example.Movie_Ticket_Booking_System.features.role.AccountRole;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class AccountController {
         return new ResAccountDTO(account.getId(), account.getEmail(), account.getFullName(), account.getPhone(), roles, cinemaId, cinemaName);
     }
 
+    @PreAuthorize("hasAuthority('ACCOUNT_READ')")
     @GetMapping
     public ResponseEntity<ApiResponse<com.example.Movie_Ticket_Booking_System.common.dto.PageResponseDTO<ResAccountDTO>>> getAccounts(
             @RequestParam(defaultValue = "0") int page,
@@ -59,6 +61,7 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.success("Lấy danh sách tài khoản thành công", resPage));
     }
 
+    @PreAuthorize("hasAuthority('ACCOUNT_CREATE')")
     @PostMapping
     public ResponseEntity<ApiResponse<ResAccountDTO>> createAccount(@Valid @RequestBody ReqCreateAccountDTO dto) {
         Account newAccount = accountService.handleCreateAccount(dto);
@@ -67,12 +70,14 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.created("Tạo tài khoản thành công", mapToResDTO(createdAccount)));
     }
 
+    @PreAuthorize("hasAuthority('ACCOUNT_READ')")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<ResAccountDTO>> getAccountById(@PathVariable UUID id) {
         Account account = accountService.handleGetAccountById(id);
         return ResponseEntity.ok(ApiResponse.success("Lấy thông tin tài khoản thành công", mapToResDTO(account)));
     }
 
+    @PreAuthorize("hasAuthority('ACCOUNT_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ResAccountDTO>> updateAccount(@PathVariable UUID id, @Valid @RequestBody ReqUpdateAccountDTO dto) {
         Account updatedAccount = accountService.handleUpdateAccount(id, dto);
@@ -80,6 +85,7 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.success("Cập nhật tài khoản thành công", mapToResDTO(savedAccount)));
     }
 
+    @PreAuthorize("hasAuthority('ACCOUNT_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteAccount(@PathVariable UUID id) {
         accountService.handleDeleteAccount(id);

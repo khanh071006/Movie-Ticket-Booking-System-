@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/bookings")
@@ -22,6 +24,7 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
+@PreAuthorize("hasAuthority('BOOKING_CREATE')")
     @PostMapping
     public ResponseEntity<ResBookingDTO> createBooking(@Valid @RequestBody ReqBookingDTO bookingDTO, @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt) {
         ResBookingDTO createdBooking = bookingService.createBooking(bookingDTO, jwt.getSubject());
@@ -33,11 +36,13 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookedSeats(showtimeId));
     }
 
+@PreAuthorize("hasAuthority('BOOKING_READ')")
     @org.springframework.web.bind.annotation.GetMapping("/my-bookings")
     public ResponseEntity<java.util.List<com.example.Movie_Ticket_Booking_System.features.booking.dto.ResBookingHistoryDTO>> getMyBookings(@AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt) {
         return ResponseEntity.ok(bookingService.getMyBookings(jwt.getSubject()));
     }
 
+@PreAuthorize("hasAuthority('BOOKING_CHECKIN')")
     @org.springframework.web.bind.annotation.PutMapping("/{id}/checkin")
     public ResponseEntity<com.example.Movie_Ticket_Booking_System.features.booking.dto.ResBookingHistoryDTO> checkinTicket(@org.springframework.web.bind.annotation.PathVariable java.util.UUID id, @AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt) {
         Long cinemaId = null;

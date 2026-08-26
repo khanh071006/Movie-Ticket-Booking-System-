@@ -19,20 +19,22 @@ public class ReportController {
         this.reportService = reportService;
     }
 
+@PreAuthorize("hasAuthority('REPORT_VIEW')")
     @GetMapping("/revenue-by-date")
     public ResponseEntity<ApiResponse<List<RevenueByDateProjection>>> getRevenueByDate(@org.springframework.security.core.annotation.AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt) {
         Long cinemaId = jwt.hasClaim("cinemaId") ? jwt.getClaim("cinemaId") : null;
         return ResponseEntity.ok(ApiResponse.success("Success", reportService.getRevenueByDate(cinemaId)));
     }
 
+@PreAuthorize("hasAuthority('REPORT_VIEW')")
     @GetMapping("/revenue-by-movie")
     public ResponseEntity<ApiResponse<List<RevenueByMovieProjection>>> getRevenueByMovie(@org.springframework.security.core.annotation.AuthenticationPrincipal org.springframework.security.oauth2.jwt.Jwt jwt) {
         Long cinemaId = jwt.hasClaim("cinemaId") ? jwt.getClaim("cinemaId") : null;
         return ResponseEntity.ok(ApiResponse.success("Success", reportService.getRevenueByMovie(cinemaId)));
     }
 
+@PreAuthorize("hasAuthority('REPORT_VIEW')")
     @GetMapping("/revenue/cinemas")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ApiResponse<List<RevenueByCinemaProjection>>> getRevenueByCinema() {
         return ResponseEntity.ok(ApiResponse.success("Success", reportService.getRevenueByCinema()));
     }

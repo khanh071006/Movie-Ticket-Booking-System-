@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/snacks")
@@ -40,18 +42,21 @@ public class SnackController {
         return ResponseEntity.ok(new ResSnackDTO(snackService.getSnackById(id)));
     }
 
+@PreAuthorize("hasAuthority('SNACK_CREATE')")
     @PostMapping
     public ResponseEntity<ResSnackDTO> createSnack(@Valid @RequestBody ReqSnackDTO reqSnackDTO) {
         Snack snack = snackService.createSnack(reqSnackDTO);
         return new ResponseEntity<>(new ResSnackDTO(snack), HttpStatus.CREATED);
     }
 
+@PreAuthorize("hasAuthority('SNACK_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<ResSnackDTO> updateSnack(@PathVariable Integer id, @Valid @RequestBody ReqSnackDTO reqSnackDTO) {
         Snack snack = snackService.updateSnack(id, reqSnackDTO);
         return ResponseEntity.ok(new ResSnackDTO(snack));
     }
 
+@PreAuthorize("hasAuthority('SNACK_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSnack(@PathVariable Integer id) {
         snackService.deleteSnack(id);

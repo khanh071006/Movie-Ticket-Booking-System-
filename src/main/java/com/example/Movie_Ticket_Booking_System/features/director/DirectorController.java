@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/directors")
@@ -19,6 +21,7 @@ public class DirectorController {
         this.directorService = directorService;
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_CREATE')")
     @PostMapping
     public ResponseEntity<ApiResponse<ResDirectorDTO>> createDirector(@Valid @RequestBody ReqDirectorDTO reqDirectorDTO) {
         return ResponseEntity.status(201).body(ApiResponse.created(directorService.handleCreateDirector(reqDirectorDTO)));
@@ -34,11 +37,13 @@ public class DirectorController {
         return ResponseEntity.ok(ApiResponse.success(directorService.handleGetDirectorById(id)));
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_UPDATE')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<ResDirectorDTO>> updateDirector(@PathVariable Integer id, @Valid @RequestBody ReqDirectorDTO reqDirectorDTO) {
         return ResponseEntity.ok(ApiResponse.success(directorService.handleUpdateDirector(id, reqDirectorDTO)));
     }
 
+@PreAuthorize("hasAuthority('CATEGORY_DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteDirector(@PathVariable Integer id) {
         directorService.handleDeleteDirector(id);

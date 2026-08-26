@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @RequestMapping("/api/v1/showtimes")
@@ -20,12 +22,14 @@ public class ShowtimeController {
         this.showtimeService = showtimeService;
     }
 
+@PreAuthorize("hasAuthority('SHOWTIME_CREATE')")
     @PostMapping
     public ResponseEntity<ShowtimeResponseDTO> createShowtime(@Valid @RequestBody ShowtimeRequestDTO showtimeRequestDTO) {
         ShowtimeResponseDTO createdShowtime = showtimeService.createShowtime(showtimeRequestDTO);
         return new ResponseEntity<>(createdShowtime, HttpStatus.CREATED);
     }
 
+@PreAuthorize("hasAuthority('SHOWTIME_DELETE')")
     @DeleteMapping("/{showtimeId}")
     public ResponseEntity<Void> deleteShowtime(@PathVariable UUID showtimeId) {
         showtimeService.deleteShowtime(showtimeId);
