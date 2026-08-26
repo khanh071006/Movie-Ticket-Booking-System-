@@ -2,6 +2,7 @@ import type { Account } from '../../../types/app';
 
 interface JwtPayload {
     scope?: string;
+    exp?: number;
 }
 
 const decodeBase64Url = (value: string): string => {
@@ -10,7 +11,30 @@ const decodeBase64Url = (value: string): string => {
     return atob(padded);
 };
 
-export const getStoredToken = (): string => localStorage.getItem('accessToken') ?? '';
+export const isTokenValid = (token: string): boolean => {
+    if (!token) return false;
+    try {
+        const parts = token.split('.');
+        if (parts.length < 2) return false;
+        const payload = JSON.parse(decodeBase64Url(parts[1])) as JwtPayload;
+        if (!payload.exp) return true;
+        // Kiểm tra xem thời gian hiện tại đã vượt qua exp chưa (trừ hao 5 giây)
+        return payload.exp > (Math.floor(Date.now() / 1000) + 5);
+    } catch {
+        return false;
+    }
+};
+
+export const getStoredToken = (): string => {
+    const token = localStorage.getItem('accessToken') ?? '';
+    if (token && !isTokenValid(token)) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('currentAccount');
+        return '';
+    }
+    return token;
+};
 
 export const setStoredToken = (token: string): void => {
     localStorage.setItem('accessToken', token);
