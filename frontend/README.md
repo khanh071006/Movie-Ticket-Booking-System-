@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# 💻 Frontend - React Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This directory contains the user interface for the Movie Ticket Booking System. It provides two distinct experiences: a public portal for customers to browse movies and book tickets, and a comprehensive administrative dashboard for managing cinema operations.
 
-Currently, two official plugins are available:
+## 🛠️ Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Core**: React 19, TypeScript 6.0, Vite 8.0
+- **Styling**: TailwindCSS 4.2
+- **Routing**: React Router 7.14
+- **HTTP Client**: Axios 1.13
+- **Data Visualization**: Recharts 3.8
+- **UI Components**: Swiper (Carousels), Lucide React (Icons), QRCode React
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🏗️ Project Structure
 
-## Expanding the ESLint configuration
+The frontend is strictly organized into functional domains:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+├── api/             # Centralized Axios client & API method wrappers
+├── components/      # Shared layout components (AppBar, Sidebar, PublicLayout, etc.)
+├── features/        # Business logic & utilities (e.g., auth session management)
+├── guards/          # React Router layout wrappers for Role-Based Routing
+├── pages/           # Page-level components
+│   ├── public/      # Homepage, Booking flow, User Profile
+│   ├── admin/       # SuperAdmin/Manager/Staff dashboards & CRUD tables
+│   ├── auth/        # Login and Registration forms
+│   └── error/       # 403 Forbidden, 404 Not Found
+└── routes/          # Centralized route definitions (router.tsx)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🔐 State & Authentication
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### JWT Management
+- The application stores the JWT access token in `localStorage`.
+- `session.ts` provides strict parsing logic. It decodes the JWT to verify the `exp` (expiration) claim before trusting the token.
+- **Auto-Logout**: If the token is expired, the session is cleared automatically to prevent "ghost" logins.
+
+### Axios Interceptor
+All HTTP requests route through a custom Axios instance (`axiosClient.ts`).
+- An interceptor attaches the `Authorization: Bearer <token>` header to all outgoing requests.
+- If the backend responds with a `401 Unauthorized` (e.g., token expired server-side), the interceptor catches the error, forcefully clears the local session, and redirects the user to `/login`.
+
+### Route Guards
+Security is enforced at the routing layer using Guard components (`SuperAdminGuard`, `ManagerGuard`, `StaffGuard`).
+These components decode the token's `scope` and verify the presence of required roles. If a user tries to access `/superadmin/dashboard` with a `STAFF` token, they are instantly redirected to a `403 Forbidden` page.
+
+---
+
+## ✨ Key UI Features
+
+- **Interactive Seat Map**: Visually distinguishes between Standard, VIP, and Sweetbox seats. Real-time polling reflects seats that are already booked or disabled.
+- **Dynamic Pricing Calculator**: The UI instantly recalculates the total checkout price by combining the Base Ticket Price + Cinema-specific Seat Surcharges + Snacks.
+- **QR Code E-Tickets**: Renders scannable QR codes for completed bookings, allowing Staff to scan and verify tickets at the cinema entrance.
+- **Revenue Dashboards**: Implements `Recharts` to display visual line/bar graphs of revenue split by date, movie, and cinema branch.
+
+---
+
+## 🚀 Setup & Run
+
+1. Ensure you have Node.js (version 20+) installed.
+2. Install the dependencies:
+```bash
+npm install
 ```
+3. Start the Vite development server:
+```bash
+npm run dev
+```
+
+*Note: The frontend runs on `http://localhost:5173` by default and expects the backend to be running on `http://localhost:8080`. API base URLs can be overridden using `.env` variables if necessary.*

@@ -1,8 +1,8 @@
 ---
 name: project-readme-generator
-description: Generates comprehensive README.md files for the Movie Ticket Booking System project by analyzing codebase structure
+description: Generates comprehensive README.md files for the root, frontend, and backend of the Movie Ticket Booking System project by analyzing codebase structure.
 allowed-tools: ["read_url_content", "find_by_name", "grep_search", "write_to_file", "view_file"]
-version: 1.0.0
+version: 2.0.0
 author: GLINCKER Team
 license: Apache-2.0
 keywords: [documentation, readme, markdown, project, spring-boot, react]
@@ -17,69 +17,52 @@ Automatically generates professional, comprehensive `README.md` files for the Mo
 This skill helps you create high-quality README files tailored to this repository by:
 - Analyzing the frontend/backend project structure
 - Identifying Spring Boot, React, and PostgreSQL configurations
+- Generating **THREE** separate README files: one for the root, one for the backend, and one for the frontend.
 - Highlighting enterprise features like Dynamic PBAC and Pessimistic Locking
-- Generating appropriate sections with clear setup instructions
-- Following README best practices for a developer portfolio
 
 ## Instructions
 
 When generating a README for this project, follow these steps:
 
 ### 1. Project Discovery
+- Confirm the `backend/` and `frontend/` directories.
+- Examine configuration files like `backend/pom.xml` and `frontend/package.json`.
 
-First, analyze the project structure:
-- Use `list_dir` or `find_by_name` to confirm the `backend/` and `frontend/` directories.
-- Use `view_file` to examine configuration files like `backend/pom.xml` and `frontend/package.json`.
-- Detect specific security implementation details (e.g. `SecurityConfig.java`, PBAC mappings).
+### 2. Output Requirements
+You must generate and save **THREE** distinct README files:
 
-### 2. Content Analysis
+#### A. Root README (`/README.md`)
+- **Title**: `🍿 Movie Ticket Booking System` with badge shields.
+- **Overview**: High-level summary of the fullstack application.
+- **Monorepo Structure**: Briefly explain the separation between `backend/` and `frontend/`.
+- **Global Prerequisites**: Java 21, Node.js 20, PostgreSQL 16.
+- **Quick Start**: Basic commands to start both layers.
+- **Links**: Provide hyperlinks to `./backend/README.md` and `./frontend/README.md` for deep dives.
 
-Based on findings, determine:
-- Project type: Fullstack Web Application
-- Primary programming languages: Java (Backend), TypeScript (Frontend)
-- Key features to highlight: Dynamic PBAC, VNPay integration, Seat Locking mechanism.
-- Start and test commands for both layers.
+#### B. Backend README (`/backend/README.md`)
+- **Title**: `🛠️ Backend - Spring Boot Architecture`
+- **Tech Stack**: Spring Boot 3, Spring Security, JPA, PostgreSQL, VNPay, ZXing.
+- **Architecture Highlights**:
+  - **Dynamic PBAC**: Detailed explanation of Permissions, RolePermissions, and `@PreAuthorize`.
+  - **Concurrency**: How Pessimistic Locking is used for seat booking.
+  - **Payment Flow**: Steps for VNPay integration.
+- **Database Schema Overview**: Mention key tables (movies, rooms, seats, bookings, accounts, roles, permissions).
+- **API Endpoints Table**: List key Public vs Authenticated endpoints.
+- **Setup & Run**: Detailed Maven commands and `application-local.properties` setup.
 
-### 3. README Generation
+#### C. Frontend README (`/frontend/README.md`)
+- **Title**: `💻 Frontend - React Application`
+- **Tech Stack**: React 19, TypeScript, Vite, TailwindCSS, Axios, React Router.
+- **Project Structure**: Explain `components`, `pages`, `guards`, `features`, `api`.
+- **State & Authentication**: Explain how JWT is stored in localStorage, the `axios` interceptor for 401 handling, and the route guards (`SuperAdminGuard`, `ManagerGuard`, etc.).
+- **Key Features**: Seat map visualization, dynamic ticket pricing UI, QR code scanning.
+- **Setup & Run**: Detailed npm commands (`npm install`, `npm run dev`).
 
-Create a `README.md` with these required sections:
-
-**Required Sections:**
-- **Title and Description**: `🍿 Movie Ticket Booking System` with badge shields (Spring Boot, React, PostgreSQL).
-- **Features**: Key functionality (Multi-role dashboards, PBAC, VNPay, Pessimistic Locking).
-- **Project Structure**: Explain the monorepo split (`frontend/` and `backend/`).
-- **Tech Stack**: Frontend, Backend, and Database technologies used.
-- **Getting Started**:
-  - Prerequisites (Java 21, Node.js, PostgreSQL).
-  - Backend setup commands.
-  - Frontend setup commands.
-- **License**: License information (if applicable).
-
-### 4. Writing Style
-
-Use this style for generated READMEs:
+### 3. Writing Style
 - Professional, technical, and confident tone.
 - Clear, concise language with Active voice.
-- Code blocks with proper syntax highlighting (`bash`, `java`, `typescript`).
-- Badge shields for tech stack indicators.
-- Emoji sparingly but effectively for section headers.
+- Code blocks with proper syntax highlighting.
 - Write in English (or Vietnamese if explicitly requested).
 
-### 5. Output
-
-Present the generated README to the user and offer to:
-- Write it directly to `README.md` at the root using `write_to_file`.
-- Make adjustments based on feedback.
-
-## Examples
-
-### Example 1: Fullstack Setup
-
-**User Request:**
-"Generate a README for this project to put on my GitHub."
-
-**Agent Response:**
-1. Confirms the presence of `backend` and `frontend` folders.
-2. Extracts tech stack versions from `pom.xml` and `package.json`.
-3. Drafts a complete README.md adhering to the structure.
-4. Writes the file to the workspace and asks for user feedback.
+### 4. Execution
+Use the `write_to_file` tool to save all three files to their respective locations, then commit and push the changes.
