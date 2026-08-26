@@ -32,7 +32,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         if (account.getAccountRoles() != null) {
             for (AccountRole accountRole : account.getAccountRoles()) {
+                // Giữ lại ROLE_ để tương thích nếu cần
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + accountRole.getRole().getName()));
+                
+                // Thêm các permissions của Role này vào
+                if (accountRole.getRole().getRolePermissions() != null) {
+                    for (com.example.Movie_Ticket_Booking_System.features.role.RolePermission rp : accountRole.getRole().getRolePermissions()) {
+                        authorities.add(new SimpleGrantedAuthority(rp.getPermission().getCode()));
+                    }
+                }
             }
         }
 

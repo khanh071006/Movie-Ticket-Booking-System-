@@ -16,6 +16,9 @@ public class Role {
     @OneToMany(mappedBy = "role")
     private List<AccountRole> accountRoles;
 
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RolePermission> rolePermissions;
+
     // Getters and Setters
 
     public int getId() {
@@ -40,5 +43,13 @@ public class Role {
 
     public void setAccountRoles(List<AccountRole> accountRoles) {
         this.accountRoles = accountRoles;
+    }
+
+    public List<RolePermission> getRolePermissions() {
+        return rolePermissions;
+    }
+
+    public void setRolePermissions(List<RolePermission> rolePermissions) {
+        this.rolePermissions = rolePermissions;
     }
 }
