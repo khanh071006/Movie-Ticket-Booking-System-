@@ -6,5 +6,5 @@ import java.util.UUID;
 public interface TmdbService {
     void handleSyncNowPlayingMovies();
     void handleSyncUpcomingMovies();
-    Movie handleSyncMovieDetails(Long tmdbId, com.example.Movie_Ticket_Booking_System.features.moviestatus.MovieStatus status);
+    Movie handleSyncMovieDetails(Integer tmdbId, com.example.Movie_Ticket_Booking_System.features.moviestatus.MovieStatus status);
 }

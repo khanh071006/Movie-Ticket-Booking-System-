@@ -30,6 +30,7 @@ public class ShowtimeAutoGeneratorServiceImpl implements ShowtimeAutoGeneratorSe
     }
 
     @Transactional
+    @Override
     public void handleGenerateShowtimesForNext7Days() {
         // 1. Fetch all active "Đang Chiếu" movies
         List<Movie> activeMovies = movieRepository.findByMovieStatus_Name("Đang Chiếu");

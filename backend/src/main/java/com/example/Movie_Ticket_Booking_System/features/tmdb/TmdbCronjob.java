@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TmdbCronjob {
 
-    private final TmdbSyncService tmdbSyncService;
+    private final TmdbService tmdbService;
 
-    public TmdbCronjob(TmdbSyncService tmdbSyncService) {
-        this.tmdbSyncService = tmdbSyncService;
+    public TmdbCronjob(TmdbService tmdbService) {
+        this.tmdbService = tmdbService;
     }
 
     // Run every day at 2 AM
@@ -17,8 +17,8 @@ public class TmdbCronjob {
     public void syncTmdbDaily() {
         System.out.println("Starting daily TMDB sync...");
         try {
-            tmdbSyncService.syncNowPlayingMovies();
-            tmdbSyncService.syncUpcomingMovies();
+            tmdbService.handleSyncNowPlayingMovies();
+            tmdbService.handleSyncUpcomingMovies();
             System.out.println("TMDB sync completed successfully.");
         } catch (Exception e) {
             System.err.println("TMDB sync failed: " + e.getMessage());

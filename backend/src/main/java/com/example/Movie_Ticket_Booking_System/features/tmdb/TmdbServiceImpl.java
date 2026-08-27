@@ -61,6 +61,7 @@ public class TmdbServiceImpl implements TmdbService {
         this.movieStatusRepository = movieStatusRepository;
     }
 
+    @Override
     public void handleSyncNowPlayingMovies() {
         if (apiKey == null || apiKey.isEmpty()) {
             throw new RuntimeException("TMDB API Key is not configured.");
@@ -111,6 +112,7 @@ public class TmdbServiceImpl implements TmdbService {
         }
     }
 
+    @Override
     public void handleSyncUpcomingMovies() {
         MovieStatus comingSoonStatus = movieStatusRepository.findByName("Sắp Chiếu")
                 .orElseGet(() -> {
@@ -158,6 +160,7 @@ public class TmdbServiceImpl implements TmdbService {
     }
 
     @Transactional
+    @Override
     public Movie handleSyncMovieDetails(Integer tmdbMovieId, MovieStatus targetStatus) {
         String detailUrl = UriComponentsBuilder.fromUriString(apiUrl + "/movie/" + tmdbMovieId)
                 .queryParam("api_key", apiKey)
