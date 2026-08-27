@@ -11,8 +11,9 @@ import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface BookingSeatRepository extends JpaRepository<BookingSeat, UUID> {
-    List<BookingSeat> findByBooking_ShowtimeIdAndSeatIdIn(UUID showtimeId, List<Integer> seatIds);
+    @Query("SELECT bs FROM BookingSeat bs WHERE bs.booking.showtime.id = :showtimeId AND bs.seat.id IN :seatIds AND bs.booking.paymentStatus NOT IN ('FAILED', 'CANCELED')")
+    List<BookingSeat> findByBooking_ShowtimeIdAndSeatIdIn(@Param("showtimeId") UUID showtimeId, @Param("seatIds") List<Integer> seatIds);
 
-    @Query("SELECT bs.seat.id FROM BookingSeat bs WHERE bs.booking.showtime.id = :showtimeId AND bs.booking.paymentStatus != 'FAILED'")
+    @Query("SELECT bs.seat.id FROM BookingSeat bs WHERE bs.booking.showtime.id = :showtimeId AND bs.booking.paymentStatus NOT IN ('FAILED', 'CANCELED')")
     List<Integer> findBookedSeatIdsByShowtimeId(@Param("showtimeId") UUID showtimeId);
 }

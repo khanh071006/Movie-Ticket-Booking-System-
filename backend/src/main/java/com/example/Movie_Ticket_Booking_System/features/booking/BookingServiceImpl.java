@@ -256,4 +256,14 @@ public class BookingServiceImpl implements BookingService {
         
         return convertToHistoryDTO(booking);
     }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void handleCancelAbandonedBookings() {
+        java.time.LocalDateTime threshold = java.time.LocalDateTime.now().minusMinutes(10);
+        int canceledCount = bookingRepository.cancelAbandonedBookings(threshold);
+        if (canceledCount > 0) {
+            System.out.println("Cronjob: Canceled " + canceledCount + " abandoned bookings older than 10 minutes.");
+        }
+    }
 }

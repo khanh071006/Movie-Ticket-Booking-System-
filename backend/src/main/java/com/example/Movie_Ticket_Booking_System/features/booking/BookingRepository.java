@@ -23,4 +23,8 @@ public interface BookingRepository extends JpaRepository<Booking, UUID> {
 
     @org.springframework.data.jpa.repository.Query("SELECT c.name as cinemaName, SUM(b.totalAmount) as total FROM Booking b JOIN b.showtime s JOIN s.room r JOIN r.cinema c WHERE b.paymentStatus = 'PAID' GROUP BY c.id, c.name")
     List<com.example.Movie_Ticket_Booking_System.features.report.RevenueByCinemaProjection> getRevenueByCinema();
+
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.data.jpa.repository.Query("UPDATE Booking b SET b.paymentStatus = 'CANCELED' WHERE b.paymentStatus = 'PENDING' AND b.createdDatetime < :threshold")
+    int cancelAbandonedBookings(@org.springframework.data.repository.query.Param("threshold") java.time.LocalDateTime threshold);
 }
